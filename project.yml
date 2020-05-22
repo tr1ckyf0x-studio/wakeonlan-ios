@@ -20,6 +20,8 @@ targets:
     type: application
     sources:
       - path: "Wake on LAN"
+      - path: "Wake on LAN/R.generated.swift"
+        optional: true
     dependencies:
       - carthage: SnapKit
     settings:
@@ -32,6 +34,14 @@ targets:
         CODE_SIGN_IDENTITY: "Apple Development"
         CODE_SIGN_STYLE: Automatic
         PROVISIONING_PROFILE_SPECIFIER: ""
+    preBuildScripts:
+    - name: "R.Swift"
+      script: |
+              "$PODS_ROOT/R.swift/rswift" generate "$SRCROOT/Wake on LAN/R.generated.swift"
+      inputFiles:
+        - $TEMP_DIR/rswift-lastrun
+      outputFiles:
+        - $SRCROOT/Wake on LAN/R.generated.swift
     # postBuildScripts:
     #   - name: "Crashlytics"
     #     script: |

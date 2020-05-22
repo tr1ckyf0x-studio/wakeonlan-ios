@@ -46,9 +46,9 @@ class AddHostForm: Form {
         portTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.port)
         let portFormItem = FormItem.text(portTextFormItem)
         
-        let macAddressSection = FormSection.section(content: [macAddressFormItem], header: "MAC ADDRESS", footer: nil)
-        let ipAddressScetion = FormSection.section(content: [ipAddressFormItem], header: "IP ADDRESS", footer: nil)
-        let portSection = FormSection.section(content: [portFormItem], header: "PORT", footer: nil)
+        let macAddressSection = FormSection.section(content: [macAddressFormItem], header: R.string.addHost.macAddress(), footer: nil)
+        let ipAddressScetion = FormSection.section(content: [ipAddressFormItem], header: R.string.addHost.ipAddress(), footer: nil)
+        let portSection = FormSection.section(content: [portFormItem], header: R.string.addHost.port(), footer: nil)
         
         formSections = [macAddressSection, ipAddressScetion, portSection]
     }
