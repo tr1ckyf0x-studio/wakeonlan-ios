@@ -19,6 +19,7 @@ class HostListView: UIView {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
     

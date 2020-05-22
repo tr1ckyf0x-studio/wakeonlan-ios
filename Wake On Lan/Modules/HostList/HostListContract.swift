@@ -9,19 +9,21 @@
 import Foundation
 
 protocol HostListViewOutput: class {
+    var tableManager: HostListTableManager? { get }
+    func viewIsReady(_ view: HostListViewInput)
     func viewDidPressAddButton(_ view: HostListViewInput)
 }
 
 protocol HostListViewInput: class {
-    
+    func reloadTable()
 }
 
 protocol HostListInteractorInput: class {
-    
+    func fetchHosts()
 }
 
 protocol HostListInteractorOutput: class {
-    
+    func interactor(_ interactor: HostListInteractorInput, didUpdateHosts hosts: [Host])
 }
 
 protocol HostListRouterProtocol: class {
