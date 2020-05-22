@@ -11,7 +11,14 @@ import Foundation
 class HostListConfigurator {
     func configure(viewController: HostListViewController) {
         let presenter = HostListPresenter()
+        let interactor = HostListInteractor()
         let router = HostListRouter()
+        let tableManager = HostListTableManager()
+        
+        presenter.tableManager = tableManager
+        
+        presenter.interactor = interactor
+        interactor.presenter = presenter
         
         viewController.presenter = presenter
         presenter.view = viewController

@@ -23,11 +23,22 @@ class HostListViewController: UIViewController {
         let configurator = HostListConfigurator()
         configurator.configure(viewController: self)
         hostListView.delegate = self
+        setupViews()
+        presenter?.viewIsReady(self)
+    }
+    
+    private func setupViews() {
         setupNavigationBar()
+        setupTableView()
     }
     
     private func setupNavigationBar() {
         setupAddButton()
+    }
+    
+    private func setupTableView() {
+        hostListView.tableView.dataSource = presenter?.tableManager
+        hostListView.tableView.delegate = presenter?.tableManager
     }
     
     private func setupAddButton() {
@@ -42,5 +53,7 @@ extension HostListViewController: HostListViewDelegate {
 }
 
 extension HostListViewController: HostListViewInput {
-    
+    func reloadTable() {
+        hostListView.tableView.reloadData()
+    }
 }
