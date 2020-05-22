@@ -4,4 +4,5 @@ target 'Wake on LAN' do
   use_frameworks!
 
   pod "Resolver"
+  pod "R.swift"
 end
