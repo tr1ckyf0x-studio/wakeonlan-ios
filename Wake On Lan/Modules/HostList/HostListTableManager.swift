@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol HostListTableManagerDelegate: class {
+    func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath)
+}
+
 class HostListTableManager: NSObject {
     
     var sections = [HostListSectionModel]()
+    
+    weak var delegate: HostListTableManagerDelegate?
     
 }
 
@@ -48,7 +54,8 @@ extension HostListTableManager: UITableViewDelegate {
         return sections[section].footer
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        delegate?.tableManager(self, didSelectRowAt: indexPath)
     }
 }
