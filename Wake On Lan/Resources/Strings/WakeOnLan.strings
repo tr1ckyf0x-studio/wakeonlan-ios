@@ -1,0 +1,10 @@
+/* 
+  WakeOnLan.strings
+  Wake on LAN
+
+  Created by Владислав Лисянский on 23.05.2020.
+  Copyright © 2020 Владислав Лисянский. All rights reserved.
+*/
+
+"wrong mac address length" = "MAC Address length MUST be equal to %@";
+"wake on lan unexpected error" = "Unexpected error occured";

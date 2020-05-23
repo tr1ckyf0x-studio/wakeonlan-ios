@@ -16,6 +16,7 @@ class HostListConfigurator {
         let tableManager = HostListTableManager()
         
         presenter.tableManager = tableManager
+        tableManager.delegate = presenter
         
         presenter.interactor = interactor
         interactor.presenter = presenter

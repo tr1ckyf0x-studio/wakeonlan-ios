@@ -20,10 +20,12 @@ protocol HostListViewInput: class {
 
 protocol HostListInteractorInput: class {
     func fetchHosts()
+    func wakeHost(_ host: Host)
 }
 
 protocol HostListInteractorOutput: class {
     func interactor(_ interactor: HostListInteractorInput, didUpdateHosts hosts: [Host])
+    func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error)
 }
 
 protocol HostListRouterProtocol: class {

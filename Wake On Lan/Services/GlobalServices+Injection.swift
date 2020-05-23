@@ -12,5 +12,6 @@ import Resolver
 extension Resolver {
     public static func registerGlobalServices() {
         register { PersistentCoreDataService() }.scope(application)
+        register { WakeOnLanService() }.scope(application)
     }
 }
