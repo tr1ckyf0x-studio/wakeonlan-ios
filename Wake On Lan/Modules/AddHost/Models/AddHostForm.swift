@@ -36,6 +36,7 @@ class AddHostForm: Form {
             self?.macAddress = value
         }
         macAddressTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.macAddress)
+        macAddressTextFormItem.failureReason = .invalidMACAddress
         let macAddressFormItem = FormItem.text(macAddressTextFormItem)
         
         let ipAddressTextFormItem = TextFormItem()
@@ -45,6 +46,7 @@ class AddHostForm: Form {
             self?.ipAddress = value
         }
         ipAddressTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
+        ipAddressTextFormItem.failureReason = .invalidIPAddress
         let ipAddressFormItem = FormItem.text(ipAddressTextFormItem)
         
         let portTextFormItem = TextFormItem()
@@ -54,6 +56,7 @@ class AddHostForm: Form {
             self?.port = value
         }
         portTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.port)
+        portTextFormItem.failureReason = .invalidPort
         let portFormItem = FormItem.text(portTextFormItem)
         
         let titleSection = FormSection.section(content: [titleFormItem], header: R.string.addHost.title(), footer: nil)

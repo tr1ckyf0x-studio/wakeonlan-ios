@@ -14,16 +14,19 @@ protocol AddHostViewDelegate: class {
 }
 
 class AddHostView: UIView {
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(TextInputCell.self, forCellReuseIdentifier: TextInputCell.reuseIdentifier)
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        
         return tableView
     }()
     
     lazy var saveItemButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonPressed))
+        let barButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .save, target: self, action: #selector(saveButtonPressed))
         return barButtonItem
     }()
     
@@ -53,5 +56,7 @@ class AddHostView: UIView {
     
     @objc private func saveButtonPressed() {
         delegate?.addHostViewDidPressSaveButton(self)
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 }

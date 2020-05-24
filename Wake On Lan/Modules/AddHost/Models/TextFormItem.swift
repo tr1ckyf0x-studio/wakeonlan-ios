@@ -8,6 +8,20 @@
 
 import Foundation
 
+enum AddHostFailureReason: String {
+    // TODO: R.swift
+    case invalidMACAddress = "Incorrect MAC address"
+    case invalidIPAddress = "Incorrect IP address"
+    case invalidPort = "Incorrect PORT"
+    case unknown = "Unknown Error"
+}
+
+extension AddHostFailureReason: CustomStringConvertible {
+    var description: String {
+        return self.rawValue
+    }
+}
+
 class TextFormItem: FormValidable {
     var value: String? {
         didSet {
@@ -19,6 +33,7 @@ class TextFormItem: FormValidable {
     var onValueChanged: ((String?) -> Void)?
     var validator: TextValidator?
     var defaultValue: String?
+    var failureReason: AddHostFailureReason = .unknown
     
     var isMandatory: Bool = true
     

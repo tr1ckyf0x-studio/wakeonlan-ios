@@ -33,18 +33,29 @@ extension AddHostTableManager: UITableViewDataSource {
         let model = sections[indexPath.section].items[indexPath.row]
         switch model {
         case .text:
-            let textInputCell = tableView.dequeueReusableCell(withIdentifier: TextInputCell.reuseIdentifier, for: indexPath) as? TextInputCell
+            let textInputCell =
+                tableView.dequeueReusableCell(
+                    withIdentifier: TextInputCell.reuseIdentifier, for: indexPath) as? TextInputCell
             textInputCell?.configure(with: model)
+            textInputCell?.onExpandAction = { completion in
+                CATransaction.begin()
+                CATransaction.setCompletionBlock({
+                    completion?()
+                })
+                tableView.beginUpdates()
+                tableView.endUpdates()
+                CATransaction.commit()
+            }
             cell = textInputCell
         }
-        
-        guard let unwrappedCell = cell else { fatalError("Unknown cell identifier") }
+        guard let unwrappedCell = cell else { fatalError("\(self): Unknown cell identifier") }
         
         return unwrappedCell
     }
 }
 
 extension AddHostTableManager: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].header
     }
