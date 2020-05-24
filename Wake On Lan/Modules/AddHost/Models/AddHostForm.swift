@@ -9,6 +9,7 @@
 import Foundation
 
 class AddHostForm: Form {
+    var title: String?
     var macAddress: String?
     var ipAddress: String?
     var port: String?
@@ -20,8 +21,17 @@ class AddHostForm: Form {
     }
     
     private func configureItems() {
+        // TODO: Image picker form item
+        
+        let titleTextFormItem = TextFormItem()
+        titleTextFormItem.onValueChanged = { [weak self] value in
+            self?.title = value
+        }
+        titleTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.title)
+        let titleFormItem = FormItem.text(titleTextFormItem)
+        
         let macAddressTextFormItem = TextFormItem()
-        macAddressTextFormItem.placeholder = "00:11:22:33:44:55"
+        macAddressTextFormItem.placeholder = "XX:XX:XX:XX:XX:XX"
         macAddressTextFormItem.onValueChanged = { [weak self] value in
             self?.macAddress = value
         }
@@ -46,11 +56,12 @@ class AddHostForm: Form {
         portTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.port)
         let portFormItem = FormItem.text(portTextFormItem)
         
+        let titleSection = FormSection.section(content: [titleFormItem], header: R.string.addHost.title(), footer: nil)
         let macAddressSection = FormSection.section(content: [macAddressFormItem], header: R.string.addHost.macAddress(), footer: nil)
         let ipAddressScetion = FormSection.section(content: [ipAddressFormItem], header: R.string.addHost.ipAddress(), footer: nil)
         let portSection = FormSection.section(content: [portFormItem], header: R.string.addHost.port(), footer: nil)
         
-        formSections = [macAddressSection, ipAddressScetion, portSection]
+        formSections = [titleSection, macAddressSection, ipAddressScetion, portSection]
     }
 }
 

@@ -16,6 +16,8 @@ extension Host {
         return NSFetchRequest<Host>(entityName: "Host")
     }
 
+    @NSManaged public var title: String
+    @NSManaged public var iconName: String
     @NSManaged public var macAddress: String
     @NSManaged public var ipAddress: String?
     @NSManaged public var port: String?

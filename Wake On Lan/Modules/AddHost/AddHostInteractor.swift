@@ -18,7 +18,10 @@ class AddHostInteractor: AddHostInteractorInput {
         let context = coreDataService.createChildConcurrentContext()
         context.performAndWait {
             let host = Host(context: context)
-            guard let macAddress = form.macAddress else { return }
+            guard let macAddress = form.macAddress,
+                  let title = form.title
+            else { return }
+            host.title = title
             host.macAddress = macAddress
             host.ipAddress = form.ipAddress
             host.port = form.port

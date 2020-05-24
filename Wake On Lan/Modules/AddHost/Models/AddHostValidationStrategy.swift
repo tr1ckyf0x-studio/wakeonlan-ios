@@ -9,12 +9,14 @@
 import Foundation
 
 enum AddHostValidationStrategy: RegExPatternRepresentable {
+    case title
     case macAddress
     case ipAddress
     case port
     
     var regExPattern: String {
         switch self {
+        case .title: return "(.|\\s)*\\S(.|\\s)*"
         case .macAddress: return "^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$"
         case .ipAddress: return "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
         case .port: return "^[0-9]+$"

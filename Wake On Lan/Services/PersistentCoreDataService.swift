@@ -66,6 +66,7 @@ final class PersistentCoreDataService {
                         completionHandler?()
                     }
                 } catch {
+                    print(error)
                     // TODO: Обработка ошибок
                 }
             }
