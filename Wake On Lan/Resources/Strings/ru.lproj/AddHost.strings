@@ -6,6 +6,7 @@
   Copyright © 2020 Владислав Лисянский. All rights reserved.
 */
 
+"title" = "Название";
 "ip address" = "IP адрес";
 "mac address" = "MAC адрес";
 "port" = "Порт";
