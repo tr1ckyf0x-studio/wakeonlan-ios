@@ -67,6 +67,7 @@ class TextInputCell: UITableViewCell {
         textField.addTarget(
             self, action: #selector(textFieldValueChanged(_:)), for: .editingChanged)
         textField.delegate = self
+        textField.returnKeyType = .next
         
         return textField
     }()
@@ -129,12 +130,31 @@ class TextInputCell: UITableViewCell {
         failureView.isHidden = true
     }
     
+    private func configureToolbarIfNeeded() {
+        let toolBar = UIToolbar()
+        let doneButton = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(didTapDoneButton))
+        let flexibleSpace = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil)
+        toolBar.items = [flexibleSpace, doneButton]
+        toolBar.sizeToFit()
+        textField.inputAccessoryView = toolBar
+    }
+    
     // MARK: - Action
     @objc private func textFieldValueChanged(_ textField: UITextField) {
         guard let item = textFormItem,
             let textValue = textField.text else { return }
         item.value = textValue
         (item.isValid || textValue.isEmpty) ? (expanded = false) : (expanded = true)
+    }
+    
+    @objc private func didTapDoneButton() {
+        self.endEditing(true)
     }
 
 }
@@ -162,11 +182,14 @@ extension TextInputCell: FormConfigurable {
     func configure(with formItem: FormItem) {
         guard case let .text(textFormItem) = formItem else { return }
         self.textFormItem = textFormItem
+        failureView.configure(with: textFormItem.failureReason)
         textField.tag = textFormItem.indexPath?.section ?? 0
         textField.text = textFormItem.value
         textField.placeholder = textFormItem.placeholder
         textField.keyboardType = textFormItem.keyboardType
-        failureView.configure(with: textFormItem.failureReason)
+        // Setup toolbar on number pad
+        guard textField.keyboardType == .numberPad else { return }
+        configureToolbarIfNeeded()
     }
 
 }
