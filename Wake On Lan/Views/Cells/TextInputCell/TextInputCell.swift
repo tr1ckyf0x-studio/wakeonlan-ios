@@ -1,4 +1,4 @@
-//
+
 //  TextInputCell.swift
 //  Wake On Lan
 //
@@ -39,8 +39,8 @@ private class AddHostFailureView: UIView {
     func show() {
         addSubview(failureLabel)
         failureLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(15)
-            $0.trailing.greaterThanOrEqualToSuperview().offset(15)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.greaterThanOrEqualToSuperview().offset(20)
             $0.top.equalToSuperview().offset(10)
             $0.bottom.equalToSuperview().inset(10).priority(.low)
         }
@@ -57,17 +57,21 @@ class TextInputCell: UITableViewCell {
     static let reuseIdentifier = "TextInputCell"
     
     // MARK: - Properties
-    public var onExpandAction: (( _ completionBlock: (() -> Void)? ) -> Void)?
+    var onExpandAction: (( _ completionBlock: (() -> Void)? ) -> Void)?
+    var onNextResponderAction: ((_ indexPath: IndexPath) -> Void)?
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .none
         textField.autocorrectionType = .no
+        textField.addTarget(
+            self, action: #selector(textFieldValueChanged(_:)), for: .editingChanged)
+        textField.delegate = self
         
         return textField
     }()
     
-    private var failureView = AddHostFailureView()
+    private let failureView = AddHostFailureView()
     
     private var textFormItem: TextFormItem?
     
@@ -92,7 +96,6 @@ class TextInputCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureViews()
-        textField.addTarget(self, action: #selector(textFieldValueChanged(_:)), for: .editingChanged)
     }
     
     required init?(coder: NSCoder) {
@@ -109,9 +112,9 @@ class TextInputCell: UITableViewCell {
         contentView.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(44)
-            make.leading.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(20)
             make.top.equalToSuperview()
-            make.trailing.equalToSuperview().inset(15)
+            make.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -125,7 +128,8 @@ class TextInputCell: UITableViewCell {
         // Hide error view by default
         failureView.isHidden = true
     }
-
+    
+    // MARK: - Action
     @objc private func textFieldValueChanged(_ textField: UITextField) {
         guard let item = textFormItem,
             let textValue = textField.text else { return }
@@ -135,12 +139,34 @@ class TextInputCell: UITableViewCell {
 
 }
 
+// MARK: - UITextFieldDelegate
+extension TextInputCell: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let nextResponderTag = textField.tag + 1
+        guard let nextResponder =
+            superview?.viewWithTag(nextResponderTag) else {
+            textField.resignFirstResponder()
+            return true
+        }
+        nextResponder.becomeFirstResponder()
+        if let indexPath = self.textFormItem?.indexPath {
+            onNextResponderAction?(indexPath)
+        }
+        return true
+    }
+
+}
+
+// MARK: - FormConfigurable
 extension TextInputCell: FormConfigurable {
     func configure(with formItem: FormItem) {
         guard case let .text(textFormItem) = formItem else { return }
         self.textFormItem = textFormItem
+        textField.tag = textFormItem.indexPath?.section ?? 0
         textField.text = textFormItem.value
         textField.placeholder = textFormItem.placeholder
+        textField.keyboardType = textFormItem.keyboardType
         failureView.configure(with: textFormItem.failureReason)
     }
+
 }

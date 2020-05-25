@@ -15,11 +15,16 @@ protocol AddHostViewDelegate: class {
 
 class AddHostView: UIView {
     
+    // MARK: - Properties
+    weak var delegate: AddHostViewDelegate?
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(TextInputCell.self, forCellReuseIdentifier: TextInputCell.reuseIdentifier)
+        tableView.register(
+            TextInputCell.self, forCellReuseIdentifier: TextInputCell.reuseIdentifier)
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.keyboardDismissMode = .onDrag
         
         return tableView
     }()
@@ -30,19 +35,33 @@ class AddHostView: UIView {
         return barButtonItem
     }()
     
-    weak var delegate: AddHostViewDelegate?
-    
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         createSubviews()
+        registerNotifications()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         createSubviews()
     }
-
+    
+    // MARK: - Private
+    private func registerNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+    }
+    
     private func createSubviews() {
         setupTableView()
     }
@@ -56,7 +75,18 @@ class AddHostView: UIView {
     
     @objc private func saveButtonPressed() {
         delegate?.addHostViewDidPressSaveButton(self)
-        tableView.beginUpdates()
-        tableView.endUpdates()
     }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        let key = UIResponder.keyboardFrameBeginUserInfoKey
+        if let keyboardSize = (notification.userInfo?[key] as? NSValue)?.cgRectValue {
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            tableView.contentInset = insets
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        tableView.contentInset = .zero
+    }
+    
 }

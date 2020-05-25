@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum AddHostFailureReason: String {
     // TODO: R.swift
@@ -34,6 +35,7 @@ class TextFormItem: FormValidable {
     var validator: TextValidator?
     var defaultValue: String?
     var failureReason: AddHostFailureReason = .unknown
+    var keyboardType: UIKeyboardType = .asciiCapable
     
     var isMandatory: Bool = true
     

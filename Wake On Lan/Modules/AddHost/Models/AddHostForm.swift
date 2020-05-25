@@ -37,6 +37,7 @@ class AddHostForm: Form {
         }
         macAddressTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.macAddress)
         macAddressTextFormItem.failureReason = .invalidMACAddress
+        macAddressTextFormItem.keyboardType = .asciiCapable
         let macAddressFormItem = FormItem.text(macAddressTextFormItem)
         
         let ipAddressTextFormItem = TextFormItem()
@@ -47,6 +48,8 @@ class AddHostForm: Form {
         }
         ipAddressTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
         ipAddressTextFormItem.failureReason = .invalidIPAddress
+        ipAddressTextFormItem.keyboardType = .numbersAndPunctuation
+        ipAddressTextFormItem.isMandatory = false
         let ipAddressFormItem = FormItem.text(ipAddressTextFormItem)
         
         let portTextFormItem = TextFormItem()
@@ -57,12 +60,28 @@ class AddHostForm: Form {
         }
         portTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.port)
         portTextFormItem.failureReason = .invalidPort
+        portTextFormItem.keyboardType = .numberPad
+        portTextFormItem.isMandatory = false
         let portFormItem = FormItem.text(portTextFormItem)
+
+        let macAddressSection = FormSection.section(
+            content: [macAddressFormItem],
+            header: R.string.addHost.macAddress(),
+            footer: R.string.addHost.macAddressDescription(),
+            mandatory: true)
         
+        let ipAddressScetion = FormSection.section(
+            content: [ipAddressFormItem],
+            header: R.string.addHost.ipAddress(),
+            footer: R.string.addHost.ipAddressDescription())
+
         let titleSection = FormSection.section(content: [titleFormItem], header: R.string.addHost.title(), footer: nil)
         let macAddressSection = FormSection.section(content: [macAddressFormItem], header: R.string.addHost.macAddress(), footer: nil)
         let ipAddressScetion = FormSection.section(content: [ipAddressFormItem], header: R.string.addHost.ipAddress(), footer: nil)
-        let portSection = FormSection.section(content: [portFormItem], header: R.string.addHost.port(), footer: nil)
+        let portSection = FormSection.section(
+            content: [portFormItem],
+            header: R.string.addHost.port(),
+            footer: R.string.addHost.portDescription())
         
         formSections = [titleSection, macAddressSection, ipAddressScetion, portSection]
     }
