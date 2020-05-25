@@ -68,6 +68,7 @@ class TextInputCell: UITableViewCell {
             self, action: #selector(textFieldValueChanged(_:)), for: .editingChanged)
         textField.delegate = self
         textField.returnKeyType = .next
+        textField.clearButtonMode = .whileEditing
         
         return textField
     }()
