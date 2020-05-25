@@ -9,7 +9,7 @@
 
 import Foundation
 
-enum AddHostValidationStrategy: RegExPatternRepresentable {
+enum AddHostValidationStrategy {
     case title
     case macAddress
     case ipAddress

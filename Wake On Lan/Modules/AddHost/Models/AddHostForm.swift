@@ -65,7 +65,13 @@ class AddHostForm: Form {
         portTextFormItem.keyboardType = .numberPad
         portTextFormItem.isMandatory = false
         portTextFormItem.maxLength = 5
+
         let portFormItem = FormItem.text(portTextFormItem)
+
+        let titleSection = FormSection.section(
+            content: [titleFormItem],
+            header: R.string.addHost.title(),
+            footer: nil)
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
@@ -78,9 +84,6 @@ class AddHostForm: Form {
             header: R.string.addHost.ipAddress(),
             footer: R.string.addHost.ipAddressDescription())
 
-        let titleSection = FormSection.section(content: [titleFormItem], header: R.string.addHost.title(), footer: nil)
-        let macAddressSection = FormSection.section(content: [macAddressFormItem], header: R.string.addHost.macAddress(), footer: nil)
-        let ipAddressScetion = FormSection.section(content: [ipAddressFormItem], header: R.string.addHost.ipAddress(), footer: nil)
         let portSection = FormSection.section(
             content: [portFormItem],
             header: R.string.addHost.port(),
