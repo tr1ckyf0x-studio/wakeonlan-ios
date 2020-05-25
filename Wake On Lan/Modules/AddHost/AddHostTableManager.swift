@@ -43,7 +43,7 @@ extension AddHostTableManager: UITableViewDataSource {
             textInputCell?.onNextResponderAction = { indexPath in
                 guard let nextIndexPath =
                     tableView.nextIndexPath(for: indexPath) else { return }
-                tableView.scrollToRow(at: nextIndexPath, at: .middle, animated: true)
+                tableView.scrollToRow(at: nextIndexPath, at: .top, animated: true)
             }
             // NOTE: We need to hide failure label in
             // completion block for smoothy animation working

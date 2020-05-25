@@ -14,10 +14,10 @@ protocol AddHostViewDelegate: class {
 }
 
 class AddHostView: UIView {
-    
+
     // MARK: - Properties
     weak var delegate: AddHostViewDelegate?
-    
+
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(
@@ -25,7 +25,7 @@ class AddHostView: UIView {
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
-        
+
         return tableView
     }()
     

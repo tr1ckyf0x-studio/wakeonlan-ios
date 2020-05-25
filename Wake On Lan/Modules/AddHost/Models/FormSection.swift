@@ -36,7 +36,8 @@ enum FormSection {
             return footer
         }
     }
-    
+
+    // TODO: Need to refactoring
     var isMandatory: Bool {
         switch self {
         case let .section(_, _, _, mandatory):

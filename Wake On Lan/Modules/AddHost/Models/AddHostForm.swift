@@ -36,8 +36,10 @@ class AddHostForm: Form {
             self?.macAddress = value
         }
         macAddressTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.macAddress)
+        macAddressTextFormItem.formatter = TextFormatter(strategy: AddHostFormatterStrategy.macAddress)
         macAddressTextFormItem.failureReason = .invalidMACAddress
         macAddressTextFormItem.keyboardType = .asciiCapable
+        macAddressTextFormItem.maxLength = 17
         let macAddressFormItem = FormItem.text(macAddressTextFormItem)
         
         let ipAddressTextFormItem = TextFormItem()
@@ -62,6 +64,7 @@ class AddHostForm: Form {
         portTextFormItem.failureReason = .invalidPort
         portTextFormItem.keyboardType = .numberPad
         portTextFormItem.isMandatory = false
+        portTextFormItem.maxLength = 5
         let portFormItem = FormItem.text(portTextFormItem)
 
         let macAddressSection = FormSection.section(

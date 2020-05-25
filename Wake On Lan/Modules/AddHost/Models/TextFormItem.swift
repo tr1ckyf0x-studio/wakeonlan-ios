@@ -33,11 +33,12 @@ class TextFormItem: FormValidable {
     var indexPath: IndexPath?
     var onValueChanged: ((String?) -> Void)?
     var validator: TextValidator?
+    var formatter: TextFormatter?
     var defaultValue: String?
     var failureReason: AddHostFailureReason = .unknown
     var keyboardType: UIKeyboardType = .asciiCapable
-    
     var isMandatory: Bool = true
+    var maxLength: Int?
     
     var isValid: Bool {
         let defaultReplacedValue = value ?? defaultValue
@@ -47,4 +48,12 @@ class TextFormItem: FormValidable {
         
         return validator.validate(value: value)
     }
+
+    var formatted: String? {
+        guard let formatter = self.formatter else {
+            return value
+        }
+        return formatter.format(text: value ?? "")
+    }
+
 }

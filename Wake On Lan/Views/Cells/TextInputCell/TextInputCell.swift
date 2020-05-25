@@ -151,6 +151,7 @@ class TextInputCell: UITableViewCell {
             let textValue = textField.text else { return }
         item.value = textValue
         (item.isValid || textValue.isEmpty) ? (expanded = false) : (expanded = true)
+        textField.text = item.formatted
     }
     
     @objc private func didTapDoneButton() {
@@ -161,6 +162,7 @@ class TextInputCell: UITableViewCell {
 
 // MARK: - UITextFieldDelegate
 extension TextInputCell: UITextFieldDelegate {
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextResponderTag = textField.tag + 1
         guard let nextResponder =
@@ -173,6 +175,21 @@ extension TextInputCell: UITextFieldDelegate {
             onNextResponderAction?(indexPath)
         }
         return true
+    }
+
+    // NOTE: Grabbed from
+    // https://www.hackingwithswift.com/example-code/uikit/
+    // how-to-limit-the-number-of-characters-in-a-uitextfield-or-uitextview
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string:
+        String) -> Bool {
+        guard let maxLength = textFormItem?.maxLength else { return true }
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        return updatedText.count <= maxLength
     }
 
 }
@@ -188,6 +205,7 @@ extension TextInputCell: FormConfigurable {
         textField.placeholder = textFormItem.placeholder
         textField.keyboardType = textFormItem.keyboardType
         // Setup toolbar on number pad
+        // TODO: Need to refactoring
         guard textField.keyboardType == .numberPad else { return }
         configureToolbarIfNeeded()
     }
