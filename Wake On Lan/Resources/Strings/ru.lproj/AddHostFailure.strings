@@ -1,0 +1,12 @@
+/* 
+  AddHostFailure.strings
+  Wake on LAN
+
+  Created by Dmitry Stavitsky on 26.05.2020.
+  Copyright © 2020 Владислав Лисянский. All rights reserved.
+*/
+
+"invalidMACAddress" = "Некорректный MAC-адрес";
+"invalidIPAddress" = "Некорректный IP-адрес";
+"invalidPort" = "Некорректный порт";
+"unknown" = "Неизвестная ошибка";

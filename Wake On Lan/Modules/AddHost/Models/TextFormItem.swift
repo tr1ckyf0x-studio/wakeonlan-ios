@@ -9,20 +9,6 @@
 import Foundation
 import UIKit
 
-enum AddHostFailureReason: String {
-    // TODO: R.swift
-    case invalidMACAddress = "Incorrect MAC address"
-    case invalidIPAddress = "Incorrect IP address"
-    case invalidPort = "Incorrect PORT"
-    case unknown = "Unknown Error"
-}
-
-extension AddHostFailureReason: CustomStringConvertible {
-    var description: String {
-        return self.rawValue
-    }
-}
-
 class TextFormItem: FormValidable {
     var value: String? {
         didSet {
@@ -35,7 +21,7 @@ class TextFormItem: FormValidable {
     var validator: TextValidator?
     var formatter: TextFormatter?
     var defaultValue: String?
-    var failureReason: AddHostFailureReason = .unknown
+    var failureReason: AddHostForm.Error?
     var keyboardType: UIKeyboardType = .asciiCapable
     var isMandatory: Bool = true
     var maxLength: Int?

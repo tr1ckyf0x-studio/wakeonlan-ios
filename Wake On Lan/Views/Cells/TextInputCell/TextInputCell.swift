@@ -32,8 +32,8 @@ private class AddHostFailureView: UIView {
     }
     
     // MARK: Public
-    func configure(with reason: AddHostFailureReason) {
-        failureLabel.text = String(describing: reason)
+    func configure(with reason: AddHostForm.Error) {
+        failureLabel.text = reason.description
     }
     
     func show() {
@@ -205,15 +205,19 @@ extension TextInputCell: FormConfigurable {
     func configure(with formItem: FormItem) {
         guard case let .text(textFormItem) = formItem else { return }
         self.textFormItem = textFormItem
-        failureView.configure(with: textFormItem.failureReason)
         textField.tag = textFormItem.indexPath?.section ?? 0
         textField.text = textFormItem.value
         textField.placeholder = textFormItem.placeholder
         textField.keyboardType = textFormItem.keyboardType
         // Setup toolbar on number pad
         // TODO: Needs be refactored
-        guard textField.keyboardType == .numberPad else { return }
-        configureToolbarIfNeeded()
+        if textField.keyboardType == .numberPad {
+            configureToolbarIfNeeded()
+        }
+
+        // Setup FailureView if needed
+        guard let error = textFormItem.failureReason else { return }
+        failureView.configure(with: error)
     }
 
 }

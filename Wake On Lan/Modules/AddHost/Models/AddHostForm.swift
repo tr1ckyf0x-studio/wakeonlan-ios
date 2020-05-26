@@ -9,17 +9,42 @@
 import Foundation
 
 class AddHostForm: Form {
+
+    // MARK: - Error
+    enum Error: LocalizedError {
+        case invalidMACAddress
+        case invalidIPAddress
+        case invalidPort
+        case unknown
+
+        var description: String {
+            switch self {
+            case .invalidMACAddress:
+                return R.string.addHostFailure.invalidMACAddress()
+            case .invalidIPAddress:
+                return R.string.addHostFailure.invalidIPAddress()
+            case .invalidPort:
+                return R.string.addHostFailure.invalidPort()
+            case .unknown:
+                return R.string.addHostFailure.unknown()
+            }
+        }
+    }
+
+    // MARK: - Properties
     var title: String?
     var macAddress: String?
     var ipAddress: String?
     var port: String?
     
     private(set) var formSections = [FormSection]()
-    
+
+    // MARK: - Init
     init() {
         configureItems()
     }
-    
+
+    // MARK: - Private
     private func configureItems() {
         // TODO: Image picker form item
         
