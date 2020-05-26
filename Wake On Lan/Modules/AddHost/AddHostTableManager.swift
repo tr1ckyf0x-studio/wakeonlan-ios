@@ -149,7 +149,7 @@ private extension NSMutableAttributedString {
             .foregroundColor : UIColor.lightGray
         ]
         let additionalAttributedString =
-            NSMutableAttributedString(string: " - " + R.string.addHost.mandatory(), attributes: additionalAttributes)
+            NSMutableAttributedString(string: " - " + R.string.addHost.optional(), attributes: additionalAttributes)
         guard let attributedText =
             additionalAttributedString.copy() as? NSAttributedString else { return }
         self.append(attributedText)

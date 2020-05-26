@@ -15,4 +15,4 @@
 "mac address description" = "Enter the MAC address of the target computer. You can find it on the Ethernet network settings of the computer.";
 "port description" = "Enter the WOL port. 9 is usually supported by Ethernet cards, otherwise you can try 7 or 0.";
 
-"mandatory" = "Optional";
+"optional" = "Optional";
