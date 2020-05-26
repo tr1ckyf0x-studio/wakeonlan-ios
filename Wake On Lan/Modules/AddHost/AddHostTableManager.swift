@@ -78,10 +78,8 @@ extension AddHostTableManager: UITableViewDelegate {
         let sourceAttributes: [NSAttributedString.Key : UIFont] = [ .font : headerLabel.font ]
         let sourceAttributedString =
             NSMutableAttributedString(string: headerText, attributes: sourceAttributes)
-        guard let attributedText = sourceAttributedString.appendOptional().copy() as? NSAttributedString else {
-            return
-        }
-        headerLabel.attributedText = attributedText
+        sourceAttributedString.appendOptional()
+        headerLabel.attributedText = sourceAttributedString
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -145,17 +143,16 @@ private extension UITableView {
 
 private extension NSMutableAttributedString {
     /// Appending `Optional` part to existing string
-    func appendOptional() -> NSAttributedString {
+    func appendOptional() {
         let additionalAttributes: [NSAttributedString.Key: Any] = [
             .font : UIFont.italicSystemFont(ofSize: 12),
             .foregroundColor : UIColor.lightGray
         ]
         let additionalAttributedString =
             NSMutableAttributedString(string: " - " + R.string.addHost.mandatory(), attributes: additionalAttributes)
-        self.append(additionalAttributedString)
-        guard let attributedText = self.copy() as? NSAttributedString else {
-            return NSAttributedString()
-        }
-        return attributedText
+        guard let attributedText =
+            additionalAttributedString.copy() as? NSAttributedString else { return }
+        self.append(attributedText)
     }
+
 }
