@@ -81,10 +81,9 @@ class AddHostView: UIView {
         // NOTE: We need to use keyboardFrame`End`UserInfoKey instead of
         // keyboardFrame`Begin`UserInfoKey because we using inputAccessoryView
         let key = UIResponder.keyboardFrameEndUserInfoKey
-        if let keyboardSize = (notification.userInfo?[key] as? NSValue)?.cgRectValue {
-            let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-            tableView.contentInset = insets
-        }
+        guard let keyboardSize = (notification.userInfo?[key] as? NSValue)?.cgRectValue else { return }
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        tableView.contentInset = insets
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {

@@ -15,7 +15,11 @@ enum AddHostFormatterStrategy {
 // MARK: - FormatPatternRepresentable
 extension AddHostFormatterStrategy: FormatPatternRepresentable {
     var formatPattern: String {
-        return "XX:XX:XX:XX:XX:XX"
+        switch self {
+        case .macAddress:
+            return "XX:XX:XX:XX:XX:XX"
+        default: return String()
+        }
     }
 
     var separator: String {

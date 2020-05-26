@@ -71,7 +71,7 @@ extension AddHostTableManager: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard !sections[section].isMandatory,
-            let  header = view as? UITableViewHeaderFooterView,
+            let header = view as? UITableViewHeaderFooterView,
             let headerLabel = header.textLabel,
             let headerText = headerLabel.text else { return }
         // Make source attributed string

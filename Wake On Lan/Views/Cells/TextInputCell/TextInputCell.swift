@@ -207,7 +207,7 @@ extension TextInputCell: FormConfigurable {
         textField.placeholder = textFormItem.placeholder
         textField.keyboardType = textFormItem.keyboardType
         // Setup toolbar on number pad
-        // TODO: Need to refactoring
+        // TODO: Needs be refactored
         guard textField.keyboardType == .numberPad else { return }
         configureToolbarIfNeeded()
     }

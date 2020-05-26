@@ -13,7 +13,7 @@ extension String {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
 
-    func formats(_ mask: String, _ separator: String) -> String {
+    func formatted(by mask: String, _ separator: String) -> String {
         let cleanString = self.components(separatedBy: separator).joined()
         var result = ""
         var index = cleanString.startIndex
