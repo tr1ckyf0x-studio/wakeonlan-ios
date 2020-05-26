@@ -25,6 +25,7 @@ class TextFormItem: FormValidable {
     var keyboardType: UIKeyboardType = .asciiCapable
     var isMandatory: Bool = true
     var maxLength: Int?
+    var needsUppercased: Bool = false
     
     var isValid: Bool {
         let defaultReplacedValue = value ?? defaultValue

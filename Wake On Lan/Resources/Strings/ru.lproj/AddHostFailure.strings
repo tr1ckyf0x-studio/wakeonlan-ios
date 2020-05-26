@@ -9,4 +9,5 @@
 "invalidMACAddress" = "Некорректный MAC-адрес";
 "invalidIPAddress" = "Некорректный IP-адрес";
 "invalidPort" = "Некорректный порт";
+"invalidTitle" = "Некорректное имя";
 "unknown" = "Неизвестная ошибка";

@@ -73,7 +73,6 @@ class TextInputCell: UITableViewCell {
         textField.delegate = self
         textField.returnKeyType = .next
         textField.clearButtonMode = .whileEditing
-        textField.autocapitalizationType = .allCharacters
         
         return textField
     }()
@@ -157,6 +156,7 @@ class TextInputCell: UITableViewCell {
             let textValue = textField.text else { return }
         item.value = textValue
         (item.isValid || textValue.isEmpty) ? (expanded = false) : (expanded = true)
+        guard item.needsUppercased else { return }
         textField.text = item.formatted?.uppercased()
     }
     

@@ -18,7 +18,8 @@ extension AddHostFormatterStrategy: FormatPatternRepresentable {
         switch self {
         case .macAddress:
             return "XX:XX:XX:XX:XX:XX"
-        default: return String()
+        default:
+            return String()
         }
     }
 
