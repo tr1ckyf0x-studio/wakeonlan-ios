@@ -56,9 +56,13 @@ class TextInputCell: UITableViewCell {
     
     static let reuseIdentifier = "TextInputCell"
     
+    typealias OnExpandCompletion = () -> Void
+    typealias OnExpandAction = (_ completion: OnExpandCompletion?) -> Void
+    typealias OnNextResponderAction = (_ indexPath: IndexPath) -> Void
+    
     // MARK: - Properties
-    var onExpandAction: (( _ completionBlock: (() -> Void)? ) -> Void)?
-    var onNextResponderAction: ((_ indexPath: IndexPath) -> Void)?
+    var onExpandAction: OnExpandAction?
+    var onNextResponderAction: OnNextResponderAction?
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
