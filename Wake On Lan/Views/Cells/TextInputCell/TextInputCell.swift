@@ -9,6 +9,30 @@
 import UIKit
 import SnapKit
 
+extension UITableViewCell {
+
+    func makeTopSeparatorLine() {
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        addSubview(separatorLine)
+        separatorLine.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+    }
+
+    func makeBottomSeparatorLine() {
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        addSubview(separatorLine)
+        separatorLine.snp.makeConstraints {
+            $0.leading.trailing.top.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+    }
+
+}
+
 private class AddHostFailureView: UIView {
     
     // MARK: Properties
@@ -73,7 +97,7 @@ class TextInputCell: UITableViewCell {
         textField.delegate = self
         textField.returnKeyType = .next
         textField.clearButtonMode = .whileEditing
-        
+
         return textField
     }()
     
@@ -112,6 +136,8 @@ class TextInputCell: UITableViewCell {
     private func configureViews() {
         configureTextField()
         configureFailureLabel()
+        makeTopSeparatorLine()
+        makeBottomSeparatorLine()
     }
     
     private func configureTextField() {

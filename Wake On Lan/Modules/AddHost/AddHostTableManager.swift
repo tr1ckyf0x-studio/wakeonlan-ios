@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol AddHostTableManagerDelegate: class {
+    func tableManager(_ manager: AddHostTableManager, didTapDeviceIconCell: DeviceIconCell?)
+}
+
 class AddHostTableManager: NSObject {
+
+    var delegate: AddHostTableManagerDelegate?
 
     var form: AddHostForm?
     
@@ -57,6 +63,13 @@ extension AddHostTableManager: UITableViewDataSource {
                 CATransaction.commit()
             }
             cell = textInputCell
+        case .icon:
+            let deviceIconCell = tableView.dequeueReusableCell(
+                withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
+            deviceIconCell?.didTapChangeIconBlock = { [unowned self] _ in
+                self.delegate?.tableManager(self, didTapDeviceIconCell: deviceIconCell)
+            }
+            cell = deviceIconCell
         }
         guard let unwrappedCell = cell else {
             fatalError("\(self): Unknown cell identifier")
@@ -64,6 +77,7 @@ extension AddHostTableManager: UITableViewDataSource {
         
         return unwrappedCell
     }
+
 }
 
 // MARK: - UITableViewDelegate
@@ -82,12 +96,34 @@ extension AddHostTableManager: UITableViewDelegate {
         headerLabel.attributedText = sourceAttributedString
     }
 
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 0 else { return tableView.headerView(forSection: section) }
+
+        return UIView()
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard section == 0 else { return UITableView.automaticDimension }
+
+        return .zero
+    }
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].header
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return sections[section].footer
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let model = sections[indexPath.section].items[indexPath.row]
+        switch model {
+        case .icon:
+            return 120 // TODO: Move to constants
+        case .text:
+            return UITableView.automaticDimension
+        }
     }
 
 }

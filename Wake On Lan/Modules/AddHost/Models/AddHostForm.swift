@@ -49,7 +49,8 @@ class AddHostForm: Form {
 
     // MARK: - Private
     private func configureItems() {
-        // TODO: Image picker form item
+
+        let deviceIconFormItem = FormItem.icon
         
         let titleTextFormItem = TextFormItem()
         titleTextFormItem.placeholder = "e.g. MacBook or NAS"
@@ -101,8 +102,13 @@ class AddHostForm: Form {
         portTextFormItem.keyboardType = .numberPad
         portTextFormItem.isMandatory = false
         portTextFormItem.maxLength = 5
-
         let portFormItem = FormItem.text(portTextFormItem)
+
+        let deviceIconSection = FormSection.section(
+            content: [deviceIconFormItem],
+            header: nil,
+            footer: nil,
+            mandatory: true)
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
@@ -126,7 +132,8 @@ class AddHostForm: Form {
             header: R.string.addHost.port(),
             footer: R.string.addHost.portDescription())
         
-        formSections = [titleSection, macAddressSection, ipAddressScetion, portSection]
+        formSections =
+            [deviceIconSection, titleSection, macAddressSection, ipAddressScetion, portSection]
     }
 }
 
