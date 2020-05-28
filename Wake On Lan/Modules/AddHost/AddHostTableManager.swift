@@ -97,12 +97,14 @@ extension AddHostTableManager: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // TODO: Add enum for sections
         guard section == 0 else { return tableView.headerView(forSection: section) }
 
         return UIView()
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // TODO: Add enum for sections
         guard section == 0 else { return UITableView.automaticDimension }
 
         return .zero
