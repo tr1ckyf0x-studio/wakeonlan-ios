@@ -12,10 +12,30 @@ final class Host: NSManagedObject {
     @NSManaged private(set) var createdAt: Date
     @NSManaged private(set) var title: String
     @NSManaged private(set) var iconName: String
-    @NSManaged private(set) var macAddress: String
-    @NSManaged private(set) var ipAddress: String?
+    @NSManaged private var macAddressData: Data
+    @NSManaged private var ipAddressData: Data?
     @NSManaged private(set) var port: String?
-
+    
+    private(set) var macAddress: String {
+        get {
+            return HostCoreDataFormatter.decompress(data: macAddressData, ofType: .macAddress)
+        }
+        set {
+            macAddressData = HostCoreDataFormatter.compress(string: newValue, ofType: .macAddress)
+        }
+    }
+    
+    private(set) var ipAddress: String? {
+        get {
+            guard let ipAddressData = ipAddressData else { return nil }
+            return HostCoreDataFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
+        }
+        set {
+            guard let ipAddress = newValue else { ipAddressData = nil; return }
+            ipAddressData = HostCoreDataFormatter.compress(string: ipAddress, ofType: .ipAddress)
+        }
+    }
+    
 }
 
 // MARK: - CRUD
