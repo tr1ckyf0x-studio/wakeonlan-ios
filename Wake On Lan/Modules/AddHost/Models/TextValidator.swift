@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TextValidator: Validator {
+struct TextValidator: Validator {
     
     typealias Value = String
     typealias Pattern = String
