@@ -44,7 +44,7 @@ class DeviceIconView: UIView {
 
     public func configure(with model: IconModel) {
         guard let icon = model.picture else { return }
-        deviceImageView.image = icon.withRenderingMode(.alwaysTemplate)
+        deviceImageView.image = icon
     }
 
     // MARK: - Private

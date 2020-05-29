@@ -11,17 +11,14 @@ import UIKit
 class ChooseIconView: UIView {
 
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100)
-        // Space between columns
-        layout.minimumInteritemSpacing = 10
-        // Space between rows
-        layout.minimumLineSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16)
+        let layout = ChooseIconCollectionLayout()
         let collectionView =
             UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ChooseIconCell.self,
                                 forCellWithReuseIdentifier: "\(ChooseIconCell.self)")
+//        collectionView.register(ChooseIconHeaderView.self,
+//                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+//                                withReuseIdentifier: "\(ChooseIconHeaderView.self)")
         collectionView.alwaysBounceVertical = true
 
         return collectionView
@@ -41,7 +38,7 @@ class ChooseIconView: UIView {
 
     private func setupCollectionView() {
         addSubview(collectionView)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(safeAreaLayoutGuide)
         }

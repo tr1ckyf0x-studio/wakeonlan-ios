@@ -21,7 +21,8 @@ class ChooseIconPresenter {
             R.image.router(),
             R.image.scanner(),
             R.image.tv()].map {
-                let model = IconModel(picture: $0)
+                let image = $0?.withRenderingMode(.alwaysTemplate)
+                let model = IconModel(picture: image)
                 let item = ChooseIconSectionItem.icon(model)
                 return item
         }

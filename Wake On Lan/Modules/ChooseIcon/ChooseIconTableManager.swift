@@ -27,6 +27,24 @@ extension ChooseIconTableManager: UICollectionViewDelegate {
 
 }
 
+extension ChooseIconTableManager: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        let indexPath = IndexPath(row: 0, section: 0)
+//        guard let headerView = self.collectionView(
+//            collectionView,
+//            viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
+//            at: indexPath) as? ChooseIconHeaderView else { return .zero }
+//        headerView.layoutIfNeeded()
+//        let targetSize = CGSize(width: collectionView.frame.width,
+//                                height: UIView.layoutFittingExpandedSize.height)
+//
+//        return headerView.fittingSizeFor(targetSize: targetSize)
+//    }
+
+}
+
 // MARK: - UICollectionViewDataSource
 extension ChooseIconTableManager: UICollectionViewDataSource {
 
@@ -54,5 +72,20 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
 
         return unwrappedCell
     }
+
+//    func collectionView(_ collectionView: UICollectionView,
+//                        viewForSupplementaryElementOfKind kind: String,
+//                        at indexPath: IndexPath) -> UICollectionReusableView {
+//        guard kind == UICollectionView.elementKindSectionHeader,
+//            let headerView =
+//            collectionView.dequeueReusableSupplementaryView(
+//                ofKind: kind,
+//                withReuseIdentifier: "\(ChooseIconHeaderView.self)",
+//                for: indexPath) as? ChooseIconHeaderView else {
+//                    return UICollectionReusableView()
+//        }
+//
+//        return headerView
+//    }
 
 }

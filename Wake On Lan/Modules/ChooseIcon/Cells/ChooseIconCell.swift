@@ -16,6 +16,9 @@ class ChooseIconCell: UICollectionViewCell {
 
     private lazy var baseView: DeviceIconView = {
         let view = DeviceIconView()
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
+        view.layer.cornerRadius = 10
         view.delegate = self
 
         return view
