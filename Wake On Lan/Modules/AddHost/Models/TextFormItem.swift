@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class TextFormItem: FormValidable {
     var value: String? {
@@ -18,9 +18,13 @@ class TextFormItem: FormValidable {
     var indexPath: IndexPath?
     var onValueChanged: ((String?) -> Void)?
     var validator: TextValidator?
+    var formatter: TextFormatter?
     var defaultValue: String?
-    
+    var failureReason: AddHostForm.Error?
+    var keyboardType: UIKeyboardType = .asciiCapable
     var isMandatory: Bool = true
+    var maxLength: Int?
+    var needsUppercased: Bool = false
     
     var isValid: Bool {
         let defaultReplacedValue = value ?? defaultValue
@@ -30,4 +34,12 @@ class TextFormItem: FormValidable {
         
         return validator.validate(value: value)
     }
+
+    var formatted: String? {
+        guard let formatter = self.formatter else {
+            return value
+        }
+        return formatter.format(text: value ?? "")
+    }
+
 }

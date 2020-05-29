@@ -9,25 +9,56 @@
 import Foundation
 
 class AddHostForm: Form {
+
+    // MARK: - Error
+    enum Error: LocalizedError {
+        case invalidMACAddress
+        case invalidIPAddress
+        case invalidPort
+        case invalidTitle
+        case unknown
+
+        var description: String {
+            switch self {
+            case .invalidMACAddress:
+                return R.string.addHostFailure.invalidMACAddress()
+            case .invalidIPAddress:
+                return R.string.addHostFailure.invalidIPAddress()
+            case .invalidPort:
+                return R.string.addHostFailure.invalidPort()
+            case .invalidTitle:
+                return R.string.addHostFailure.invalidTitle()
+            case .unknown:
+                return R.string.addHostFailure.unknown()
+            }
+        }
+    }
+
+    // MARK: - Properties
     var title: String?
     var macAddress: String?
     var ipAddress: String?
     var port: String?
     
     private(set) var formSections = [FormSection]()
-    
+
+    // MARK: - Init
     init() {
         configureItems()
     }
-    
+
+    // MARK: - Private
     private func configureItems() {
         // TODO: Image picker form item
         
         let titleTextFormItem = TextFormItem()
+        titleTextFormItem.placeholder = "e.g. MacBook or NAS"
         titleTextFormItem.onValueChanged = { [weak self] value in
             self?.title = value
         }
-        titleTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.title)
+        titleTextFormItem.validator =
+            TextValidator(strategy: AddHostValidationStrategy.title)
+        titleTextFormItem.needsUppercased = false
         let titleFormItem = FormItem.text(titleTextFormItem)
         
         let macAddressTextFormItem = TextFormItem()
@@ -35,7 +66,14 @@ class AddHostForm: Form {
         macAddressTextFormItem.onValueChanged = { [weak self] value in
             self?.macAddress = value
         }
-        macAddressTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.macAddress)
+        macAddressTextFormItem.validator =
+            TextValidator(strategy: AddHostValidationStrategy.macAddress)
+        macAddressTextFormItem.formatter =
+            TextFormatter(strategy: AddHostFormatterStrategy.macAddress)
+        macAddressTextFormItem.failureReason = .invalidMACAddress
+        macAddressTextFormItem.keyboardType = .asciiCapable
+        macAddressTextFormItem.maxLength = 17
+        macAddressTextFormItem.needsUppercased = true
         let macAddressFormItem = FormItem.text(macAddressTextFormItem)
         
         let ipAddressTextFormItem = TextFormItem()
@@ -44,7 +82,11 @@ class AddHostForm: Form {
         ipAddressTextFormItem.onValueChanged = { [weak self] value in
             self?.ipAddress = value
         }
-        ipAddressTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
+        ipAddressTextFormItem.validator =
+            TextValidator(strategy: AddHostValidationStrategy.ipAddress)
+        ipAddressTextFormItem.failureReason = .invalidIPAddress
+        ipAddressTextFormItem.keyboardType = .numbersAndPunctuation
+        ipAddressTextFormItem.isMandatory = false
         let ipAddressFormItem = FormItem.text(ipAddressTextFormItem)
         
         let portTextFormItem = TextFormItem()
@@ -53,13 +95,36 @@ class AddHostForm: Form {
         portTextFormItem.onValueChanged = { [weak self] value in
             self?.port = value
         }
-        portTextFormItem.validator = TextValidator(strategy: AddHostValidationStrategy.port)
+        portTextFormItem.validator =
+            TextValidator(strategy: AddHostValidationStrategy.port)
+        portTextFormItem.failureReason = .invalidPort
+        portTextFormItem.keyboardType = .numberPad
+        portTextFormItem.isMandatory = false
+        portTextFormItem.maxLength = 5
+
         let portFormItem = FormItem.text(portTextFormItem)
+
+        let titleSection = FormSection.section(
+            content: [titleFormItem],
+            header: R.string.addHost.title(),
+            footer: R.string.addHost.titleDescription(),
+            mandatory: true)
+
+        let macAddressSection = FormSection.section(
+            content: [macAddressFormItem],
+            header: R.string.addHost.macAddress(),
+            footer: R.string.addHost.macAddressDescription(),
+            mandatory: true)
         
-        let titleSection = FormSection.section(content: [titleFormItem], header: R.string.addHost.title(), footer: nil)
-        let macAddressSection = FormSection.section(content: [macAddressFormItem], header: R.string.addHost.macAddress(), footer: nil)
-        let ipAddressScetion = FormSection.section(content: [ipAddressFormItem], header: R.string.addHost.ipAddress(), footer: nil)
-        let portSection = FormSection.section(content: [portFormItem], header: R.string.addHost.port(), footer: nil)
+        let ipAddressScetion = FormSection.section(
+            content: [ipAddressFormItem],
+            header: R.string.addHost.ipAddress(),
+            footer: R.string.addHost.ipAddressDescription())
+
+        let portSection = FormSection.section(
+            content: [portFormItem],
+            header: R.string.addHost.port(),
+            footer: R.string.addHost.portDescription())
         
         formSections = [titleSection, macAddressSection, ipAddressScetion, portSection]
     }
