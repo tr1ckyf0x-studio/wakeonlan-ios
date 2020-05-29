@@ -11,23 +11,38 @@ import Foundation
 enum FormSection {
     typealias Item = FormItem
     
-    case section(content: [Item], header: String?, footer: String?)
+    case section(content: [Item],
+        header: String?,
+        footer: String?,
+        mandatory: Bool = false)
     
     var items: [Item] {
         switch self {
-        case let .section(content, _, _): return content
+        case let .section(content, _, _, _):
+            return content
         }
     }
     
     var header: String? {
         switch self {
-        case let .section(_, header, _): return header
+        case let .section(_, header, _, _):
+            return header
         }
     }
     
     var footer: String? {
         switch self {
-        case let .section(_, _, footer): return footer
+        case let .section(_, _, footer, _):
+            return footer
         }
     }
+
+    // TODO: Need to refactoring
+    var isMandatory: Bool {
+        switch self {
+        case let .section(_, _, _, mandatory):
+            return mandatory
+        }
+    }
+
 }
