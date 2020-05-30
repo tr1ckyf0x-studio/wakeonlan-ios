@@ -42,7 +42,7 @@ extension AddHostPresenter: AddHostInteractorOutput {
 }
 
 extension AddHostPresenter: AddHostTableManagerDelegate {
-    func tableManager(_ manager: AddHostTableManager, didTapDeviceIconCell: DeviceIconCell?) {
+    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager) {
         router?.routeToChooseIcon()
     }
 }

@@ -66,7 +66,7 @@ class DeviceIconCell: UITableViewCell {
 
 // MARK: - DeviceIconViewDelegate
 extension DeviceIconCell: DeviceIconViewDelegate {
-    func didTapChangeIcon(_ view: DeviceIconView) {
+    func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView) {
         didTapChangeIconBlock?(self)
     }
 }

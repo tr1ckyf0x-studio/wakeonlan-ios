@@ -47,7 +47,8 @@ class ChooseIconCell: UICollectionViewCell {
 }
 
 extension ChooseIconCell: DeviceIconViewDelegate {
-    func didTapChangeIcon(_ view: DeviceIconView) {
+    func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView) {
         didTapIconBlock?(self)
     }
+
 }

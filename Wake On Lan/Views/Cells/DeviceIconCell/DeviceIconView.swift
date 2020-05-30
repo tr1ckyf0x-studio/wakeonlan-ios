@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DeviceIconViewDelegate {
+protocol DeviceIconViewDelegate: class {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView)
 }
 
@@ -60,7 +60,7 @@ class DeviceIconView: UIView {
 
     // MARK: - Action
     @objc private func didTapChangeIcon() {
-        delegate?.didTapChangeIcon(self)
+        delegate?.deviceIconViewDidTapChangeIcon(self)
     }
 
 }

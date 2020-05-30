@@ -67,7 +67,7 @@ extension AddHostTableManager: UITableViewDataSource {
             let deviceIconCell = tableView.dequeueReusableCell(
                 withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
             deviceIconCell?.didTapChangeIconBlock = { [unowned self] _ in
-                self.delegate?.tableManager(self, didTapDeviceIconCell: deviceIconCell)
+                self.delegate?.tableManagerDidTapDeviceIconCell(self)
             }
             cell = deviceIconCell
         }
