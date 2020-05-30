@@ -10,7 +10,7 @@ import UIKit
 
 class ChooseIconCell: UICollectionViewCell {
 
-    typealias TapIconBlock = ((_ cell: ChooseIconCell) -> Void)
+    typealias TapIconBlock = (_ cell: ChooseIconCell) -> Void
 
     public var didTapIconBlock: TapIconBlock?
 
@@ -48,7 +48,6 @@ class ChooseIconCell: UICollectionViewCell {
 
 extension ChooseIconCell: DeviceIconViewDelegate {
     func didTapChangeIcon(_ view: DeviceIconView) {
-        guard let block = didTapIconBlock else { return }
-        block(self)
+        didTapIconBlock?(self)
     }
 }

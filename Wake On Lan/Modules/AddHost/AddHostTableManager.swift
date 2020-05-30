@@ -9,12 +9,12 @@
 import UIKit
 
 protocol AddHostTableManagerDelegate: class {
-    func tableManager(_ manager: AddHostTableManager, didTapDeviceIconCell: DeviceIconCell?)
+    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager)
 }
 
 class AddHostTableManager: NSObject {
 
-    var delegate: AddHostTableManagerDelegate?
+    weak var delegate: AddHostTableManagerDelegate?
 
     var form: AddHostForm?
     

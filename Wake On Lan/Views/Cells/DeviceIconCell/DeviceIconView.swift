@@ -9,12 +9,12 @@
 import UIKit
 
 protocol DeviceIconViewDelegate {
-    func didTapChangeIcon(_ view: DeviceIconView)
+    func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView)
 }
 
 class DeviceIconView: UIView {
 
-    var delegate: DeviceIconViewDelegate?
+    weak var delegate: DeviceIconViewDelegate?
 
     // MARK: - Properties
     private lazy var deviceImageView: UIImageView = {

@@ -6,13 +6,12 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
 class DeviceIconCell: UITableViewCell {
 
-    typealias ChangeIconBlock = ((_ cell: DeviceIconCell) -> Void)
+    typealias ChangeIconBlock = (_ cell: DeviceIconCell) -> Void
 
     public var didTapChangeIconBlock: ChangeIconBlock?
 
@@ -68,7 +67,6 @@ class DeviceIconCell: UITableViewCell {
 // MARK: - DeviceIconViewDelegate
 extension DeviceIconCell: DeviceIconViewDelegate {
     func didTapChangeIcon(_ view: DeviceIconView) {
-        guard let block = didTapChangeIconBlock else { return }
-        block(self)
+        didTapChangeIconBlock?(self)
     }
 }
