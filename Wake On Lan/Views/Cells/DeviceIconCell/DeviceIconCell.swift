@@ -46,19 +46,21 @@ class DeviceIconCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupChangeIconLabel() {
-        addSubview(changeIconLabel)
-        changeIconLabel.snp.makeConstraints {
-            $0.top.equalTo(baseView.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
-        }
-    }
-
     private func setupDeviceIconView() {
         contentView.addSubview(baseView)
         baseView.snp.makeConstraints {
-            $0.leading.bottom.trailing.equalToSuperview()
             $0.top.equalTo(contentView.snp.top).offset(16)
+            $0.height.equalTo(120)
+            $0.leading.trailing.equalToSuperview()
+        }
+    }
+
+    private func setupChangeIconLabel() {
+        contentView.addSubview(changeIconLabel)
+        changeIconLabel.snp.makeConstraints {
+            $0.top.equalTo(baseView.snp.bottom).offset(8)
+            $0.bottom.equalToSuperview()
+            $0.centerX.equalToSuperview()
         }
     }
 

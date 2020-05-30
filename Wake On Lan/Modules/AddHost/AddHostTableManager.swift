@@ -103,7 +103,21 @@ extension AddHostTableManager: UITableViewDelegate {
         return UIView()
     }
 
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        // TODO: Add enum for sections
+        guard section == 0 else { return tableView.headerView(forSection: section) }
+
+        return UIView()
+    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // TODO: Add enum for sections
+        guard section == 0 else { return UITableView.automaticDimension }
+
+        return .zero
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         // TODO: Add enum for sections
         guard section == 0 else { return UITableView.automaticDimension }
 
@@ -116,16 +130,6 @@ extension AddHostTableManager: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return sections[section].footer
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = sections[indexPath.section].items[indexPath.row]
-        switch model {
-        case .icon:
-            return 120 // TODO: Move to constants
-        case .text:
-            return UITableView.automaticDimension
-        }
     }
 
 }
