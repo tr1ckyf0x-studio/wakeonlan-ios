@@ -49,7 +49,6 @@ class ChooseIconCell: UICollectionViewCell {
 extension ChooseIconCell: DeviceIconViewDelegate {
     func didTapChangeIcon(_ view: DeviceIconView) {
         guard let block = didTapIconBlock else { return }
-        // TODO: Save icon identifier to CoreData
         block(self)
     }
 }

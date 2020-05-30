@@ -28,26 +28,22 @@ class ChooseIconViewController: UIViewController {
         presenter.viewDidLoad(self)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        reloadCollectionViewLayout()
-    }
-
-    private func reloadCollectionViewLayout() {
-        guard let layout =
-            chooseIconView.collectionView.collectionViewLayout as? ChooseIconCollectionLayout else {
-                return
-        }
-        layout.containerWidth = view.bounds.size.width
+        presenter.viewWillLayoutSubviews(self)
     }
 
 }
 
 // MARK: - ChooseIconViewInput
 extension ChooseIconViewController: ChooseIconViewInput {
+
+    func reloadCollectionViewLayout() {
+        guard let layout =
+            chooseIconView.collectionView.collectionViewLayout as? ChooseIconCollectionLayout else {
+                return
+        }
+        layout.containerWidth = view.bounds.size.width
+    }
 
 }

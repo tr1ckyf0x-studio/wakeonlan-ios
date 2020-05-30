@@ -22,8 +22,13 @@ class AddHostRouter: AddHostRouterProtocol {
 
 }
 
-
-// NOTE: We should not subclass UIAlertController
+// NOTE:
+// Well-known issue since iOS 12.2+
+// (
+//   "<NSLayoutConstraint:0x6000011bb660 UIView:0x7faec3fb8b10.width == - 16   (active)>"
+// )
+// See this thread for more information:
+// https://stackoverflow.com/questions/55372093/uialertcontrollers-actionsheet-gives-constraint-error-on-ios-12-2-12-3
 private extension UIAlertController {
 
     private enum Constants {

@@ -34,8 +34,8 @@ class ChooseIconPresenter {
 
 extension ChooseIconPresenter: ChooseIconViewOutput {
 
-    func viewDidLoad(_ view: ChooseIconViewInput) {
-
+    func viewWillLayoutSubviews(_ view: ChooseIconViewInput) {
+        view.reloadCollectionViewLayout()
     }
 
 }

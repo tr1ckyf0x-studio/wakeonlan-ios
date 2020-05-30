@@ -45,6 +45,10 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
             let iconCell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "\(ChooseIconCell.self)", for: indexPath) as? ChooseIconCell
             iconCell?.configure(with: model)
+            // TODO:
+            // iconCell?.didTapIconBlock = {
+                // Save image identifier into CoreData
+            // }
             cell = iconCell
         }
 

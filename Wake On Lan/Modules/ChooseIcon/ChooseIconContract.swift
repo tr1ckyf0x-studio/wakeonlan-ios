@@ -10,12 +10,22 @@ import UIKit
 
 protocol ChooseIconViewInput: UIViewController {
     var presenter: ChooseIconViewOutput! { get set }
+
+    func reloadCollectionViewLayout()
 }
 
 protocol ChooseIconViewOutput {
     var tableManager: ChooseIconTableManager { get }
 
     func viewDidLoad(_ view: ChooseIconViewInput)
+
+    func viewWillLayoutSubviews(_ view: ChooseIconViewInput)
+}
+
+extension ChooseIconViewOutput {
+    func viewDidLoad(_ view: ChooseIconViewInput) { }
+
+    func viewWillLayoutSubviews(_ view: ChooseIconViewInput) { }
 }
 
 protocol ChooseIconRouterProtocol: class {
