@@ -16,7 +16,7 @@ class ChooseIconHeaderView: UICollectionReusableView {
         label.font = .systemFont(ofSize: 28, weight: .semibold)
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
-        label.text = "Choose icon"
+        label.text = "Choose icon" // TODO: R.swift
         label.sizeToFit()
 
         return label

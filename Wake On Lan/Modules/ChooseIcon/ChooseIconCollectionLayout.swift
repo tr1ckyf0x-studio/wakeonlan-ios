@@ -58,7 +58,6 @@ class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
         sectionInset = Constants.insets
         minimumLineSpacing = Constants.spaceBetweenRows
         minimumInteritemSpacing = Constants.spaceBetweenColumns
-        configureLayoutIfNeeded()
     }
 
     required init?(coder: NSCoder) {

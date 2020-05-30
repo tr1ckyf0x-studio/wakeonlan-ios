@@ -16,9 +16,6 @@ class ChooseIconView: UIView {
             UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ChooseIconCell.self,
                                 forCellWithReuseIdentifier: "\(ChooseIconCell.self)")
-//        collectionView.register(ChooseIconHeaderView.self,
-//                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-//                                withReuseIdentifier: "\(ChooseIconHeaderView.self)")
         collectionView.alwaysBounceVertical = true
 
         return collectionView
