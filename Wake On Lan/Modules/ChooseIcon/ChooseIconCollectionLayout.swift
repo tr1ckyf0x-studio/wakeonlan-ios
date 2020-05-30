@@ -43,6 +43,16 @@ class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
         }
     }
 
+    var containerHeight: CGFloat {
+        guard let itemsCount = collectionView?.numberOfItems(inSection: 0) else { return .zero }
+        let numberOfRows = (CGFloat(itemsCount) / CGFloat(Constants.numberOfColumns)).rounded(.up)
+        let itemHeight = itemSize.height
+        var totalHeight = minimumInteritemSpacing * (numberOfRows - 1)
+        totalHeight += numberOfRows * itemHeight
+
+        return totalHeight
+    }
+
     var containerWidth: CGFloat = .zero {
          didSet {
             guard containerWidth == oldValue else {

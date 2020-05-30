@@ -19,3 +19,7 @@
 "title description" = "Name that will be displayed in the host list";
 
 "optional" = "Optional";
+
+// Action sheet
+"cancel" = "Cancel";
+"choose icon" = "Choose Icon";

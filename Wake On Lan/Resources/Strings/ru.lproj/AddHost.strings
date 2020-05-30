@@ -19,3 +19,7 @@
 "title description" = "Имя будет отображаться в списке хостов";
 
 "optional" = "Не обязательно";
+
+// Action sheet
+"cancel" = "Отмена";
+"choose icon" = "Выберите иконку";

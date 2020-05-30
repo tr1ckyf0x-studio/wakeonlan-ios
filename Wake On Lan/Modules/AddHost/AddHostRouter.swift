@@ -12,8 +12,11 @@ class AddHostRouter: AddHostRouterProtocol {
     var viewController: UIViewController?
 
     func routeToChooseIcon() {
-        let chooseIconView = ChooseIconViewController()
-        let alertController = UIAlertController(with: chooseIconView.view)
+        let chooseIconViewController = ChooseIconViewController()
+        guard let chooseIconView = chooseIconViewController.view as? ChooseIconView,
+            let presentingViewController = viewController else { return }
+        let alertController = UIAlertController(with: chooseIconView,
+                                                presentingViewController: presentingViewController)
         viewController?.present(alertController, animated: true)
     }
 
@@ -24,18 +27,23 @@ class AddHostRouter: AddHostRouterProtocol {
 private extension UIAlertController {
 
     private enum Constants {
-        // NOTE: 57 - Cancel height
-        static let topAnchor = 45
-        static let bottomAnchor = 57 + 16
-        static let baseViewHeight = 300
+        // NOTE: 57 - Cancel button height
+        static let topAnchor: CGFloat = 45
+        static let bottomAnchor: CGFloat = 57 + 16
     }
 
-    convenience init(with chooseIconView: UIView) {
-        // TODO: R.swift
-        self.init(title: "Choose Icon", message: nil, preferredStyle: .actionSheet)
+    convenience init(with chooseIconView: ChooseIconView,
+                     presentingViewController: UIViewController) {
+        self.init(title: R.string.addHost.chooseIcon(), message: nil, preferredStyle: .actionSheet)
         chooseIconView.backgroundColor = .clear
+        guard let layout =
+            chooseIconView.collectionView.collectionViewLayout as? ChooseIconCollectionLayout else {
+                return
+        }
+        layout.containerWidth = presentingViewController.view.bounds.width
+        let viewHeight = layout.containerHeight + Constants.bottomAnchor + Constants.topAnchor
         view.snp.makeConstraints {
-            $0.height.equalTo(Constants.baseViewHeight) // Ugly solution
+            $0.height.equalTo(viewHeight)
         }
         view.addSubview(chooseIconView)
         chooseIconView.snp.makeConstraints {
@@ -43,8 +51,7 @@ private extension UIAlertController {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.bottomAnchor)
         }
-        // TODO: R.swift
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: R.string.addHost.cancel(), style: .cancel)
         addAction(cancelAction)
     }
 
