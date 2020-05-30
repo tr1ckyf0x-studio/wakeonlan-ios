@@ -23,19 +23,25 @@ class AddHostRouter: AddHostRouterProtocol {
 // NOTE: We should not subclass UIAlertController
 private extension UIAlertController {
 
+    private enum Constants {
+        // NOTE: 57 - Cancel height
+        static let topAnchor = 45
+        static let bottomAnchor = 57 + 16
+        static let baseViewHeight = 300
+    }
+
     convenience init(with chooseIconView: UIView) {
         // TODO: R.swift
         self.init(title: "Choose Icon", message: nil, preferredStyle: .actionSheet)
         chooseIconView.backgroundColor = .clear
         view.snp.makeConstraints {
-            $0.height.equalTo(300) // Ugly solution
+            $0.height.equalTo(Constants.baseViewHeight) // Ugly solution
         }
         view.addSubview(chooseIconView)
         chooseIconView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(45)
+            $0.top.equalToSuperview().offset(Constants.topAnchor)
             $0.leading.trailing.equalToSuperview()
-            let bottomAnchor = (57 + 16) // 57 - Cancel height
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-bottomAnchor)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-Constants.bottomAnchor)
         }
         // TODO: R.swift
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
