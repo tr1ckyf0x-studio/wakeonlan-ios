@@ -23,6 +23,8 @@ class AddHostPresenter {
 extension AddHostPresenter: AddHostViewOutput {
     func viewDidLoad(_ view: AddHostViewInput) {
         tableManager.form = addHostForm
+        tableManager.delegate = self
+
         view.reloadTable()
     }
     
@@ -36,5 +38,11 @@ extension AddHostPresenter: AddHostViewOutput {
 extension AddHostPresenter: AddHostInteractorOutput {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm) {
         router?.popCurrentController(animated: true)
+    }
+}
+
+extension AddHostPresenter: AddHostTableManagerDelegate {
+    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager) {
+        router?.routeToChooseIcon()
     }
 }

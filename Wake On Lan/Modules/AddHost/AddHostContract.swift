@@ -10,7 +10,7 @@ import Foundation
 
 protocol AddHostViewOutput: class {
     var tableManager: AddHostTableManager { get }
-    
+
     func viewDidLoad(_ view: AddHostViewInput)
     func viewDidPressSaveButton(_ view: AddHostViewInput)
 }
@@ -28,5 +28,5 @@ protocol AddHostInteractorOutput: class {
 }
 
 protocol AddHostRouterProtocol: class, Router {
-
+    func routeToChooseIcon()
 }

@@ -10,24 +10,34 @@ import Foundation
 
 enum FormItem {
     case text(_ formItem: TextFormItem)
+    case icon
 }
 
-extension FormItem: FormValidable {
+extension FormItem: FormValidable, FormMandatoryable {
     var isValid: Bool {
         switch self {
-        case let .text(formItem): return formItem.isValid
+        case let .text(formItem):
+            return formItem.isValid
+        default:
+            return true
         }
     }
     
     var isMandatory: Bool {
         get {
             switch self {
-            case let .text(formItem): return formItem.isMandatory
+            case let .text(formItem):
+                return formItem.isMandatory
+            default:
+                return true
             }
         }
         set {
             switch self {
-            case let .text(formItem): formItem.isMandatory = newValue
+            case let .text(formItem):
+                formItem.isMandatory = newValue
+            default:
+                return
             }
         }
     }

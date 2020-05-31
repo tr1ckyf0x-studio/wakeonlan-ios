@@ -22,9 +22,12 @@ class AddHostView: UIView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(
             TextInputCell.self, forCellReuseIdentifier: TextInputCell.reuseIdentifier)
+        tableView.register(
+            DeviceIconCell.self, forCellReuseIdentifier: "\(DeviceIconCell.self)")
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
+        tableView.separatorStyle = .none
 
         return tableView
     }()
@@ -44,8 +47,7 @@ class AddHostView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        createSubviews()
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Private

@@ -1,0 +1,9 @@
+*.png filter=lfs diff=lfs merge=lfs -text
+*.heic filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.svg filter=lfs diff=lfs merge=lfs -text
+*.secret filter=lfs diff=lfs merge=lfs -text
+*.gpg filter=lfs diff=lfs merge=lfs -text
+.gitsecret/keys/pubring.kbx filter=lfs diff=lfs merge=lfs -text
+.gitsecret/keys/pubring.kbx~ filter=lfs diff=lfs merge=lfs -text

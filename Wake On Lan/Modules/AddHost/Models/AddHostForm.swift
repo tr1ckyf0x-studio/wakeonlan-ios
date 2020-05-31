@@ -49,7 +49,8 @@ class AddHostForm: Form {
 
     // MARK: - Private
     private func configureItems() {
-        // TODO: Image picker form item
+
+        let deviceIconFormItem = FormItem.icon
         
         let titleTextFormItem = TextFormItem()
         titleTextFormItem.placeholder = "e.g. MacBook or NAS"
@@ -101,32 +102,38 @@ class AddHostForm: Form {
         portTextFormItem.keyboardType = .numberPad
         portTextFormItem.isMandatory = false
         portTextFormItem.maxLength = 5
-
         let portFormItem = FormItem.text(portTextFormItem)
+
+        let deviceIconSection = FormSection.section(
+            content: [deviceIconFormItem],
+            kind: .deviceIcon)
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
-            header: R.string.addHost.title(),
-            footer: R.string.addHost.titleDescription(),
-            mandatory: true)
+            header: .init(header: R.string.addHost.title()),
+            footer: .init(footer: R.string.addHost.titleDescription()),
+            kind: .title)
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
-            header: R.string.addHost.macAddress(),
-            footer: R.string.addHost.macAddressDescription(),
-            mandatory: true)
-        
+            header: .init(header: R.string.addHost.macAddress()),
+            footer: .init(footer: R.string.addHost.macAddressDescription()),
+            kind: .macAddress)
+
         let ipAddressScetion = FormSection.section(
             content: [ipAddressFormItem],
-            header: R.string.addHost.ipAddress(),
-            footer: R.string.addHost.ipAddressDescription())
+            header: .init(header: R.string.addHost.ipAddress(), mandatory: false),
+            footer: .init(footer: R.string.addHost.ipAddressDescription()),
+            kind: .ipAddress)
 
         let portSection = FormSection.section(
             content: [portFormItem],
-            header: R.string.addHost.port(),
-            footer: R.string.addHost.portDescription())
+            header: .init(header: R.string.addHost.port(), mandatory: false),
+            footer: .init(footer: R.string.addHost.portDescription()),
+            kind: .port)
         
-        formSections = [titleSection, macAddressSection, ipAddressScetion, portSection]
+        formSections =
+            [deviceIconSection, titleSection, macAddressSection, ipAddressScetion, portSection]
     }
 }
 
