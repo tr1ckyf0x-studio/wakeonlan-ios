@@ -106,8 +106,6 @@ class AddHostForm: Form {
 
         let deviceIconSection = FormSection.section(
             content: [deviceIconFormItem],
-            header: nil,
-            footer: nil,
             kind: .deviceIcon)
 
         let titleSection = FormSection.section(

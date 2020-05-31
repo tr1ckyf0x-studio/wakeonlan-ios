@@ -32,6 +32,8 @@ struct FormSectionFooter: FormMandatoryable {
 
 enum FormSection {
 
+    typealias Item = FormItem
+
     enum Kind {
         case deviceIcon
         case title
@@ -39,12 +41,10 @@ enum FormSection {
         case ipAddress
         case port
     }
-
-    typealias Item = FormItem
     
     case section(content: [Item],
-        header: FormSectionHeader?,
-        footer: FormSectionFooter?,
+        header: FormSectionHeader? = nil,
+        footer: FormSectionFooter? = nil,
         kind: FormSection.Kind? = nil)
     
     var items: [Item] {
