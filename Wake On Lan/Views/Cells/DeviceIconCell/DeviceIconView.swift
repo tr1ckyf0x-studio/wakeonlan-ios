@@ -43,8 +43,7 @@ class DeviceIconView: UIView {
     }
 
     public func configure(with model: IconModel) {
-        guard let icon = model.picture else { return }
-        deviceImageView.image = icon
+        deviceImageView.image = model.picture
     }
 
     // MARK: - Private
