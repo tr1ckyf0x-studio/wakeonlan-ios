@@ -11,9 +11,15 @@
 "mac address" = "MAC Address";
 "port" = "Port";
 
+"change icon" = "Tap to change icon";
+
 "ip address description" = "IP address of the target computer. Instead, you should use the broadcast IP of your sub-network, for example 192.168.0.255, 192.168.1.255 or 10.0.0.255. Otherwise 255.255.255.255 will be used";
 "mac address description" = "MAC address of the target computer. You can find it on the Ethernet network settings of the computer.";
 "port description" = "Wake-On-Lan port. 9 is usually supported by Ethernet cards, otherwise you can try 7 or 0.";
 "title description" = "Name that will be displayed in the host list";
 
 "optional" = "Optional";
+
+// Action sheet
+"cancel" = "Cancel";
+"choose icon" = "Choose Icon";

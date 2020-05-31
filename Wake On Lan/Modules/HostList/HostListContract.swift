@@ -31,5 +31,3 @@ protocol HostListInteractorOutput: class {
 protocol HostListRouterProtocol: class {
     func routeToAddHost()
 }
-
-

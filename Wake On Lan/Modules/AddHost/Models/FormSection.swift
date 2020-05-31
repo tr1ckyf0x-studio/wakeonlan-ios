@@ -8,13 +8,44 @@
 
 import Foundation
 
+struct FormSectionHeader: FormMandatoryable {
+    let header: String
+    let isMandatory: Bool
+
+    init(header: String, mandatory: Bool = true) {
+        self.header = header
+        self.isMandatory = mandatory
+    }
+
+}
+
+struct FormSectionFooter: FormMandatoryable {
+    let footer: String
+    let isMandatory: Bool
+
+    init(footer: String, mandatory: Bool = true) {
+        self.footer = footer
+        self.isMandatory = mandatory
+    }
+
+}
+
 enum FormSection {
+
     typealias Item = FormItem
+
+    enum Kind {
+        case deviceIcon
+        case title
+        case macAddress
+        case ipAddress
+        case port
+    }
     
     case section(content: [Item],
-        header: String?,
-        footer: String?,
-        mandatory: Bool = false)
+        header: FormSectionHeader? = nil,
+        footer: FormSectionFooter? = nil,
+        kind: FormSection.Kind? = nil)
     
     var items: [Item] {
         switch self {
@@ -23,25 +54,24 @@ enum FormSection {
         }
     }
     
-    var header: String? {
+    var header: FormSectionHeader? {
         switch self {
         case let .section(_, header, _, _):
             return header
         }
     }
     
-    var footer: String? {
+    var footer: FormSectionFooter? {
         switch self {
         case let .section(_, _, footer, _):
             return footer
         }
     }
 
-    // TODO: Need to refactoring
-    var isMandatory: Bool {
+    var kind: FormSection.Kind? {
         switch self {
-        case let .section(_, _, _, mandatory):
-            return mandatory
+        case let .section(_, _, _, kind):
+            return kind
         }
     }
 
