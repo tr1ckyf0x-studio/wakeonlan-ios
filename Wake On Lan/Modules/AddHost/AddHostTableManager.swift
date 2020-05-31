@@ -12,6 +12,7 @@ protocol AddHostTableManagerDelegate: class {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager)
 }
 
+// TODO: Implementing custom header/footer views
 class AddHostTableManager: NSObject {
 
     weak var delegate: AddHostTableManagerDelegate?
@@ -97,38 +98,6 @@ extension AddHostTableManager: UITableViewDelegate {
             NSMutableAttributedString(string: headerText, attributes: sourceAttributes)
         sourceAttributedString.appendOptional()
         headerLabel.attributedText = sourceAttributedString
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard sections[section].kind == .deviceIcon else {
-            return tableView.headerView(forSection: section)
-        }
-
-        return UIView()
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard sections[section].kind == .deviceIcon else {
-            return tableView.headerView(forSection: section)
-        }
-
-        return UIView()
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard sections[section].kind == .deviceIcon else {
-            return UITableView.automaticDimension
-        }
-
-        return .zero
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard sections[section].kind == .deviceIcon else {
-            return UITableView.automaticDimension
-        }
-
-        return .zero
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

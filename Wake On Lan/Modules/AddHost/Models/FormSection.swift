@@ -9,13 +9,25 @@
 import Foundation
 
 struct FormSectionHeader: FormMandatoryable {
-    let header: String?
+    let header: String
     let isMandatory: Bool
+
+    init(header: String, mandatory: Bool = true) {
+        self.header = header
+        self.isMandatory = mandatory
+    }
+
 }
 
 struct FormSectionFooter: FormMandatoryable {
-    let footer: String?
+    let footer: String
     let isMandatory: Bool
+
+    init(footer: String, mandatory: Bool = true) {
+        self.footer = footer
+        self.isMandatory = mandatory
+    }
+
 }
 
 enum FormSection {

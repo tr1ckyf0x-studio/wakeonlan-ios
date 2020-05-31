@@ -49,7 +49,8 @@ class DeviceIconCell: UITableViewCell {
     private func setupDeviceIconView() {
         contentView.addSubview(baseView)
         baseView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).offset(16)
+            // TODO: Add offset after implementing custom header/footer views
+            $0.top.equalTo(contentView.snp.top) // .offset(16)
             $0.height.equalTo(120)
             $0.leading.trailing.equalToSuperview()
         }

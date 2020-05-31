@@ -112,26 +112,26 @@ class AddHostForm: Form {
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
-            header: .init(header: R.string.addHost.title(), isMandatory: true),
-            footer: .init(footer: R.string.addHost.titleDescription(), isMandatory: true),
+            header: .init(header: R.string.addHost.title()),
+            footer: .init(footer: R.string.addHost.titleDescription()),
             kind: .title)
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
-            header: .init(header: R.string.addHost.macAddress(), isMandatory: true),
-            footer: .init(footer: R.string.addHost.macAddressDescription(), isMandatory: true),
+            header: .init(header: R.string.addHost.macAddress()),
+            footer: .init(footer: R.string.addHost.macAddressDescription()),
             kind: .macAddress)
 
         let ipAddressScetion = FormSection.section(
             content: [ipAddressFormItem],
-            header: .init(header: R.string.addHost.ipAddress(), isMandatory: true),
-            footer: .init(footer: R.string.addHost.ipAddressDescription(), isMandatory: true),
+            header: .init(header: R.string.addHost.ipAddress(), mandatory: false),
+            footer: .init(footer: R.string.addHost.ipAddressDescription()),
             kind: .ipAddress)
 
         let portSection = FormSection.section(
             content: [portFormItem],
-            header: .init(header: R.string.addHost.port(), isMandatory: true),
-            footer: .init(footer: R.string.addHost.portDescription(), isMandatory: true),
+            header: .init(header: R.string.addHost.port(), mandatory: false),
+            footer: .init(footer: R.string.addHost.portDescription()),
             kind: .port)
         
         formSections =
