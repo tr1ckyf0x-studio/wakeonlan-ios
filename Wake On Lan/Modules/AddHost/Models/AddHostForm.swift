@@ -108,29 +108,31 @@ class AddHostForm: Form {
             content: [deviceIconFormItem],
             header: nil,
             footer: nil,
-            mandatory: true)
+            kind: .deviceIcon)
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
-            header: R.string.addHost.title(),
-            footer: R.string.addHost.titleDescription(),
-            mandatory: true)
+            header: .init(header: R.string.addHost.title(), isMandatory: true),
+            footer: .init(footer: R.string.addHost.titleDescription(), isMandatory: true),
+            kind: .title)
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
-            header: R.string.addHost.macAddress(),
-            footer: R.string.addHost.macAddressDescription(),
-            mandatory: true)
-        
+            header: .init(header: R.string.addHost.macAddress(), isMandatory: true),
+            footer: .init(footer: R.string.addHost.macAddressDescription(), isMandatory: true),
+            kind: .macAddress)
+
         let ipAddressScetion = FormSection.section(
             content: [ipAddressFormItem],
-            header: R.string.addHost.ipAddress(),
-            footer: R.string.addHost.ipAddressDescription())
+            header: .init(header: R.string.addHost.ipAddress(), isMandatory: true),
+            footer: .init(footer: R.string.addHost.ipAddressDescription(), isMandatory: true),
+            kind: .ipAddress)
 
         let portSection = FormSection.section(
             content: [portFormItem],
-            header: R.string.addHost.port(),
-            footer: R.string.addHost.portDescription())
+            header: .init(header: R.string.addHost.port(), isMandatory: true),
+            footer: .init(footer: R.string.addHost.portDescription(), isMandatory: true),
+            kind: .port)
         
         formSections =
             [deviceIconSection, titleSection, macAddressSection, ipAddressScetion, portSection]

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextFormItem: FormValidable {
+class TextFormItem: FormValidable, FormMandatoryable {
     var value: String? {
         didSet {
             onValueChanged?(value)

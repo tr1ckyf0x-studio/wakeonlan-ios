@@ -13,7 +13,7 @@ enum FormItem {
     case icon
 }
 
-extension FormItem: FormValidable {
+extension FormItem: FormValidable, FormMandatoryable {
     var isValid: Bool {
         switch self {
         case let .text(formItem):

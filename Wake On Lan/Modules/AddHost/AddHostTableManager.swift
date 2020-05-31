@@ -83,8 +83,11 @@ extension AddHostTableManager: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension AddHostTableManager: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard !sections[section].isMandatory,
+    func tableView(_ tableView: UITableView,
+                   willDisplayHeaderView view: UIView,
+                   forSection section: Int) {
+        guard let sectionHeader = sections[section].header,
+            !sectionHeader.isMandatory,
             let header = view as? UITableViewHeaderFooterView,
             let headerLabel = header.textLabel,
             let headerText = headerLabel.text else { return }
@@ -97,39 +100,43 @@ extension AddHostTableManager: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // TODO: Add enum for sections
-        guard section == 0 else { return tableView.headerView(forSection: section) }
+        guard sections[section].kind == .deviceIcon else {
+            return tableView.headerView(forSection: section)
+        }
 
         return UIView()
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        // TODO: Add enum for sections
-        guard section == 0 else { return tableView.headerView(forSection: section) }
+        guard sections[section].kind == .deviceIcon else {
+            return tableView.headerView(forSection: section)
+        }
 
         return UIView()
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        // TODO: Add enum for sections
-        guard section == 0 else { return UITableView.automaticDimension }
+        guard sections[section].kind == .deviceIcon else {
+            return UITableView.automaticDimension
+        }
 
         return .zero
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        // TODO: Add enum for sections
-        guard section == 0 else { return UITableView.automaticDimension }
+        guard sections[section].kind == .deviceIcon else {
+            return UITableView.automaticDimension
+        }
 
         return .zero
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].header
+        return sections[section].header?.header
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footer
+        return sections[section].footer?.footer
     }
 
 }

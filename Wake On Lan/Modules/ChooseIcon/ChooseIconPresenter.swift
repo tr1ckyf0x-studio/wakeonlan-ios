@@ -11,10 +11,10 @@ class ChooseIconPresenter {
     var router: ChooseIconRouterProtocol!
 
     private(set) lazy var tableManager: ChooseIconTableManager = {
-        return ChooseIconTableManager(with: configureSections())
+        return ChooseIconTableManager(with: createSections())
     }()
 
-    private func configureSections() -> [ChooseIconSection] {
+    private func createSections() -> [ChooseIconSection] {
         let items: [ChooseIconSectionItem] = [
             R.image.other(),
             R.image.desktop(),
