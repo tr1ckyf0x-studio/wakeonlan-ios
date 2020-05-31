@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol AddHostTableManagerDelegate: class {
+    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager)
+}
+
+// TODO: Implementing custom header/footer views
 class AddHostTableManager: NSObject {
+
+    weak var delegate: AddHostTableManagerDelegate?
 
     var form: AddHostForm?
     
@@ -57,6 +64,13 @@ extension AddHostTableManager: UITableViewDataSource {
                 CATransaction.commit()
             }
             cell = textInputCell
+        case .icon:
+            let deviceIconCell = tableView.dequeueReusableCell(
+                withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
+            deviceIconCell?.didTapChangeIconBlock = { [unowned self] _ in
+                self.delegate?.tableManagerDidTapDeviceIconCell(self)
+            }
+            cell = deviceIconCell
         }
         guard let unwrappedCell = cell else {
             fatalError("\(self): Unknown cell identifier")
@@ -64,13 +78,17 @@ extension AddHostTableManager: UITableViewDataSource {
         
         return unwrappedCell
     }
+
 }
 
 // MARK: - UITableViewDelegate
 extension AddHostTableManager: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard !sections[section].isMandatory,
+    func tableView(_ tableView: UITableView,
+                   willDisplayHeaderView view: UIView,
+                   forSection section: Int) {
+        guard let sectionHeader = sections[section].header,
+            !sectionHeader.isMandatory,
             let header = view as? UITableViewHeaderFooterView,
             let headerLabel = header.textLabel,
             let headerText = headerLabel.text else { return }
@@ -83,11 +101,11 @@ extension AddHostTableManager: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].header
+        return sections[section].header?.header
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footer
+        return sections[section].footer?.footer
     }
 
 }
