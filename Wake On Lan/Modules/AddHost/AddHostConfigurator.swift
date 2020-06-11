@@ -19,7 +19,7 @@ class AddHostConfigurator {
         
         interactor.presenter = presenter
         presenter.interactor = interactor
-        
+
         viewController.presenter = presenter
         presenter.view = viewController
     }

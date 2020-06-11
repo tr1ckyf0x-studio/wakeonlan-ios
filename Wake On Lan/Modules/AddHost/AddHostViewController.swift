@@ -10,7 +10,7 @@ import UIKit
 
 class AddHostViewController: UIViewController {
     
-    var presenter: AddHostViewOutput?
+    var presenter: (AddHostViewOutput & ChooseIconModuleOutput)?
     
     private lazy var addHostView = AddHostView()
     

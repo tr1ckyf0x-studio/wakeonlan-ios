@@ -11,7 +11,7 @@ import SnapKit
 
 class DeviceIconCell: UITableViewCell {
 
-    typealias ChangeIconBlock = (_ cell: DeviceIconCell) -> Void
+    typealias ChangeIconBlock = (_ model: IconModel) -> Void
 
     public var didTapChangeIconBlock: ChangeIconBlock?
 
@@ -32,6 +32,7 @@ class DeviceIconCell: UITableViewCell {
         return label
     }()
 
+    private var model: IconModel?
 
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -46,6 +47,13 @@ class DeviceIconCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Public
+    public func configure(with model: IconModel) {
+        self.model = model
+        baseView.configure(with: model)
+    }
+
+    // MARK: - Private
     private func setupDeviceIconView() {
         contentView.addSubview(baseView)
         baseView.snp.makeConstraints {
@@ -70,6 +78,7 @@ class DeviceIconCell: UITableViewCell {
 // MARK: - DeviceIconViewDelegate
 extension DeviceIconCell: DeviceIconViewDelegate {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView) {
-        didTapChangeIconBlock?(self)
+        guard let model = self.model else { return }
+        didTapChangeIconBlock?(model)
     }
 }

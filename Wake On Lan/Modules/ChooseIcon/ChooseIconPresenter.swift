@@ -8,6 +8,7 @@
 
 class ChooseIconPresenter {
     weak var view: ChooseIconViewInput!
+    weak var moduleDelegate: ChooseIconModuleOutput?
     var router: ChooseIconRouterProtocol!
 
     private(set) lazy var tableManager: ChooseIconTableManager = {
@@ -16,13 +17,13 @@ class ChooseIconPresenter {
 
     private func createSections() -> [ChooseIconSection] {
         let items: [ChooseIconSectionItem] = [
-            R.image.other(),
-            R.image.desktop(),
-            R.image.router(),
-            R.image.scanner(),
-            R.image.tv()].map {
-                let image = $0?.withRenderingMode(.alwaysTemplate)
-                let model = IconModel(picture: image)
+            R.image.other,
+            R.image.desktop,
+            R.image.router,
+            R.image.scanner,
+            R.image.tv].map {
+                let imageName = $0.name
+                let model = IconModel(pictureName: imageName)
                 let item = ChooseIconSectionItem.icon(model)
                 return item
         }
@@ -33,9 +34,26 @@ class ChooseIconPresenter {
 }
 
 extension ChooseIconPresenter: ChooseIconViewOutput {
+    func viewDidLoad(_ view: ChooseIconViewInput) {
+        view.makePresentingViewControllerDimmed()
+        tableManager.delegate = self
+    }
+
+    func viewWillDisappear(_ view: ChooseIconViewInput) {
+        view.makePresentingViewControllerTransparent()
+    }
 
     func viewWillLayoutSubviews(_ view: ChooseIconViewInput) {
         view.reloadCollectionViewLayout()
+        view.updateIconViewHeight()
+    }
+
+}
+
+extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
+    func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
+        moduleDelegate?.chooseIconModuleDidSelectIcon(icon)
+        view.dismiss(animated: true)
     }
 
 }

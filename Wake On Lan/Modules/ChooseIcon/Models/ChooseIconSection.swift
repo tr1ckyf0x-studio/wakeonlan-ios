@@ -9,7 +9,7 @@
 import UIKit
 
 struct IconModel {
-    var picture: UIImage?
+    var pictureName: String
 }
 
 enum ChooseIconSectionItem {

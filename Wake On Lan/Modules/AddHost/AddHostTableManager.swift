@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddHostTableManagerDelegate: class {
-    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager)
+    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel)
 }
 
 // TODO: Implementing custom header/footer views
@@ -18,7 +18,7 @@ class AddHostTableManager: NSObject {
     weak var delegate: AddHostTableManagerDelegate?
 
     var form: AddHostForm?
-    
+
     var sections: [FormSection] {
         guard let form = form else { return [] }
         return form.formSections
@@ -64,11 +64,12 @@ extension AddHostTableManager: UITableViewDataSource {
                 CATransaction.commit()
             }
             cell = textInputCell
-        case .icon:
+        case .icon(let model):
             let deviceIconCell = tableView.dequeueReusableCell(
                 withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
-            deviceIconCell?.didTapChangeIconBlock = { [unowned self] _ in
-                self.delegate?.tableManagerDidTapDeviceIconCell(self)
+            deviceIconCell?.configure(with: model)
+            deviceIconCell?.didTapChangeIconBlock = { [unowned self] model in
+                self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
             }
             cell = deviceIconCell
         }
@@ -167,7 +168,8 @@ private extension NSMutableAttributedString {
             .foregroundColor : UIColor.lightGray
         ]
         let additionalAttributedString =
-            NSMutableAttributedString(string: " - " + R.string.addHost.optional(), attributes: additionalAttributes)
+            NSMutableAttributedString(string: " - " + R.string.addHost.optional(),
+                                      attributes: additionalAttributes)
         guard let attributedText =
             additionalAttributedString.copy() as? NSAttributedString else { return }
         self.append(attributedText)

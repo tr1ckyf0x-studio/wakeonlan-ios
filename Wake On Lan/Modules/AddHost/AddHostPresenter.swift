@@ -18,6 +18,7 @@ class AddHostPresenter {
     private(set) var tableManager = AddHostTableManager()
     
     private var addHostForm = AddHostForm()
+
 }
 
 extension AddHostPresenter: AddHostViewOutput {
@@ -27,7 +28,7 @@ extension AddHostPresenter: AddHostViewOutput {
 
         view.reloadTable()
     }
-    
+
     func viewDidPressSaveButton(_ view: AddHostViewInput) {
         // TODO: Обработка ошибок формы
         guard addHostForm.isValid else { return }
@@ -42,7 +43,14 @@ extension AddHostPresenter: AddHostInteractorOutput {
 }
 
 extension AddHostPresenter: AddHostTableManagerDelegate {
-    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager) {
+    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel) {
         router?.routeToChooseIcon()
+    }
+}
+
+extension AddHostPresenter: ChooseIconModuleOutput {
+    func chooseIconModuleDidSelectIcon(_ iconModel: IconModel) {
+        addHostForm.iconName = iconModel.pictureName
+        view?.reloadTable()
     }
 }

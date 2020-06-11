@@ -35,11 +35,23 @@ class AddHostForm: Form {
     }
 
     // MARK: - Properties
+    var iconName: String? {
+        didSet {
+            formSections.removeAll { $0.kind == .deviceIcon }
+            let iconModel = IconModel(pictureName: self.iconName!)
+            let deviceIconFormItem = FormItem.icon(iconModel)
+            let deviceIconSection = FormSection.section(
+                content: [deviceIconFormItem],
+                kind: .deviceIcon)
+            formSections.insert(deviceIconSection, at: 0)
+        }
+    }
+
     var title: String?
     var macAddress: String?
     var ipAddress: String?
     var port: String?
-    
+
     private(set) var formSections = [FormSection]()
 
     // MARK: - Init
@@ -50,7 +62,8 @@ class AddHostForm: Form {
     // MARK: - Private
     private func configureItems() {
 
-        let deviceIconFormItem = FormItem.icon
+        let iconModel = IconModel(pictureName: R.image.desktop.name)
+        let deviceIconFormItem = FormItem.icon(iconModel)
         
         let titleTextFormItem = TextFormItem()
         titleTextFormItem.placeholder = "e.g. MacBook or NAS"
