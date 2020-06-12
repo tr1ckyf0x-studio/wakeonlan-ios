@@ -49,22 +49,6 @@ class AddHostForm: Form {
         configureItems()
     }
 
-    private func createSections() -> [ChooseIconSection] {
-        let items: [FormItem] = [
-            R.image.other,
-            R.image.desktop,
-            R.image.router,
-            R.image.scanner,
-            R.image.tv].map {
-                let imageName = $0.name
-                let model = IconModel(pictureName: imageName, selected: false)
-                let item = FormItem.icon(model)
-                return item
-        }
-
-        return [ChooseIconSection.section(content: items)]
-    }
-
     // MARK: - Private
     private func configureItems() {
 
@@ -172,4 +156,5 @@ extension AddHostForm {
         }
         return formIsValid
     }
+
 }

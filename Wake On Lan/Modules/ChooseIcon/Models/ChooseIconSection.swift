@@ -12,15 +12,16 @@ class IconModel {
     var pictureName: String = R.image.other.name
     var selected: Bool = false
 
+    init() { }
+
     init(pictureName: String, selected: Bool) {
         self.pictureName = pictureName
         self.selected = selected
     }
 
-    init() { }
-
 }
 
+// MARK: - Equatable
 extension IconModel: Equatable {
     static func == (lhs: IconModel, rhs: IconModel) -> Bool {
         return lhs.pictureName == rhs.pictureName
