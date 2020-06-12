@@ -26,7 +26,13 @@ extension IconModel: Equatable {
     static func == (lhs: IconModel, rhs: IconModel) -> Bool {
         return lhs.pictureName == rhs.pictureName
     }
+}
 
+// MARK: - CustomStringConvertible
+extension IconModel: CustomStringConvertible {
+    var description: String {
+         return "( \(self) : \(pictureName), \(selected) )"
+     }
 }
 
 enum ChooseIconSectionItem {
