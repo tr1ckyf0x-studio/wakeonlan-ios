@@ -8,8 +8,24 @@
 
 import UIKit
 
-struct IconModel {
-    var pictureName: String
+class IconModel {
+    var pictureName: String = R.image.other.name
+    var selected: Bool = false
+
+    init(pictureName: String, selected: Bool) {
+        self.pictureName = pictureName
+        self.selected = selected
+    }
+
+    init() { }
+
+}
+
+extension IconModel: Equatable {
+    static func == (lhs: IconModel, rhs: IconModel) -> Bool {
+        return lhs.pictureName == rhs.pictureName
+    }
+
 }
 
 enum ChooseIconSectionItem {
@@ -18,7 +34,7 @@ enum ChooseIconSectionItem {
 
 enum ChooseIconSection {
 
-    typealias Item = ChooseIconSectionItem
+    typealias Item = FormItem
 
     case section(header: String? = nil, content: [Item], footer: String? = nil)
 

@@ -11,23 +11,13 @@ class ChooseIconPresenter {
     weak var moduleDelegate: ChooseIconModuleOutput?
     var router: ChooseIconRouterProtocol!
 
+    var items: [FormItem]!
+
     private(set) lazy var tableManager: ChooseIconTableManager = {
         return ChooseIconTableManager(with: createSections())
     }()
 
     private func createSections() -> [ChooseIconSection] {
-        let items: [ChooseIconSectionItem] = [
-            R.image.other,
-            R.image.desktop,
-            R.image.router,
-            R.image.scanner,
-            R.image.tv].map {
-                let imageName = $0.name
-                let model = IconModel(pictureName: imageName)
-                let item = ChooseIconSectionItem.icon(model)
-                return item
-        }
-
         return [ChooseIconSection.section(content: items)]
     }
 

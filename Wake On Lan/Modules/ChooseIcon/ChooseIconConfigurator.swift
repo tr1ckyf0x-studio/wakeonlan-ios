@@ -9,9 +9,11 @@
 class ChooseIconConfigurator {
 
     func configure(viewController: ChooseIconViewInput,
+                   items: [FormItem],
                    moduleDelegate: ChooseIconModuleOutput?) {
         let presenter = ChooseIconPresenter()
         presenter.moduleDelegate = moduleDelegate
+        presenter.items = items
         let router = ChooseIconRouter(viewController: viewController)
 
         presenter.router = router

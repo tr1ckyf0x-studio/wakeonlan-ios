@@ -24,6 +24,8 @@ class AddHostView: UIView {
             TextInputCell.self, forCellReuseIdentifier: TextInputCell.reuseIdentifier)
         tableView.register(
             DeviceIconCell.self, forCellReuseIdentifier: "\(DeviceIconCell.self)")
+        tableView.register(
+            EmptyCell.self, forCellReuseIdentifier: "\(EmptyCell.self)")
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag

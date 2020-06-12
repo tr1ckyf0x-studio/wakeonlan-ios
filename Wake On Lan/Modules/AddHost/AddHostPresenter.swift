@@ -44,13 +44,22 @@ extension AddHostPresenter: AddHostInteractorOutput {
 
 extension AddHostPresenter: AddHostTableManagerDelegate {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel) {
-        router?.routeToChooseIcon()
+        router?.routeToChooseIcon(items: addHostForm.iconSectionItems)
     }
 }
 
 extension AddHostPresenter: ChooseIconModuleOutput {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel) {
         addHostForm.iconName = iconModel.pictureName
+        addHostForm.iconSectionItems.forEach {
+            switch $0 {
+            case .icon(let oldModel):
+                oldModel == iconModel ? (oldModel.selected = true) : (oldModel.selected = false)
+            default:
+                break
+            }
+        }
         view?.reloadTable()
     }
+
 }

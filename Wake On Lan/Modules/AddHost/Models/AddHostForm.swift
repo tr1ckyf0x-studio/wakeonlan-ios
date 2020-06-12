@@ -35,35 +35,47 @@ class AddHostForm: Form {
     }
 
     // MARK: - Properties
-    var iconName: String? {
-        didSet {
-            formSections.removeAll { $0.kind == .deviceIcon }
-            let iconModel = IconModel(pictureName: self.iconName!)
-            let deviceIconFormItem = FormItem.icon(iconModel)
-            let deviceIconSection = FormSection.section(
-                content: [deviceIconFormItem],
-                kind: .deviceIcon)
-            formSections.insert(deviceIconSection, at: 0)
-        }
-    }
-
+    var iconName: String?
     var title: String?
     var macAddress: String?
     var ipAddress: String?
     var port: String?
 
     private(set) var formSections = [FormSection]()
+    private(set) var iconSectionItems = [FormItem]()
 
     // MARK: - Init
     init() {
         configureItems()
     }
 
+    private func createSections() -> [ChooseIconSection] {
+        let items: [FormItem] = [
+            R.image.other,
+            R.image.desktop,
+            R.image.router,
+            R.image.scanner,
+            R.image.tv].map {
+                let imageName = $0.name
+                let model = IconModel(pictureName: imageName, selected: false)
+                let item = FormItem.icon(model)
+                return item
+        }
+
+        return [ChooseIconSection.section(content: items)]
+    }
+
     // MARK: - Private
     private func configureItems() {
 
-        let iconModel = IconModel(pictureName: R.image.desktop.name)
-        let deviceIconFormItem = FormItem.icon(iconModel)
+        // Items for ChooseIcon module
+        // TODO: Get it from CoreData
+        let defaultSelected = IconModel(pictureName: R.image.other.name, selected: true)
+        iconSectionItems += [FormItem.icon(defaultSelected)]
+        iconSectionItems += [R.image.desktop, R.image.router, R.image.scanner, R.image.tv].map {
+            let model = IconModel(pictureName: $0.name, selected: false)
+            return FormItem.icon(model)
+        }
         
         let titleTextFormItem = TextFormItem()
         titleTextFormItem.placeholder = "e.g. MacBook or NAS"
@@ -118,7 +130,7 @@ class AddHostForm: Form {
         let portFormItem = FormItem.text(portTextFormItem)
 
         let deviceIconSection = FormSection.section(
-            content: [deviceIconFormItem],
+            content: iconSectionItems,
             kind: .deviceIcon)
 
         let titleSection = FormSection.section(

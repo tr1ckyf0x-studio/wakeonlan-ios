@@ -65,19 +65,38 @@ extension AddHostTableManager: UITableViewDataSource {
             }
             cell = textInputCell
         case .icon(let model):
-            let deviceIconCell = tableView.dequeueReusableCell(
-                withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
-            deviceIconCell?.configure(with: model)
-            deviceIconCell?.didTapChangeIconBlock = { [unowned self] model in
-                self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
+            if model.selected {
+                let deviceIconCell = tableView.dequeueReusableCell(
+                    withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
+                deviceIconCell?.configure(with: model)
+                deviceIconCell?.didTapChangeIconBlock = { [unowned self] model in
+                    self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
+                }
+                cell = deviceIconCell
+            } else {
+                let emptyCell = tableView.dequeueReusableCell(
+                    withIdentifier: "\(EmptyCell.self)", for: indexPath) as? EmptyCell
+                cell = emptyCell
             }
-            cell = deviceIconCell
         }
+
         guard let unwrappedCell = cell else {
             fatalError("\(self): Unknown cell identifier")
         }
         
         return unwrappedCell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let model = sections[indexPath.section].items[indexPath.row]
+        switch model {
+        case .icon(let model):
+            guard model.selected else { return .zero }
+        default:
+            return UITableView.automaticDimension
+        }
+
+        return UITableView.automaticDimension
     }
 
 }
