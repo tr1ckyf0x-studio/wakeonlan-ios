@@ -19,8 +19,10 @@ class AddHostInteractor: AddHostInteractorInput {
         context.performAndWait {
             let host = Host(context: context)
             guard let macAddress = form.macAddress,
-                  let title = form.title
-            else { return }
+                let title = form.title,
+                let iconName = form.iconName
+                else { return }
+            host.iconName = iconName
             host.title = title
             host.macAddress = macAddress
             host.ipAddress = form.ipAddress

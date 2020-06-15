@@ -47,7 +47,7 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
         var cell: UICollectionViewCell?
 
         switch sectionModel {
-        case .icon(var model):
+        case .icon(let model):
             let iconCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "\(ChooseIconCell.self)", for: indexPath) as? ChooseIconCell
             iconCell?.configure(with: model)

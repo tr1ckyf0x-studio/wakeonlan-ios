@@ -71,8 +71,7 @@ class ChooseIconViewController: UIViewController {
     // MARK: - Private
     private func setupDismissingTap() {
         view.addGestureRecognizer({
-            UITapGestureRecognizer(target: self,
-                                   action: #selector(closeViewController))
+            UITapGestureRecognizer(target: self, action: #selector(closeViewController))
             }())
     }
 

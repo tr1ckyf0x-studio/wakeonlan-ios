@@ -53,8 +53,8 @@ extension AddHostPresenter: ChooseIconModuleOutput {
         addHostForm.iconName = iconModel.pictureName
         addHostForm.iconSectionItems.forEach {
             switch $0 {
-            case .icon(let oldModel):
-                oldModel == iconModel ? (oldModel.selected = true) : (oldModel.selected = false)
+            case .icon(let model):
+                model == iconModel ? (model.selected = true) : (model.selected = false)
             default:
                 break
             }

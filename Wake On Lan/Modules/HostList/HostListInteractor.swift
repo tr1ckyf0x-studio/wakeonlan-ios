@@ -18,7 +18,11 @@ class HostListInteractor: HostListInteractorInput {
     @Injected private var wakeOnLanService: WakeOnLanService
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(_:)), name: Notification.Name.NSManagedObjectContextDidSave, object: coreDataService.mainContext)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contextDidSave(_:)),
+            name: Notification.Name.NSManagedObjectContextDidSave,
+            object: coreDataService.mainContext)
     }
     
     func fetchHosts() {
