@@ -10,40 +10,40 @@ import UIKit
 
 class AddHostViewController: UIViewController {
     
+    // MARK: - Properties
     var presenter: (AddHostViewOutput & ChooseIconModuleOutput)?
+
+    private lazy var addHostView: AddHostView = {
+        let view = AddHostView()
+        view.delegate = self
+        return view
+    }()
     
-    private lazy var addHostView = AddHostView()
-    
+    // MARK: - Lifecycle
     override func loadView() {
         view = addHostView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let configurator = AddHostConfigurator()
-        configurator.configure(viewController: self)
-        addHostView.delegate = self
-        setupViews()
-        presenter?.viewDidLoad(self)
-    }
-    
-    private func setupViews() {
+        AddHostConfigurator().configure(viewController: self)
         setupTableView()
         setupNavigationBar()
+        presenter?.viewDidLoad(self)
     }
-    
+
+    // MARK: - Private
     private func setupTableView() {
-        addHostView.tableView.dataSource = presenter?.tableManager
         addHostView.tableView.delegate = presenter?.tableManager
+        addHostView.tableView.dataSource = presenter?.tableManager
     }
-    
+
     private func setupNavigationBar() {
-        setupSaveButton()
-    }
-    
-    private func setupSaveButton() {
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.leftBarButtonItem = addHostView.backBarButton
         navigationItem.rightBarButtonItem = addHostView.saveItemButton
     }
+
 }
 
 extension AddHostViewController: AddHostViewInput {
@@ -53,6 +53,10 @@ extension AddHostViewController: AddHostViewInput {
 }
 
 extension AddHostViewController: AddHostViewDelegate {
+    func addHostViewDidPressBackButton(_ view: AddHostView) {
+        presenter?.viewDidPressBackButton(self)
+    }
+    
     func addHostViewDidPressSaveButton(_ view: AddHostView) {
         presenter?.viewDidPressSaveButton(self)
     }

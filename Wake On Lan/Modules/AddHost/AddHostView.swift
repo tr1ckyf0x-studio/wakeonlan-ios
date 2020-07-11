@@ -11,6 +11,7 @@ import SnapKit
 
 protocol AddHostViewDelegate: class {
     func addHostViewDidPressSaveButton(_ view: AddHostView)
+    func addHostViewDidPressBackButton(_ view: AddHostView)
 }
 
 class AddHostView: UIView {
@@ -30,21 +31,74 @@ class AddHostView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .softUIColor
 
         return tableView
     }()
     
     lazy var saveItemButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .save, target: self, action: #selector(saveButtonPressed))
-        return barButtonItem
+        let saveButton: SoftUIButton = {
+            let addButton = SoftUIButton(cornerRadius: 16.0)
+            addButton.setImage(R.image.save()?.withRenderingMode(.alwaysTemplate), for: .normal)
+            addButton.addTarget(self,
+                                action: #selector(saveButtonPressed),
+                                for: .touchUpInside)
+            let spacing: CGFloat = 6
+            addButton.imageEdgeInsets =
+                UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            addButton.adjustsImageWhenHighlighted = false
+            addButton.adjustsImageWhenDisabled = false
+            addButton.imageView?.contentMode = .scaleAspectFit
+            addButton.imageView?.tintColor = .init(red: 105/255, green: 105/255, blue: 105/255, alpha: 1.0)
+            
+            return addButton
+        }()
+        
+        let barButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: saveButton)
+            button.customView?.snp.makeConstraints {
+                $0.width.height.equalTo(32)
+            }
+            
+            return button
+        }()
+        
+        return barButton
+    }()
+    
+    lazy var backBarButton: UIBarButtonItem = {
+        let addButton: SoftUIButton = {
+            let addButton = SoftUIButton(cornerRadius: 16.0)
+            addButton.setImage(R.image.back(), for: .normal)
+            addButton.addTarget(self,
+                                action: #selector(backButtonPressed),
+                                for: .touchUpInside)
+            let spacing: CGFloat = 5
+            addButton.imageEdgeInsets =
+                UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            addButton.adjustsImageWhenHighlighted = false
+            addButton.adjustsImageWhenDisabled = false
+            
+            return addButton
+        }()
+        
+        let barButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: addButton)
+            button.customView?.snp.makeConstraints {
+                $0.width.height.equalTo(32)
+            }
+            
+            return button
+        }()
+        
+        return barButton
     }()
     
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        createSubviews()
+        setupTableView()
         registerNotifications()
     }
     
@@ -66,10 +120,6 @@ class AddHostView: UIView {
             object: nil)
     }
     
-    private func createSubviews() {
-        setupTableView()
-    }
-    
     private func setupTableView() {
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -79,6 +129,10 @@ class AddHostView: UIView {
     
     @objc private func saveButtonPressed() {
         delegate?.addHostViewDidPressSaveButton(self)
+    }
+    
+    @objc private func backButtonPressed() {
+        delegate?.addHostViewDidPressBackButton(self)
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {

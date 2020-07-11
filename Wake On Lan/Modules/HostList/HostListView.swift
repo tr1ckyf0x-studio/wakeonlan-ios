@@ -15,22 +15,50 @@ protocol HostListViewDelegate: class {
 
 class HostListView: UIView {
     
+    private enum Constants {
+        static let addItemButtonDimensions = 32.0
+    }
+    
     weak var delegate: HostListViewDelegate?
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(HostListTableViewCell.self, forCellReuseIdentifier: "\(HostListTableViewCell.self)")
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        
         return tableView
     }()
     
     lazy var addItemButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
-        return barButtonItem
+        let addButton: SoftUIButton = {
+            let addButton = SoftUIButton(cornerRadius: 16.0)
+            addButton.setImage(R.image.add(), for: .normal)
+            addButton.addTarget(self, action: #selector(addButtonPressed(_:)), for: .touchUpInside)
+            let spacing: CGFloat = 5
+            addButton.imageEdgeInsets =
+                UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            addButton.adjustsImageWhenHighlighted = false
+            addButton.adjustsImageWhenDisabled = false
+            
+            return addButton
+        }()
+        
+        let barButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: addButton)
+            button.customView?.snp.makeConstraints {
+                $0.width.height.equalTo(Constants.addItemButtonDimensions)
+            }
+            
+            return button
+        }()
+        
+        return barButton
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = .softUIColor
         createSubviews()
     }
     
@@ -38,7 +66,7 @@ class HostListView: UIView {
         super.init(coder: coder)
         createSubviews()
     }
-
+    
     private func createSubviews() {
         setupTableView()
     }
@@ -50,7 +78,7 @@ class HostListView: UIView {
         }
     }
     
-    @objc private func addButtonPressed() {
+    @objc private func addButtonPressed(_ sender: UIButton) {
         delegate?.hostListViewDidPressAddButton(self)
     }
 }

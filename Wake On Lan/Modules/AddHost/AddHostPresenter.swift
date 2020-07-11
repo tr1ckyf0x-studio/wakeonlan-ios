@@ -22,6 +22,7 @@ class AddHostPresenter {
 }
 
 extension AddHostPresenter: AddHostViewOutput {
+    
     func viewDidLoad(_ view: AddHostViewInput) {
         tableManager.form = addHostForm
         tableManager.delegate = self
@@ -34,6 +35,11 @@ extension AddHostPresenter: AddHostViewOutput {
         guard addHostForm.isValid else { return }
         interactor?.saveForm(addHostForm)
     }
+    
+    func viewDidPressBackButton(_ view: AddHostViewInput) {
+        router?.popCurrentController(animated: true)
+    }
+
 }
 
 extension AddHostPresenter: AddHostInteractorOutput {

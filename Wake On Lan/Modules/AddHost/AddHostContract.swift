@@ -13,6 +13,7 @@ protocol AddHostViewOutput: class {
 
     func viewDidLoad(_ view: AddHostViewInput)
     func viewDidPressSaveButton(_ view: AddHostViewInput)
+    func viewDidPressBackButton(_ view: AddHostViewInput)
 }
 
 protocol AddHostViewInput: class {
