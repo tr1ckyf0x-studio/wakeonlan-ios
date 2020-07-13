@@ -10,8 +10,12 @@ import UIKit
 
 class HostListTableViewCell: UITableViewCell {
 
+    typealias TapInfoBlock = (_ cell: HostListTableViewCell) -> Void
+
     // MARK: - Properties
     private let baseView = SoftUIView()
+    
+    private var didTapInfoBlock: TapInfoBlock?
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
@@ -22,7 +26,7 @@ class HostListTableViewCell: UITableViewCell {
 
     private let hostTitle: UILabel = {
         let label = UILabel()
-        label.font = R.font.robotoLight(size: 18)
+        label.font = R.font.robotoMedium(size: 18)
         label.textColor = .gray
         label.numberOfLines = 1
         label.textAlignment = .left
@@ -32,12 +36,22 @@ class HostListTableViewCell: UITableViewCell {
     
     private let macAddressTitle: UILabel = {
         let label = UILabel()
-        label.font = R.font.robotoThin(size: 14)
+        label.font = R.font.robotoLight(size: 14)
         label.textColor = .darkGray
         label.numberOfLines = 1
         label.textAlignment = .left
         
         return label
+    }()
+    
+    private lazy var infoButton: SoftUIButton = {
+        let button = SoftUIButton(roundShape: true)
+        button.setImage(R.image.more(), for: .normal)
+        button.addTarget(self, action: #selector(didTapInfoButton), for: .touchUpInside)
+        button.adjustsImageWhenDisabled = false
+        button.adjustsImageWhenHighlighted = false
+
+        return button
     }()
 
     // MARK: - Init
@@ -49,6 +63,7 @@ class HostListTableViewCell: UITableViewCell {
         setupImageView()
         setupHostTitle()
         setupMacAddressTitle()
+        setupInfoButton()
     }
 
     required init?(coder: NSCoder) {
@@ -56,7 +71,7 @@ class HostListTableViewCell: UITableViewCell {
     }
 
     // MARK: - Public
-    func configure(with model: Host) {
+    func configure(with model: Host, didTapInfoBlock: @escaping TapInfoBlock) {
         let image = UIImage(named: model.iconName,
                             in: Bundle.main,
                             compatibleWith: nil)?
@@ -64,6 +79,7 @@ class HostListTableViewCell: UITableViewCell {
         deviceImageView.image = image
         hostTitle.text = model.title
         macAddressTitle.text = model.macAddress
+        self.didTapInfoBlock = didTapInfoBlock
     }
 
     // MARK: - Private
@@ -102,6 +118,23 @@ class HostListTableViewCell: UITableViewCell {
             $0.leading.equalTo(hostTitle.snp.leading)
             $0.top.equalTo(hostTitle.snp.bottom).offset(8)
         }
+    }
+    
+    private func setupInfoButton() {
+        baseView.addSubview(infoButton)
+        infoButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(36)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(36)
+            $0.height.equalTo(infoButton.snp.width)
+        }
+    }
+    
+    // MARK: - Action
+    @objc private func didTapInfoButton() {
+        guard let action = didTapInfoBlock else { return }
+        action(self)
     }
 
 }

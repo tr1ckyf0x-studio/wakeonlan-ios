@@ -10,6 +10,7 @@ import UIKit
 
 protocol HostListTableManagerDelegate: class {
     func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath)
+    func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host)
 }
 
 class HostListTableManager: NSObject {
@@ -36,7 +37,9 @@ extension HostListTableManager: UITableViewDataSource {
         switch model {
         case let .host(host):
             let hostCell = tableView.dequeueReusableCell(withIdentifier: "\(HostListTableViewCell.self)", for: indexPath) as? HostListTableViewCell
-            hostCell?.configure(with: host)
+            hostCell?.configure(with: host, didTapInfoBlock: { [unowned self] _ in
+                self.delegate?.tableManagerDidTapInfoButton(self, host: host)
+            })
             cell = hostCell
         }
         

@@ -9,8 +9,8 @@
 import Foundation
 
 class AddHostConfigurator {
-    func configure(viewController: AddHostViewController) {
-        let presenter = AddHostPresenter()
+    func configure(viewController: AddHostViewController, addHostForm: AddHostForm = AddHostForm()) {
+        let presenter = AddHostPresenter(addHostForm: addHostForm)
         let interactor = AddHostInteractor()
         let router = AddHostRouter()
         

@@ -33,90 +33,131 @@ class AddHostForm: Form {
             }
         }
     }
-
+    
+    // MARK: - Constants
+    private enum Placeholder {
+        static let title = "e.g. MacBook or NAS"
+        static let macAddress = "XX:XX:XX:XX:XX:XX"
+        static let ipAddress = "255.255.255.255"
+        static let port = "9"
+    }
+        
     // MARK: - Properties
-    var iconName: String?
+    var iconModel: IconModel? = IconModel(selected: true) {
+        didSet {
+            self.iconSectionItems.forEach {
+                switch $0 {
+                case .icon(let model):
+                    model == self.iconModel ? (model.selected = true) : (model.selected = false)
+                default:
+                    break
+                }
+            }
+        }
+    }
+
     var title: String?
     var macAddress: String?
     var ipAddress: String?
     var port: String?
 
     private(set) var formSections = [FormSection]()
-    private(set) var iconSectionItems = [FormItem]()
-
-    // MARK: - Init
-    init() {
-        configureItems()
-    }
-
-    // MARK: - Private
-    private func configureItems() {
-
-        // Items for ChooseIcon module
-        // TODO: Get it from CoreData
-        let defaultSelected = IconModel(pictureName: R.image.other.name, selected: true)
-        iconSectionItems += [FormItem.icon(defaultSelected)]
-        iconSectionItems += [R.image.desktop, R.image.router, R.image.scanner, R.image.tv].map {
+    
+    // MARK: - Section items
+    private(set) lazy var iconSectionItems: [FormItem] = {
+        var items = [FormItem]()
+        items += [FormItem.icon(.init(selected: true))]
+        items += [R.image.desktop, R.image.router, R.image.scanner, R.image.tv].map {
             let model = IconModel(pictureName: $0.name, selected: false)
             return FormItem.icon(model)
         }
-        
-        let titleTextFormItem = TextFormItem()
-        titleTextFormItem.placeholder = "e.g. MacBook or NAS"
-        titleTextFormItem.onValueChanged = { [weak self] value in
+
+        return items
+    }()
+    
+    private lazy var titleItem: TextFormItem = {
+        let item = TextFormItem()
+        item.placeholder = Placeholder.title
+        item.onValueChanged = { [weak self] value in
             self?.title = value
         }
-        titleTextFormItem.validator =
-            TextValidator(strategy: AddHostValidationStrategy.title)
-        titleTextFormItem.needsUppercased = false
-        let titleFormItem = FormItem.text(titleTextFormItem)
-        
-        let macAddressTextFormItem = TextFormItem()
-        macAddressTextFormItem.placeholder = "XX:XX:XX:XX:XX:XX"
-        macAddressTextFormItem.onValueChanged = { [weak self] value in
+        item.validator = TextValidator(strategy: AddHostValidationStrategy.title)
+        item.needsUppercased = false
+
+        return item
+    }()
+    
+    private lazy var macAddressItem: TextFormItem = {
+        let item = TextFormItem()
+        item.placeholder = Placeholder.macAddress
+        item.onValueChanged = { [weak self] value in
             self?.macAddress = value
         }
-        macAddressTextFormItem.validator =
-            TextValidator(strategy: AddHostValidationStrategy.macAddress)
-        macAddressTextFormItem.formatter =
-            TextFormatter(strategy: AddHostFormatterStrategy.macAddress)
-        macAddressTextFormItem.failureReason = .invalidMACAddress
-        macAddressTextFormItem.keyboardType = .asciiCapable
-        macAddressTextFormItem.maxLength = 17
-        macAddressTextFormItem.needsUppercased = true
-        let macAddressFormItem = FormItem.text(macAddressTextFormItem)
+        item.validator = TextValidator(strategy: AddHostValidationStrategy.macAddress)
+        item.formatter = TextFormatter(strategy: AddHostFormatterStrategy.macAddress)
+        item.failureReason = .invalidMACAddress
+        item.keyboardType = .asciiCapable
+        item.maxLength = 17
+        item.needsUppercased = true
         
-        let ipAddressTextFormItem = TextFormItem()
-        ipAddressTextFormItem.placeholder = "255.255.255.255"
-        ipAddressTextFormItem.defaultValue = "255.255.255.255"
-        ipAddressTextFormItem.onValueChanged = { [weak self] value in
+        return item
+    }()
+    
+    private lazy var ipAddressItem: TextFormItem = {
+        let item = TextFormItem()
+        item.placeholder = Placeholder.ipAddress
+        item.defaultValue = "255.255.255.255"
+        item.onValueChanged = { [weak self] value in
             self?.ipAddress = value
         }
-        ipAddressTextFormItem.validator =
-            TextValidator(strategy: AddHostValidationStrategy.ipAddress)
-        ipAddressTextFormItem.failureReason = .invalidIPAddress
-        ipAddressTextFormItem.keyboardType = .numbersAndPunctuation
-        ipAddressTextFormItem.isMandatory = false
-        let ipAddressFormItem = FormItem.text(ipAddressTextFormItem)
-        
-        let portTextFormItem = TextFormItem()
-        portTextFormItem.placeholder = "9"
-        portTextFormItem.defaultValue = "9"
-        portTextFormItem.onValueChanged = { [weak self] value in
+        item.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
+        item.failureReason = .invalidIPAddress
+        item.keyboardType = .numbersAndPunctuation
+        item.isMandatory = false
+                
+        return item
+    }()
+    
+    private lazy var portItem: TextFormItem = {
+        let item = TextFormItem()
+        item.placeholder = Placeholder.port
+        item.defaultValue = "9"
+        item.onValueChanged = { [weak self] value in
             self?.port = value
         }
-        portTextFormItem.validator =
-            TextValidator(strategy: AddHostValidationStrategy.port)
-        portTextFormItem.failureReason = .invalidPort
-        portTextFormItem.keyboardType = .numberPad
-        portTextFormItem.isMandatory = false
-        portTextFormItem.maxLength = 5
-        let portFormItem = FormItem.text(portTextFormItem)
+        item.validator = TextValidator(strategy: AddHostValidationStrategy.port)
+        item.failureReason = .invalidPort
+        item.keyboardType = .numberPad
+        item.isMandatory = false
+        item.maxLength = 5
+        
+        return item
+    }()
 
-        let deviceIconSection = FormSection.section(
-            content: iconSectionItems,
-            kind: .deviceIcon)
+    // MARK: - Init
+    
+    init(host: Host? = nil) {
+        makeSections(host: host)
+    }
 
+    // MARK: - Private
+    
+    private func makeSections(host: Host? = nil) {
+        let titleFormItem = FormItem.text(titleItem)
+        let macAddressFormItem = FormItem.text(macAddressItem)
+        let ipAddressFormItem = FormItem.text(ipAddressItem)
+        let portFormItem = FormItem.text(portItem)
+
+        if let host = host {
+            iconModel = .init(pictureName: host.iconName, selected: true)
+            titleItem.value = host.title
+            macAddressItem.value = host.macAddress
+            ipAddressItem.value = host.ipAddress
+            portItem.value = host.port
+        }
+        
+        let deviceIconSection = FormSection.section(content: iconSectionItems, kind: .deviceIcon)
+        
         let titleSection = FormSection.section(
             content: [titleFormItem],
             header: .init(header: R.string.addHost.title()),
@@ -129,21 +170,21 @@ class AddHostForm: Form {
             footer: .init(footer: R.string.addHost.macAddressDescription()),
             kind: .macAddress)
 
-        let ipAddressScetion = FormSection.section(
+        let ipAddressSection = FormSection.section(
             content: [ipAddressFormItem],
             header: .init(header: R.string.addHost.ipAddress(), mandatory: false),
             footer: .init(footer: R.string.addHost.ipAddressDescription()),
             kind: .ipAddress)
-
+        
         let portSection = FormSection.section(
             content: [portFormItem],
             header: .init(header: R.string.addHost.port(), mandatory: false),
             footer: .init(footer: R.string.addHost.portDescription()),
             kind: .port)
         
-        formSections =
-            [deviceIconSection, titleSection, macAddressSection, ipAddressScetion, portSection]
+        formSections = [deviceIconSection, titleSection, macAddressSection, ipAddressSection, portSection]
     }
+
 }
 
 extension AddHostForm {

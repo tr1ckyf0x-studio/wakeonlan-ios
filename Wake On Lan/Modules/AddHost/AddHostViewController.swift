@@ -26,7 +26,6 @@ class AddHostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AddHostConfigurator().configure(viewController: self)
         setupTableView()
         setupNavigationBar()
         presenter?.viewDidLoad(self)

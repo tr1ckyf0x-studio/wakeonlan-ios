@@ -20,7 +20,7 @@ class AddHostInteractor: AddHostInteractorInput {
             let host = Host(context: context)
             guard let macAddress = form.macAddress,
                 let title = form.title,
-                let iconName = form.iconName
+                let iconName = form.iconModel?.pictureName
                 else { return }
             host.iconName = iconName
             host.title = title

@@ -9,12 +9,10 @@
 import UIKit
 
 class IconModel {
-    var pictureName: String = R.image.other.name
+    var pictureName: String
     var selected: Bool = false
 
-    init() { }
-
-    init(pictureName: String, selected: Bool) {
+    init(pictureName: String = R.image.other.name, selected: Bool) {
         self.pictureName = pictureName
         self.selected = selected
     }

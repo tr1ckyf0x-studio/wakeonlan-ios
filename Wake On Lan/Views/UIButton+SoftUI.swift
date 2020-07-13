@@ -24,9 +24,10 @@ class SoftUIButton: UIButton, SoftUIProtocol {
             pressed = isSelected ? false : true
         }
     }
-    
+        
     override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
+        if roundShape { cornerRadius = bounds.height / 2 }
         addSoftUIEffectIfNeeded()
     }
 
@@ -50,8 +51,11 @@ class SoftUIButton: UIButton, SoftUIProtocol {
         }
     }
     
+    private var roundShape: Bool = false
+    
     // MARK: - Init
-    init(cornerRadius: CGFloat = 15.0, themeColor: UIColor = .softUIColor) {
+    init(roundShape: Bool = false, cornerRadius: CGFloat = 15.0, themeColor: UIColor = .softUIColor) {
+        self.roundShape = roundShape
         self.themeColor = themeColor
         self.cornerRadius = cornerRadius
         super.init(frame: .zero)

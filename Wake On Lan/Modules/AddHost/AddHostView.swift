@@ -38,7 +38,7 @@ class AddHostView: UIView {
     
     lazy var saveItemButton: UIBarButtonItem = {
         let saveButton: SoftUIButton = {
-            let addButton = SoftUIButton(cornerRadius: 16.0)
+            let addButton = SoftUIButton(roundShape: true)
             addButton.setImage(R.image.save()?.withRenderingMode(.alwaysTemplate), for: .normal)
             addButton.addTarget(self,
                                 action: #selector(saveButtonPressed),
@@ -68,7 +68,7 @@ class AddHostView: UIView {
     
     lazy var backBarButton: UIBarButtonItem = {
         let addButton: SoftUIButton = {
-            let addButton = SoftUIButton(cornerRadius: 16.0)
+            let addButton = SoftUIButton(roundShape: true)
             addButton.setImage(R.image.back(), for: .normal)
             addButton.addTarget(self,
                                 action: #selector(backButtonPressed),

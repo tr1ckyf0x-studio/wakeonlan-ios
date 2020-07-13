@@ -17,7 +17,11 @@ class AddHostPresenter {
     
     private(set) var tableManager = AddHostTableManager()
     
-    private var addHostForm = AddHostForm()
+    private(set) var addHostForm: AddHostForm
+    
+    init(addHostForm: AddHostForm = AddHostForm()) {
+        self.addHostForm = addHostForm
+    }
 
 }
 
@@ -56,15 +60,7 @@ extension AddHostPresenter: AddHostTableManagerDelegate {
 
 extension AddHostPresenter: ChooseIconModuleOutput {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel) {
-        addHostForm.iconName = iconModel.pictureName
-        addHostForm.iconSectionItems.forEach {
-            switch $0 {
-            case .icon(let model):
-                model == iconModel ? (model.selected = true) : (model.selected = false)
-            default:
-                break
-            }
-        }
+        addHostForm.iconModel = iconModel
         view?.reloadTable()
     }
 
