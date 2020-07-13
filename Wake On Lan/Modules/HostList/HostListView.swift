@@ -38,9 +38,7 @@ class HostListView: UIView {
             let spacing: CGFloat = 5
             addButton.imageEdgeInsets =
                 UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-            addButton.adjustsImageWhenHighlighted = false
-            addButton.adjustsImageWhenDisabled = false
-            
+
             return addButton
         }()
         

@@ -18,8 +18,6 @@ class ChooseIconCell: UICollectionViewCell {
     private lazy var deviceButton: SoftUIButton = {
         let button = SoftUIButton()
         button.addTarget(self, action: #selector(didTapDeviceButton(_:)), for: .touchUpInside)
-        button.adjustsImageWhenDisabled = false
-        button.adjustsImageWhenHighlighted = false
 
         return button
     }()

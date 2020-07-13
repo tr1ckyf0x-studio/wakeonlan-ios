@@ -48,8 +48,6 @@ class HostListTableViewCell: UITableViewCell {
         let button = SoftUIButton(roundShape: true)
         button.setImage(R.image.more(), for: .normal)
         button.addTarget(self, action: #selector(didTapInfoButton), for: .touchUpInside)
-        button.adjustsImageWhenDisabled = false
-        button.adjustsImageWhenHighlighted = false
 
         return button
     }()

@@ -58,7 +58,10 @@ class SoftUIButton: UIButton, SoftUIProtocol {
         self.roundShape = roundShape
         self.themeColor = themeColor
         self.cornerRadius = cornerRadius
+        
         super.init(frame: .zero)
+        self.adjustsImageWhenDisabled = false
+        self.adjustsImageWhenHighlighted = false
     }
     
     required init?(coder: NSCoder) {

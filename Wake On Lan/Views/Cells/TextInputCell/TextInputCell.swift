@@ -9,30 +9,6 @@
 import UIKit
 import SnapKit
 
-extension UITableViewCell {
-
-    func makeTopSeparatorLine() {
-        let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        addSubview(separatorLine)
-        separatorLine.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(1)
-        }
-    }
-
-    func makeBottomSeparatorLine() {
-        let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        addSubview(separatorLine)
-        separatorLine.snp.makeConstraints {
-            $0.leading.trailing.top.equalToSuperview()
-            $0.height.equalTo(1)
-        }
-    }
-
-}
-
 private class AddHostFailureView: UIView {
     
     // MARK: Properties
@@ -137,8 +113,9 @@ class TextInputCell: UITableViewCell {
     private func configureViews() {
         configureTextField()
         configureFailureLabel()
-        makeTopSeparatorLine()
-        makeBottomSeparatorLine()
+        [UITableViewCell.SeparatorLine.top, .bottom].forEach {
+            makeSeparatorLine(type: $0)
+        }
     }
     
     private func configureTextField() {
@@ -189,6 +166,32 @@ class TextInputCell: UITableViewCell {
     
     @objc private func didTapDoneButton() {
         self.endEditing(true)
+    }
+
+}
+
+// MARK: - UITableViewCell + SeparatorLine
+private extension UITableViewCell {
+    
+    enum SeparatorLine {
+        case top
+        case bottom
+    }
+    
+    func makeSeparatorLine(type: SeparatorLine) {
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        addSubview(separatorLine)
+        separatorLine.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            switch type {
+            case .top:
+                $0.bottom.equalToSuperview()
+            case .bottom:
+                $0.top.equalToSuperview()
+            }
+            $0.height.equalTo(1)
+        }
     }
 
 }
