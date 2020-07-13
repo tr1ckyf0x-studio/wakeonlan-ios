@@ -44,8 +44,7 @@ class AddHostView: UIView {
                                 action: #selector(saveButtonPressed),
                                 for: .touchUpInside)
             let spacing: CGFloat = 6
-            addButton.imageEdgeInsets =
-                UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            addButton.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
             addButton.imageView?.contentMode = .scaleAspectFit
             addButton.imageView?.tintColor = .init(red: 105/255, green: 105/255, blue: 105/255, alpha: 1.0)
             
@@ -72,8 +71,7 @@ class AddHostView: UIView {
                                 action: #selector(backButtonPressed),
                                 for: .touchUpInside)
             let spacing: CGFloat = 5
-            addButton.imageEdgeInsets =
-                UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            addButton.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
             
             return addButton
         }()
