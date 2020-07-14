@@ -47,7 +47,6 @@ final class PersistentCoreDataService {
     // MARK: - Core Data Saving support
     
     func saveContext(_ context: NSManagedObjectContext, completionHandler: SaveCompletionHandler? = nil) {
-        
         switch context.concurrencyType {
         case .privateQueueConcurrencyType:
             context.performAndWait {

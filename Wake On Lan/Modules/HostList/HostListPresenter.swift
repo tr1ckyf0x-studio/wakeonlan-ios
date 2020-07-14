@@ -46,7 +46,8 @@ extension HostListPresenter: HostListTableManagerDelegate {
     }
     
     func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath) {
-        guard case let .host(host) = tableManager.sections[indexPath.section].items[indexPath.item] else { return }
+        guard case let .host(host) =
+            tableManager.sections[indexPath.section].items[indexPath.item] else { return }
         interactor?.wakeHost(host)
     }
 }

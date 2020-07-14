@@ -36,7 +36,9 @@ extension HostListTableManager: UITableViewDataSource {
         let model = sections[indexPath.section].items[indexPath.row]
         switch model {
         case let .host(host):
-            let hostCell = tableView.dequeueReusableCell(withIdentifier: "\(HostListTableViewCell.self)", for: indexPath) as? HostListTableViewCell
+            let hostCell = tableView.dequeueReusableCell(
+                withIdentifier: "\(HostListTableViewCell.self)",
+                for: indexPath) as? HostListTableViewCell
             hostCell?.configure(with: host, didTapInfoBlock: { [unowned self] _ in
                 self.delegate?.tableManagerDidTapInfoButton(self, host: host)
             })

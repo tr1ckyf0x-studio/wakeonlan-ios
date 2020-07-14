@@ -113,7 +113,7 @@ class TextInputCell: UITableViewCell {
     private func configureViews() {
         configureTextField()
         configureFailureLabel()
-        [UITableViewCell.SeparatorLine.top, .bottom].forEach {
+        UITableViewCell.SeparatorLineType.allCases.forEach {
             makeSeparatorLine(type: $0)
         }
     }
@@ -173,12 +173,11 @@ class TextInputCell: UITableViewCell {
 // MARK: - UITableViewCell + SeparatorLine
 private extension UITableViewCell {
     
-    enum SeparatorLine {
-        case top
-        case bottom
+    enum SeparatorLineType : CaseIterable {
+        case top, bottom
     }
     
-    func makeSeparatorLine(type: SeparatorLine) {
+    func makeSeparatorLine(type: SeparatorLineType) {
         let separatorLine = UIView()
         separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         addSubview(separatorLine)

@@ -22,10 +22,12 @@ protocol AddHostViewInput: class {
 
 protocol AddHostInteractorInput: class {
     func saveForm(_ form: AddHostForm)
+    func updateForm(_ form: AddHostForm)
 }
 
 protocol AddHostInteractorOutput: class {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm)
+    func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm)
 }
 
 protocol AddHostRouterProtocol: class, Router {

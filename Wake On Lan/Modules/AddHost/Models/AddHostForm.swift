@@ -33,7 +33,7 @@ class AddHostForm: Form {
             }
         }
     }
-    
+
     // MARK: - Constants
     private enum Placeholder {
         static let title = "e.g. MacBook or NAS"
@@ -41,8 +41,21 @@ class AddHostForm: Form {
         static let ipAddress = "255.255.255.255"
         static let port = "9"
     }
-        
+
     // MARK: - Properties
+    private(set) var formSections = [FormSection]()
+
+    private(set) var host: Host? {
+        didSet {
+            guard let host = host else { return }
+            iconModel = IconModel(pictureName: host.iconName, selected: true)
+            titleItem.value = host.title
+            macAddressItem.value = host.macAddress
+            ipAddressItem.value = host.ipAddress
+            portItem.value = host.port
+        }
+    }
+
     var iconModel: IconModel? = IconModel(selected: true) {
         didSet {
             self.iconSectionItems.forEach {
@@ -61,8 +74,6 @@ class AddHostForm: Form {
     var ipAddress: String?
     var port: String?
 
-    private(set) var formSections = [FormSection]()
-    
     // MARK: - Section items
     private(set) lazy var iconSectionItems: [FormItem] = {
         var items = [FormItem]()
@@ -114,7 +125,7 @@ class AddHostForm: Form {
         item.failureReason = .invalidIPAddress
         item.keyboardType = .numbersAndPunctuation
         item.isMandatory = false
-                
+
         return item
     }()
     
@@ -130,34 +141,27 @@ class AddHostForm: Form {
         item.keyboardType = .numberPad
         item.isMandatory = false
         item.maxLength = 5
-        
+
         return item
     }()
 
     // MARK: - Init
-    
+
     init(host: Host? = nil) {
-        makeSections(host: host)
+        makeSections()
+        defer { self.host = host }
     }
 
     // MARK: - Private
-    
-    private func makeSections(host: Host? = nil) {
+
+    private func makeSections() {
         let titleFormItem = FormItem.text(titleItem)
         let macAddressFormItem = FormItem.text(macAddressItem)
         let ipAddressFormItem = FormItem.text(ipAddressItem)
         let portFormItem = FormItem.text(portItem)
 
-        if let host = host {
-            iconModel = .init(pictureName: host.iconName, selected: true)
-            titleItem.value = host.title
-            macAddressItem.value = host.macAddress
-            ipAddressItem.value = host.ipAddress
-            portItem.value = host.port
-        }
-        
         let deviceIconSection = FormSection.section(content: iconSectionItems, kind: .deviceIcon)
-        
+
         let titleSection = FormSection.section(
             content: [titleFormItem],
             header: .init(header: R.string.addHost.title()),
@@ -182,7 +186,8 @@ class AddHostForm: Form {
             footer: .init(footer: R.string.addHost.portDescription()),
             kind: .port)
         
-        formSections = [deviceIconSection, titleSection, macAddressSection, ipAddressSection, portSection]
+        formSections =
+            [deviceIconSection, titleSection, macAddressSection, ipAddressSection, portSection]
     }
 
 }

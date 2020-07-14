@@ -30,14 +30,18 @@ extension AddHostPresenter: AddHostViewOutput {
     func viewDidLoad(_ view: AddHostViewInput) {
         tableManager.form = addHostForm
         tableManager.delegate = self
-
         view.reloadTable()
     }
 
     func viewDidPressSaveButton(_ view: AddHostViewInput) {
         // TODO: Обработка ошибок формы
         guard addHostForm.isValid else { return }
-        interactor?.saveForm(addHostForm)
+        guard let _ = addHostForm.host else { // Host does not yet exists
+            interactor?.saveForm(addHostForm)
+            return
+        }
+        // Host already exists
+        interactor?.updateForm(addHostForm)
     }
     
     func viewDidPressBackButton(_ view: AddHostViewInput) {
@@ -48,6 +52,10 @@ extension AddHostPresenter: AddHostViewOutput {
 
 extension AddHostPresenter: AddHostInteractorOutput {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm) {
+        router?.popCurrentController(animated: true)
+    }
+
+    func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm) {
         router?.popCurrentController(animated: true)
     }
 }
