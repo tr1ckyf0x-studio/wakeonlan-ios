@@ -18,20 +18,17 @@ class AddHostInteractor: AddHostInteractorInput {
 
     func saveForm(_ form: AddHostForm) {
         let context = coreDataService.createChildConcurrentContext()
-        context.performAndWait {
-            let host = Host(context: context)
-            guard let macAddress = form.macAddress,
-                let title = form.title,
-                let iconName = form.iconModel?.pictureName
-                else { return }
-            host.iconName = iconName
-            host.title = title
-            host.macAddress = macAddress
-            host.ipAddress = form.ipAddress
-            host.port = form.port
-            host.id = UUID()
-        }
-
+        let host = Host(context: context)
+        guard let macAddress = form.macAddress,
+            let title = form.title,
+            let iconName = form.iconModel?.pictureName
+            else { return }
+        host.iconName = iconName
+        host.title = title
+        host.macAddress = macAddress
+        host.ipAddress = form.ipAddress
+        host.port = form.port
+        host.id = UUID()
         coreDataService.saveContext(context) { [weak self] in
             guard let self = self else { return }
             self.presenter?.interactor(self, didSaveForm: form)
@@ -46,7 +43,7 @@ class AddHostInteractor: AddHostInteractorInput {
         let fetchRequest = Host.fetchRequest() as NSFetchRequest<Host>
         fetchRequest.predicate = NSPredicate(format: "id = %@", currentHostUUID.uuidString)
         let managedContext = coreDataService.createChildConcurrentContext()
-        managedContext.performAndWait {
+        managedContext.perform { [unowned self] in
             do {
                 let objects = try fetchRequest.execute()
                 let updateObject = objects.first
@@ -59,12 +56,14 @@ class AddHostInteractor: AddHostInteractorInput {
                 if let port = form.port {
                     updateObject?.port = port
                 }
+                self.coreDataService.saveContext(managedContext) { [unowned self] in
+                    self.presenter?.interactor(self, didUpdateForm: form)
+                }
             } catch {
+                // TODO: Error - handling
                 print(error)
             }
         }
-        coreDataService.saveContext(managedContext)
-        presenter?.interactor(self, didUpdateForm: form)
     }
 
 }
