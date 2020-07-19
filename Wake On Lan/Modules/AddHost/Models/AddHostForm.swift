@@ -186,10 +186,3 @@ extension AddHostForm {
     }
 
 }
-
-private extension IndexPath {
-    init(row: Int, section: FormSection.Kind) {
-        self.init(row: row, section: section.rawValue)
-    }
-
-}
