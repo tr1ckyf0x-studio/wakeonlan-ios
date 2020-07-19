@@ -49,10 +49,11 @@ extension HostListTableManager: UITableViewDataSource {
         
         return unwrappedCell
     }
-    
+
 }
 
 extension HostListTableManager: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section].header
     }

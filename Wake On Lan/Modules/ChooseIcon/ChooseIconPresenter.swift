@@ -11,18 +11,22 @@ class ChooseIconPresenter {
     weak var moduleDelegate: ChooseIconModuleOutput?
     var router: ChooseIconRouterProtocol!
 
-    var items: [FormItem]!
+    private let sections: [ChooseIconSection] = {
+        let items: [FormItem] = [R.image.other, R.image.desktop, R.image.router, R.image.scanner, R.image.tv].map {
+            let model = IconModel(pictureName: $0.name)
+            return .icon(model)
+        }
 
-    private(set) lazy var tableManager: ChooseIconTableManager = {
-        return ChooseIconTableManager(with: createSections())
+        return [ChooseIconSection.section(content: items)]
     }()
 
-    private func createSections() -> [ChooseIconSection] {
-        return [ChooseIconSection.section(content: items)]
-    }
+    private(set) lazy var tableManager: ChooseIconTableManager = {
+        return .init(with: sections)
+    }()
 
 }
 
+// MARK: - ChooseIconViewOutput
 extension ChooseIconPresenter: ChooseIconViewOutput {
     func viewDidLoad(_ view: ChooseIconViewInput) {
         view.makePresentingViewControllerDimmed()
@@ -40,6 +44,7 @@ extension ChooseIconPresenter: ChooseIconViewOutput {
 
 }
 
+// MARK: - ChooseIconTableManagerDelegate
 extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
         moduleDelegate?.chooseIconModuleDidSelectIcon(icon)

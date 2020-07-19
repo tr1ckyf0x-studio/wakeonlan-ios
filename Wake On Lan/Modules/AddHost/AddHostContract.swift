@@ -31,5 +31,5 @@ protocol AddHostInteractorOutput: class {
 }
 
 protocol AddHostRouterProtocol: class, Router {
-    func routeToChooseIcon(items: [FormItem])
+    func routeToChooseIcon()
 }

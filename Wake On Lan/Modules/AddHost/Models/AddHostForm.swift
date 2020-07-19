@@ -48,7 +48,7 @@ class AddHostForm: Form {
     private(set) var host: Host? {
         didSet {
             guard let host = host else { return }
-            iconModel = IconModel(pictureName: host.iconName, selected: true)
+            iconModel = IconModel(pictureName: host.iconName)
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
             ipAddressItem.value = host.ipAddress
@@ -56,34 +56,17 @@ class AddHostForm: Form {
         }
     }
 
-    var iconModel: IconModel? = IconModel(selected: true) {
-        didSet {
-            self.iconSectionItems.forEach {
-                switch $0 {
-                case .icon(let model):
-                    model == self.iconModel ? (model.selected = true) : (model.selected = false)
-                default:
-                    break
-                }
-            }
-        }
-    }
-
+    var iconModel: IconModel? = .init()
     var title: String?
     var macAddress: String?
     var ipAddress: String?
     var port: String?
 
     // MARK: - Section items
-    private(set) lazy var iconSectionItems: [FormItem] = {
-        var items = [FormItem]()
-        items += [FormItem.icon(.init(selected: true))]
-        items += [R.image.desktop, R.image.router, R.image.scanner, R.image.tv].map {
-            let model = IconModel(pictureName: $0.name, selected: false)
-            return FormItem.icon(model)
-        }
+    private lazy var iconSectionItems: [FormItem] = {
+        guard let model = iconModel else { return [] }
 
-        return items
+        return [FormItem.icon(model)]
     }()
     
     private lazy var titleItem: TextFormItem = {
@@ -146,21 +129,20 @@ class AddHostForm: Form {
     }()
 
     // MARK: - Init
-
     init(host: Host? = nil) {
         makeSections()
         defer { self.host = host }
     }
 
     // MARK: - Private
-
     private func makeSections() {
         let titleFormItem = FormItem.text(titleItem)
         let macAddressFormItem = FormItem.text(macAddressItem)
         let ipAddressFormItem = FormItem.text(ipAddressItem)
         let portFormItem = FormItem.text(portItem)
 
-        let deviceIconSection = FormSection.section(content: iconSectionItems, kind: .deviceIcon)
+        let deviceIconSection = FormSection.section(content: iconSectionItems,
+                                                    kind: .deviceIcon)
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
@@ -201,6 +183,13 @@ extension AddHostForm {
             return formResult && sectionIsValid
         }
         return formIsValid
+    }
+
+}
+
+private extension IndexPath {
+    init(row: Int, section: FormSection.Kind) {
+        self.init(row: row, section: section.rawValue)
     }
 
 }

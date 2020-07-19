@@ -42,11 +42,10 @@ class SoftUIView: UIView, SoftUIProtocol {
         let newShadowLayer = makeShadowLayer()
         newShadowLayer.name = shadowLayerName
 
-        // Layer does not exists
-        if oldShadowLayer == nil {
+        if let layer = oldShadowLayer { // Layer already exists
+            self.layer.replaceSublayer(layer, with: newShadowLayer)
+        } else { // Layer does not exists
             self.layer.insertSublayer(newShadowLayer, at: 0)
-        } else {
-            self.layer.replaceSublayer(oldShadowLayer ?? CAShapeLayer(), with: newShadowLayer)
         }
     }
     

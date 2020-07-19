@@ -9,7 +9,7 @@
 import UIKit
 
 class AddHostViewController: UIViewController {
-    
+
     // MARK: - Properties
     var presenter: (AddHostViewOutput & ChooseIconModuleOutput)?
 
@@ -45,12 +45,14 @@ class AddHostViewController: UIViewController {
 
 }
 
+// MARK: - AddHostViewInput
 extension AddHostViewController: AddHostViewInput {
     func reloadTable() {
         addHostView.tableView.reloadData()
     }
 }
 
+// MARK: - AddHostViewDelegate
 extension AddHostViewController: AddHostViewDelegate {
     func addHostViewDidPressBackButton(_ view: AddHostView) {
         presenter?.viewDidPressBackButton(self)

@@ -8,31 +8,18 @@
 
 import UIKit
 
-class IconModel {
-    var pictureName: String
-    var selected: Bool = false
-
-    init(pictureName: String = R.image.other.name, selected: Bool) {
-        self.pictureName = pictureName
-        self.selected = selected
-    }
-
+// MARK: - IconModel
+struct IconModel {
+    var pictureName: String = R.image.other.name
 }
 
-// MARK: - Equatable
 extension IconModel: Equatable {
     static func == (lhs: IconModel, rhs: IconModel) -> Bool {
         return lhs.pictureName == rhs.pictureName
     }
 }
 
-// MARK: - CustomStringConvertible
-extension IconModel: CustomStringConvertible {
-    var description: String {
-         return "( \(self) : \(pictureName), \(selected) )"
-     }
-}
-
+// MARK: - Section Model
 enum ChooseIconSectionItem {
     case icon(_ model: IconModel)
 }

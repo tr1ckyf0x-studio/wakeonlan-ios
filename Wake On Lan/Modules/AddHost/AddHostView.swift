@@ -134,7 +134,7 @@ class AddHostView: UIView {
         // keyboardFrame`Begin`UserInfoKey because we using inputAccessoryView
         let key = UIResponder.keyboardFrameEndUserInfoKey
         guard let keyboardSize = (notification.userInfo?[key] as? NSValue)?.cgRectValue else { return }
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        let insets = UIEdgeInsets(top: .zero, left: .zero, bottom: keyboardSize.height, right: .zero)
         tableView.contentInset = insets
     }
     

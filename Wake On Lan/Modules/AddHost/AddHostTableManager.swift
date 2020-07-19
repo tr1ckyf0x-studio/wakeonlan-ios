@@ -8,11 +8,7 @@
 
 import UIKit
 
-protocol AddHostTableManagerDelegate: class {
-    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel)
-}
-
-// TODO: Implementing custom header/footer views
+// TODO: Implement custom header/footer views
 class AddHostTableManager: NSObject {
 
     weak var delegate: AddHostTableManagerDelegate?
@@ -40,44 +36,38 @@ extension AddHostTableManager: UITableViewDataSource {
         var cell: UITableViewCell?
         let model = sections[indexPath.section].items[indexPath.row]
         switch model {
-        case .text(let textFormItem):
-            let textInputCell =
-                tableView.dequeueReusableCell(
-                    withIdentifier: TextInputCell.reuseIdentifier, for: indexPath) as? TextInputCell
-            textFormItem.indexPath = indexPath
-            textInputCell?.configure(with: model)
-            // Scroll table view to next responder
-            textInputCell?.onNextResponderAction = { indexPath in
-                guard let nextIndexPath =
-                    tableView.nextIndexPath(for: indexPath) else { return }
-                tableView.scrollToRow(at: nextIndexPath, at: .top, animated: true)
-            }
-            // NOTE: We need to hide failure label in
-            // completion block for smoothy animation working
-            textInputCell?.onExpandAction = { completion in
-                CATransaction.begin()
-                CATransaction.setCompletionBlock({
-                    completion?()
-                })
-                tableView.beginUpdates()
-                tableView.endUpdates()
-                CATransaction.commit()
-            }
-            cell = textInputCell
-        case .icon(let model):
-            if model.selected {
+            case .text(let textFormItem):
+                let textInputCell =
+                    tableView.dequeueReusableCell(
+                        withIdentifier: TextInputCell.reuseIdentifier, for: indexPath) as? TextInputCell
+                textFormItem.indexPath = indexPath
+                textInputCell?.configure(with: model)
+                // Scroll table view to next responder
+                textInputCell?.onNextResponderAction = { indexPath in
+                    guard let nextIndexPath =
+                        tableView.nextIndexPath(for: indexPath) else { return }
+                    tableView.scrollToRow(at: nextIndexPath, at: .top, animated: true)
+                }
+                // NOTE: We need to hide failure label in
+                // completion block for smoothy animation working
+                textInputCell?.onExpandAction = { completion in
+                    CATransaction.begin()
+                    CATransaction.setCompletionBlock({
+                        completion?()
+                    })
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                    CATransaction.commit()
+                }
+                cell = textInputCell
+            case .icon:
                 let deviceIconCell = tableView.dequeueReusableCell(
                     withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
-                deviceIconCell?.configure(with: model)
+                deviceIconCell?.configure(with: form?.iconModel)
                 deviceIconCell?.didTapChangeIconBlock = { [unowned self] model in
                     self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
                 }
                 cell = deviceIconCell
-            } else {
-                let emptyCell = tableView.dequeueReusableCell(
-                    withIdentifier: "\(EmptyCell.self)", for: indexPath) as? EmptyCell
-                cell = emptyCell
-            }
         }
 
         guard let unwrappedCell = cell else {
@@ -85,18 +75,6 @@ extension AddHostTableManager: UITableViewDataSource {
         }
         
         return unwrappedCell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = sections[indexPath.section].items[indexPath.row]
-        switch model {
-        case .icon(let model):
-            guard model.selected else { return .zero }
-        default:
-            return UITableView.automaticDimension
-        }
-
-        return UITableView.automaticDimension
     }
 
 }

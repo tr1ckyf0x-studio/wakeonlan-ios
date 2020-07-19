@@ -11,14 +11,13 @@ import UIKit
 class AddHostRouter: AddHostRouterProtocol {
     var viewController: UIViewController?
 
-    func routeToChooseIcon(items: [FormItem]) {
+    func routeToChooseIcon() {
         // TODO: Needs to be refactored(viewConroller cast)
         guard let addHostViewController = viewController as? AddHostViewController else { return }
         let chooseIconViewController = ChooseIconViewController()
         chooseIconViewController.modalPresentationStyle = .overCurrentContext
         let configurator = ChooseIconConfigurator()
         configurator.configure(viewController: chooseIconViewController,
-                               items: items,
                                moduleDelegate: addHostViewController.presenter)
         viewController?.present(chooseIconViewController, animated: true)
     }

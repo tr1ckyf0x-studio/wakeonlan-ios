@@ -51,7 +51,6 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
             let iconCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "\(ChooseIconCell.self)", for: indexPath) as? ChooseIconCell
             let didTapIconBlock: ChooseIconCell.TapIconBlock = { [unowned self] _ in
-                model.selected = true
                 self.delegate?.tableManager(self, didTapIcon: model)
             }
             iconCell?.configure(with: model, didTapBlock: didTapIconBlock)

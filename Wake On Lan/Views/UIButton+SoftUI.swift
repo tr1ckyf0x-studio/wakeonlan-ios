@@ -78,10 +78,10 @@ class SoftUIButton: UIButton, SoftUIProtocol {
         let newShadowLayer = makeShadowLayer()
         newShadowLayer.name = shadowLayerName
 
-        if oldShadowLayer == nil { // Layer does not exists
+        if let layer = oldShadowLayer { // Layer already exists
+            self.layer.replaceSublayer(layer, with: newShadowLayer)
+        } else { // Layer does not exists
             self.layer.insertSublayer(newShadowLayer, below: self.imageView?.layer)
-        } else { // Layer already exists
-            self.layer.replaceSublayer(oldShadowLayer ?? CAShapeLayer(), with: newShadowLayer)
         }
     }
     

@@ -48,7 +48,8 @@ class DeviceIconCell: UITableViewCell {
     }
 
     // MARK: - Public
-    public func configure(with model: IconModel) {
+    public func configure(with model: IconModel?) {
+        guard let model = model else { return }
         self.model = model
         baseView.configure(with: model)
     }

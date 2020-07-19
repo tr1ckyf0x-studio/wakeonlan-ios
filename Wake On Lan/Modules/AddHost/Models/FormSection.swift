@@ -34,7 +34,7 @@ enum FormSection {
 
     typealias Item = FormItem
 
-    enum Kind {
+    enum Kind: Int {
         case deviceIcon
         case title
         case macAddress
