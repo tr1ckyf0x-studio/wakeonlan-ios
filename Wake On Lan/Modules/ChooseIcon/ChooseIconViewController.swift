@@ -68,36 +68,6 @@ class ChooseIconViewController: UIViewController {
         presenter.viewWillDisappear(self)
     }
 
-    // MARK: - Private
-    private func setupDismissingTap() {
-        view.addGestureRecognizer({
-            UITapGestureRecognizer(target: self, action: #selector(closeViewController))
-            }())
-    }
-
-    private func setupChooseIconView() {
-        view.addSubview(chooseIconView)
-        chooseIconView.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            $0.bottom.equalTo(cancelButton.snp.top).offset(-8)
-            $0.height.equalTo(1) // Because needs to be updated
-        }
-    }
-
-    private func setupCancelButton() {
-        view.addSubview(cancelButton)
-        cancelButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-8)
-            $0.height.equalTo(57)
-        }
-    }
-
-    // MARK: - Action
-    @objc private func closeViewController() {
-        dismiss(animated: true)
-    }
-
     // MARK: - Utilities
     func makePresentingViewControllerDimmed() {
         UIView.animate(withDuration: Constants.animationDuration, animations:  {
@@ -109,6 +79,38 @@ class ChooseIconViewController: UIViewController {
         UIView.animate(withDuration: Constants.animationDuration, animations:  {
             self.presentingViewController?.view.alpha = 1.0
         })
+    }
+
+}
+
+// MARK: - Private
+private extension ChooseIconViewController {
+    func setupDismissingTap() {
+        let tapGestureRecognizer =
+            UITapGestureRecognizer(target: self, action: #selector(closeViewController))
+        view.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    func setupChooseIconView() {
+        view.addSubview(chooseIconView)
+        chooseIconView.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
+            $0.bottom.equalTo(cancelButton.snp.top).offset(-8)
+            $0.height.equalTo(1) // Because needs to be updated
+        }
+    }
+
+    func setupCancelButton() {
+        view.addSubview(cancelButton)
+        cancelButton.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-8)
+            $0.height.equalTo(57)
+        }
+    }
+
+    @objc func closeViewController() {
+        dismiss(animated: true)
     }
 
 }

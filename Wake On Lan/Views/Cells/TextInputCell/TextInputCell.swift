@@ -54,7 +54,7 @@ private class AddHostFailureView: UIView {
 
 class TextInputCell: UITableViewCell {
     
-    static let reuseIdentifier = "TextInputCell"
+    static let reuseIdentifier = String(describing: self)
     
     typealias OnExpandCompletion = () -> Void
     typealias OnExpandAction = (_ completion: OnExpandCompletion?) -> Void
@@ -173,7 +173,7 @@ class TextInputCell: UITableViewCell {
 // MARK: - UITableViewCell + SeparatorLine
 private extension UITableViewCell {
     
-    enum SeparatorLineType : CaseIterable {
+    enum SeparatorLineType: CaseIterable {
         case top, bottom
     }
     
@@ -217,8 +217,7 @@ extension TextInputCell: UITextFieldDelegate {
     // how-to-limit-the-number-of-characters-in-a-uitextfield-or-uitextview
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
-                   replacementString string:
-        String) -> Bool {
+                   replacementString string: String) -> Bool {
         guard let maxLength = textFormItem?.maxLength else { return true }
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }

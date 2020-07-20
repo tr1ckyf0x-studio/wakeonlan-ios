@@ -31,18 +31,20 @@ class AddHostViewController: UIViewController {
         presenter?.viewDidLoad(self)
     }
 
-    // MARK: - Private
-    private func setupTableView() {
+}
+
+// MARK: - Private
+private extension AddHostViewController {
+    func setupTableView() {
         addHostView.tableView.delegate = presenter?.tableManager
         addHostView.tableView.dataSource = presenter?.tableManager
     }
 
-    private func setupNavigationBar() {
+    func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = addHostView.backBarButton
         navigationItem.rightBarButtonItem = addHostView.saveItemButton
     }
-
 }
 
 // MARK: - AddHostViewInput
