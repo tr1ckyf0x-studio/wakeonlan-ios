@@ -36,8 +36,8 @@ extension AddHostPresenter: AddHostViewOutput {
 
     func viewDidPressSaveButton(_ view: AddHostViewInput) {
         // TODO: Обработка ошибок формы
-        guard addHostForm.isValid else { return }
-        guard let _ = addHostForm.host else { // Host does not yet exists
+        guard let _ = addHostForm.host,
+            addHostForm.isValid else { // Host does not yet exists
             interactor?.saveForm(addHostForm)
             return
         }
