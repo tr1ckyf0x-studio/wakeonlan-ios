@@ -11,8 +11,11 @@ import UIKit
 class HostListRouter: HostListRouterProtocol {
     weak var viewController: UIViewController?
     
-    func routeToAddHost() {
+    func routeToAddHost(with host: Host? = nil) {
         let addHostViewController = AddHostViewController()
+        let addHostConfigurator = AddHostConfigurator()
+        addHostConfigurator.configure(viewController: addHostViewController, addHostForm: AddHostForm(host: host))
         viewController?.navigationController?.pushViewController(addHostViewController, animated: true)
     }
+
 }

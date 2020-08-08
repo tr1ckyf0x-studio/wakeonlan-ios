@@ -9,50 +9,57 @@
 import UIKit
 
 class AddHostViewController: UIViewController {
+
+    // MARK: - Properties
+    var presenter: (AddHostViewOutput & ChooseIconModuleOutput)?
+
+    private lazy var addHostView: AddHostView = {
+        let view = AddHostView()
+        view.delegate = self
+        return view
+    }()
     
-    var presenter: AddHostViewOutput?
-    
-    private lazy var addHostView = AddHostView()
-    
+    // MARK: - Lifecycle
     override func loadView() {
         view = addHostView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let configurator = AddHostConfigurator()
-        configurator.configure(viewController: self)
-        addHostView.delegate = self
-        setupViews()
-        presenter?.viewDidLoad(self)
-    }
-    
-    private func setupViews() {
         setupTableView()
         setupNavigationBar()
+        presenter?.viewDidLoad(self)
     }
-    
-    private func setupTableView() {
-        addHostView.tableView.dataSource = presenter?.tableManager
+
+}
+
+// MARK: - Private
+private extension AddHostViewController {
+    func setupTableView() {
         addHostView.tableView.delegate = presenter?.tableManager
+        addHostView.tableView.dataSource = presenter?.tableManager
     }
-    
-    private func setupNavigationBar() {
-        setupSaveButton()
-    }
-    
-    private func setupSaveButton() {
+
+    func setupNavigationBar() {
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.leftBarButtonItem = addHostView.backBarButton
         navigationItem.rightBarButtonItem = addHostView.saveItemButton
     }
 }
 
+// MARK: - AddHostViewInput
 extension AddHostViewController: AddHostViewInput {
     func reloadTable() {
         addHostView.tableView.reloadData()
     }
 }
 
+// MARK: - AddHostViewDelegate
 extension AddHostViewController: AddHostViewDelegate {
+    func addHostViewDidPressBackButton(_ view: AddHostView) {
+        presenter?.viewDidPressBackButton(self)
+    }
+    
     func addHostViewDidPressSaveButton(_ view: AddHostView) {
         presenter?.viewDidPressSaveButton(self)
     }

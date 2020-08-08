@@ -8,34 +8,42 @@
 
 class ChooseIconPresenter {
     weak var view: ChooseIconViewInput!
+    weak var moduleDelegate: ChooseIconModuleOutput?
     var router: ChooseIconRouterProtocol!
 
-    private(set) lazy var tableManager: ChooseIconTableManager = {
-        return ChooseIconTableManager(with: createSections())
+    private(set) lazy var tableManager = ChooseIconTableManager(with: sections)
+
+    private let sections: [ChooseIconSection] = {
+        [[R.image.other, R.image.desktop, R.image.router, R.image.scanner, R.image.tv].map {
+            .icon(IconModel(pictureName: $0.name))
+            }].map { ChooseIconSection.section(content: $0) }
     }()
 
-    private func createSections() -> [ChooseIconSection] {
-        let items: [ChooseIconSectionItem] = [
-            R.image.other(),
-            R.image.desktop(),
-            R.image.router(),
-            R.image.scanner(),
-            R.image.tv()].map {
-                let image = $0?.withRenderingMode(.alwaysTemplate)
-                let model = IconModel(picture: image)
-                let item = ChooseIconSectionItem.icon(model)
-                return item
-        }
+}
 
-        return [ChooseIconSection.section(content: items)]
+// MARK: - ChooseIconViewOutput
+extension ChooseIconPresenter: ChooseIconViewOutput {
+    func viewDidLoad(_ view: ChooseIconViewInput) {
+        view.makePresentingViewControllerDimmed()
+        tableManager.delegate = self
+    }
+
+    func viewWillDisappear(_ view: ChooseIconViewInput) {
+        view.makePresentingViewControllerTransparent()
+    }
+
+    func viewWillLayoutSubviews(_ view: ChooseIconViewInput) {
+        view.reloadCollectionViewLayout()
+        view.updateIconViewHeight()
     }
 
 }
 
-extension ChooseIconPresenter: ChooseIconViewOutput {
-
-    func viewWillLayoutSubviews(_ view: ChooseIconViewInput) {
-        view.reloadCollectionViewLayout()
+// MARK: - ChooseIconTableManagerDelegate
+extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
+    func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
+        moduleDelegate?.chooseIconModuleDidSelectIcon(icon)
+        view.dismiss(animated: true)
     }
 
 }

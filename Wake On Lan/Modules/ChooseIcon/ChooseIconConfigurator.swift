@@ -8,8 +8,10 @@
 
 class ChooseIconConfigurator {
 
-    func configure(viewController: ChooseIconViewInput) {
+    func configure(viewController: ChooseIconViewInput,
+                   moduleDelegate: ChooseIconModuleOutput?) {
         let presenter = ChooseIconPresenter()
+        presenter.moduleDelegate = moduleDelegate
         let router = ChooseIconRouter(viewController: viewController)
 
         presenter.router = router

@@ -29,5 +29,5 @@ protocol HostListInteractorOutput: class {
 }
 
 protocol HostListRouterProtocol: class {
-    func routeToAddHost()
+    func routeToAddHost(with host: Host?)
 }

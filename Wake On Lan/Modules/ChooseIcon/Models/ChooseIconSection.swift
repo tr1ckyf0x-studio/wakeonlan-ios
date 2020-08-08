@@ -8,17 +8,25 @@
 
 import UIKit
 
+// MARK: - IconModel
 struct IconModel {
-    var picture: UIImage?
+    var pictureName: String = R.image.other.name
 }
 
+extension IconModel: Equatable {
+    static func == (lhs: IconModel, rhs: IconModel) -> Bool {
+        return lhs.pictureName == rhs.pictureName
+    }
+}
+
+// MARK: - Section Model
 enum ChooseIconSectionItem {
     case icon(_ model: IconModel)
 }
 
 enum ChooseIconSection {
 
-    typealias Item = ChooseIconSectionItem
+    typealias Item = FormItem
 
     case section(header: String? = nil, content: [Item], footer: String? = nil)
 
