@@ -21,11 +21,10 @@ class ChooseIconView: UIView {
         return collectionView
     }()
 
-
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = .softUIColor
         setupCollectionView()
     }
 

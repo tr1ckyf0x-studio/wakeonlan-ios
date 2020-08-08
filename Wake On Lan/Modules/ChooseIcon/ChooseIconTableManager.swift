@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol ChooseIconTableManagerDelegate: class {
+    func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)
+
+}
+
 class ChooseIconTableManager: NSObject {
     var sections: [ChooseIconSection]
+    weak var delegate: ChooseIconTableManagerDelegate?
 
     init(with sections: [ChooseIconSection]) {
         self.sections = sections
@@ -43,13 +49,14 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
         switch sectionModel {
         case .icon(let model):
             let iconCell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "\(ChooseIconCell.self)", for: indexPath) as? ChooseIconCell
-            iconCell?.configure(with: model)
-            // TODO:
-            // iconCell?.didTapIconBlock = {
-                // Save image identifier into CoreData
-            // }
+                withReuseIdentifier: "\(ChooseIconCell.self)", for: indexPath) as? ChooseIconCell
+            let didTapIconBlock: ChooseIconCell.TapIconBlock = { [unowned self] _ in
+                self.delegate?.tableManager(self, didTapIcon: model)
+            }
+            iconCell?.configure(with: model, didTapBlock: didTapIconBlock)
             cell = iconCell
+        default:
+            break
         }
 
         guard let unwrappedCell = cell else {

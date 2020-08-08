@@ -9,30 +9,6 @@
 import UIKit
 import SnapKit
 
-extension UITableViewCell {
-
-    func makeTopSeparatorLine() {
-        let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        addSubview(separatorLine)
-        separatorLine.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(1)
-        }
-    }
-
-    func makeBottomSeparatorLine() {
-        let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        addSubview(separatorLine)
-        separatorLine.snp.makeConstraints {
-            $0.leading.trailing.top.equalToSuperview()
-            $0.height.equalTo(1)
-        }
-    }
-
-}
-
 private class AddHostFailureView: UIView {
     
     // MARK: Properties
@@ -78,7 +54,7 @@ private class AddHostFailureView: UIView {
 
 class TextInputCell: UITableViewCell {
     
-    static let reuseIdentifier = "TextInputCell"
+    static let reuseIdentifier = String(describing: self)
     
     typealias OnExpandCompletion = () -> Void
     typealias OnExpandAction = (_ completion: OnExpandCompletion?) -> Void
@@ -137,8 +113,9 @@ class TextInputCell: UITableViewCell {
     private func configureViews() {
         configureTextField()
         configureFailureLabel()
-        makeTopSeparatorLine()
-        makeBottomSeparatorLine()
+        UITableViewCell.SeparatorLineType.allCases.forEach {
+            makeSeparatorLine(type: $0)
+        }
     }
     
     private func configureTextField() {
@@ -193,6 +170,31 @@ class TextInputCell: UITableViewCell {
 
 }
 
+// MARK: - UITableViewCell + SeparatorLine
+private extension UITableViewCell {
+    
+    enum SeparatorLineType: CaseIterable {
+        case top, bottom
+    }
+    
+    func makeSeparatorLine(type: SeparatorLineType) {
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        addSubview(separatorLine)
+        separatorLine.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            switch type {
+            case .top:
+                $0.bottom.equalToSuperview()
+            case .bottom:
+                $0.top.equalToSuperview()
+            }
+            $0.height.equalTo(1)
+        }
+    }
+
+}
+
 // MARK: - UITextFieldDelegate
 extension TextInputCell: UITextFieldDelegate {
 
@@ -215,8 +217,7 @@ extension TextInputCell: UITextFieldDelegate {
     // how-to-limit-the-number-of-characters-in-a-uitextfield-or-uitextview
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
-                   replacementString string:
-        String) -> Bool {
+                   replacementString string: String) -> Bool {
         guard let maxLength = textFormItem?.maxLength else { return true }
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }

@@ -11,23 +11,25 @@ import Resolver
 import CoreData
 
 class HostListInteractor: HostListInteractorInput {
-    
+
     weak var presenter: HostListInteractorOutput?
-    
+
     @Injected private var coreDataService: PersistentCoreDataService
     @Injected private var wakeOnLanService: WakeOnLanService
-    
+
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(_:)), name: Notification.Name.NSManagedObjectContextDidSave, object: coreDataService.mainContext)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contextDidSave(_:)),
+            name: Notification.Name.NSManagedObjectContextDidSave,
+            object: coreDataService.mainContext)
     }
-    
+
     func fetchHosts() {
         coreDataService.mainContext.perform { [weak self] in
             guard let self = self else { return }
             do {
-                let request = Host.fetchRequest() as NSFetchRequest<Host>
-                let sort = NSSortDescriptor(keyPath: \Host.id, ascending: true)
-                request.sortDescriptors = [sort]
+                let request = Host.sortedFetchRequest
                 let hosts = try request.execute()
                 self.presenter?.interactor(self, didUpdateHosts: hosts)
             } catch {
@@ -36,7 +38,7 @@ class HostListInteractor: HostListInteractorInput {
             }
         }
     }
-    
+
     func wakeHost(_ host: Host) {
         do {
             try wakeOnLanService.sendMagicPacket(to: host)
@@ -44,7 +46,7 @@ class HostListInteractor: HostListInteractorInput {
             presenter?.interactor(self, didEncounterError: error)
         }
     }
-    
+
     @objc func contextDidSave(_ notification: Notification) {
         fetchHosts()
     }
