@@ -5,4 +5,8 @@ target 'Wake on LAN' do
 
   pod "Resolver"
   pod "R.swift"
+
+  target 'WakeOnLanTests' do
+    inherit! :search_paths
+  end
 end
