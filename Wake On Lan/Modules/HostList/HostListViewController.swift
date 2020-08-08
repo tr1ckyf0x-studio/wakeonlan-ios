@@ -9,51 +9,62 @@
 import UIKit
 
 class HostListViewController: UIViewController {
-    
+
+    // MARK: - Properties
     var presenter: HostListViewOutput?
+
+    private lazy var hostListView: HostListView = {
+        let view = HostListView()
+        view.delegate = self
+        return view
+    }()
     
-    private lazy var hostListView = HostListView()
-    
+    // MARK: - Lifecycle
     override func loadView() {
         view = hostListView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let configurator = HostListConfigurator()
-        configurator.configure(viewController: self)
-        hostListView.delegate = self
-        setupViews()
+        HostListConfigurator().configure(viewController: self)
+        setupTableView()
         presenter?.viewIsReady(self)
     }
     
-    private func setupViews() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavigationBar()
-        setupTableView()
     }
-    
+
+    // MARK: - Private
     private func setupNavigationBar() {
-        setupAddButton()
+        navigationItem.title = R.string.hostList.hosts()
+        navigationItem.rightBarButtonItem = hostListView.addItemButton
+        navigationItem.largeTitleDisplayMode = .always
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.barTintColor = .softUIColor
+        navigationBar.prefersLargeTitles = true
+        let largeTitleTextAttributes = [NSAttributedString.Key.font : R.font.robotoBold(size: 36)!]
+        navigationBar.largeTitleTextAttributes = largeTitleTextAttributes
     }
     
     private func setupTableView() {
-        hostListView.tableView.dataSource = presenter?.tableManager
         hostListView.tableView.delegate = presenter?.tableManager
+        hostListView.tableView.dataSource = presenter?.tableManager
     }
-    
-    private func setupAddButton() {
-        navigationItem.rightBarButtonItem = hostListView.addItemButton
-    }
+
 }
 
-extension HostListViewController: HostListViewDelegate {
-    func hostListViewDidPressAddButton(_ view: HostListView) {
-        presenter?.viewDidPressAddButton(self)
-    }
-}
-
+// MARK: - HostListViewInput
 extension HostListViewController: HostListViewInput {
     func reloadTable() {
         hostListView.tableView.reloadData()
+    }
+}
+
+// MARK: - HostListViewDelegate
+extension HostListViewController: HostListViewDelegate {
+    func hostListViewDidPressAddButton(_ view: HostListView) {
+        presenter?.viewDidPressAddButton(self)
     }
 }

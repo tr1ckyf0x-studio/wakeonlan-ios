@@ -25,9 +25,9 @@ class DeviceIconView: UIView {
         imageView.isUserInteractionEnabled = true
 
         // Add tap gesture recognizer
-        let tapGestureRecognizer =
+        imageView.addGestureRecognizer({
             UITapGestureRecognizer(target: self, action: #selector(didTapChangeIcon))
-        imageView.addGestureRecognizer(tapGestureRecognizer)
+            }())
 
         return imageView
     }()
@@ -43,7 +43,9 @@ class DeviceIconView: UIView {
     }
 
     public func configure(with model: IconModel) {
-        deviceImageView.image = model.picture
+        deviceImageView.image = UIImage(named: model.pictureName,
+                                        in: Bundle.main,
+                                        compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
     }
 
     // MARK: - Private

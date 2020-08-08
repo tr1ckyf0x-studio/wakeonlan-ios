@@ -10,7 +10,7 @@ import Foundation
 
 enum FormItem {
     case text(_ formItem: TextFormItem)
-    case icon
+    case icon(_ iconModel: IconModel)
 }
 
 extension FormItem: FormValidable, FormMandatoryable {

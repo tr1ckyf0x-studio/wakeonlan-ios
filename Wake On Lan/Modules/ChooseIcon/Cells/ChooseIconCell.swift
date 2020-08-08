@@ -9,21 +9,20 @@
 import UIKit
 
 class ChooseIconCell: UICollectionViewCell {
-
+    
     typealias TapIconBlock = (_ cell: ChooseIconCell) -> Void
 
-    public var didTapIconBlock: TapIconBlock?
+    // MARK: - Properties
+    private var didTapIconBlock: TapIconBlock?
 
-    private lazy var baseView: DeviceIconView = {
-        let view = DeviceIconView()
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
-        view.layer.cornerRadius = 10
-        view.delegate = self
+    private lazy var deviceButton: SoftUIButton = {
+        let button = SoftUIButton()
+        button.addTarget(self, action: #selector(didTapDeviceButton(_:)), for: .touchUpInside)
 
-        return view
+        return button
     }()
 
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupDeviceIconView()
@@ -33,21 +32,31 @@ class ChooseIconCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func configure(with model: IconModel) {
-        baseView.configure(with: model)
+    // MARK: - Public
+    func configure(with model: IconModel, didTapBlock: @escaping TapIconBlock) {
+        didTapIconBlock = didTapBlock
+        setupDeviceImage(with: model.pictureName)
     }
 
+    // MARK: - Private
+    private func setupDeviceImage(with imageName: String) {
+        let image = UIImage(named: imageName,
+                            in: Bundle.main,
+                            compatibleWith: nil)?
+            .withRenderingMode(.alwaysTemplate)
+        deviceButton.setImage(image, for: .normal)
+        deviceButton.imageView?.tintColor = .systemGray
+    }
+    
     private func setupDeviceIconView() {
-        contentView.addSubview(baseView)
-        baseView.snp.makeConstraints {
+        contentView.addSubview(deviceButton)
+        deviceButton.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
-
-}
-
-extension ChooseIconCell: DeviceIconViewDelegate {
-    func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView) {
+    
+    // MARK: - Action
+    @objc private func didTapDeviceButton(_ sender: UIButton) {
         didTapIconBlock?(self)
     }
 

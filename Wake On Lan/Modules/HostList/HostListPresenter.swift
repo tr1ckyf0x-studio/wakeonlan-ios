@@ -21,7 +21,7 @@ extension HostListPresenter: HostListViewOutput {
     }
     
     func viewDidPressAddButton(_ view: HostListViewInput) {
-        router?.routeToAddHost()
+        router?.routeToAddHost(with: nil)
     }
 }
 
@@ -40,9 +40,14 @@ extension HostListPresenter: HostListInteractorOutput {
 }
 
 extension HostListPresenter: HostListTableManagerDelegate {
+    
+    func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host) {
+        router?.routeToAddHost(with: host)
+    }
+    
     func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath) {
-        guard case let .host(host) = tableManager.sections[indexPath.section].items[indexPath.item] else { return }
-        
+        guard case let .host(host) =
+            tableManager.sections[indexPath.section].items[indexPath.item] else { return }
         interactor?.wakeHost(host)
     }
 }

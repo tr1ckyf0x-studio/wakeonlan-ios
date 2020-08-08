@@ -1,0 +1,9 @@
+/* 
+  HostList.strings
+  Wake on LAN
+
+  Created by Dmitry on 09.07.2020.
+  Copyright © 2020 Владислав Лисянский. All rights reserved.
+*/
+
+"hosts" = "Hosts";

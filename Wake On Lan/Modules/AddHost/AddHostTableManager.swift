@@ -8,17 +8,13 @@
 
 import UIKit
 
-protocol AddHostTableManagerDelegate: class {
-    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager)
-}
-
-// TODO: Implementing custom header/footer views
+// TODO: Implement custom header/footer views
 class AddHostTableManager: NSObject {
 
     weak var delegate: AddHostTableManagerDelegate?
 
     var form: AddHostForm?
-    
+
     var sections: [FormSection] {
         guard let form = form else { return [] }
         return form.formSections
@@ -40,38 +36,40 @@ extension AddHostTableManager: UITableViewDataSource {
         var cell: UITableViewCell?
         let model = sections[indexPath.section].items[indexPath.row]
         switch model {
-        case .text(let textFormItem):
-            let textInputCell =
-                tableView.dequeueReusableCell(
-                    withIdentifier: TextInputCell.reuseIdentifier, for: indexPath) as? TextInputCell
-            textFormItem.indexPath = indexPath
-            textInputCell?.configure(with: model)
-            // Scroll table view to next responder
-            textInputCell?.onNextResponderAction = { indexPath in
-                guard let nextIndexPath =
-                    tableView.nextIndexPath(for: indexPath) else { return }
-                tableView.scrollToRow(at: nextIndexPath, at: .top, animated: true)
-            }
-            // NOTE: We need to hide failure label in
-            // completion block for smoothy animation working
-            textInputCell?.onExpandAction = { completion in
-                CATransaction.begin()
-                CATransaction.setCompletionBlock({
-                    completion?()
-                })
-                tableView.beginUpdates()
-                tableView.endUpdates()
-                CATransaction.commit()
-            }
-            cell = textInputCell
-        case .icon:
-            let deviceIconCell = tableView.dequeueReusableCell(
-                withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
-            deviceIconCell?.didTapChangeIconBlock = { [unowned self] _ in
-                self.delegate?.tableManagerDidTapDeviceIconCell(self)
-            }
-            cell = deviceIconCell
+            case .text(let textFormItem):
+                let textInputCell =
+                    tableView.dequeueReusableCell(
+                        withIdentifier: TextInputCell.reuseIdentifier, for: indexPath) as? TextInputCell
+                textFormItem.indexPath = indexPath
+                textInputCell?.configure(with: model)
+                // Scroll table view to next responder
+                textInputCell?.onNextResponderAction = { indexPath in
+                    guard let nextIndexPath =
+                        tableView.nextIndexPath(for: indexPath) else { return }
+                    tableView.scrollToRow(at: nextIndexPath, at: .top, animated: true)
+                }
+                // NOTE: We need to hide failure label in
+                // completion block for smoothy animation working
+                textInputCell?.onExpandAction = { completion in
+                    CATransaction.begin()
+                    CATransaction.setCompletionBlock({
+                        completion?()
+                    })
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                    CATransaction.commit()
+                }
+                cell = textInputCell
+            case .icon:
+                let deviceIconCell = tableView.dequeueReusableCell(
+                    withIdentifier: "\(DeviceIconCell.self)", for: indexPath) as? DeviceIconCell
+                deviceIconCell?.configure(with: form?.iconModel)
+                deviceIconCell?.didTapChangeIconBlock = { [unowned self] model in
+                    self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
+                }
+                cell = deviceIconCell
         }
+
         guard let unwrappedCell = cell else {
             fatalError("\(self): Unknown cell identifier")
         }
@@ -167,7 +165,8 @@ private extension NSMutableAttributedString {
             .foregroundColor : UIColor.lightGray
         ]
         let additionalAttributedString =
-            NSMutableAttributedString(string: " - " + R.string.addHost.optional(), attributes: additionalAttributes)
+            NSMutableAttributedString(string: " - " + R.string.addHost.optional(),
+                                      attributes: additionalAttributes)
         guard let attributedText =
             additionalAttributedString.copy() as? NSAttributedString else { return }
         self.append(attributedText)
