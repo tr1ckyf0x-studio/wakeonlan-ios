@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HostListPresenter {
+final class HostListPresenter {
     weak var view: HostListViewInput?
     var router: HostListRouterProtocol?
     var interactor: HostListInteractorInput?
@@ -23,6 +23,7 @@ extension HostListPresenter: HostListViewOutput {
     func viewDidPressAddButton(_ view: HostListViewInput) {
         router?.routeToAddHost(with: nil)
     }
+
 }
 
 extension HostListPresenter: HostListInteractorOutput {
@@ -37,6 +38,7 @@ extension HostListPresenter: HostListInteractorOutput {
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error) {
         print(error)
     }
+
 }
 
 extension HostListPresenter: HostListTableManagerDelegate {
@@ -50,4 +52,29 @@ extension HostListPresenter: HostListTableManagerDelegate {
             tableManager.sections[indexPath.section].items[indexPath.item] else { return }
         interactor?.wakeHost(host)
     }
+
+}
+
+extension HostListPresenter: HostListCacheTrackerDelegate {
+    
+    func cacheTracker(_ tracker: CacheTracker,
+                      didChangeContent content: [HostListCacheTracker<Host, HostListPresenter>.Transaction<Host>]) {
+        content.forEach {
+            switch $0 {
+                case .insert(let indexPath):
+                return
+                case .update(let indexPath, let object):
+                return
+                case .move(old: let oldIndexPath, new: let newIndexPath):
+                return
+                case .delete(let indexPath):
+                return
+            }
+        }
+        
+    }
+    
+    typealias Object = Host
+    
+    
 }
