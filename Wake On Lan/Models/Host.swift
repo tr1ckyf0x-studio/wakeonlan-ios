@@ -8,7 +8,7 @@
 
 import CoreData
 
-final class Host: NSManagedObject {
+final class Host : NSManagedObject {
     @NSManaged private(set) var createdAt: Date
     @NSManaged private(set) var title: String
     @NSManaged private(set) var iconName: String
@@ -35,19 +35,27 @@ final class Host: NSManagedObject {
             ipAddressData = HostCoreDataFormatter.compress(string: ipAddress, ofType: .ipAddress)
         }
     }
-    
+
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+        primitiveCreatedAt = Date()
+    }
+
+    // MARK: - Private
+    @NSManaged private var primitiveCreatedAt: Date
+
 }
 
 // MARK: - CRUD
 extension Host {
 
-    static func insert(into context: NSManagedObjectContext, form: AddHostForm) {
+    static func insert(into context: NSManagedObjectContext,
+                       form: AddHostForm) {
         guard let macAddress = form.macAddress,
             let title = form.title,
             let iconName = form.iconModel?.pictureName
             else { return }
         let host: Host = context.insertObject()
-        host.createdAt = Date()
         host.iconName = iconName
         host.title = title
         host.macAddress = macAddress
