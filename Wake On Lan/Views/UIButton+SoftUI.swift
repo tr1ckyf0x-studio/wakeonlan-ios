@@ -38,15 +38,16 @@ class SoftUIButton: UIButton, SoftUIProtocol {
     
     private var pressed: Bool = false {
         didSet {
+            guard let shadowLayer = layer.sublayers?.first else { return }
             switch pressed {
             case true:
-                self.layer.shadowOffset = CGSize(width: -2, height: -2)
-                self.layer.sublayers?[0].shadowOffset = CGSize(width: 2, height: 2)
-                self.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 0, right: 0)
+                layer.shadowOffset = CGSize(width: -2, height: -2)
+                shadowLayer.shadowOffset = CGSize(width: 2, height: 2)
+                contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 0, right: 0)
             case false:
-                self.layer.shadowOffset = CGSize(width: 2, height: 2)
-                self.layer.sublayers?[0].shadowOffset = CGSize(width: -2, height: -2)
-                self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 2)
+                layer.shadowOffset = CGSize(width: 2, height: 2)
+                shadowLayer.shadowOffset = CGSize(width: -2, height: -2)
+                contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 2)
             }
         }
     }

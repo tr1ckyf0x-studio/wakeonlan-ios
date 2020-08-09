@@ -28,7 +28,8 @@ class AddHostInteractor: AddHostInteractorInput {
     func updateForm(_ form: AddHostForm) {
         let context = coreDataService.createChildConcurrentContext()
         context.perform { [unowned self] in
-            Host.update(object: form.host!, into: context, with: form)
+            guard let host = form.host else { return }
+            Host.update(object: host, into: context, with: form)
             self.coreDataService.saveContext(context) { [unowned self] in
                 self.presenter?.interactor(self, didUpdateForm: form)
             }

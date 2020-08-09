@@ -97,7 +97,9 @@ final class WakeOnLanService {
                 UInt8(digit, radix: Constants.macAddressRadix)
             }
             
-        guard macComponents.count == Constants.macAddressBytesCount else { throw Self.Error.wrongMacAddressLength }
+        guard macComponents.count == Constants.macAddressBytesCount else {
+            throw Self.Error.wrongMacAddressLength
+        }
         
         let body = Array(repeating: macComponents, count: Constants.magicPocketBodyLength).flatMap { $0 }
         

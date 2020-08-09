@@ -16,9 +16,8 @@ protocol Managed : class, NSFetchRequestResult {
 }
 
 extension Managed {
-    static var defaultSortDescriptors: [NSSortDescriptor] {
-        return []
-    }
+    // TODO: Implement it
+    static var defaultSortDescriptors: [NSSortDescriptor] { [] }
 
     static var sortedFetchRequest: NSFetchRequest<Self> {
         let request = NSFetchRequest<Self>(entityName: entityName)
