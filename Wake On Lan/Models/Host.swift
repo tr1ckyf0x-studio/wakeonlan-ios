@@ -31,7 +31,10 @@ final class Host : NSManagedObject {
             return HostCoreDataFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
         }
         set {
-            guard let ipAddress = newValue else { ipAddressData = nil; return }
+            guard let ipAddress = newValue else {
+                ipAddressData = nil
+                return
+            }
             ipAddressData = HostCoreDataFormatter.compress(string: ipAddress, ofType: .ipAddress)
         }
     }

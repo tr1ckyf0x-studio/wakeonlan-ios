@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import CoreData
+
+typealias Content = HostListCacheTracker<Host, HostListInteractor>.Transaction<Host>
 
 protocol HostListViewOutput: class {
     var tableManager: HostListTableManager? { get }
@@ -16,6 +19,7 @@ protocol HostListViewOutput: class {
 
 protocol HostListViewInput: class {
     func reloadTable()
+    func updateTable(with update: Content)
 }
 
 protocol HostListInteractorInput: class {
@@ -24,7 +28,8 @@ protocol HostListInteractorInput: class {
 }
 
 protocol HostListInteractorOutput: class {
-    func interactor(_ interactor: HostListInteractorInput, didUpdateHosts hosts: [Host])
+    func interactor(_ interactor: HostListInteractorInput, didChangeContent content: [Content])
+    func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host])
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error)
 }
 
