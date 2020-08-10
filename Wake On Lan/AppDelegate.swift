@@ -7,21 +7,22 @@
 //
 
 import UIKit
+import Resolver
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     var window: UIWindow?
+    @Injected private var coreDataService: PersistentCoreDataService
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let hostListViewController = HostListViewController()
-        let navigationController = UINavigationController(rootViewController: hostListViewController)
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
-
+        coreDataService.createHostContainer { [unowned self] in
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let hostListViewController = HostListViewController()
+            let navigationController = UINavigationController(rootViewController: hostListViewController)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+        }
         return true
     }
 
 }
-

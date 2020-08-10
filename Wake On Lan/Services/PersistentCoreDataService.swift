@@ -12,19 +12,22 @@ import CoreData
 final class PersistentCoreDataService {
 
     typealias SaveCompletionHandler = () -> Void
-    
-    private lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "HostsDataModel")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+
+    // MARK: - Properties
+    private lazy var persistentContainer = NSPersistentContainer(name: "HostsDataModel")
+
+    var mainContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+
+    // MARK: - Public
+    func createHostContainer(completion: @escaping () -> Void) {
+        persistentContainer.loadPersistentStores(completionHandler: { storeDescription, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+            DispatchQueue.main.async { completion() }
         })
-        return container
-    }()
-    
-    var mainContext: NSManagedObjectContext {
-        return persistentContainer.viewContext
     }
     
     func createChildConcurrentContext() -> NSManagedObjectContext {
@@ -34,7 +37,6 @@ final class PersistentCoreDataService {
     }
 
     // MARK: - Core Data Saving support
-    
     func saveContext(_ context: NSManagedObjectContext,
                      completionHandler: SaveCompletionHandler? = nil) {
         switch context.concurrencyType {

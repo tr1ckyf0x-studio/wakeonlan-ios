@@ -37,7 +37,7 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     
     // MARK: - Transaction
     enum Transaction<Object> {
-        case insert(IndexPath)
+        case insert(IndexPath, Object)
         case update(IndexPath, Object)
         case move(old: IndexPath, new: IndexPath)
         case delete(IndexPath)
@@ -54,19 +54,19 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     // MARK: - Init
     init(with fetchRequest: NSFetchRequest<Object>,
          context: NSManagedObjectContext,
-         completion: @escaping Completion) {
+         delegate: Delegate) {
         controller = .init(fetchRequest: fetchRequest,
                            managedObjectContext: context,
                            sectionNameKeyPath: nil,
                            cacheName: nil)
         super.init()
-        controller.delegate = self
+        self.delegate = delegate
+        self.controller.delegate = self
         do {
             try controller.performFetch()
         } catch { // TODO: Error - handling
             print(" \(self) : Cannot fetch data")
         }
-        completion(controller)
     }
     
     func objectAtIndexPath(_ indexPath: IndexPath) -> Object {
@@ -91,7 +91,8 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
         switch type {
             case .insert:
                 guard let indexPath = newIndexPath else { fatalError("Index path should be not nil") }
-                transactionStorage.append(.insert(indexPath))
+                let object = objectAtIndexPath(indexPath)
+                transactionStorage.append(.insert(indexPath, object))
             case .update:
                 guard let indexPath = indexPath else { fatalError("Index path should be not nil") }
                 let object = objectAtIndexPath(indexPath)
@@ -113,19 +114,3 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     }
 
 }
-
-//final class A: HostListCacheTrackerDelegate {
-//    typealias Object = Host
-//
-//    func cacheTracker(_ tracker: CacheTracker,
-//                      didChangeContent content: [HostListCacheTracker<Object, A>.Transaction<Object>]) {
-//
-//    }
-//
-//}
-//
-//let tracker = HostListCacheTracker<Host, A>(
-//    with: Host.sortedFetchRequest,
-//    context: NSManagedObjectContext())
-//
-//let obj: Host = tracker.objectAtIndexPath(IndexPath(row: 0, section: 0))
