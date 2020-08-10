@@ -57,9 +57,28 @@ class HostListViewController: UIViewController {
 
 // MARK: - HostListViewInput
 extension HostListViewController: HostListViewInput {
+
     func reloadTable() {
         hostListView.tableView.reloadData()
     }
+
+    func updateTable(with update: Content) {
+        let tableView = hostListView.tableView
+        tableView.performBatchUpdates({
+            switch update {
+                case .insert(let indexPath, _):
+                    tableView.insertRows(at: [indexPath], with: .automatic)
+                case .update(let indexPath, _):
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                case .move(old: let indexPath, new: let newIndexPath):
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                case .delete(let indexPath):
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        })
+    }
+
 }
 
 // MARK: - HostListViewDelegate
@@ -67,4 +86,5 @@ extension HostListViewController: HostListViewDelegate {
     func hostListViewDidPressAddButton(_ view: HostListView) {
         presenter?.viewDidPressAddButton(self)
     }
+
 }

@@ -15,7 +15,11 @@ protocol HostListTableManagerDelegate: class {
 
 class HostListTableManager: NSObject {
 
-    var sections = [HostListSectionModel]()
+    var sections: [HostListSectionModel] {
+        return tableViewModel.sections
+    }
+
+    var tableViewModel = HostListTableViewModel()
 
     weak var delegate: HostListTableManagerDelegate?
 
@@ -33,7 +37,7 @@ extension HostListTableManager: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
-        let model = sections[indexPath.section].items[indexPath.row]
+        let model = tableViewModel.sections[indexPath.section].items[indexPath.row]
         switch model {
         case let .host(host):
             let hostCell = tableView.dequeueReusableCell(

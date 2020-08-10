@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HostListPresenter {
+final class HostListPresenter {
     weak var view: HostListViewInput?
     var router: HostListRouterProtocol?
     var interactor: HostListInteractorInput?
@@ -23,20 +23,44 @@ extension HostListPresenter: HostListViewOutput {
     func viewDidPressAddButton(_ view: HostListViewInput) {
         router?.routeToAddHost(with: nil)
     }
+
 }
 
 extension HostListPresenter: HostListInteractorOutput {
-    func interactor(_ interactor: HostListInteractorInput, didUpdateHosts hosts: [Host]) {
+
+    func interactor(_ interactor: HostListInteractorInput, didChangeContent content: [Content]) {
+        content.forEach {
+            switch $0 {
+                case .insert(let indexPath, let object):
+                    tableManager?.tableViewModel.insertObject(
+                        object, at: indexPath.row, in: indexPath.section)
+                case .update(let indexPath, let object):
+                    tableManager?.tableViewModel.updateObject(
+                        object, at: indexPath.row, in: indexPath.section)
+                case .move(old: let oldIndexPath, new: let newIndexPath):
+                    tableManager?.tableViewModel.moveObject(
+                        from: oldIndexPath.row, to: newIndexPath.row, in: oldIndexPath.section)
+                case .delete(let indexPath):
+                    tableManager?.tableViewModel.removeObject(
+                        at: indexPath.row, in: indexPath.section)
+            }
+            view?.updateTable(with: $0)
+        }
+    }
+
+    func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host]) {
         let mainSectionItems = hosts.map { HostListSectionItem.host($0) }
-        let mainSection = HostListSectionModel.mainSection(content: mainSectionItems, header: nil, footer: nil)
+        let mainSection = HostListSectionModel.mainSection(
+            content: mainSectionItems, header: nil, footer: nil)
         let sections = [mainSection]
-        tableManager?.sections = sections
+        tableManager?.tableViewModel = HostListTableViewModel(sections: sections)
         view?.reloadTable()
     }
     
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error) {
         print(error)
     }
+
 }
 
 extension HostListPresenter: HostListTableManagerDelegate {
@@ -47,7 +71,10 @@ extension HostListPresenter: HostListTableManagerDelegate {
     
     func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath) {
         guard case let .host(host) =
-            tableManager.sections[indexPath.section].items[indexPath.item] else { return }
+            tableManager.tableViewModel.sections[indexPath.section].items[indexPath.item] else {
+                return
+        }
         interactor?.wakeHost(host)
     }
+
 }

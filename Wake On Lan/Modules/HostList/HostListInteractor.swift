@@ -10,33 +10,23 @@ import Foundation
 import Resolver
 import CoreData
 
-class HostListInteractor: HostListInteractorInput {
+final class HostListInteractor: HostListInteractorInput {
+
+    @Injected private var coreDataService: PersistentCoreDataService
+
+    @Injected private var wakeOnLanService: WakeOnLanService
 
     weak var presenter: HostListInteractorOutput?
 
-    @Injected private var coreDataService: PersistentCoreDataService
-    @Injected private var wakeOnLanService: WakeOnLanService
-
-    init() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(contextDidSave(_:)),
-            name: Notification.Name.NSManagedObjectContextDidSave,
-            object: coreDataService.mainContext)
-    }
+    private lazy var cacheTracker: HostListCacheTracker<Host, HostListInteractor> = {
+        HostListCacheTracker(with: Host.sortedFetchRequest,
+                             context: coreDataService.mainContext,
+                             delegate: self)
+    }()
 
     func fetchHosts() {
-        coreDataService.mainContext.perform { [weak self] in
-            guard let self = self else { return }
-            do {
-                let request = Host.sortedFetchRequest
-                let hosts = try request.execute()
-                self.presenter?.interactor(self, didUpdateHosts: hosts)
-            } catch {
-                print(error)
-                // TODO: Обработка ошибок
-            }
-        }
+        guard let hosts = cacheTracker.fetchedObjects else { return }
+        presenter?.interactor(self, didFetchHosts: hosts)
     }
 
     func wakeHost(_ host: Host) {
@@ -47,7 +37,15 @@ class HostListInteractor: HostListInteractorInput {
         }
     }
 
-    @objc func contextDidSave(_ notification: Notification) {
-        fetchHosts()
+}
+
+extension HostListInteractor: HostListCacheTrackerDelegate {
+
+    typealias Object = Host
+
+    func cacheTracker(_ tracker: CacheTracker,
+                      didChangeContent content: [Content]) {
+        presenter?.interactor(self, didChangeContent: content)
     }
+
 }
