@@ -16,7 +16,7 @@ enum HostListSectionItem {
 enum HostListSectionModel {
     typealias Item = HostListSectionItem
     
-    case mainSection(content: [Item], header: String?, footer: String?)
+    case mainSection(content: [Item], header: String? = nil, footer: String? = nil)
     
     var items: [Item] {
         switch self {
