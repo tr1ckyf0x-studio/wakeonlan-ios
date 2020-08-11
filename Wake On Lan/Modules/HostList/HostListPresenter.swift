@@ -16,6 +16,7 @@ final class HostListPresenter {
 }
 
 extension HostListPresenter: HostListViewOutput {
+
     func viewIsReady(_ view: HostListViewInput) {
         interactor?.fetchHosts()
     }
@@ -49,10 +50,8 @@ extension HostListPresenter: HostListInteractorOutput {
     }
 
     func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host]) {
-        let mainSectionItems = hosts.map { HostListSectionItem.host($0) }
-        let mainSection = HostListSectionModel.mainSection(
-            content: mainSectionItems, header: nil, footer: nil)
-        let sections = [mainSection]
+        let sections: [HostListSectionModel] =
+            [hosts.map { HostListSectionItem.host($0) }].map { .mainSection(content: $0) }
         tableManager?.tableViewModel = HostListTableViewModel(sections: sections)
         view?.reloadTable()
     }
