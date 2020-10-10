@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-carthage bootstrap --platform iOS --cache-builds
+sh carthage.sh bootstrap --platform iOS --cache-builds
