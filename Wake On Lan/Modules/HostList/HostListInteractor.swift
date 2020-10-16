@@ -37,6 +37,12 @@ final class HostListInteractor: HostListInteractorInput {
         }
     }
 
+    func deleteHost(_ host: Host) {
+        let context = coreDataService.createChildConcurrentContext()
+        let object = context.object(with: host.objectID)
+        context.delete(object)
+        coreDataService.saveContext(context)
+    }
 }
 
 extension HostListInteractor: HostListCacheTrackerDelegate {

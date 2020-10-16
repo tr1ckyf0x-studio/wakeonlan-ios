@@ -83,7 +83,6 @@ extension Host {
             updateObject.port = port
         }
     }
-
 }
 
 // MARK: - Managed

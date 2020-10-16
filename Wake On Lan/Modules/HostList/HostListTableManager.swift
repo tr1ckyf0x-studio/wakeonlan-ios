@@ -11,6 +11,7 @@ import UIKit
 protocol HostListTableManagerDelegate: class {
     func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath)
     func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host)
+    func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host)
 }
 
 class HostListTableManager: NSObject {
@@ -23,6 +24,7 @@ class HostListTableManager: NSObject {
 
     weak var delegate: HostListTableManagerDelegate?
 
+    weak var tableView: UITableView?
 }
 
 extension HostListTableManager: UITableViewDataSource {
@@ -37,15 +39,13 @@ extension HostListTableManager: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
-        let model = tableViewModel.sections[indexPath.section].items[indexPath.row]
+        let model = sections[indexPath.section].items[indexPath.row]
         switch model {
         case let .host(host):
             let hostCell = tableView.dequeueReusableCell(
                 withIdentifier: "\(HostListTableViewCell.self)",
                 for: indexPath) as? HostListTableViewCell
-            hostCell?.configure(with: host, didTapInfoBlock: { [unowned self] _ in
-                self.delegate?.tableManagerDidTapInfoButton(self, host: host)
-            })
+            hostCell?.configure(with: host, delegate: self)
             cell = hostCell
         }
         
@@ -69,5 +69,29 @@ extension HostListTableManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.tableManager(self, didSelectRowAt: indexPath)
+    }
+}
+
+extension HostListTableManager: HostListTableViewCellDelegate {
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell) {
+        guard let host = getHost(forCell: cell) else { return }
+        delegate?.tableManagerDidTapInfoButton(self, host: host)
+    }
+    
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell) {
+        guard let host = getHost(forCell: cell) else { return }
+        delegate?.tableManagerDidTapDeleteButton(self, host: host)
+    }
+}
+
+// MARK: - Private methods
+private extension HostListTableManager {
+    func getHost(forCell cell: UITableViewCell) -> Host? {
+        guard let indexPath = tableView?.indexPath(for: cell) else { return nil }
+        let model = sections[indexPath.section].items[indexPath.item]
+        switch model {
+        case let .host(host):
+            return host
+        }
     }
 }

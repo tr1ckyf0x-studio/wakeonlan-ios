@@ -59,13 +59,16 @@ extension HostListPresenter: HostListInteractorOutput {
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error) {
         print(error)
     }
-
 }
 
 extension HostListPresenter: HostListTableManagerDelegate {
     
     func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host) {
         router?.routeToAddHost(with: host)
+    }
+    
+    func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host) {
+        interactor?.deleteHost(host)
     }
     
     func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath) {
