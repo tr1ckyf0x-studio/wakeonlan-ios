@@ -10,12 +10,19 @@ options:
   deploymentTarget:
     iOS: 12.0
 
+configFiles:
+  Debug: "Config/WOL.debug.xcconfig"
+  Release: "Config/WOL.release.xcconfig"
+
 attributes:
   CLASSPREFIX: WO
   ORGANIZATIONNAME: "Владислав Лисянский"
 
 targets:
   Wake on LAN:
+    configFiles:
+      Debug: "Config/WOL.debug.xcconfig"
+      Release: "Config/WOL.release.xcconfig"
     platform: iOS
     type: application
     sources:

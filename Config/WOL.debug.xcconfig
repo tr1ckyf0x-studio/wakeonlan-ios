@@ -1,0 +1,12 @@
+//
+//  Base.xcconfig
+//  Pods
+//
+//  Created by Dmitry on 18.10.2020.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Base.xcconfig"
+#include "../Pods/Target Support Files/Pods-Wake on LAN/Pods-Wake on LAN.debug.xcconfig"

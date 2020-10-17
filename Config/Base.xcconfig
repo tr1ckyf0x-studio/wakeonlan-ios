@@ -1,0 +1,14 @@
+//
+//  Base.xcconfig
+//  Pods
+//
+//  Created by Dmitry on 18.10.2020.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+/// Suppress warning 'Missing localizability'
+CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES
+CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES
