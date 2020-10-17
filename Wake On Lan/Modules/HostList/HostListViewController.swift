@@ -51,7 +51,6 @@ class HostListViewController: UIViewController {
     private func setupTableView() {
         hostListView.tableView.delegate = presenter?.tableManager
         hostListView.tableView.dataSource = presenter?.tableManager
-        presenter?.tableManager?.tableView = hostListView.tableView
     }
 
 }

@@ -9,9 +9,14 @@
 import UIKit
 
 protocol HostListTableManagerDelegate: class {
-    func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath)
+    
+    func tableManager(_ tableManager: HostListTableManager,
+                      didSelectRowAt indexPath: IndexPath)
+    
     func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host)
+    
     func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host)
+
 }
 
 class HostListTableManager: NSObject {
@@ -24,7 +29,6 @@ class HostListTableManager: NSObject {
 
     weak var delegate: HostListTableManagerDelegate?
 
-    weak var tableView: UITableView?
 }
 
 extension HostListTableManager: UITableViewDataSource {
@@ -33,11 +37,13 @@ extension HostListTableManager: UITableViewDataSource {
         return sections.count
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
         return sections[section].items.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         let model = sections[indexPath.section].items[indexPath.row]
         switch model {
@@ -70,28 +76,17 @@ extension HostListTableManager: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.tableManager(self, didSelectRowAt: indexPath)
     }
+
 }
 
 extension HostListTableManager: HostListTableViewCellDelegate {
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell) {
-        guard let host = getHost(forCell: cell) else { return }
-        delegate?.tableManagerDidTapInfoButton(self, host: host)
+    
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host) {
+        delegate?.tableManagerDidTapDeleteButton(self, host: model)
     }
     
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell) {
-        guard let host = getHost(forCell: cell) else { return }
-        delegate?.tableManagerDidTapDeleteButton(self, host: host)
-    }
-}
 
-// MARK: - Private methods
-private extension HostListTableManager {
-    func getHost(forCell cell: UITableViewCell) -> Host? {
-        guard let indexPath = tableView?.indexPath(for: cell) else { return nil }
-        let model = sections[indexPath.section].items[indexPath.item]
-        switch model {
-        case let .host(host):
-            return host
-        }
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host) {
+        delegate?.tableManagerDidTapInfoButton(self, host: model)
     }
 }

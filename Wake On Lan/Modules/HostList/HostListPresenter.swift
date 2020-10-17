@@ -49,14 +49,16 @@ extension HostListPresenter: HostListInteractorOutput {
         }
     }
 
-    func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host]) {
+    func interactor(_ interactor: HostListInteractorInput,
+                    didFetchHosts hosts: [Host]) {
         let sections: [HostListSectionModel] =
             [hosts.map { HostListSectionItem.host($0) }].map { .mainSection(content: $0) }
         tableManager?.tableViewModel = HostListTableViewModel(sections: sections)
         view?.reloadTable()
     }
     
-    func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error) {
+    func interactor(_ interactor: HostListInteractorInput,
+                    didEncounterError error: Error) {
         print(error)
     }
 }
@@ -71,7 +73,8 @@ extension HostListPresenter: HostListTableManagerDelegate {
         interactor?.deleteHost(host)
     }
     
-    func tableManager(_ tableManager: HostListTableManager, didSelectRowAt indexPath: IndexPath) {
+    func tableManager(_ tableManager: HostListTableManager,
+                      didSelectRowAt indexPath: IndexPath) {
         guard case let .host(host) =
             tableManager.tableViewModel.sections[indexPath.section].items[indexPath.item] else {
                 return

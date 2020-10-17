@@ -9,25 +9,32 @@
 import UIKit
 
 protocol HostListTableViewCellDelegate: class {
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell)
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell)
+    
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host)
+    
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host)
+
 }
 
 final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
+    private var model: Host?
+    
     private weak var delegate: HostListTableViewCellDelegate?
     
-    private let scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.alwaysBounceHorizontal = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isPagingEnabled = true
+        scrollView.delegate = self
+        
         return scrollView
     }()
     
-    private let scrollViewContentView: UIView = UIView()
+    private let scrollViewContentView = UIView()
     
     private lazy var deleteButton: SoftUIButton = {
         let button = SoftUIButton(roundShape: false)
@@ -100,6 +107,7 @@ final class HostListTableViewCell: UITableViewCell {
         deviceImageView.image = image
         hostTitle.text = model.title
         macAddressTitle.text = model.macAddress
+        self.model = model
         self.delegate = delegate
     }
 
@@ -178,11 +186,28 @@ final class HostListTableViewCell: UITableViewCell {
     
     // MARK: - Action
     @objc private func didTapInfoButton() {
-        delegate?.hostListCellDidTapInfo(self)
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTapInfo(self, model: model)
     }
     
     @objc private func didTapDeleteButton() {
-        delegate?.hostListCellDidTapDelete(self)
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTapDelete(self, model: model)
+    }
+
+}
+
+extension HostListTableViewCell: UIScrollViewDelegate {
+
+    // NOTE: Prevent left swiping
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        switch scrollView.contentOffset.x {
+            case let x where x <= .zero:
+                scrollView.isPagingEnabled = false
+                scrollView.contentOffset.x = .zero
+            default:
+                scrollView.isPagingEnabled = true
+        }
     }
 
 }
