@@ -42,7 +42,7 @@ class DeviceIconView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func configure(with model: IconModel) {
+    func configure(with model: IconModel) {
         deviceImageView.image = UIImage(named: model.pictureName,
                                         in: Bundle.main,
                                         compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)

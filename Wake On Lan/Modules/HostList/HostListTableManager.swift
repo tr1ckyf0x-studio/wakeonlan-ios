@@ -9,12 +9,12 @@
 import UIKit
 
 protocol HostListTableManagerDelegate: class {
-    
+
     func tableManager(_ tableManager: HostListTableManager,
                       didSelectRowAt indexPath: IndexPath)
-    
+
     func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host)
-    
+
     func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host)
 
 }
@@ -22,7 +22,7 @@ protocol HostListTableManagerDelegate: class {
 class HostListTableManager: NSObject {
 
     var sections: [HostListSectionModel] {
-        return tableViewModel.sections
+        tableViewModel.sections
     }
 
     var tableViewModel = HostListTableViewModel()
@@ -34,12 +34,12 @@ class HostListTableManager: NSObject {
 extension HostListTableManager: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        sections.count
     }
 
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return sections[section].items.count
+        sections[section].items.count
     }
 
     func tableView(_ tableView: UITableView,
@@ -54,9 +54,9 @@ extension HostListTableManager: UITableViewDataSource {
             hostCell?.configure(with: host, delegate: self)
             cell = hostCell
         }
-        
+
         guard let unwrappedCell = cell else { fatalError("Unknown cell identifier") }
-        
+
         return unwrappedCell
     }
 
@@ -65,13 +65,13 @@ extension HostListTableManager: UITableViewDataSource {
 extension HostListTableManager: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].header
+        sections[section].header
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footer
+        sections[section].footer
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.tableManager(self, didSelectRowAt: indexPath)
@@ -80,11 +80,10 @@ extension HostListTableManager: UITableViewDelegate {
 }
 
 extension HostListTableManager: HostListTableViewCellDelegate {
-    
+
     func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapDeleteButton(self, host: model)
     }
-    
 
     func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapInfoButton(self, host: model)

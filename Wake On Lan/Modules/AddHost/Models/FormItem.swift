@@ -18,16 +18,18 @@ extension FormItem: FormValidable, FormMandatoryable {
         switch self {
         case let .text(formItem):
             return formItem.isValid
+
         default:
             return true
         }
     }
-    
+
     var isMandatory: Bool {
         get {
             switch self {
             case let .text(formItem):
                 return formItem.isMandatory
+
             default:
                 return true
             }
@@ -36,10 +38,11 @@ extension FormItem: FormValidable, FormMandatoryable {
             switch self {
             case let .text(formItem):
                 formItem.isMandatory = newValue
+
             default:
                 return
             }
         }
     }
-    
+
 }

@@ -10,32 +10,33 @@ import Foundation
 import CoreData
 
 protocol HostListCacheTrackerProtocol {
-    
+
     associatedtype Object: NSFetchRequestResult
-    
+
     var fetchedObjects: [Object]? { get }
-    
+
     func objectAtIndexPath(_ indexPath: IndexPath) -> Object
-    
+
     func indexPathForObject(_ object: Object) -> IndexPath?
 
 }
 
-protocol HostListCacheTrackerDelegate : class {
-    
+protocol HostListCacheTrackerDelegate: class {
+
     associatedtype Object: NSFetchRequestResult
-    
+
     typealias CacheTracker = HostListCacheTracker<Object, Self>
-    
+
     func cacheTracker(_ tracker: CacheTracker,
                       didChangeContent content: [CacheTracker.Transaction<Object>])
 
 }
 
-final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate> : NSObject, HostListCacheTrackerProtocol, NSFetchedResultsControllerDelegate where Delegate.Object == Object {
-    
+// swiftlint:disable line_length
+final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate>: NSObject, HostListCacheTrackerProtocol, NSFetchedResultsControllerDelegate where Delegate.Object == Object {
+
     typealias Completion = (_ controller: NSFetchedResultsController<Object>) -> Void
-    
+
     // MARK: - Transaction
     enum Transaction<Object> {
         case insert(IndexPath, Object)
@@ -43,15 +44,15 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
         case move(old: IndexPath, new: IndexPath)
         case delete(IndexPath)
     }
-    
+
     // MARK: - Properties
     private var controller: NSFetchedResultsController<Object>
     private var transactionStorage = [Transaction<Object>]()
     private weak var delegate: Delegate?
     var fetchedObjects: [Object]? {
-        return controller.fetchedObjects
+        controller.fetchedObjects
     }
-    
+
     // MARK: - Init
     init(with fetchRequest: NSFetchRequest<Object>,
          context: NSManagedObjectContext,
@@ -69,47 +70,51 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
             print(" \(self) : Cannot fetch data")
         }
     }
-    
+
     func objectAtIndexPath(_ indexPath: IndexPath) -> Object {
-        return controller.object(at: indexPath)
+        controller.object(at: indexPath)
     }
-    
+
     func indexPathForObject(_ object: Object) -> IndexPath? {
-        return controller.indexPath(forObject: object)
+        controller.indexPath(forObject: object)
     }
-    
+
     // MARK: - NSFetchedResultsControllerDelegate
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         if transactionStorage.isEmpty { return }
         transactionStorage.removeAll()
     }
-    
+
     @objc func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                           didChange anObject: Any,
                           at indexPath: IndexPath?,
                           for type: NSFetchedResultsChangeType,
                           newIndexPath: IndexPath?) {
         switch type {
-            case .insert:
-                guard let indexPath = newIndexPath else { fatalError("Index path should be not nil") }
-                let object = objectAtIndexPath(indexPath)
-                transactionStorage.append(.insert(indexPath, object))
-            case .update:
-                guard let indexPath = indexPath else { fatalError("Index path should be not nil") }
-                let object = objectAtIndexPath(indexPath)
-                transactionStorage.append(.update(indexPath, object))
-            case .move:
-                guard let indexPath = indexPath,
-                    let newIndexPath = newIndexPath else { fatalError("Index path should be not nil") }
-                transactionStorage.append(.move(old: indexPath, new: newIndexPath))
-            case .delete:
-                guard let indexPath = indexPath else { fatalError("Index path should be not nil") }
-                transactionStorage.append(.delete(indexPath))
-            @unknown default:
-                fatalError("Unknown transaction type")
+        case .insert:
+            guard let indexPath = newIndexPath else { fatalError("Index path should be not nil") }
+            let object = objectAtIndexPath(indexPath)
+            transactionStorage.append(.insert(indexPath, object))
+
+        case .update:
+            guard let indexPath = indexPath else { fatalError("Index path should be not nil") }
+            let object = objectAtIndexPath(indexPath)
+            transactionStorage.append(.update(indexPath, object))
+
+        case .move:
+            guard let indexPath = indexPath,
+                let newIndexPath = newIndexPath else { fatalError("Index path should be not nil") }
+            transactionStorage.append(.move(old: indexPath, new: newIndexPath))
+
+        case .delete:
+            guard let indexPath = indexPath else { fatalError("Index path should be not nil") }
+            transactionStorage.append(.delete(indexPath))
+
+        @unknown default:
+            fatalError("Unknown transaction type")
         }
     }
-    
+
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.delegate?.cacheTracker(self, didChangeContent: transactionStorage)
     }

@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol SoftUIProtocol where Self : UIView {
+protocol SoftUIProtocol where Self: UIView {
 
     var themeColor: UIColor { get }
-    
+
     var cornerRadius: CGFloat { get }
 
     func addSoftUIEffectIfNeeded()
-    
+
     func makeShadowLayer() -> CAShapeLayer
 
 }
@@ -26,7 +26,7 @@ extension SoftUIProtocol {
         let layer = CAShapeLayer()
         layer.frame = self.bounds
         layer.addTopLeftEffect(cornerRadius: cornerRadius, themeColor: themeColor.cgColor)
-        
+
         return layer
     }
 

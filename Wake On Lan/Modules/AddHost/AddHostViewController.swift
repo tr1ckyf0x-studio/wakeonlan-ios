@@ -18,12 +18,12 @@ class AddHostViewController: UIViewController {
         view.delegate = self
         return view
     }()
-    
+
     // MARK: - Lifecycle
     override func loadView() {
         view = addHostView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -59,7 +59,7 @@ extension AddHostViewController: AddHostViewDelegate {
     func addHostViewDidPressBackButton(_ view: AddHostView) {
         presenter?.viewDidPressBackButton(self)
     }
-    
+
     func addHostViewDidPressSaveButton(_ view: AddHostView) {
         presenter?.viewDidPressSaveButton(self)
     }

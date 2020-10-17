@@ -1,4 +1,3 @@
-
 //  TextInputCell.swift
 //  Wake On Lan
 //
@@ -10,32 +9,32 @@ import UIKit
 import SnapKit
 
 private class AddHostFailureView: UIView {
-    
+
     // MARK: Properties
     private let failureLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         // TODO: Consider another font
         label.font = .boldSystemFont(ofSize: 12.0)
-        
+
         return label
     }()
-    
+
     // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .red
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: Public
     func configure(with reason: AddHostForm.Error) {
         failureLabel.text = reason.description
     }
-    
+
     func show() {
         addSubview(failureLabel)
         failureLabel.snp.makeConstraints {
@@ -45,25 +44,25 @@ private class AddHostFailureView: UIView {
             $0.bottom.equalToSuperview().inset(10).priority(.low)
         }
     }
-    
+
     func hide() {
         failureLabel.removeFromSuperview()
     }
-    
+
 }
 
 class TextInputCell: UITableViewCell {
-    
+
     static let reuseIdentifier = String(describing: self)
-    
+
     typealias OnExpandCompletion = () -> Void
     typealias OnExpandAction = (_ completion: OnExpandCompletion?) -> Void
     typealias OnNextResponderAction = (_ indexPath: IndexPath) -> Void
-    
+
     // MARK: - Properties
     var onExpandAction: OnExpandAction?
     var onNextResponderAction: OnNextResponderAction?
-    
+
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .none
@@ -76,11 +75,11 @@ class TextInputCell: UITableViewCell {
 
         return textField
     }()
-    
+
     private let failureView = AddHostFailureView()
-    
+
     private var textFormItem: TextFormItem?
-    
+
     private var expanded: Bool = false {
         didSet {
             if expanded == oldValue { return }
@@ -89,6 +88,7 @@ class TextInputCell: UITableViewCell {
                 failureView.show()
                 failureView.isHidden = false
                 onExpandAction?(nil)
+
             case false:
                 failureView.hide()
                 onExpandAction?({ [unowned self] in
@@ -104,11 +104,11 @@ class TextInputCell: UITableViewCell {
         selectionStyle = .none
         configureViews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Private
     private func configureViews() {
         configureTextField()
@@ -117,7 +117,7 @@ class TextInputCell: UITableViewCell {
             makeSeparatorLine(type: $0)
         }
     }
-    
+
     private func configureTextField() {
         contentView.addSubview(textField)
         textField.snp.makeConstraints { make in
@@ -127,7 +127,7 @@ class TextInputCell: UITableViewCell {
             make.trailing.equalToSuperview().inset(20)
         }
     }
-    
+
     private func configureFailureLabel() {
         contentView.addSubview(failureView)
         failureView.snp.makeConstraints {
@@ -138,7 +138,7 @@ class TextInputCell: UITableViewCell {
         // Hide error view by default
         failureView.isHidden = true
     }
-    
+
     private func configureToolbarIfNeeded() {
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(
@@ -153,7 +153,7 @@ class TextInputCell: UITableViewCell {
         toolBar.sizeToFit()
         textField.inputAccessoryView = toolBar
     }
-    
+
     // MARK: - Action
     @objc private func textFieldValueChanged(_ textField: UITextField) {
         guard let item = textFormItem,
@@ -163,7 +163,7 @@ class TextInputCell: UITableViewCell {
         guard item.needsUppercased else { return }
         textField.text = item.formatted?.uppercased()
     }
-    
+
     @objc private func didTapDoneButton() {
         self.endEditing(true)
     }
@@ -172,11 +172,11 @@ class TextInputCell: UITableViewCell {
 
 // MARK: - UITableViewCell + SeparatorLine
 private extension UITableViewCell {
-    
+
     enum SeparatorLineType: CaseIterable {
         case top, bottom
     }
-    
+
     func makeSeparatorLine(type: SeparatorLineType) {
         let separatorLine = UIView()
         separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
@@ -186,6 +186,7 @@ private extension UITableViewCell {
             switch type {
             case .top:
                 $0.bottom.equalToSuperview()
+
             case .bottom:
                 $0.top.equalToSuperview()
             }
@@ -202,8 +203,8 @@ extension TextInputCell: UITextFieldDelegate {
         let nextResponderTag = textField.tag + 1
         guard let nextResponder =
             superview?.viewWithTag(nextResponderTag) else {
-            textField.resignFirstResponder()
-            return true
+                textField.resignFirstResponder()
+                return true
         }
         nextResponder.becomeFirstResponder()
         if let indexPath = self.textFormItem?.indexPath {

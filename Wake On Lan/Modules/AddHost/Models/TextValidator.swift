@@ -9,17 +9,17 @@
 import Foundation
 
 struct TextValidator: Validator {
-    
+
     typealias Value = String
     typealias Pattern = String
-    
+
     private var pattern: Pattern
-    
+
     init<Strategy: RegExPatternRepresentable>(strategy: Strategy) {
         self.pattern = strategy.regExPattern
     }
-    
+
     func validate(value: Value) -> Bool {
-        return value.matches(pattern)
+        value.matches(pattern)
     }
 }

@@ -9,9 +9,9 @@
 import UIKit
 
 protocol HostListTableViewCellDelegate: class {
-    
+
     func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host)
-    
+
     func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host)
 
 }
@@ -20,9 +20,9 @@ final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     private var model: Host?
-    
+
     private weak var delegate: HostListTableViewCellDelegate?
-    
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.alwaysBounceHorizontal = true
@@ -30,19 +30,19 @@ final class HostListTableViewCell: UITableViewCell {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
-        
+
         return scrollView
     }()
-    
+
     private let scrollViewContentView = UIView()
-    
+
     private lazy var deleteButton: SoftUIButton = {
         let button = SoftUIButton(roundShape: false)
         button.setImage(R.image.icon_trash(), for: .normal)
         button.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
         return button
     }()
-    
+
     private let baseView = SoftUIView()
 
     private let deviceImageView: UIImageView = {
@@ -61,17 +61,17 @@ final class HostListTableViewCell: UITableViewCell {
 
         return label
     }()
-    
+
     private let macAddressTitle: UILabel = {
         let label = UILabel()
         label.font = R.font.robotoLight(size: 14)
         label.textColor = .darkGray
         label.numberOfLines = 1
         label.textAlignment = .left
-        
+
         return label
     }()
-    
+
     private lazy var infoButton: SoftUIButton = {
         let button = SoftUIButton(roundShape: true)
         button.setImage(R.image.more(), for: .normal)
@@ -122,7 +122,7 @@ final class HostListTableViewCell: UITableViewCell {
             make.edges.equalToSuperview()
         }
     }
-    
+
     private func setupBaseView() {
         scrollViewContentView.addSubview(baseView)
         baseView.snp.makeConstraints {
@@ -135,7 +135,7 @@ final class HostListTableViewCell: UITableViewCell {
             make.height.equalTo(baseView).offset(16)
         }
     }
-    
+
     private func setupDeleteView() {
         scrollViewContentView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
@@ -156,7 +156,7 @@ final class HostListTableViewCell: UITableViewCell {
             $0.width.height.equalTo(80)
         }
     }
-    
+
     private func setupHostTitle() {
         baseView.addSubview(hostTitle)
         hostTitle.snp.makeConstraints {
@@ -164,7 +164,7 @@ final class HostListTableViewCell: UITableViewCell {
             $0.top.equalToSuperview().offset(32)
         }
     }
-    
+
     private func setupMacAddressTitle() {
         baseView.addSubview(macAddressTitle)
         macAddressTitle.snp.makeConstraints {
@@ -172,7 +172,7 @@ final class HostListTableViewCell: UITableViewCell {
             $0.top.equalTo(hostTitle.snp.bottom).offset(8)
         }
     }
-    
+
     private func setupInfoButton() {
         baseView.addSubview(infoButton)
         infoButton.snp.makeConstraints {
@@ -183,13 +183,13 @@ final class HostListTableViewCell: UITableViewCell {
             $0.height.equalTo(infoButton.snp.width)
         }
     }
-    
+
     // MARK: - Action
     @objc private func didTapInfoButton() {
         guard let model = self.model else { return }
         delegate?.hostListCellDidTapInfo(self, model: model)
     }
-    
+
     @objc private func didTapDeleteButton() {
         guard let model = self.model else { return }
         delegate?.hostListCellDidTapDelete(self, model: model)
@@ -202,11 +202,12 @@ extension HostListTableViewCell: UIScrollViewDelegate {
     // NOTE: Prevent left swiping
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switch scrollView.contentOffset.x {
-            case let x where x <= .zero:
-                scrollView.isPagingEnabled = false
-                scrollView.contentOffset.x = .zero
-            default:
-                scrollView.isPagingEnabled = true
+        case let xOffset where xOffset <= .zero:
+            scrollView.isPagingEnabled = false
+            scrollView.contentOffset.x = .zero
+
+        default:
+            scrollView.isPagingEnabled = true
         }
     }
 

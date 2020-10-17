@@ -14,6 +14,7 @@ class TextFormItem: FormValidable, FormMandatoryable {
             onValueChanged?(value)
         }
     }
+
     var placeholder = ""
     var indexPath: IndexPath?
     var onValueChanged: ((String?) -> Void)?
@@ -25,13 +26,13 @@ class TextFormItem: FormValidable, FormMandatoryable {
     var isMandatory: Bool = true
     var maxLength: Int?
     var needsUppercased: Bool = false
-    
+
     var isValid: Bool {
         let defaultReplacedValue = value ?? defaultValue
         guard let validator = validator,
             let value = defaultReplacedValue
             else { return !isMandatory }
-        
+
         return validator.validate(value: value)
     }
 

@@ -10,15 +10,15 @@ import Foundation
 
 class AddHostPresenter {
     weak var view: AddHostViewInput?
-    
+
     var interactor: AddHostInteractorInput?
-    
+
     var router: AddHostRouter?
-    
+
     private(set) var tableManager = AddHostTableManager()
-    
+
     private(set) var addHostForm: AddHostForm
-    
+
     init(addHostForm: AddHostForm = AddHostForm()) {
         self.addHostForm = addHostForm
     }
@@ -27,7 +27,7 @@ class AddHostPresenter {
 
 // MARK: - AddHostViewOutput
 extension AddHostPresenter: AddHostViewOutput {
-    
+
     func viewDidLoad(_ view: AddHostViewInput) {
         tableManager.form = addHostForm
         tableManager.delegate = self
@@ -36,15 +36,17 @@ extension AddHostPresenter: AddHostViewOutput {
 
     func viewDidPressSaveButton(_ view: AddHostViewInput) {
         // TODO: Обработка ошибок формы
-        guard let _ = addHostForm.host,
-            addHostForm.isValid else { // Host does not yet exists
+        guard addHostForm.isValid else { return }
+
+        if addHostForm.host == nil {
+            // Host does not yet exists
             interactor?.saveForm(addHostForm)
-            return
+        } else {
+            // Host already exists
+            interactor?.updateForm(addHostForm)
         }
-        // Host already exists
-        interactor?.updateForm(addHostForm)
     }
-    
+
     func viewDidPressBackButton(_ view: AddHostViewInput) {
         router?.popCurrentController(animated: true)
     }

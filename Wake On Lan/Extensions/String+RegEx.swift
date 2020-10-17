@@ -10,7 +10,7 @@ import Foundation
 
 extension String {
     func matches(_ regex: String) -> Bool {
-        return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
+        self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
 
     func formatted(by mask: String, _ separator: String) -> String {

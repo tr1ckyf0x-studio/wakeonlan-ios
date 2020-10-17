@@ -10,7 +10,7 @@ import UIKit
 
 class HostListRouter: HostListRouterProtocol {
     weak var viewController: UIViewController?
-    
+
     func routeToAddHost(with host: Host? = nil) {
         let addHostViewController = AddHostViewController()
         let addHostConfigurator = AddHostConfigurator()
