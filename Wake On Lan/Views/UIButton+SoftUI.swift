@@ -9,22 +9,22 @@
 import UIKit
 
 class SoftUIButton: UIButton, SoftUIProtocol {
-    
+
     private let shadowLayerName = "com.wol.soft_shadow_layer"
 
     // MARK: - Override
-    open override var isHighlighted: Bool {
+    override open var isHighlighted: Bool {
         didSet {
             pressed = isHighlighted ? true : false
         }
     }
-    
-    open override var isSelected: Bool {
+
+    override open var isSelected: Bool {
         didSet {
             pressed = isSelected ? false : true
         }
     }
-        
+
     override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         if roundShape { cornerRadius = bounds.height / 2 }
@@ -33,9 +33,9 @@ class SoftUIButton: UIButton, SoftUIProtocol {
 
     // MARK: - Properties
     var themeColor: UIColor
-    
+
     var cornerRadius: CGFloat
-    
+
     private var pressed: Bool = false {
         didSet {
             guard let shadowLayer = layer.sublayers?.first else { return }
@@ -44,6 +44,7 @@ class SoftUIButton: UIButton, SoftUIProtocol {
                 layer.shadowOffset = CGSize(width: -2, height: -2)
                 shadowLayer.shadowOffset = CGSize(width: 2, height: 2)
                 contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 0, right: 0)
+
             case false:
                 layer.shadowOffset = CGSize(width: 2, height: 2)
                 shadowLayer.shadowOffset = CGSize(width: -2, height: -2)
@@ -51,24 +52,24 @@ class SoftUIButton: UIButton, SoftUIProtocol {
             }
         }
     }
-    
+
     private var roundShape: Bool = false
-    
+
     // MARK: - Init
     init(roundShape: Bool = false, cornerRadius: CGFloat = 15.0, themeColor: UIColor = .softUIColor) {
         self.roundShape = roundShape
         self.themeColor = themeColor
         self.cornerRadius = cornerRadius
-        
+
         super.init(frame: .zero)
         self.adjustsImageWhenDisabled = false
         self.adjustsImageWhenHighlighted = false
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - SoftUIProtocol
     func addSoftUIEffectIfNeeded() {
         self.layer.addBottomRightEffect(cornerRadius: cornerRadius)
@@ -85,5 +86,5 @@ class SoftUIButton: UIButton, SoftUIProtocol {
             self.layer.insertSublayer(newShadowLayer, below: self.imageView?.layer)
         }
     }
-    
+
 }

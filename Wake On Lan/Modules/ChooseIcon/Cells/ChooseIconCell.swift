@@ -9,7 +9,7 @@
 import UIKit
 
 class ChooseIconCell: UICollectionViewCell {
-    
+
     typealias TapIconBlock = (_ cell: ChooseIconCell) -> Void
 
     // MARK: - Properties
@@ -47,14 +47,14 @@ class ChooseIconCell: UICollectionViewCell {
         deviceButton.setImage(image, for: .normal)
         deviceButton.imageView?.tintColor = .systemGray
     }
-    
+
     private func setupDeviceIconView() {
         contentView.addSubview(deviceButton)
         deviceButton.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
-    
+
     // MARK: - Action
     @objc private func didTapDeviceButton(_ sender: UIButton) {
         didTapIconBlock?(self)

@@ -41,7 +41,7 @@ class ChooseIconViewController: UIViewController {
     }()
 
     private var chooseIconCollectionLayout: ChooseIconCollectionLayout? {
-        return chooseIconView.collectionView.collectionViewLayout as? ChooseIconCollectionLayout ?? nil
+        chooseIconView.collectionView.collectionViewLayout as? ChooseIconCollectionLayout
     }
 
     // MARK: - Lifecycle
@@ -70,15 +70,15 @@ class ChooseIconViewController: UIViewController {
 
     // MARK: - Utilities
     func makePresentingViewControllerDimmed() {
-        UIView.animate(withDuration: Constants.animationDuration, animations:  {
+        UIView.animate(withDuration: Constants.animationDuration) {
             self.presentingViewController?.view.alpha = 0.5
-        })
+        }
     }
 
     func makePresentingViewControllerTransparent() {
-        UIView.animate(withDuration: Constants.animationDuration, animations:  {
+        UIView.animate(withDuration: Constants.animationDuration) {
             self.presentingViewController?.view.alpha = 1.0
-        })
+        }
     }
 
 }

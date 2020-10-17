@@ -16,7 +16,7 @@ extension ChooseIconCollectionDisplay: Equatable {
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
-        case (grid(let lcolumns), .grid(let rcolumns)):
+        case let (grid(lcolumns), .grid(rcolumns)):
             return lcolumns == rcolumns
         }
     }

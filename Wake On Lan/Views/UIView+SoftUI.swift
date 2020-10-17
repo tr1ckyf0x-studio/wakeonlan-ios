@@ -13,9 +13,9 @@ public extension UIColor {
 }
 
 class SoftUIView: UIView, SoftUIProtocol {
-    
+
     private let shadowLayerName = "com.wol.soft_shadow_layer"
-    
+
     // MARK: - Properties
     var themeColor: UIColor
 
@@ -27,12 +27,12 @@ class SoftUIView: UIView, SoftUIProtocol {
         self.cornerRadius = cornerRadius
         super.init(frame: .zero)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: - SoftUIProtocol
+
+    // MARK: - SoftUIProtocol
     func addSoftUIEffectIfNeeded() {
         self.layer.addBottomRightEffect(cornerRadius: cornerRadius)
         let oldShadowLayer = self.layer.sublayers?.first {
@@ -48,21 +48,21 @@ class SoftUIView: UIView, SoftUIProtocol {
             self.layer.insertSublayer(newShadowLayer, at: 0)
         }
     }
-    
+
     override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         addSoftUIEffectIfNeeded()
     }
-    
+
 }
 
 extension CALayer {
-    
+
     func addBottomRightEffect(cornerRadius: CGFloat) {
         self.cornerRadius = cornerRadius
         self.shadowRadius = 2
         self.shadowOpacity = 1
-        
+
         self.shadowOffset = CGSize(width: 2.0, height: 2.0)
         self.shadowColor = UIColor(red: 223 / 255, green: 228 / 255, blue: 238 / 255, alpha: 1.0).cgColor
         self.masksToBounds = false
@@ -71,12 +71,12 @@ extension CALayer {
 }
 
 extension CAShapeLayer {
-    
+
     func addTopLeftEffect(cornerRadius: CGFloat, themeColor: CGColor = UIColor.softUIColor.cgColor) {
         self.cornerRadius = cornerRadius
         self.shadowRadius = 2
         self.shadowOpacity = 1
-        
+
         self.shadowOffset = CGSize(width: -2.0, height: -2.0)
         self.shadowColor = UIColor.white.cgColor
         self.backgroundColor = themeColor

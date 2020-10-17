@@ -13,6 +13,7 @@ typealias Content = HostListCacheTracker<Host, HostListInteractor>.Transaction<H
 
 protocol HostListViewOutput: class {
     var tableManager: HostListTableManager? { get }
+
     func viewIsReady(_ view: HostListViewInput)
     func viewDidPressAddButton(_ view: HostListViewInput)
 }

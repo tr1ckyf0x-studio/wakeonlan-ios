@@ -13,10 +13,10 @@ class AddHostConfigurator {
         let presenter = AddHostPresenter(addHostForm: addHostForm)
         let interactor = AddHostInteractor()
         let router = AddHostRouter()
-        
+
         router.viewController = viewController
         presenter.router = router
-        
+
         interactor.presenter = presenter
         presenter.interactor = interactor
 

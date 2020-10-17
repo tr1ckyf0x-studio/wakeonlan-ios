@@ -14,22 +14,22 @@ protocol HostListViewDelegate: class {
 }
 
 class HostListView: UIView {
-    
+
     private enum Constants {
         static let addItemButtonDimensions = 32.0
     }
-    
+
     weak var delegate: HostListViewDelegate?
-    
+
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(HostListTableViewCell.self, forCellReuseIdentifier: "\(HostListTableViewCell.self)")
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        
+
         return tableView
     }()
-    
+
     lazy var addItemButton: UIBarButtonItem = {
         let addButton: SoftUIButton = {
             let addButton = SoftUIButton(cornerRadius: 16.0)
@@ -41,41 +41,41 @@ class HostListView: UIView {
 
             return addButton
         }()
-        
+
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: addButton)
             button.customView?.snp.makeConstraints {
                 $0.width.height.equalTo(Constants.addItemButtonDimensions)
             }
-            
+
             return button
         }()
-        
+
         return barButton
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .softUIColor
         createSubviews()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         createSubviews()
     }
-    
+
     private func createSubviews() {
         setupTableView()
     }
-    
+
     private func setupTableView() {
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
-    
+
     @objc private func addButtonPressed(_ sender: UIButton) {
         delegate?.hostListViewDidPressAddButton(self)
     }

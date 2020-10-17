@@ -8,6 +8,6 @@
 
 protocol Validator {
     associatedtype Value
-    
+
     func validate(value: Value) -> Bool
 }

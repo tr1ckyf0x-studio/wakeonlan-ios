@@ -16,7 +16,7 @@ struct TextFormatter: Formatter {
     }
 
     func format(text: String) -> String {
-        return text.formatted(by: format, separator)
+        text.formatted(by: format, separator)
     }
 
 }

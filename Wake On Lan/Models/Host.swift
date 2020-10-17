@@ -1,6 +1,6 @@
 //
 //  Host+CoreDataClass.swift
-//  
+//
 //
 //  Created by Владислав Лисянский on 20.05.2020.
 //
@@ -8,17 +8,17 @@
 
 import CoreData
 
-final class Host : NSManagedObject {
+final class Host: NSManagedObject {
     @NSManaged private(set) var createdAt: Date
     @NSManaged private(set) var title: String
     @NSManaged private(set) var iconName: String
     @NSManaged private var macAddressData: Data
     @NSManaged private var ipAddressData: Data?
     @NSManaged private(set) var port: String?
-    
+
     private(set) var macAddress: String {
         get {
-            return HostCoreDataFormatter.decompress(
+            HostCoreDataFormatter.decompress(
                 data: macAddressData, ofType: .macAddress)
         }
         set {
@@ -26,7 +26,7 @@ final class Host : NSManagedObject {
                 string: newValue, ofType: .macAddress)
         }
     }
-    
+
     private(set) var ipAddress: String? {
         get {
             guard let ipAddressData = ipAddressData else { return nil }

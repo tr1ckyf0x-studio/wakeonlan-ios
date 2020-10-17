@@ -28,7 +28,7 @@ class ChooseIconTableManager: NSObject {
 extension ChooseIconTableManager: UICollectionViewDelegate {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
+        sections.count
     }
 
 }
@@ -38,7 +38,7 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return sections[section].content.count
+        sections[section].content.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -55,6 +55,7 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
             }
             iconCell?.configure(with: model, didTapBlock: didTapIconBlock)
             cell = iconCell
+
         default:
             break
         }
