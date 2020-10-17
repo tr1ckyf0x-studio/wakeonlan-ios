@@ -33,7 +33,7 @@ class AddHostView: UIView {
 
         return tableView
     }()
-    
+
     lazy var saveItemButton: UIBarButtonItem = {
         let saveButton: SoftUIButton = {
             let addButton = SoftUIButton(roundShape: true)
@@ -44,23 +44,23 @@ class AddHostView: UIView {
             let spacing: CGFloat = 6
             addButton.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
             addButton.imageView?.contentMode = .scaleAspectFit
-            addButton.imageView?.tintColor = .init(red: 105/255, green: 105/255, blue: 105/255, alpha: 1.0)
-            
+            addButton.imageView?.tintColor = .init(red: 105 / 255, green: 105 / 255, blue: 105 / 255, alpha: 1.0)
+
             return addButton
         }()
-        
+
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: saveButton)
             button.customView?.snp.makeConstraints {
                 $0.width.height.equalTo(32)
             }
-            
+
             return button
         }()
-        
+
         return barButton
     }()
-    
+
     lazy var backBarButton: UIBarButtonItem = {
         let addButton: SoftUIButton = {
             let addButton = SoftUIButton(roundShape: true)
@@ -70,22 +70,22 @@ class AddHostView: UIView {
                                 for: .touchUpInside)
             let spacing: CGFloat = 5
             addButton.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
-            
+
             return addButton
         }()
-        
+
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: addButton)
             button.customView?.snp.makeConstraints {
                 $0.width.height.equalTo(32)
             }
-            
+
             return button
         }()
-        
+
         return barButton
     }()
-    
+
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,7 +93,7 @@ class AddHostView: UIView {
         setupTableView()
         registerNotifications()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -13,7 +13,7 @@ class DeviceIconCell: UITableViewCell {
 
     typealias ChangeIconBlock = (_ model: IconModel) -> Void
 
-    public var didTapChangeIconBlock: ChangeIconBlock?
+    var didTapChangeIconBlock: ChangeIconBlock?
 
     private lazy var baseView: DeviceIconView = {
         let view = DeviceIconView()
@@ -48,7 +48,7 @@ class DeviceIconCell: UITableViewCell {
     }
 
     // MARK: - Public
-    public func configure(with model: IconModel?) {
+    func configure(with model: IconModel?) {
         guard let model = model else { return }
         self.model = model
         baseView.configure(with: model)

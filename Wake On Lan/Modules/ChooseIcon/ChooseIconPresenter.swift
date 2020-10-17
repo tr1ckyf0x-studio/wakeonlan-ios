@@ -14,9 +14,11 @@ class ChooseIconPresenter {
     private(set) lazy var tableManager = ChooseIconTableManager(with: sections)
 
     private let sections: [ChooseIconSection] = {
-        [[R.image.other, R.image.desktop, R.image.router, R.image.scanner, R.image.tv].map {
-            .icon(IconModel(pictureName: $0.name))
-            }].map { ChooseIconSection.section(content: $0) }
+        [[R.image.other, R.image.desktop, R.image.router, R.image.scanner, R.image.tv]
+                .map {
+                        .icon(IconModel(pictureName: $0.name))
+                }]
+                .map { ChooseIconSection.section(content: $0) }
     }()
 
 }

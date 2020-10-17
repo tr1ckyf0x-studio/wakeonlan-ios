@@ -22,12 +22,16 @@ class AddHostForm: Form {
             switch self {
             case .invalidMACAddress:
                 return R.string.addHostFailure.invalidMACAddress()
+
             case .invalidIPAddress:
                 return R.string.addHostFailure.invalidIPAddress()
+
             case .invalidPort:
                 return R.string.addHostFailure.invalidPort()
+
             case .invalidTitle:
                 return R.string.addHostFailure.invalidTitle()
+
             case .unknown:
                 return R.string.addHostFailure.unknown()
             }
@@ -68,7 +72,7 @@ class AddHostForm: Form {
 
         return [FormItem.icon(model)]
     }()
-    
+
     private lazy var titleItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = Placeholder.title
@@ -80,7 +84,7 @@ class AddHostForm: Form {
 
         return item
     }()
-    
+
     private lazy var macAddressItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = Placeholder.macAddress
@@ -93,10 +97,10 @@ class AddHostForm: Form {
         item.keyboardType = .asciiCapable
         item.maxLength = 17
         item.needsUppercased = true
-        
+
         return item
     }()
-    
+
     private lazy var ipAddressItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = Placeholder.ipAddress
@@ -111,7 +115,7 @@ class AddHostForm: Form {
 
         return item
     }()
-    
+
     private lazy var portItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = Placeholder.port
@@ -131,7 +135,8 @@ class AddHostForm: Form {
     // MARK: - Init
     init(host: Host? = nil) {
         makeSections()
-        defer { self.host = host }
+        // swiftlint:disable inert_defer
+        defer { self.host = host } // Otherwise didSet does not call
     }
 
     // MARK: - Private
@@ -161,13 +166,13 @@ class AddHostForm: Form {
             header: .init(header: R.string.addHost.ipAddress(), mandatory: false),
             footer: .init(footer: R.string.addHost.ipAddressDescription()),
             kind: .ipAddress)
-        
+
         let portSection = FormSection.section(
             content: [portFormItem],
             header: .init(header: R.string.addHost.port(), mandatory: false),
             footer: .init(footer: R.string.addHost.portDescription()),
             kind: .port)
-        
+
         formSections =
             [deviceIconSection, titleSection, macAddressSection, ipAddressSection, portSection]
     }
@@ -175,14 +180,13 @@ class AddHostForm: Form {
 }
 
 extension AddHostForm {
+
     var isValid: Bool {
-        let formIsValid = formSections.reduce(true) { formResult, formSection -> Bool in
-            let sectionIsValid = formSection.items.reduce(true) { sectionResult, formItem -> Bool in
-                return sectionResult && formItem.isValid
+        formSections.allSatisfy { formSection -> Bool in
+            formSection.items.allSatisfy { formItem -> Bool in
+                formItem.isValid
             }
-            return formResult && sectionIsValid
         }
-        return formIsValid
     }
 
 }

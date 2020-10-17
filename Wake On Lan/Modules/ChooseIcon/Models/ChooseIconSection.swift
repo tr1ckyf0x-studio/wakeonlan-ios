@@ -15,7 +15,7 @@ struct IconModel {
 
 extension IconModel: Equatable {
     static func == (lhs: IconModel, rhs: IconModel) -> Bool {
-        return lhs.pictureName == rhs.pictureName
+        lhs.pictureName == rhs.pictureName
     }
 }
 

@@ -20,7 +20,7 @@ extension HostListPresenter: HostListViewOutput {
     func viewIsReady(_ view: HostListViewInput) {
         interactor?.fetchHosts()
     }
-    
+
     func viewDidPressAddButton(_ view: HostListViewInput) {
         router?.routeToAddHost(with: nil)
     }
@@ -32,18 +32,21 @@ extension HostListPresenter: HostListInteractorOutput {
     func interactor(_ interactor: HostListInteractorInput, didChangeContent content: [Content]) {
         content.forEach {
             switch $0 {
-                case .insert(let indexPath, let object):
-                    tableManager?.tableViewModel.insertObject(
-                        object, at: indexPath.row, in: indexPath.section)
-                case .update(let indexPath, let object):
-                    tableManager?.tableViewModel.updateObject(
-                        object, at: indexPath.row, in: indexPath.section)
-                case .move(old: let oldIndexPath, new: let newIndexPath):
-                    tableManager?.tableViewModel.moveObject(
-                        from: oldIndexPath.row, to: newIndexPath.row, in: oldIndexPath.section)
-                case .delete(let indexPath):
-                    tableManager?.tableViewModel.removeObject(
-                        at: indexPath.row, in: indexPath.section)
+            case let .insert(indexPath, object):
+                tableManager?.tableViewModel.insertObject(
+                    object, at: indexPath.row, in: indexPath.section)
+
+            case let .update(indexPath, object):
+                tableManager?.tableViewModel.updateObject(
+                    object, at: indexPath.row, in: indexPath.section)
+
+            case let .move(oldIndexPath, newIndexPath):
+                tableManager?.tableViewModel.moveObject(
+                    from: oldIndexPath.row, to: newIndexPath.row, in: oldIndexPath.section)
+
+            case let .delete(indexPath):
+                tableManager?.tableViewModel.removeObject(
+                    at: indexPath.row, in: indexPath.section)
             }
             view?.updateTable(with: $0)
         }
@@ -56,7 +59,7 @@ extension HostListPresenter: HostListInteractorOutput {
         tableManager?.tableViewModel = HostListTableViewModel(sections: sections)
         view?.reloadTable()
     }
-    
+
     func interactor(_ interactor: HostListInteractorInput,
                     didEncounterError error: Error) {
         print(error)
@@ -64,15 +67,15 @@ extension HostListPresenter: HostListInteractorOutput {
 }
 
 extension HostListPresenter: HostListTableManagerDelegate {
-    
+
     func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host) {
         router?.routeToAddHost(with: host)
     }
-    
+
     func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host) {
         interactor?.deleteHost(host)
     }
-    
+
     func tableManager(_ tableManager: HostListTableManager,
                       didSelectRowAt indexPath: IndexPath) {
         guard case let .host(host) =

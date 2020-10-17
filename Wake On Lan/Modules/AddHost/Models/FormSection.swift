@@ -41,26 +41,26 @@ enum FormSection {
         case ipAddress
         case port
     }
-    
+
     case section(content: [Item],
-        header: FormSectionHeader? = nil,
-        footer: FormSectionFooter? = nil,
-        kind: FormSection.Kind? = nil)
-    
+                 header: FormSectionHeader? = nil,
+                 footer: FormSectionFooter? = nil,
+                 kind: FormSection.Kind? = nil)
+
     var items: [Item] {
         switch self {
         case let .section(content, _, _, _):
             return content
         }
     }
-    
+
     var header: FormSectionHeader? {
         switch self {
         case let .section(_, header, _, _):
             return header
         }
     }
-    
+
     var footer: FormSectionFooter? {
         switch self {
         case let .section(_, _, footer, _):
