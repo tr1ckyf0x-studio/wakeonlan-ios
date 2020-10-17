@@ -8,7 +8,7 @@ settings:
 
 options:
   deploymentTarget:
-    iOS: 11.0
+    iOS: 12.0
 
 attributes:
   CLASSPREFIX: WO
