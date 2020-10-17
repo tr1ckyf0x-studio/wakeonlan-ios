@@ -22,6 +22,7 @@ protocol HostListCacheTrackerProtocol {
 }
 
 protocol HostListCacheTrackerDelegate : class {
+    
     associatedtype Object: NSFetchRequestResult
     
     typealias CacheTracker = HostListCacheTracker<Object, Self>

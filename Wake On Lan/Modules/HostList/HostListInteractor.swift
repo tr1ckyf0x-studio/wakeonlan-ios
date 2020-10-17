@@ -37,6 +37,14 @@ final class HostListInteractor: HostListInteractorInput {
         }
     }
 
+    func deleteHost(_ host: Host) {
+        guard let context = host.managedObjectContext else { return }
+        context.perform { [weak self] in
+            context.delete(host)
+            self?.coreDataService.saveContext(context)
+        }
+    }
+
 }
 
 extension HostListInteractor: HostListCacheTrackerDelegate {

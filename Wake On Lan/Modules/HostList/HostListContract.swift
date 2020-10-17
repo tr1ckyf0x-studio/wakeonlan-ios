@@ -25,6 +25,7 @@ protocol HostListViewInput: class {
 protocol HostListInteractorInput: class {
     func fetchHosts()
     func wakeHost(_ host: Host)
+    func deleteHost(_ host: Host)
 }
 
 protocol HostListInteractorOutput: class {

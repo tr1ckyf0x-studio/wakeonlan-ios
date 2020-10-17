@@ -18,24 +18,28 @@ final class Host : NSManagedObject {
     
     private(set) var macAddress: String {
         get {
-            return HostCoreDataFormatter.decompress(data: macAddressData, ofType: .macAddress)
+            return HostCoreDataFormatter.decompress(
+                data: macAddressData, ofType: .macAddress)
         }
         set {
-            macAddressData = HostCoreDataFormatter.compress(string: newValue, ofType: .macAddress)
+            macAddressData = HostCoreDataFormatter.compress(
+                string: newValue, ofType: .macAddress)
         }
     }
     
     private(set) var ipAddress: String? {
         get {
             guard let ipAddressData = ipAddressData else { return nil }
-            return HostCoreDataFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
+            return HostCoreDataFormatter.decompress(
+                data: ipAddressData, ofType: .ipAddress)
         }
         set {
             guard let ipAddress = newValue else {
                 ipAddressData = nil
                 return
             }
-            ipAddressData = HostCoreDataFormatter.compress(string: ipAddress, ofType: .ipAddress)
+            ipAddressData = HostCoreDataFormatter.compress(
+                string: ipAddress, ofType: .ipAddress)
         }
     }
 
