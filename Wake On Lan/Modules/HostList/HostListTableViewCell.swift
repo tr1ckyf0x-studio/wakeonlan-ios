@@ -8,14 +8,42 @@
 
 import UIKit
 
-class HostListTableViewCell: UITableViewCell {
+protocol HostListTableViewCellDelegate: class {
+    
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host)
+    
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host)
 
-    typealias TapInfoBlock = (_ cell: HostListTableViewCell) -> Void
+}
+
+final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
-    private let baseView = SoftUIView()
+    private var model: Host?
     
-    private var didTapInfoBlock: TapInfoBlock?
+    private weak var delegate: HostListTableViewCellDelegate?
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.isPagingEnabled = true
+        scrollView.delegate = self
+        
+        return scrollView
+    }()
+    
+    private let scrollViewContentView = UIView()
+    
+    private lazy var deleteButton: SoftUIButton = {
+        let button = SoftUIButton(roundShape: false)
+        button.setImage(R.image.icon_trash(), for: .normal)
+        button.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private let baseView = SoftUIView()
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
@@ -57,7 +85,9 @@ class HostListTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = .softUIColor
+        setupScrollView()
         setupBaseView()
+        setupDeleteView()
         setupImageView()
         setupHostTitle()
         setupMacAddressTitle()
@@ -69,7 +99,7 @@ class HostListTableViewCell: UITableViewCell {
     }
 
     // MARK: - Public
-    func configure(with model: Host, didTapInfoBlock: @escaping TapInfoBlock) {
+    func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
         let image = UIImage(named: model.iconName,
                             in: Bundle.main,
                             compatibleWith: nil)?
@@ -77,17 +107,42 @@ class HostListTableViewCell: UITableViewCell {
         deviceImageView.image = image
         hostTitle.text = model.title
         macAddressTitle.text = model.macAddress
-        self.didTapInfoBlock = didTapInfoBlock
+        self.model = model
+        self.delegate = delegate
     }
 
     // MARK: - Private
+    private func setupScrollView() {
+        contentView.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        scrollView.addSubview(scrollViewContentView)
+        scrollViewContentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
     private func setupBaseView() {
-        contentView.addSubview(baseView)
+        scrollViewContentView.addSubview(baseView)
         baseView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
             $0.top.equalToSuperview().offset(8)
-            $0.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().offset(-8)
+            $0.width.equalTo(scrollView).offset(-32)
+        }
+        scrollView.snp.makeConstraints { make in
+            make.height.equalTo(baseView).offset(16)
+        }
+    }
+    
+    private func setupDeleteView() {
+        scrollViewContentView.addSubview(deleteButton)
+        deleteButton.snp.makeConstraints { make in
+            make.top.bottom.equalTo(baseView)
+            make.leading.equalTo(baseView.snp.trailing).offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.width.equalTo(deleteButton.snp.height)
         }
     }
 
@@ -131,8 +186,28 @@ class HostListTableViewCell: UITableViewCell {
     
     // MARK: - Action
     @objc private func didTapInfoButton() {
-        guard let action = didTapInfoBlock else { return }
-        action(self)
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTapInfo(self, model: model)
+    }
+    
+    @objc private func didTapDeleteButton() {
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTapDelete(self, model: model)
+    }
+
+}
+
+extension HostListTableViewCell: UIScrollViewDelegate {
+
+    // NOTE: Prevent left swiping
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        switch scrollView.contentOffset.x {
+            case let x where x <= .zero:
+                scrollView.isPagingEnabled = false
+                scrollView.contentOffset.x = .zero
+            default:
+                scrollView.isPagingEnabled = true
+        }
     }
 
 }

@@ -71,8 +71,7 @@ extension HostListViewController: HostListViewInput {
                 case .update(let indexPath, _):
                     tableView.reloadRows(at: [indexPath], with: .automatic)
                 case .move(old: let indexPath, new: let newIndexPath):
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                    tableView.moveRow(at: indexPath, to: newIndexPath)
                 case .delete(let indexPath):
                     tableView.deleteRows(at: [indexPath], with: .automatic)
             }
