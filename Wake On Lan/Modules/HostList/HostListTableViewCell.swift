@@ -14,6 +14,8 @@ protocol HostListTableViewCellDelegate: class {
 
     func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host)
 
+    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host)
+
 }
 
 // MARK: - NotificationView
@@ -30,7 +32,7 @@ private final class NotificationView: UIView {
 
     private lazy var notificationLabel: UILabel = {
         let label = UILabel()
-        label.text = "PACKET SENT"
+        label.text = R.string.hostList.packetSent()
         label.textColor = .white
         label.textAlignment = .center
         label.backgroundColor = .lightGray
@@ -53,10 +55,10 @@ private final class NotificationView: UIView {
 
     // MARK: - Private
     private func setupBaseView() {
-        backgroundColor = .lightGray
-        layer.cornerRadius = 10
         alpha = .zero
+        layer.cornerRadius = 10
         layer.masksToBounds = false
+        backgroundColor = .lightGray
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 
@@ -312,6 +314,9 @@ final class HostListTableViewCell: UITableViewCell {
                                 })
                            })
         }
+
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTap(self, model: model)
 
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         displayNotificationAnimated()
