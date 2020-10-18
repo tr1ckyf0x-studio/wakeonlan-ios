@@ -8,95 +8,7 @@
 
 import UIKit
 
-protocol HostListTableViewCellDelegate: class {
-
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host)
-
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host)
-
-    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host)
-
-}
-
-// MARK: - NotificationView
-private final class NotificationView: UIView {
-
-    private enum Constants {
-        static let shadowSize: CGFloat = 2
-        static let shadowDistance: CGFloat = 10
-        static let shadowRadius: CGFloat = 5
-        static let shadowOpacity: Float = 0.6
-        static let cornerRadius: CGFloat = 10
-        static let viewHeight: CGFloat = 20
-    }
-
-    private lazy var notificationLabel: UILabel = {
-        let label = UILabel()
-        label.text = R.string.hostList.packetSent()
-        label.textColor = .white
-        label.textAlignment = .center
-        label.backgroundColor = .lightGray
-        label.font = R.font.robotoMedium(size: 12)
-        makeShadow(for: label)
-
-        return label
-    }()
-
-    // MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupBaseView()
-        setupNotificationLabel()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - Private
-    private func setupBaseView() {
-        alpha = .zero
-        layer.cornerRadius = 10
-        layer.masksToBounds = false
-        backgroundColor = .lightGray
-        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-    }
-
-    private func setupNotificationLabel() {
-        addSubview(notificationLabel)
-        notificationLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(10)
-            $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview()
-        }
-    }
-
-    private func makeShadow(for label: UILabel) {
-        let xPosition = -(Constants.cornerRadius + Constants.shadowSize * 2)
-        let yPosition = Constants.viewHeight - (Constants.shadowSize * 0.4) + Constants.shadowDistance
-        let labelWidth = label.intrinsicContentSize.width
-        let width = [labelWidth * 2,
-                     Constants.shadowSize * 2,
-                     Constants.cornerRadius].reduce(.zero, +)
-
-        let contactRect =
-            CGRect(x: xPosition, y: yPosition, width: width, height: Constants.shadowSize)
-
-        label.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
-        label.layer.shadowRadius = Constants.shadowRadius
-        label.layer.shadowOpacity = Constants.shadowOpacity
-        label.layer.masksToBounds = false
-    }
-
-    // MARK: - intrinsicContentSize
-    override var intrinsicContentSize: CGSize {
-        .init(width: notificationLabel.intrinsicContentSize.width * 2,
-              height: Constants.viewHeight)
-    }
-
-}
-
+// MARK: - HostListTableViewCell
 final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
@@ -324,6 +236,7 @@ final class HostListTableViewCell: UITableViewCell {
 
 }
 
+// MARK: - UIScrollViewDelegate
 extension HostListTableViewCell: UIScrollViewDelegate {
 
     // NOTE: Prevents left swiping
@@ -336,6 +249,85 @@ extension HostListTableViewCell: UIScrollViewDelegate {
         default:
             scrollView.isPagingEnabled = true
         }
+    }
+
+}
+
+// MARK: - NotificationView
+private final class NotificationView: UIView {
+
+    private enum Constants {
+        static let shadowSize: CGFloat = 2
+        static let shadowDistance: CGFloat = 10
+        static let shadowRadius: CGFloat = 5
+        static let shadowOpacity: Float = 0.6
+        static let cornerRadius: CGFloat = 10
+        static let viewHeight: CGFloat = 20
+    }
+
+    private lazy var notificationLabel: UILabel = {
+        let label = UILabel()
+        label.text = R.string.hostList.packetSent()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = .lightGray
+        label.font = R.font.robotoMedium(size: 12)
+        makeShadow(for: label)
+
+        return label
+    }()
+
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupBaseView()
+        setupNotificationLabel()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private
+    private func setupBaseView() {
+        alpha = .zero
+        layer.cornerRadius = 10
+        layer.masksToBounds = false
+        backgroundColor = .lightGray
+        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+    }
+
+    private func setupNotificationLabel() {
+        addSubview(notificationLabel)
+        notificationLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(10)
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview()
+        }
+    }
+
+    private func makeShadow(for label: UILabel) {
+        let xPosition = -(Constants.cornerRadius + Constants.shadowSize * 2)
+        let yPosition = Constants.viewHeight - (Constants.shadowSize * 0.4) + Constants.shadowDistance
+        let labelWidth = label.intrinsicContentSize.width
+        let width = [labelWidth * 2,
+                     Constants.shadowSize * 2,
+                     Constants.cornerRadius].reduce(.zero, +)
+
+        let contactRect =
+            CGRect(x: xPosition, y: yPosition, width: width, height: Constants.shadowSize)
+
+        label.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
+        label.layer.shadowRadius = Constants.shadowRadius
+        label.layer.shadowOpacity = Constants.shadowOpacity
+        label.layer.masksToBounds = false
+    }
+
+    // MARK: - intrinsicContentSize
+    override var intrinsicContentSize: CGSize {
+        .init(width: notificationLabel.intrinsicContentSize.width * 2,
+              height: Constants.viewHeight)
     }
 
 }
