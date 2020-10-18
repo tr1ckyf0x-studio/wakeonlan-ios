@@ -16,6 +16,85 @@ protocol HostListTableViewCellDelegate: class {
 
 }
 
+// MARK: - NotificationView
+private final class NotificationView: UIView {
+
+    private enum Constants {
+        static let shadowSize: CGFloat = 2
+        static let shadowDistance: CGFloat = 10
+        static let shadowRadius: CGFloat = 5
+        static let shadowOpacity: Float = 0.6
+        static let cornerRadius: CGFloat = 10
+        static let viewHeight: CGFloat = 20
+    }
+
+    private lazy var notificationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "PACKET SENT"
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = .lightGray
+        label.font = R.font.robotoMedium(size: 12)
+        makeShadow(for: label)
+
+        return label
+    }()
+
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupBaseView()
+        setupNotificationLabel()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private
+    private func setupBaseView() {
+        backgroundColor = .lightGray
+        layer.cornerRadius = 10
+        alpha = .zero
+        layer.masksToBounds = false
+        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+    }
+
+    private func setupNotificationLabel() {
+        addSubview(notificationLabel)
+        notificationLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(10)
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview()
+        }
+    }
+
+    private func makeShadow(for label: UILabel) {
+        let xPosition = -(Constants.cornerRadius + Constants.shadowSize * 2)
+        let yPosition = Constants.viewHeight - (Constants.shadowSize * 0.4) + Constants.shadowDistance
+        let labelWidth = label.intrinsicContentSize.width
+        let width = [labelWidth * 2,
+                     Constants.shadowSize * 2,
+                     Constants.cornerRadius].reduce(.zero, +)
+
+        let contactRect =
+            CGRect(x: xPosition, y: yPosition, width: width, height: Constants.shadowSize)
+
+        label.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
+        label.layer.shadowRadius = Constants.shadowRadius
+        label.layer.shadowOpacity = Constants.shadowOpacity
+        label.layer.masksToBounds = false
+    }
+
+    // MARK: - intrinsicContentSize
+    override var intrinsicContentSize: CGSize {
+        .init(width: notificationLabel.intrinsicContentSize.width * 2,
+              height: Constants.viewHeight)
+    }
+
+}
+
 final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
@@ -39,11 +118,21 @@ final class HostListTableViewCell: UITableViewCell {
     private lazy var deleteButton: SoftUIButton = {
         let button = SoftUIButton(roundShape: false)
         button.setImage(R.image.icon_trash(), for: .normal)
-        button.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(didTapDeleteButton),
+                         for: .touchUpInside)
+
         return button
     }()
 
-    private let baseView = SoftUIView()
+    private lazy var baseView: SoftUIButton = {
+        let view = SoftUIButton()
+        view.addTarget(self,
+                       action: #selector(displayNotification),
+                       for: .touchUpInside)
+
+        return view
+    }()
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
@@ -195,11 +284,44 @@ final class HostListTableViewCell: UITableViewCell {
         delegate?.hostListCellDidTapDelete(self, model: model)
     }
 
+    @objc private func displayNotification() {
+        let notificationView = NotificationView()
+        baseView.addSubview(notificationView)
+        notificationView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+
+        let animationDuration = 0.2
+        let hideNotificationAnimated = { () -> Void in
+            UIView.animate(withDuration: animationDuration,
+                           animations: { notificationView.alpha = 0.0 },
+                           completion: { _ in
+                            notificationView.removeFromSuperview()
+                           })
+        }
+
+        let displayNotificationAnimated = { () -> Void in
+            UIView.animate(withDuration: animationDuration,
+                           animations: { notificationView.alpha = 1.0 },
+                           completion: { _ in
+                            DispatchQueue.main.asyncAfter(
+                                deadline: .now() + 0.5,
+                                execute: {
+                                    hideNotificationAnimated()
+                                })
+                           })
+        }
+
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        displayNotificationAnimated()
+    }
+
 }
 
 extension HostListTableViewCell: UIScrollViewDelegate {
 
-    // NOTE: Prevent left swiping
+    // NOTE: Prevents left swiping
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switch scrollView.contentOffset.x {
         case let xOffset where xOffset <= .zero:
