@@ -256,14 +256,7 @@ extension HostListTableViewCell: UIScrollViewDelegate {
 // MARK: - NotificationView
 private final class NotificationView: UIView {
 
-    private enum Constants {
-        static let shadowSize: CGFloat = 2
-        static let shadowDistance: CGFloat = 10
-        static let shadowRadius: CGFloat = 5
-        static let shadowOpacity: Float = 0.6
-        static let cornerRadius: CGFloat = 10
-        static let viewHeight: CGFloat = 20
-    }
+    static let height: CGFloat = 20
 
     private lazy var notificationLabel: UILabel = {
         let label = UILabel()
@@ -272,7 +265,7 @@ private final class NotificationView: UIView {
         label.textAlignment = .center
         label.backgroundColor = .lightGray
         label.font = R.font.robotoMedium(size: 12)
-        makeShadow(for: label)
+        label.makeShadow()
 
         return label
     }()
@@ -307,27 +300,36 @@ private final class NotificationView: UIView {
         }
     }
 
-    private func makeShadow(for label: UILabel) {
+    // MARK: - intrinsicContentSize
+    override var intrinsicContentSize: CGSize {
+        .init(width: notificationLabel.intrinsicContentSize.width * 2, height: Self.height)
+    }
+
+}
+
+private extension UILabel {
+
+    private enum Constants {
+        static let shadowSize: CGFloat = 2
+        static let shadowDistance: CGFloat = 10
+        static let shadowRadius: CGFloat = 5
+        static let shadowOpacity: Float = 0.6
+        static let cornerRadius: CGFloat = 10
+    }
+
+    func makeShadow() {
         let xPosition = -(Constants.cornerRadius + Constants.shadowSize * 2)
-        let yPosition = Constants.viewHeight - (Constants.shadowSize * 0.4) + Constants.shadowDistance
-        let labelWidth = label.intrinsicContentSize.width
+        let yPosition = NotificationView.height - (Constants.shadowSize * 0.4) + Constants.shadowDistance
+        let labelWidth = intrinsicContentSize.width
         let width = [labelWidth * 2,
                      Constants.shadowSize * 2,
                      Constants.cornerRadius].reduce(.zero, +)
-
         let contactRect =
             CGRect(x: xPosition, y: yPosition, width: width, height: Constants.shadowSize)
-
-        label.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
-        label.layer.shadowRadius = Constants.shadowRadius
-        label.layer.shadowOpacity = Constants.shadowOpacity
-        label.layer.masksToBounds = false
-    }
-
-    // MARK: - intrinsicContentSize
-    override var intrinsicContentSize: CGSize {
-        .init(width: notificationLabel.intrinsicContentSize.width * 2,
-              height: Constants.viewHeight)
+        layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
+        layer.shadowRadius = Constants.shadowRadius
+        layer.shadowOpacity = Constants.shadowOpacity
+        layer.masksToBounds = false
     }
 
 }
