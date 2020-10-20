@@ -68,6 +68,10 @@ extension HostListPresenter: HostListInteractorOutput {
 
 extension HostListPresenter: HostListTableManagerDelegate {
 
+    func tableManagerDidTapHostCell(_ tableManager: HostListTableManager, host: Host) {
+        interactor?.wakeHost(host)
+    }
+
     func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host) {
         router?.routeToAddHost(with: host)
     }

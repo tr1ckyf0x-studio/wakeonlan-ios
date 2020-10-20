@@ -17,6 +17,8 @@ protocol HostListTableManagerDelegate: class {
 
     func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host)
 
+    func tableManagerDidTapHostCell(_ tableManager: HostListTableManager, host: Host)
+
 }
 
 class HostListTableManager: NSObject {
@@ -81,6 +83,10 @@ extension HostListTableManager: UITableViewDelegate {
 
 extension HostListTableManager: HostListTableViewCellDelegate {
 
+    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host) {
+        delegate?.tableManagerDidTapHostCell(self, host: model)
+    }
+
     func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapDeleteButton(self, host: model)
     }
@@ -88,4 +94,5 @@ extension HostListTableManager: HostListTableViewCellDelegate {
     func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapInfoButton(self, host: model)
     }
+
 }
