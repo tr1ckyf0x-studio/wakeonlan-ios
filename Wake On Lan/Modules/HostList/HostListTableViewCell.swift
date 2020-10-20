@@ -8,14 +8,7 @@
 
 import UIKit
 
-protocol HostListTableViewCellDelegate: class {
-
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host)
-
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host)
-
-}
-
+// MARK: - HostListTableViewCell
 final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
@@ -39,11 +32,21 @@ final class HostListTableViewCell: UITableViewCell {
     private lazy var deleteButton: SoftUIButton = {
         let button = SoftUIButton(roundShape: false)
         button.setImage(R.image.icon_trash(), for: .normal)
-        button.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(didTapDeleteButton),
+                         for: .touchUpInside)
+
         return button
     }()
 
-    private let baseView = SoftUIView()
+    private lazy var baseView: SoftUIButton = {
+        let view = SoftUIButton()
+        view.addTarget(self,
+                       action: #selector(displayNotification),
+                       for: .touchUpInside)
+
+        return view
+    }()
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
@@ -195,11 +198,48 @@ final class HostListTableViewCell: UITableViewCell {
         delegate?.hostListCellDidTapDelete(self, model: model)
     }
 
+    @objc private func displayNotification() {
+        let notificationView = NotificationView()
+        baseView.addSubview(notificationView)
+        notificationView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+
+        let animationDuration = 0.2
+        let hideNotificationAnimated = { () -> Void in
+            UIView.animate(withDuration: animationDuration,
+                           animations: { notificationView.alpha = 0.0 },
+                           completion: { _ in
+                            notificationView.removeFromSuperview()
+                           })
+        }
+
+        let displayNotificationAnimated = { () -> Void in
+            UIView.animate(withDuration: animationDuration,
+                           animations: { notificationView.alpha = 1.0 },
+                           completion: { _ in
+                            DispatchQueue.main.asyncAfter(
+                                deadline: .now() + 0.5,
+                                execute: {
+                                    hideNotificationAnimated()
+                                })
+                           })
+        }
+
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTap(self, model: model)
+
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        displayNotificationAnimated()
+    }
+
 }
 
+// MARK: - UIScrollViewDelegate
 extension HostListTableViewCell: UIScrollViewDelegate {
 
-    // NOTE: Prevent left swiping
+    // NOTE: Prevents left swiping
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switch scrollView.contentOffset.x {
         case let xOffset where xOffset <= .zero:
@@ -209,6 +249,87 @@ extension HostListTableViewCell: UIScrollViewDelegate {
         default:
             scrollView.isPagingEnabled = true
         }
+    }
+
+}
+
+// MARK: - NotificationView
+private final class NotificationView: UIView {
+
+    static let height: CGFloat = 20
+
+    private lazy var notificationLabel: UILabel = {
+        let label = UILabel()
+        label.text = R.string.hostList.packetSent()
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = .lightGray
+        label.font = R.font.robotoMedium(size: 12)
+        label.makeShadow()
+
+        return label
+    }()
+
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupBaseView()
+        setupNotificationLabel()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private
+    private func setupBaseView() {
+        alpha = .zero
+        layer.cornerRadius = 10
+        layer.masksToBounds = false
+        backgroundColor = .lightGray
+        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+    }
+
+    private func setupNotificationLabel() {
+        addSubview(notificationLabel)
+        notificationLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(10)
+            $0.top.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview()
+        }
+    }
+
+    // MARK: - intrinsicContentSize
+    override var intrinsicContentSize: CGSize {
+        .init(width: notificationLabel.intrinsicContentSize.width * 2, height: Self.height)
+    }
+
+}
+
+private extension UILabel {
+
+    private enum Constants {
+        static let shadowSize: CGFloat = 2
+        static let shadowDistance: CGFloat = 10
+        static let shadowRadius: CGFloat = 5
+        static let shadowOpacity: Float = 0.6
+        static let cornerRadius: CGFloat = 10
+    }
+
+    func makeShadow() {
+        let xPosition = -(Constants.cornerRadius + Constants.shadowSize * 2)
+        let yPosition = NotificationView.height - (Constants.shadowSize * 0.4) + Constants.shadowDistance
+        let labelWidth = intrinsicContentSize.width
+        let width = [labelWidth * 2,
+                     Constants.shadowSize * 2,
+                     Constants.cornerRadius].reduce(.zero, +)
+        let contactRect =
+            CGRect(x: xPosition, y: yPosition, width: width, height: Constants.shadowSize)
+        layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
+        layer.shadowRadius = Constants.shadowRadius
+        layer.shadowOpacity = Constants.shadowOpacity
+        layer.masksToBounds = false
     }
 
 }
