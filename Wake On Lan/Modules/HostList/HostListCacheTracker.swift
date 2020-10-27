@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CocoaLumberjackSwift
 
 protocol HostListCacheTrackerProtocol {
 
@@ -67,7 +68,7 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
         do {
             try controller.performFetch()
         } catch { // TODO: Error - handling
-            print(" \(self) : Cannot fetch data")
+            DDLogError("HostListCacheTracker can not fetch hosts due to error: \(error)")
         }
     }
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CocoaLumberjackSwift
 
 final class PersistentCoreDataService {
 
@@ -24,8 +25,10 @@ final class PersistentCoreDataService {
     func createHostContainer(completion: @escaping () -> Void) {
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as NSError? {
+                DDLogError("Persistent stores were not loaded due to error: \(error)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+            DDLogDebug("Persistent stores were loaded")
             DispatchQueue.main.async { completion() }
         }
     }
@@ -33,6 +36,7 @@ final class PersistentCoreDataService {
     func createChildConcurrentContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = mainContext
+        DDLogVerbose("Child concurrent context was created")
         return context
     }
 
@@ -43,6 +47,7 @@ final class PersistentCoreDataService {
         case .privateQueueConcurrencyType:
             context.performAndWait {
                 guard context.hasChanges else {
+                    DDLogDebug("Context does not contain any changes. Save will not be performed")
                     completionHandler?()
                     return
                 }
@@ -55,22 +60,27 @@ final class PersistentCoreDataService {
                     } else {
                         completionHandler?()
                     }
+                    DDLogDebug("Context was saved")
                 } catch {
-                    print(error)
-                    // TODO: Обработка ошибок
+                    DDLogError("Context was not saved due to error: \(error)")
+                    // TODO: Maybe there must be throw
+                    // TODO: Error handling
                 }
             }
 
         case .mainQueueConcurrencyType:
             do {
                 guard context.hasChanges else {
+                    DDLogDebug("Context does not contain any changes. Save will not be performed")
                     completionHandler?()
                     return
                 }
                 try context.save()
+                DDLogDebug("Main context was saved")
                 completionHandler?()
             } catch {
                 let nsError = error as NSError
+                DDLogError("Main context was not saved due to error: \(error)")
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
 

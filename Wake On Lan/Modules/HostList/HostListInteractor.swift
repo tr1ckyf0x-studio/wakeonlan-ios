@@ -9,6 +9,7 @@
 import Foundation
 import Resolver
 import CoreData
+import CocoaLumberjackSwift
 
 final class HostListInteractor: HostListInteractorInput {
 
@@ -19,9 +20,10 @@ final class HostListInteractor: HostListInteractorInput {
     weak var presenter: HostListInteractorOutput?
 
     private lazy var cacheTracker: HostListCacheTracker<Host, HostListInteractor> = {
-        HostListCacheTracker(with: Host.sortedFetchRequest,
-                             context: coreDataService.mainContext,
-                             delegate: self)
+        DDLogVerbose("HostListCacheTracker initialized")
+        return HostListCacheTracker(with: Host.sortedFetchRequest,
+                                    context: coreDataService.mainContext,
+                                    delegate: self)
     }()
 
     func fetchHosts() {
@@ -32,8 +34,10 @@ final class HostListInteractor: HostListInteractorInput {
     func wakeHost(_ host: Host) {
         do {
             try wakeOnLanService.sendMagicPacket(to: host)
+            DDLogDebug("Magic packet was sent")
         } catch {
             presenter?.interactor(self, didEncounterError: error)
+            DDLogError("Magic packet was not sent due to error: \(error)")
         }
     }
 
@@ -42,6 +46,7 @@ final class HostListInteractor: HostListInteractorInput {
         context.perform { [weak self] in
             context.delete(host)
             self?.coreDataService.saveContext(context)
+            DDLogDebug("Host deleted")
         }
     }
 
@@ -53,6 +58,7 @@ extension HostListInteractor: HostListCacheTrackerDelegate {
 
     func cacheTracker(_ tracker: CacheTracker,
                       didChangeContent content: [Content]) {
+        DDLogDebug("CacheTracker changed content")
         presenter?.interactor(self, didChangeContent: content)
     }
 
