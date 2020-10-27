@@ -26,6 +26,8 @@ targets:
         optional: true
     dependencies:
       - carthage: SnapKit
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
@@ -66,3 +68,5 @@ targets:
     dependencies:
       - target: "Wake on LAN"
       - carthage: SnapKit
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
