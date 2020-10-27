@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CocoaLumberjackSwift
 
 final class HostListPresenter {
     weak var view: HostListViewInput?
@@ -62,7 +63,7 @@ extension HostListPresenter: HostListInteractorOutput {
 
     func interactor(_ interactor: HostListInteractorInput,
                     didEncounterError error: Error) {
-        print(error)
+        DDLogError("HostListInteractor encountered error: \(error)")
     }
 }
 

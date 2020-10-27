@@ -12,10 +12,20 @@ import Resolver
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+
     @Injected private var coreDataService: PersistentCoreDataService
+
+    var plugins: [UIApplicationDelegate] = [
+        DDLogAppDelegatePlugin()
+    ]
 
     // swiftlint:disable line_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        plugins.forEach {
+            _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions)
+        }
+
         coreDataService.createHostContainer { [unowned self] in
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let hostListViewController = HostListViewController()

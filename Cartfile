@@ -1,1 +1,2 @@
 github "SnapKit/SnapKit" ~> 5.0.1
+github "CocoaLumberjack/CocoaLumberjack"
