@@ -1,24 +1,120 @@
 PODS:
+  - Firebase/Analytics (7.0.0):
+    - Firebase/Core
+  - Firebase/Core (7.0.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 7.0.0)
+  - Firebase/CoreOnly (7.0.0):
+    - FirebaseCore (= 7.0.0)
+  - Firebase/Crashlytics (7.0.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 7.0.0)
+  - FirebaseAnalytics (7.0.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleAppMeasurement (= 7.0.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30906.0)
+  - FirebaseCore (7.0.0):
+    - FirebaseCoreDiagnostics (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Logger (~> 7.0)
+  - FirebaseCoreDiagnostics (7.0.0):
+    - GoogleDataTransport (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Logger (~> 7.0)
+    - nanopb (~> 2.30906.0)
+  - FirebaseCrashlytics (7.0.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleDataTransport (~> 8.0)
+    - nanopb (~> 2.30906.0)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstallations (7.0.0):
+    - FirebaseCore (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - PromisesObjC (~> 1.2)
+  - GoogleAppMeasurement (7.0.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30906.0)
+  - GoogleDataTransport (8.0.0):
+    - nanopb (~> 2.30906.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.0.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.0.0):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (7.0.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.0.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.0.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.0.0)"
+  - GoogleUtilities/Reachability (7.0.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.0.0):
+    - GoogleUtilities/Logger
+  - nanopb (2.30906.0):
+    - nanopb/decode (= 2.30906.0)
+    - nanopb/encode (= 2.30906.0)
+  - nanopb/decode (2.30906.0)
+  - nanopb/encode (2.30906.0)
+  - PromisesObjC (1.2.11)
   - R.swift (5.2.2):
     - R.swift.Library (~> 5.2.0)
   - R.swift.Library (5.2.0)
   - Resolver (1.1.4)
 
 DEPENDENCIES:
+  - Firebase/Analytics
+  - Firebase/Crashlytics
   - R.swift
   - Resolver
 
 SPEC REPOS:
   trunk:
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
+    - FirebaseInstallations
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleUtilities
+    - nanopb
+    - PromisesObjC
     - R.swift
     - R.swift.Library
     - Resolver
 
 SPEC CHECKSUMS:
+  Firebase: 50be68416f50eb4eb2ecb0e78acab9a051ef95df
+  FirebaseAnalytics: c1166b7990bae464c6436132510bb718c6680f80
+  FirebaseCore: cf3122185fce1cf71cedbbc498ea84d2b3e7cb69
+  FirebaseCoreDiagnostics: 5f4aa04fdb04923693cc704c7ef9158bdf41a48b
+  FirebaseCrashlytics: bd430b7323e8b49492a93e563e81899d0615f917
+  FirebaseInstallations: c28d4bcbb5c6884d1a39afbc0bd7fc590e31e9b7
+  GoogleAppMeasurement: 7790ef975d1d463c8614cd949a847e612edf087a
+  GoogleDataTransport: 6ce8004a961db1b905740d7be106c61ba7e89c21
+  GoogleUtilities: ffb2f4159f2c897c6e8992bd7fbcdef8a300589c
+  nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
   Resolver: 1f4c046255cbadfa97094692e16e940d4329779f
 
-PODFILE CHECKSUM: 1dca695be7000dfb774d6b5f4977d72f285c07b7
+PODFILE CHECKSUM: e230deea351315f7a0cfc866ab5bc5a25b9c0163
 
 COCOAPODS: 1.9.3

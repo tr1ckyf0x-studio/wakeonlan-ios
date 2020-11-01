@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @Injected private var coreDataService: PersistentCoreDataService
 
     var plugins: [UIApplicationDelegate] = [
-        DDLogAppDelegatePlugin()
+        DDLogAppDelegatePlugin(),
+        FirebaseAppDelegatePlugin()
     ]
 
     // swiftlint:disable line_length
