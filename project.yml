@@ -55,13 +55,13 @@ targets:
               else
                 echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
               fi
-    # postBuildScripts:
-    #   - name: "Crashlytics"
-    #     script: |
-    #             ${PODS_ROOT}/FirebaseCrashlytics/run
-    #     inputFiles:
-    #       - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
-    #       - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
+    postBuildScripts:
+      - name: "Crashlytics"
+        script: |
+                ${PODS_ROOT}/FirebaseCrashlytics/run
+        inputFiles:
+          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
+          - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
   WakeOnLanTests:
     type: bundle.unit-test
     platform: iOS
