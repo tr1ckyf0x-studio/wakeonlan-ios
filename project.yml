@@ -22,6 +22,8 @@ targets:
     type: application
     sources:
       - path: "Wake on LAN"
+        excludes:
+          - "**/*.secret"
       - path: "Wake on LAN/R.generated.swift"
         optional: true
     dependencies:
