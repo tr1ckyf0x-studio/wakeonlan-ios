@@ -11,7 +11,12 @@ import Resolver
 
 extension Resolver {
     public static func registerGlobalServices() {
-        register(CoreDataService.self) { PersistentCoreDataService() }.scope(application)
+        register( CoreDataService.self ) { PersistentCoreDataService<InMemory>() }.scope(application)
         register { WakeOnLanService() }.scope(application)
     }
+}
+
+private extension Resolver {
+    typealias SQLite = PersistentContainer.SQLite
+    typealias InMemory = PersistentContainer.InMemory
 }
