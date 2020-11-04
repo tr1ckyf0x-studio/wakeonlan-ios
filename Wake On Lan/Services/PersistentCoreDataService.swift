@@ -16,7 +16,7 @@ private let persistentContainerName = "HostsDataModel"
 enum PersistentContainer {
     struct SQLite: PersistentContainerType {
         static var store = NSSQLiteStoreType
-        static var persistentStoreDescriptions: [NSPersistentStoreDescription]? = nil
+        static var persistentStoreDescriptions: [NSPersistentStoreDescription]?
     }
 
     struct InMemory: PersistentContainerType {
