@@ -15,25 +15,25 @@ private let persistentContainerName = "HostsDataModel"
 
 enum PersistentContainer {
     struct SQLite: PersistentContainerType {
-        static var store: StoreType { .sqLite }
+        static var store = NSSQLiteStoreType
+        static var persistentStoreDescriptions: [NSPersistentStoreDescription]? = nil
     }
 
     struct InMemory: PersistentContainerType {
-        static var store: StoreType { .inMemory }
+        static var store = NSInMemoryStoreType
+        static var persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
+            let description = NSPersistentStoreDescription()
+            description.type = store
+            return [description]
+        }()
     }
 }
 
 // MARK: - PersistentContainerType
 
 protocol PersistentContainerType {
-    static var store: StoreType { get }
-}
-
-// MARK: - StoreType
-
-enum StoreType {
-    case inMemory
-    case sqLite
+    static var store: String { get }
+    static var persistentStoreDescriptions: [NSPersistentStoreDescription]? { get }
 }
 
 // MARK: - PersistentCoreDataService
@@ -42,14 +42,8 @@ struct PersistentCoreDataService<T: PersistentContainerType>: CoreDataService {
 
     var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: persistentContainerName)
-        switch T.self.store {
-        case .sqLite:
-            return container
-
-        case .inMemory:
-            let description = NSPersistentStoreDescription()
-            description.type = NSInMemoryStoreType
-            container.persistentStoreDescriptions = [description]
+        if let persistentStoreDescriptions = T.self.persistentStoreDescriptions {
+            container.persistentStoreDescriptions = persistentStoreDescriptions
         }
 
         return container
