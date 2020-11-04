@@ -6,87 +6,53 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import CoreData
 import CocoaLumberjackSwift
 
-final class PersistentCoreDataService {
+private let persistentContainerName = "HostsDataModel"
 
-    typealias SaveCompletionHandler = () -> Void
+// MARK: - PersistentContainer
 
-    // MARK: - Properties
-    private lazy var persistentContainer = NSPersistentContainer(name: "HostsDataModel")
-
-    var mainContext: NSManagedObjectContext {
-        persistentContainer.viewContext
+enum PersistentContainer {
+    struct SQLite: PersistentContainerType {
+        static var store: StoreType { .sqLite }
     }
 
-    // MARK: - Public
-    func createHostContainer(completion: @escaping () -> Void) {
-        persistentContainer.loadPersistentStores { _, error in
-            if let error = error as NSError? {
-                DDLogError("Persistent stores were not loaded due to error: \(error)")
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-            DDLogDebug("Persistent stores were loaded")
-            DispatchQueue.main.async { completion() }
+    struct InMemory: PersistentContainerType {
+        static var store: StoreType { .inMemory }
+    }
+}
+
+// MARK: - PersistentContainerType
+
+protocol PersistentContainerType {
+    static var store: StoreType { get }
+}
+
+// MARK: - StoreType
+
+enum StoreType {
+    case inMemory
+    case sqLite
+}
+
+// MARK: - PersistentCoreDataService
+
+struct PersistentCoreDataService<T: PersistentContainerType>: CoreDataService {
+
+    var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: persistentContainerName)
+        switch T.self.store {
+        case .sqLite:
+            return container
+
+        case .inMemory:
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
         }
-    }
 
-    func createChildConcurrentContext() -> NSManagedObjectContext {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.parent = mainContext
-        DDLogVerbose("Child concurrent context was created")
-        return context
-    }
-
-    // MARK: - Core Data Saving support
-    func saveContext(_ context: NSManagedObjectContext,
-                     completionHandler: SaveCompletionHandler? = nil) {
-        switch context.concurrencyType {
-        case .privateQueueConcurrencyType:
-            context.performAndWait {
-                guard context.hasChanges else {
-                    DDLogDebug("Context does not contain any changes. Save will not be performed")
-                    completionHandler?()
-                    return
-                }
-                do {
-                    try context.save()
-                    if let parent = context.parent {
-                        parent.perform {
-                            self.saveContext(parent, completionHandler: completionHandler)
-                        }
-                    } else {
-                        completionHandler?()
-                    }
-                    DDLogDebug("Context was saved")
-                } catch {
-                    DDLogError("Context was not saved due to error: \(error)")
-                    // TODO: Maybe there must be throw
-                    // TODO: Error handling
-                }
-            }
-
-        case .mainQueueConcurrencyType:
-            do {
-                guard context.hasChanges else {
-                    DDLogDebug("Context does not contain any changes. Save will not be performed")
-                    completionHandler?()
-                    return
-                }
-                try context.save()
-                DDLogDebug("Main context was saved")
-                completionHandler?()
-            } catch {
-                let nsError = error as NSError
-                DDLogError("Main context was not saved due to error: \(error)")
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-
-        default:
-            break
-        }
-    }
+        return container
+    }()
 
 }

@@ -13,7 +13,7 @@ import CocoaLumberjackSwift
 
 final class HostListInteractor: HostListInteractorInput {
 
-    @Injected private var coreDataService: PersistentCoreDataService
+    @Injected private var coreDataService: CoreDataService
 
     @Injected private var wakeOnLanService: WakeOnLanService
 
