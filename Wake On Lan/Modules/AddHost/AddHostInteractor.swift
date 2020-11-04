@@ -15,7 +15,7 @@ class AddHostInteractor: AddHostInteractorInput {
 
     weak var presenter: AddHostInteractorOutput?
 
-    @Injected var coreDataService: PersistentCoreDataService
+    @Injected var coreDataService: CoreDataService
 
     func saveForm(_ form: AddHostForm) {
         let context = coreDataService.createChildConcurrentContext()
