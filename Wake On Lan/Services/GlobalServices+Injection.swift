@@ -11,7 +11,7 @@ import Resolver
 
 extension Resolver {
     public static func registerGlobalServices() {
-        register( CoreDataService.self ) { PersistentCoreDataService<InMemory>() }.scope(application)
+        register( CoreDataService.self ) { PersistentCoreDataService<SQLite>() }.scope(application)
         register { WakeOnLanService() }.scope(application)
     }
 }
