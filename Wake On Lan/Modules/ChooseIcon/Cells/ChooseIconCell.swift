@@ -45,7 +45,7 @@ class ChooseIconCell: UICollectionViewCell {
                             compatibleWith: nil)?
             .withRenderingMode(.alwaysTemplate)
         deviceButton.setImage(image, for: .normal)
-        deviceButton.imageView?.tintColor = .systemGray
+        deviceButton.imageView?.tintColor = R.color.lightGray()
     }
 
     private func setupDeviceIconView() {

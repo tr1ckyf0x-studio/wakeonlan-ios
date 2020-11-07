@@ -29,7 +29,7 @@ class AddHostView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .softUIColor
+        tableView.backgroundColor = R.color.soft()
 
         return tableView
     }()
@@ -44,6 +44,7 @@ class AddHostView: UIView {
             let spacing: CGFloat = 6
             addButton.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
             addButton.imageView?.contentMode = .scaleAspectFit
+            // TODO: Recolor image
             addButton.imageView?.tintColor = .init(red: 105 / 255, green: 105 / 255, blue: 105 / 255, alpha: 1.0)
 
             return addButton
@@ -52,7 +53,7 @@ class AddHostView: UIView {
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: saveButton)
             button.customView?.snp.makeConstraints {
-                $0.width.height.equalTo(32)
+                $0.size.equalTo(32)
             }
 
             return button
@@ -77,7 +78,7 @@ class AddHostView: UIView {
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: addButton)
             button.customView?.snp.makeConstraints {
-                $0.width.height.equalTo(32)
+                $0.size.equalTo(32)
             }
 
             return button
@@ -89,7 +90,7 @@ class AddHostView: UIView {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = R.color.white()
         setupTableView()
         registerNotifications()
     }

@@ -25,7 +25,7 @@ class DeviceIconCell: UITableViewCell {
     private let changeIconLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.textColor = .gray
+        label.textColor = R.color.gray()
         label.font = .systemFont(ofSize: 12)
         label.text = R.string.addHost.changeIcon()
 

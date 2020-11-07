@@ -159,17 +159,18 @@ private extension UITableView {
 }
 
 private extension NSMutableAttributedString {
+
     /// Appending `Optional` part to existing string
     func appendOptional() {
         let additionalAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.italicSystemFont(ofSize: 12),
-                .foregroundColor: UIColor.lightGray
+            .font: UIFont.italicSystemFont(ofSize: 12),
+            .foregroundColor: R.color.lightGray() ?? UIColor()
         ]
         let additionalAttributedString =
             NSMutableAttributedString(string: " - " + R.string.addHost.optional(),
                                       attributes: additionalAttributes)
         guard let attributedText =
-            additionalAttributedString.copy() as? NSAttributedString else { return }
+                additionalAttributedString.copy() as? NSAttributedString else { return }
         self.append(attributedText)
     }
 
