@@ -56,7 +56,9 @@ class SoftUIButton: UIButton, SoftUIProtocol {
     private var roundShape: Bool = false
 
     // MARK: - Init
-    init(roundShape: Bool = false, cornerRadius: CGFloat = 15.0, themeColor: UIColor = .softUIColor) {
+    init(roundShape: Bool = false,
+         cornerRadius: CGFloat = 15.0,
+         themeColor: UIColor = R.color.soft() ?? UIColor()) {
         self.roundShape = roundShape
         self.themeColor = themeColor
         self.cornerRadius = cornerRadius

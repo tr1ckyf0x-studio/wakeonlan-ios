@@ -31,7 +31,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var deleteButton: SoftUIButton = {
         let button = SoftUIButton(roundShape: false)
-        button.setImage(R.image.icon_trash(), for: .normal)
+        button.setImage(R.image.trash(), for: .normal)
         button.addTarget(self,
                          action: #selector(didTapDeleteButton),
                          for: .touchUpInside)
@@ -50,7 +50,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .lightGray
+        imageView.tintColor = R.color.lightGray()
 
         return imageView
     }()
@@ -58,7 +58,7 @@ final class HostListTableViewCell: UITableViewCell {
     private let hostTitle: UILabel = {
         let label = UILabel()
         label.font = R.font.robotoMedium(size: 18)
-        label.textColor = .gray
+        label.textColor = R.color.gray()
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -68,7 +68,7 @@ final class HostListTableViewCell: UITableViewCell {
     private let macAddressTitle: UILabel = {
         let label = UILabel()
         label.font = R.font.robotoLight(size: 14)
-        label.textColor = .darkGray
+        label.textColor = R.color.darkGray()
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -87,7 +87,7 @@ final class HostListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = .softUIColor
+        backgroundColor = R.color.soft()
         setupScrollView()
         setupBaseView()
         setupDeleteView()
@@ -263,7 +263,7 @@ private final class NotificationView: UIView {
         label.text = R.string.hostList.packetSent()
         label.textColor = .white
         label.textAlignment = .center
-        label.backgroundColor = .lightGray
+        label.backgroundColor = R.color.lightGray()
         label.font = R.font.robotoMedium(size: 12)
         label.makeShadow()
 
@@ -286,7 +286,7 @@ private final class NotificationView: UIView {
         alpha = .zero
         layer.cornerRadius = 10
         layer.masksToBounds = false
-        backgroundColor = .lightGray
+        backgroundColor = R.color.lightGray()
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 

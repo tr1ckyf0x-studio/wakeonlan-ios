@@ -13,7 +13,7 @@ private class AddHostFailureView: UIView {
     // MARK: Properties
     private let failureLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = R.color.white()
         // TODO: Consider another font
         label.font = .boldSystemFont(ofSize: 12.0)
 
@@ -23,7 +23,7 @@ private class AddHostFailureView: UIView {
     // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+        backgroundColor = R.color.red()
     }
 
     required init?(coder: NSCoder) {
@@ -179,7 +179,7 @@ private extension UITableViewCell {
 
     func makeSeparatorLine(type: SeparatorLineType) {
         let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        separatorLine.backgroundColor = R.color.lightGrayWithAlpha30()
         addSubview(separatorLine)
         separatorLine.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
