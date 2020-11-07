@@ -29,67 +29,40 @@ class AddHostView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .softUIColor
+        tableView.backgroundColor = R.color.soft()
 
         return tableView
     }()
 
     lazy var saveItemButton: UIBarButtonItem = {
-        let saveButton: SoftUIButton = {
-            let addButton = SoftUIButton(roundShape: true)
-            addButton.setImage(R.image.save()?.withRenderingMode(.alwaysTemplate), for: .normal)
-            addButton.addTarget(self,
-                                action: #selector(saveButtonPressed),
-                                for: .touchUpInside)
-            let spacing: CGFloat = 6
-            addButton.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
-            addButton.imageView?.contentMode = .scaleAspectFit
-            addButton.imageView?.tintColor = .init(red: 105 / 255, green: 105 / 255, blue: 105 / 255, alpha: 1.0)
+        let button = SoftUIButton(roundShape: true)
+        button.setImage(R.image.save(), for: .normal)
+        button.addTarget(self,
+                         action: #selector(saveButtonPressed),
+                         for: .touchUpInside)
+        let spacing: CGFloat = 6
+        button.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        button.imageView?.contentMode = .scaleAspectFit
 
-            return addButton
-        }()
-
-        let barButton: UIBarButtonItem = {
-            let button = UIBarButtonItem(customView: saveButton)
-            button.customView?.snp.makeConstraints {
-                $0.width.height.equalTo(32)
-            }
-
-            return button
-        }()
-
-        return barButton
+        return UIBarButtonItem(with: button)
     }()
 
     lazy var backBarButton: UIBarButtonItem = {
-        let addButton: SoftUIButton = {
-            let addButton = SoftUIButton(roundShape: true)
-            addButton.setImage(R.image.back(), for: .normal)
-            addButton.addTarget(self,
-                                action: #selector(backButtonPressed),
-                                for: .touchUpInside)
-            let spacing: CGFloat = 5
-            addButton.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        let button = SoftUIButton(roundShape: true)
+        button.setImage(R.image.back(), for: .normal)
+        button.addTarget(self,
+                         action: #selector(backButtonPressed),
+                         for: .touchUpInside)
+        let spacing: CGFloat = 5
+        button.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
 
-            return addButton
-        }()
-
-        let barButton: UIBarButtonItem = {
-            let button = UIBarButtonItem(customView: addButton)
-            button.customView?.snp.makeConstraints {
-                $0.width.height.equalTo(32)
-            }
-
-            return button
-        }()
-
-        return barButton
+        return UIBarButtonItem(with: button)
     }()
 
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        backgroundColor = R.color.white()
         setupTableView()
         registerNotifications()
     }
@@ -102,6 +75,7 @@ class AddHostView: UIView {
 
 // MARK: - Private
 private extension AddHostView {
+
     func registerNotifications() {
         NotificationCenter.default.addObserver(
             self,
@@ -141,6 +115,17 @@ private extension AddHostView {
 
     @objc func keyboardWillHide(notification: NSNotification) {
         tableView.contentInset = .zero
+    }
+
+}
+
+private extension UIBarButtonItem {
+
+    convenience init(with button: UIButton) {
+        self.init(customView: button)
+        customView?.snp.makeConstraints {
+            $0.size.equalTo(32)
+        }
     }
 
 }

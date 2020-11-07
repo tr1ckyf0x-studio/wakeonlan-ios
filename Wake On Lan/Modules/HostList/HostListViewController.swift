@@ -42,7 +42,7 @@ class HostListViewController: UIViewController {
         navigationItem.rightBarButtonItem = hostListView.addItemButton
         navigationItem.largeTitleDisplayMode = .always
         guard let navigationBar = navigationController?.navigationBar else { return }
-        navigationBar.barTintColor = .softUIColor
+        navigationBar.barTintColor = R.color.soft()
         navigationBar.prefersLargeTitles = true
         let largeTitleTextAttributes = [NSAttributedString.Key.font: R.font.robotoBold(size: 36)!]
         navigationBar.largeTitleTextAttributes = largeTitleTextAttributes

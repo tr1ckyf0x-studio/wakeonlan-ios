@@ -21,7 +21,7 @@ class DeviceIconView: UIView {
         let image = R.image.desktop()?.withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.layer.cornerRadius = 14
-        imageView.tintColor = .systemGray
+        imageView.tintColor = R.color.lightGray()
         imageView.isUserInteractionEnabled = true
 
         // Add tap gesture recognizer

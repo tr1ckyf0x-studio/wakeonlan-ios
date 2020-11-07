@@ -45,7 +45,7 @@ class HostListView: UIView {
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: addButton)
             button.customView?.snp.makeConstraints {
-                $0.width.height.equalTo(Constants.addItemButtonDimensions)
+                $0.size.equalTo(Constants.addItemButtonDimensions)
             }
 
             return button
@@ -56,7 +56,7 @@ class HostListView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .softUIColor
+        backgroundColor = R.color.soft()
         createSubviews()
     }
 
