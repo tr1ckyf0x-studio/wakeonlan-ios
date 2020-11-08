@@ -9,19 +9,21 @@
 import CoreData
 import CocoaLumberjackSwift
 
-private let persistentContainerName = "HostsDataModel"
+private enum Constants {
+    static let persistentContainerName = "HostsDataModel"
+}
 
 // MARK: - PersistentContainer
 
 enum PersistentContainer {
     struct SQLite: PersistentContainerType {
-        static var store = NSSQLiteStoreType
-        static var persistentStoreDescriptions: [NSPersistentStoreDescription]?
+        static let store = NSSQLiteStoreType
+        static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = nil
     }
 
     struct InMemory: PersistentContainerType {
-        static var store = NSInMemoryStoreType
-        static var persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
+        static let store = NSInMemoryStoreType
+        static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
             let description = NSPersistentStoreDescription()
             description.type = store
             return [description]
@@ -41,7 +43,7 @@ protocol PersistentContainerType {
 struct PersistentCoreDataService<T: PersistentContainerType>: CoreDataService {
 
     var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: persistentContainerName)
+        let container = NSPersistentContainer(name: Constants.persistentContainerName)
         if let persistentStoreDescriptions = T.self.persistentStoreDescriptions {
             container.persistentStoreDescriptions = persistentStoreDescriptions
         }
