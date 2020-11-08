@@ -38,9 +38,9 @@ protocol PersistentContainerType {
     static var persistentStoreDescriptions: [NSPersistentStoreDescription]? { get }
 }
 
-// MARK: - PersistentCoreDataService
+// MARK: - CoreDataService
 
-struct PersistentCoreDataService<T: PersistentContainerType>: CoreDataService {
+struct CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
 
     var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: Constants.persistentContainerName)

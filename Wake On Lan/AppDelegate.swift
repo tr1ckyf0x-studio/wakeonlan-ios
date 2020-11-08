@@ -13,7 +13,7 @@ import Resolver
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
-    @Injected private var coreDataService: CoreDataService
+    @Injected private var coreDataService: CoreDataServiceProtocol
 
     var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
