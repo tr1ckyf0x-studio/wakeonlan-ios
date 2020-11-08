@@ -10,7 +10,7 @@ import Foundation
 import CocoaLumberjackSwift
 import CoreData
 
-protocol CoreDataService {
+protocol CoreDataServiceProtocol {
     typealias SaveCompletionHandler = () -> Void
 
     var persistentContainer: NSPersistentContainer { get }
@@ -25,7 +25,7 @@ protocol CoreDataService {
                      completionHandler: SaveCompletionHandler?)
 }
 
-extension CoreDataService {
+extension CoreDataServiceProtocol {
 
     var mainContext: NSManagedObjectContext {
         persistentContainer.viewContext
