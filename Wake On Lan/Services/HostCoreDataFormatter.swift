@@ -8,15 +8,13 @@
 
 import Foundation
 
-final class HostCoreDataFormatter {
-
-    private init() { }
+enum HostCoreDataFormatter {
 
     enum DataType {
         case macAddress
         case ipAddress
 
-        var separator: String {
+        fileprivate var separator: String {
             switch self {
             case .macAddress:
                 return ":"
@@ -26,7 +24,7 @@ final class HostCoreDataFormatter {
             }
         }
 
-        var radix: Int {
+        fileprivate var radix: Int {
             switch self {
             case .macAddress:
                 return 16
@@ -36,7 +34,7 @@ final class HostCoreDataFormatter {
             }
         }
 
-        var stringFormat: String {
+        fileprivate var stringFormat: String {
             switch self {
             case .macAddress:
                 return "%X"
@@ -47,14 +45,14 @@ final class HostCoreDataFormatter {
         }
     }
 
-    class func compress(string: String, ofType dataType: DataType) -> Data {
+    static func compress(string: String, ofType dataType: DataType) -> Data {
         let bytes = string
             .components(separatedBy: dataType.separator)
             .compactMap { UInt8($0, radix: dataType.radix) }
         return Data(bytes)
     }
 
-    class func decompress(data: Data, ofType dataType: DataType) -> String {
+    static func decompress(data: Data, ofType dataType: DataType) -> String {
         data
             .map { String(format: dataType.stringFormat, $0) }
             .joined(separator: dataType.separator)
