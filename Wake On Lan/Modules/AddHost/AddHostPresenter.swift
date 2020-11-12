@@ -13,7 +13,7 @@ class AddHostPresenter {
 
     var interactor: AddHostInteractorInput?
 
-    var router: AddHostRouter?
+    var router: AddHostRouterProtocol?
 
     private(set) var tableManager = AddHostTableManager()
 
