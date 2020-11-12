@@ -69,6 +69,5 @@ targets:
       - path: "Wake On LAN Tests"
     dependencies:
       - target: "Wake on LAN"
-      - carthage: SnapKit
-      - carthage: CocoaLumberjack
-      - carthage: CocoaLumberjackSwift
+      - carthage: Nimble
+      - carthage: Quick
