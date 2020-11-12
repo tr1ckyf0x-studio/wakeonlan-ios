@@ -1,0 +1,29 @@
+//
+//  {{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import Foundation
+
+final class {{ module_info.name }}Configurator {
+
+    func configure(viewController: {{ module_info.name }}ViewController) {
+        let presenter = {{ module_info.name }}Presenter()
+        let interactor = {{ module_info.name }}Interactor()
+        let router = {{ module_info.name }}Router()
+
+        presenter.interactor = interactor
+        interactor.presenter = presenter
+
+        viewController.presenter = presenter
+        presenter.view = viewController
+
+        presenter.router = router
+        router.presenter = presenter
+        router.viewController = viewController
+    }
+
+}
