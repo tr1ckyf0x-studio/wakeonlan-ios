@@ -1,0 +1,25 @@
+//
+//  {{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import Foundation
+@testable import {{ module_info.project_name }}
+
+final class {{ module_info.name }}PresenterMock {
+    private(set) var didCallViewDidLoad = false
+}
+
+// MARK: - {{ module_info.name }}InteractorOutputProtocol
+extension {{ module_info.name }}PresenterMock: {{ module_info.name }}InteractorOutputProtocol {
+}
+
+// MARK: - {{ module_info.name }}ViewOutputProtocol
+extension {{ module_info.name }}PresenterMock: {{ module_info.name }}ViewOutputProtocol {
+    func viewDidLoad() {
+        didCallViewDidLoad = true
+    }
+}
