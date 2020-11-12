@@ -81,6 +81,12 @@ extension HostListViewController: HostListViewInput {
         })
     }
 
+    func setEmptyViewHidden(_ isHidden: Bool) {
+        let backgroundView = isHidden ? nil : TableEmptyView()
+        hostListView.tableView.backgroundView = backgroundView
+        hostListView.tableView.isScrollEnabled = isHidden
+    }
+
 }
 
 // MARK: - HostListViewDelegate

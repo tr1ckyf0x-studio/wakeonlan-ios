@@ -21,6 +21,7 @@ protocol HostListViewOutput: class {
 protocol HostListViewInput: class {
     func reloadTable()
     func updateTable(with update: Content)
+    func setEmptyViewHidden(_ isHidden: Bool)
 }
 
 protocol HostListInteractorInput: class {

@@ -58,6 +58,7 @@ extension HostListPresenter: HostListInteractorOutput {
         let sections: [HostListSectionModel] =
             [hosts.map { HostListSectionItem.host($0) }].map { .mainSection(content: $0) }
         tableManager?.tableViewModel = HostListTableViewModel(sections: sections)
+        setupTableEmptyView(forEntitiesAmount: hosts.count)
         view?.reloadTable()
     }
 
@@ -90,4 +91,11 @@ extension HostListPresenter: HostListTableManagerDelegate {
         interactor?.wakeHost(host)
     }
 
+}
+
+// MARK: - Private methods
+private extension HostListPresenter {
+    func setupTableEmptyView(forEntitiesAmount amount: Int) {
+        view?.setEmptyViewHidden(amount > 0)
+    }
 }
