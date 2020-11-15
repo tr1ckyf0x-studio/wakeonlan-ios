@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import Reachability
+import CocoaLumberjackSwift
 
 final class HostListTableViewCell: UITableViewCell {
+
+    // MARK: - Typealiases
+
+    typealias Default = HostListNotificationView<NotificationViewType.Default>
+    typealias Failure = HostListNotificationView<NotificationViewType.Failure>
 
     // MARK: - Properties
 
@@ -121,7 +128,7 @@ final class HostListTableViewCell: UITableViewCell {
 // MARK: - Private
 
 private extension HostListTableViewCell {
-    
+
     func setupScrollView() {
         contentView.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
@@ -195,7 +202,7 @@ private extension HostListTableViewCell {
     }
 
     // MARK: - Action
-    
+
     @objc func didTapInfoButton() {
         guard let model = self.model else { return }
         delegate?.hostListCellDidTapInfo(self, model: model)
@@ -207,7 +214,14 @@ private extension HostListTableViewCell {
     }
 
     @objc func displayNotification() {
-        let notificationView = HostListNotificationView<NotificationViewType.Default>()
+        guard let reachability = try? Reachability() else {
+            DDLogWarn("It is impossible to determine the connection type")
+            return
+        }
+
+        let isReachableViaWiFi = reachability.connection == .wifi
+        let notificationView = isReachableViaWiFi ? Default() : Failure()
+
         baseView.addSubview(notificationView)
         notificationView.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -242,7 +256,7 @@ private extension HostListTableViewCell {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         displayNotificationAnimated()
     }
-    
+
 }
 
 // MARK: - UIScrollViewDelegate
