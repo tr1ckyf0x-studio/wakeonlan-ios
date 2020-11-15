@@ -11,7 +11,7 @@ import UIKit
 class AddHostViewController: UIViewController {
 
     // MARK: - Properties
-    
+
     var presenter: (AddHostViewOutput & ChooseIconModuleOutput)?
 
     private lazy var addHostView: AddHostView = {

@@ -10,15 +10,8 @@ import UIKit
 
 protocol NotificationViewStyle {
 
-    static var height: CGFloat { get }
     static var text: String { get }
     static var backgroundColor: UIColor? { get }
-
-}
-
-extension NotificationViewStyle {
-
-    static var height: CGFloat { 20.0 }
 
 }
 
@@ -46,6 +39,7 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
         let shadowRadius: CGFloat = 5
         let shadowOpacity: Float = 0.6
         let cornerRadius: CGFloat = 10
+        let shadowHeight: CGFloat = 20.0
     }
 
     private let style = Style.self
@@ -104,7 +98,7 @@ private extension HostListNotificationView {
 
     func makeShadow() {
         let xPosition = -(appearance.cornerRadius + appearance.shadowSize * 2)
-        let yPosition = style.height - (appearance.shadowSize * 0.4) + appearance.shadowDistance
+        let yPosition = appearance.shadowHeight - (appearance.shadowSize * 0.4) + appearance.shadowDistance
         let labelWidth = frame.width
         let width = [labelWidth,
                      appearance.shadowSize * 2,
