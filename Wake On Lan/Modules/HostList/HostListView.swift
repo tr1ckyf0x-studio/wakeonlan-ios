@@ -13,33 +13,64 @@ protocol HostListViewDelegate: class {
     func hostListViewDidPressAddButton(_ view: HostListView)
 }
 
-class HostListView: UIView {
+final class HostListView: UIView {
+
+    // MARK: - Constants
 
     private enum Constants {
         static let addItemButtonDimensions = 32.0
     }
 
+    // MARK: - Properties
+
     weak var delegate: HostListViewDelegate?
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(HostListTableViewCell.self, forCellReuseIdentifier: "\(HostListTableViewCell.self)")
+        tableView.register(
+            HostListTableViewCell.self,
+            forCellReuseIdentifier: "\(HostListTableViewCell.self)"
+        )
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
 
         return tableView
     }()
 
+    lazy var emptyView: TableEmptyView = {
+        let emptyView = TableEmptyView()
+        let viewModel = StatebleViewModel(
+            title: R.string.tableEmptyView.emptyViewMessage(),
+            image: R.image.droids(),
+            backgroundColor: R.color.soft()
+        )
+        emptyView.configure(with: viewModel)
+
+        return emptyView
+    }()
+
+    // swiftlint:disable closure_body_length
     lazy var addItemButton: UIBarButtonItem = {
         let addButton: SoftUIButton = {
-            let addButton = SoftUIButton(cornerRadius: 16.0)
-            addButton.setImage(R.image.add(), for: .normal)
-            addButton.addTarget(self, action: #selector(addButtonPressed(_:)), for: .touchUpInside)
+            let button = SoftUIButton(cornerRadius: 16.0)
+            button.setImage(
+                R.image.add(),
+                for: .normal
+            )
+            button.addTarget(
+                self,
+                action: #selector(didTapAddButton(_:)),
+                for: .touchUpInside
+            )
             let spacing: CGFloat = 5
-            addButton.imageEdgeInsets =
-                UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+            button.imageEdgeInsets = .init(
+                top: spacing,
+                left: spacing,
+                bottom: spacing,
+                right: spacing
+            )
 
-            return addButton
+            return button
         }()
 
         let barButton: UIBarButtonItem = {
@@ -53,30 +84,51 @@ class HostListView: UIView {
 
         return barButton
     }()
+    // swiftlint:enable closure_body_length
+
+    // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = R.color.soft()
-        createSubviews()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        createSubviews()
-    }
-
-    private func createSubviews() {
         setupTableView()
     }
 
-    private func setupTableView() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+// MARK: - Private
+
+private extension HostListView {
+
+    func setupTableView() {
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
 
-    @objc private func addButtonPressed(_ sender: UIButton) {
+    @objc func didTapAddButton(_ sender: UIButton) {
         delegate?.hostListViewDidPressAddButton(self)
     }
+
+}
+
+// MARK: - ContentStateView
+
+extension HostListView: StatebleView {
+
+    func view(for state: ViewState) -> DisplaysStateView? {
+        switch state {
+        case .default, .error, .waiting:
+            return nil
+
+        case .empty:
+            return emptyView
+        }
+    }
+
 }

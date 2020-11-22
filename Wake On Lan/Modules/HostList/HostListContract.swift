@@ -6,22 +6,22 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 typealias Content = HostListCacheTracker<Host, HostListInteractor>.Transaction<Host>
 
 protocol HostListViewOutput: class {
-    var tableManager: HostListTableManager? { get }
+    var tableManager: HostListTableManager { get }
 
-    func viewIsReady(_ view: HostListViewInput)
+    func viewDidLoad(_ view: HostListViewInput)
     func viewDidPressAddButton(_ view: HostListViewInput)
 }
 
 protocol HostListViewInput: class {
+    var contentView: StatebleView { get }
+
     func reloadTable()
     func updateTable(with update: Content)
-    func setEmptyViewHidden(_ isHidden: Bool)
 }
 
 protocol HostListInteractorInput: class {

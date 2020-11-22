@@ -38,6 +38,7 @@ class TableEmptyView: UIView {
 }
 
 // MARK: - Private methods
+
 private extension TableEmptyView {
     func setupView() {
         addSubview(containerView)
@@ -63,4 +64,15 @@ private extension TableEmptyView {
             make.bottom.equalToSuperview()
         }
     }
+}
+
+// MARK: - ConfigurableStateView
+
+extension TableEmptyView: DisplaysStateView {
+    func configure(with viewModel: StatebleViewModel) {
+        titleLabel.text = viewModel.title
+        imageView.image = viewModel.image
+        backgroundColor = viewModel.backgroundColor
+    }
+
 }

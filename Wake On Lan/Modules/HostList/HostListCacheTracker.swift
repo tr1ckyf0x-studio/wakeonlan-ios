@@ -55,13 +55,17 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     }
 
     // MARK: - Init
-    init(with fetchRequest: NSFetchRequest<Object>,
-         context: NSManagedObjectContext,
-         delegate: Delegate) {
-        controller = .init(fetchRequest: fetchRequest,
-                           managedObjectContext: context,
-                           sectionNameKeyPath: nil,
-                           cacheName: nil)
+    init(
+        with fetchRequest: NSFetchRequest<Object>,
+        context: NSManagedObjectContext,
+        delegate: Delegate
+    ) {
+        controller = .init(
+            fetchRequest: fetchRequest,
+            managedObjectContext: context,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
         super.init()
         self.delegate = delegate
         self.controller.delegate = self

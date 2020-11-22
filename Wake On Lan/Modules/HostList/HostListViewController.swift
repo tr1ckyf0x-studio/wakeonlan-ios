@@ -11,6 +11,7 @@ import UIKit
 class HostListViewController: UIViewController {
 
     // MARK: - Properties
+
     var presenter: HostListViewOutput?
 
     private lazy var hostListView: HostListView = {
@@ -20,6 +21,7 @@ class HostListViewController: UIViewController {
     }()
 
     // MARK: - Lifecycle
+
     override func loadView() {
         view = hostListView
     }
@@ -28,7 +30,7 @@ class HostListViewController: UIViewController {
         super.viewDidLoad()
         HostListConfigurator().configure(viewController: self)
         setupTableView()
-        presenter?.viewIsReady(self)
+        presenter?.viewDidLoad(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +39,7 @@ class HostListViewController: UIViewController {
     }
 
     // MARK: - Private
+
     private func setupNavigationBar() {
         navigationItem.title = R.string.hostList.hosts()
         navigationItem.rightBarButtonItem = hostListView.addItemButton
@@ -56,7 +59,10 @@ class HostListViewController: UIViewController {
 }
 
 // MARK: - HostListViewInput
+
 extension HostListViewController: HostListViewInput {
+
+    var contentView: StatebleView { hostListView }
 
     func reloadTable() {
         hostListView.tableView.reloadData()
@@ -81,15 +87,10 @@ extension HostListViewController: HostListViewInput {
         })
     }
 
-    func setEmptyViewHidden(_ isHidden: Bool) {
-        let backgroundView = isHidden ? nil : TableEmptyView()
-        hostListView.tableView.backgroundView = backgroundView
-        hostListView.tableView.isScrollEnabled = isHidden
-    }
-
 }
 
 // MARK: - HostListViewDelegate
+
 extension HostListViewController: HostListViewDelegate {
     func hostListViewDidPressAddButton(_ view: HostListView) {
         presenter?.viewDidPressAddButton(self)

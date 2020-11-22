@@ -13,12 +13,13 @@ final class HostListPresenter {
     weak var view: HostListViewInput?
     var router: HostListRouterProtocol?
     var interactor: HostListInteractorInput?
-    var tableManager: HostListTableManager?
+    var tableManager: HostListTableManager = .init()
 }
 
 extension HostListPresenter: HostListViewOutput {
 
-    func viewIsReady(_ view: HostListViewInput) {
+    func viewDidLoad(_ view: HostListViewInput) {
+        view.contentView.showState(.default)
         interactor?.fetchHosts()
     }
 
@@ -30,72 +31,59 @@ extension HostListPresenter: HostListViewOutput {
 
 extension HostListPresenter: HostListInteractorOutput {
 
-    func interactor(_ interactor: HostListInteractorInput, didChangeContent content: [Content]) {
-        content.forEach {
-            switch $0 {
-            case let .insert(indexPath, object):
-                tableManager?.tableViewModel.insertObject(
-                    object, at: indexPath.row, in: indexPath.section)
-
-            case let .update(indexPath, object):
-                tableManager?.tableViewModel.updateObject(
-                    object, at: indexPath.row, in: indexPath.section)
-
-            case let .move(oldIndexPath, newIndexPath):
-                tableManager?.tableViewModel.moveObject(
-                    from: oldIndexPath.row, to: newIndexPath.row, in: oldIndexPath.section)
-
-            case let .delete(indexPath):
-                tableManager?.tableViewModel.removeObject(
-                    at: indexPath.row, in: indexPath.section)
-            }
-            view?.updateTable(with: $0)
+    func interactor(
+        _ interactor: HostListInteractorInput,
+        didChangeContent content: [Content]
+    ) {
+        tableManager.update(with: content)
+        content.forEach { view?.updateTable(with: $0) }
+        if tableManager.itemsCount > .zero {
+            view?.contentView.showState(.default)
+        } else {
+            view?.contentView.showState(.empty)
         }
     }
 
-    func interactor(_ interactor: HostListInteractorInput,
-                    didFetchHosts hosts: [Host]) {
+    func interactor(
+        _ interactor: HostListInteractorInput,
+        didFetchHosts hosts: [Host]
+    ) {
         let sections: [HostListSectionModel] =
             [hosts.map { HostListSectionItem.host($0) }].map { .mainSection(content: $0) }
-        tableManager?.tableViewModel = HostListTableViewModel(sections: sections)
-        setupTableEmptyView(forEntitiesAmount: hosts.count)
+        tableManager.dataStore = HostListDataStore(sections: sections)
         view?.reloadTable()
+        if hosts.isEmpty { view?.contentView.showState(.empty) }
     }
 
-    func interactor(_ interactor: HostListInteractorInput,
-                    didEncounterError error: Error) {
+    func interactor(
+        _ interactor: HostListInteractorInput,
+        didEncounterError error: Error
+    ) {
         DDLogError("HostListInteractor encountered error: \(error)")
     }
 }
 
 extension HostListPresenter: HostListTableManagerDelegate {
 
-    func tableManagerDidTapHostCell(_ tableManager: HostListTableManager, host: Host) {
+    func tableManagerDidTapHostCell(
+        _ tableManager: HostListTableManager,
+        host: Host
+    ) {
         interactor?.wakeHost(host)
     }
 
-    func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host) {
+    func tableManagerDidTapInfoButton(
+        _ tableManager: HostListTableManager,
+        host: Host
+    ) {
         router?.routeToAddHost(with: host)
     }
 
-    func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host) {
+    func tableManagerDidTapDeleteButton(
+        _ tableManager: HostListTableManager,
+        host: Host
+    ) {
         interactor?.deleteHost(host)
     }
 
-    func tableManager(_ tableManager: HostListTableManager,
-                      didSelectRowAt indexPath: IndexPath) {
-        guard case let .host(host) =
-            tableManager.tableViewModel.sections[indexPath.section].items[indexPath.item] else {
-                return
-        }
-        interactor?.wakeHost(host)
-    }
-
-}
-
-// MARK: - Private methods
-private extension HostListPresenter {
-    func setupTableEmptyView(forEntitiesAmount amount: Int) {
-        view?.setEmptyViewHidden(amount > 0)
-    }
 }
