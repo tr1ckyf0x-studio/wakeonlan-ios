@@ -65,19 +65,25 @@ final class HostListTableManager: NSObject {
 
 }
 
+// MARK: - UITableViewDataSource
+
 extension HostListTableManager: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
 
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         sections[section].items.count
     }
 
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         var cell: UITableViewCell?
         let model = sections[indexPath.section].items[indexPath.row]
         switch model {
@@ -96,29 +102,48 @@ extension HostListTableManager: UITableViewDataSource {
 
 }
 
+// MARK: - UITableViewDelegate
+
 extension HostListTableManager: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(
+        _ tableView: UITableView,
+        titleForHeaderInSection section: Int
+    ) -> String? {
         sections[section].header
     }
 
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    func tableView(
+        _ tableView: UITableView,
+        titleForFooterInSection section: Int
+    ) -> String? {
         sections[section].footer
     }
 
 }
 
+// MARK: - HostListTableViewCellDelegate
+
 extension HostListTableManager: HostListTableViewCellDelegate {
 
-    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host) {
+    func hostListCellDidTap(
+        _ cell: HostListTableViewCell,
+        model: Host
+    ) {
         delegate?.tableManagerDidTapHostCell(self, host: model)
     }
 
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host) {
+    func hostListCellDidTapDelete(
+        _ cell: HostListTableViewCell,
+        model: Host
+    ) {
         delegate?.tableManagerDidTapDeleteButton(self, host: model)
     }
 
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host) {
+    func hostListCellDidTapInfo(
+        _ cell: HostListTableViewCell,
+        model: Host
+    ) {
         delegate?.tableManagerDidTapInfoButton(self, host: model)
     }
 

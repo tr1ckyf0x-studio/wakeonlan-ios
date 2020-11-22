@@ -10,11 +10,16 @@ import Foundation
 import CocoaLumberjackSwift
 
 final class HostListPresenter {
+
+    // MARK: - Properties
+
     weak var view: HostListViewInput?
     var router: HostListRouterProtocol?
     var interactor: HostListInteractorInput?
     var tableManager: HostListTableManager = .init()
 }
+
+// MARK: - HostListViewOutput
 
 extension HostListPresenter: HostListViewOutput {
 
@@ -28,6 +33,8 @@ extension HostListPresenter: HostListViewOutput {
     }
 
 }
+
+// MARK: - HostListInteractorOutput
 
 extension HostListPresenter: HostListInteractorOutput {
 
@@ -62,6 +69,8 @@ extension HostListPresenter: HostListInteractorOutput {
         DDLogError("HostListInteractor encountered error: \(error)")
     }
 }
+
+// MARK: - HostListTableManagerDelegate
 
 extension HostListPresenter: HostListTableManagerDelegate {
 

@@ -52,12 +52,16 @@ final class HostListInteractor: HostListInteractorInput {
 
 }
 
+// MARK: - HostListCacheTrackerDelegate
+
 extension HostListInteractor: HostListCacheTrackerDelegate {
 
     typealias Object = Host
 
-    func cacheTracker(_ tracker: CacheTracker,
-                      didChangeContent content: [Content]) {
+    func cacheTracker(
+        _ tracker: CacheTracker,
+        didChangeContent content: [Content]
+    ) {
         DDLogDebug("CacheTracker changed content")
         presenter?.interactor(self, didChangeContent: content)
     }

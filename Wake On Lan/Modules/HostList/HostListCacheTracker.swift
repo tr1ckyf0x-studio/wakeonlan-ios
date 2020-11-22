@@ -28,8 +28,10 @@ protocol HostListCacheTrackerDelegate: class {
 
     typealias CacheTracker = HostListCacheTracker<Object, Self>
 
-    func cacheTracker(_ tracker: CacheTracker,
-                      didChangeContent content: [CacheTracker.Transaction<Object>])
+    func cacheTracker(
+        _ tracker: CacheTracker,
+        didChangeContent content: [CacheTracker.Transaction<Object>]
+    )
 
 }
 
@@ -39,6 +41,7 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     typealias Completion = (_ controller: NSFetchedResultsController<Object>) -> Void
 
     // MARK: - Transaction
+
     enum Transaction<Object> {
         case insert(IndexPath, Object)
         case update(IndexPath, Object)
@@ -47,6 +50,7 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     }
 
     // MARK: - Properties
+
     private var controller: NSFetchedResultsController<Object>
     private var transactionStorage = [Transaction<Object>]()
     private weak var delegate: Delegate?
@@ -55,6 +59,7 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     }
 
     // MARK: - Init
+
     init(
         with fetchRequest: NSFetchRequest<Object>,
         context: NSManagedObjectContext,
@@ -85,16 +90,19 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
+
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         if transactionStorage.isEmpty { return }
         transactionStorage.removeAll()
     }
 
-    @objc func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                          didChange anObject: Any,
-                          at indexPath: IndexPath?,
-                          for type: NSFetchedResultsChangeType,
-                          newIndexPath: IndexPath?) {
+    @objc func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?
+    ) {
         switch type {
         case .insert:
             guard let indexPath = newIndexPath else { fatalError("Index path should be not nil") }
@@ -120,7 +128,9 @@ final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate
         }
     }
 
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerDidChangeContent(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>
+    ) {
         self.delegate?.cacheTracker(self, didChangeContent: transactionStorage)
     }
 

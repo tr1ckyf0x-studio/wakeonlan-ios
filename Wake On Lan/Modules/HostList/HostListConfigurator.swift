@@ -8,7 +8,8 @@
 
 import Foundation
 
-class HostListConfigurator {
+final class HostListConfigurator {
+
     func configure(viewController: HostListViewController) {
         let presenter = HostListPresenter()
         let interactor = HostListInteractor()
@@ -27,4 +28,5 @@ class HostListConfigurator {
         presenter.router = router
         router.viewController = viewController
     }
+
 }

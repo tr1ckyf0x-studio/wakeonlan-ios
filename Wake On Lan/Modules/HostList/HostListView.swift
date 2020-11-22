@@ -26,7 +26,10 @@ final class HostListView: UIView {
     weak var delegate: HostListViewDelegate?
 
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView(
+            frame: .zero,
+            style: .grouped
+        )
         tableView.register(
             HostListTableViewCell.self,
             forCellReuseIdentifier: "\(HostListTableViewCell.self)"
