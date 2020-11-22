@@ -30,6 +30,15 @@ final class HostListInteractor: HostListInteractorInput {
         guard let hosts = cacheTracker.fetchedObjects else { return }
         presenter?.interactor(self, didFetchHosts: hosts)
     }
+    
+    func deleteHost(_ host: Host) {
+        guard let context = host.managedObjectContext else { return }
+        context.perform { [weak self] in
+            context.delete(host)
+            self?.coreDataService.saveContext(context)
+            DDLogDebug("Host deleted")
+        }
+    }
 
     func wakeHost(_ host: Host) {
         do {
@@ -38,15 +47,6 @@ final class HostListInteractor: HostListInteractorInput {
         } catch {
             presenter?.interactor(self, didEncounterError: error)
             DDLogError("Magic packet was not sent due to error: \(error)")
-        }
-    }
-
-    func deleteHost(_ host: Host) {
-        guard let context = host.managedObjectContext else { return }
-        context.perform { [weak self] in
-            context.delete(host)
-            self?.coreDataService.saveContext(context)
-            DDLogDebug("Host deleted")
         }
     }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HostListViewController: UIViewController {
+final class HostListViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -28,7 +28,6 @@ class HostListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        HostListConfigurator().configure(viewController: self)
         setupTableView()
         presenter?.viewDidLoad(self)
     }

@@ -22,7 +22,7 @@ protocol HostListCacheTrackerProtocol {
 
 }
 
-protocol HostListCacheTrackerDelegate: class {
+protocol HostListCacheTrackerDelegate: AnyObject {
 
     associatedtype Object: NSFetchRequestResult
 

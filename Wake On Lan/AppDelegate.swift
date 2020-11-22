@@ -20,9 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseAppDelegatePlugin()
     ]
 
-    // swiftlint:disable line_length
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         plugins.forEach {
             _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions)
         }
@@ -30,7 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         coreDataService.createHostContainer { [unowned self] in
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let hostListViewController = HostListViewController()
-            let navigationController = UINavigationController(rootViewController: hostListViewController)
+            let hostListConfigurator = HostListConfigurator()
+            hostListConfigurator.configure(viewController: hostListViewController)
+            let navigationController = UINavigationController(
+                rootViewController: hostListViewController
+            )
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
         }
