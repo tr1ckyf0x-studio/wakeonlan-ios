@@ -10,6 +10,8 @@ import UIKit
 import Reachability
 import CocoaLumberjackSwift
 
+// MARK: - HostListTableViewCell
+
 final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Typealiases
@@ -112,10 +114,11 @@ final class HostListTableViewCell: UITableViewCell {
     // MARK: - Public
 
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
-        let image = UIImage(named: model.iconName,
-                            in: Bundle.main,
-                            compatibleWith: nil)?
-            .withRenderingMode(.alwaysTemplate)
+        let image = UIImage(
+            named: model.iconName,
+            in: Bundle.main,
+            compatibleWith: nil
+        )?.withRenderingMode(.alwaysTemplate)
         deviceImageView.image = image
         hostTitle.text = model.title
         macAddressTitle.text = model.macAddress

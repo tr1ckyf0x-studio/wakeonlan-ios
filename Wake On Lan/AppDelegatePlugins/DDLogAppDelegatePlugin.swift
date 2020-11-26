@@ -9,9 +9,11 @@
 import UIKit
 import CocoaLumberjackSwift
 
-class DDLogAppDelegatePlugin: NSObject, UIApplicationDelegate {
-    // swiftlint:disable line_length
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+final class DDLogAppDelegatePlugin: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
         DDLog.add(DDOSLogger.sharedInstance)
         return true
     }
