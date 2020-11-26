@@ -69,7 +69,7 @@ private extension TableEmptyView {
 // MARK: - ConfigurableStateView
 
 extension TableEmptyView: DisplaysStateView {
-    func configure(with viewModel: StatebleViewModel) {
+    func configure(with viewModel: StateableViewModel) {
         titleLabel.text = viewModel.title
         imageView.image = viewModel.image
         backgroundColor = viewModel.backgroundColor

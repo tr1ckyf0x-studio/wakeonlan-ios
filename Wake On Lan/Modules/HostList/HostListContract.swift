@@ -18,7 +18,7 @@ protocol HostListViewOutput: class {
 }
 
 protocol HostListViewInput: class {
-    var contentView: StatebleView { get }
+    var contentView: StateableView { get }
 
     func reloadTable()
     func updateTable(with update: Content)

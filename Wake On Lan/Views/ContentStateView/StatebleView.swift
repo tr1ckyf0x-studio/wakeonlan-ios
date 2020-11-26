@@ -18,13 +18,13 @@ enum ViewState {
 }
 
 protocol DisplaysStateView where Self: UIView {
-    func configure(with viewModel: StatebleViewModel)
+    func configure(with viewModel: StateableViewModel)
 
 }
 
-// MARK: - StatebleView
+// MARK: - StateableView
 
-protocol StatebleView: AnyObject {
+protocol StateableView: AnyObject {
     var currentState: ViewState? { get set }
 
     func showState(_ state: ViewState)
@@ -33,7 +33,7 @@ protocol StatebleView: AnyObject {
 
 }
 
-extension StatebleView where Self: UIView {
+extension StateableView where Self: UIView {
 
     var currentState: ViewState? {
         get {

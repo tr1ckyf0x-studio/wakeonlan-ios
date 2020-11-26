@@ -42,7 +42,7 @@ final class HostListView: UIView {
 
     lazy var emptyView: TableEmptyView = {
         let emptyView = TableEmptyView()
-        let viewModel = StatebleViewModel(
+        let viewModel = StateableViewModel(
             title: R.string.tableEmptyView.emptyViewMessage(),
             image: R.image.droids(),
             backgroundColor: R.color.soft()
@@ -122,7 +122,7 @@ private extension HostListView {
 
 // MARK: - ContentStateView
 
-extension HostListView: StatebleView {
+extension HostListView: StateableView {
 
     func view(for state: ViewState) -> DisplaysStateView? {
         switch state {

@@ -61,7 +61,7 @@ final class HostListViewController: UIViewController {
 
 extension HostListViewController: HostListViewInput {
 
-    var contentView: StatebleView { hostListView }
+    var contentView: StateableView { hostListView }
 
     func reloadTable() {
         hostListView.tableView.reloadData()

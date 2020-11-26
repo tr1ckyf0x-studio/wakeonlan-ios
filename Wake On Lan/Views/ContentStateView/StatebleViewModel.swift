@@ -1,5 +1,5 @@
 //
-//  StatebleViewModel.swift
+//  StateableViewModel.swift
 //  Wake on LAN
 //
 //  Created by Dmitry on 16.11.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct StatebleViewModel {
+struct StateableViewModel {
     let title: String?
     let image: UIImage?
     let backgroundColor: UIColor?
