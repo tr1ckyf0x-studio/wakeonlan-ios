@@ -79,7 +79,7 @@ extension StateableView where Self: UIView {
 // MARK: - Constants
 
 private enum Constants {
-    static let viewTag = 1_123_123
+    static let viewTag = UUID().hashValue
     static var associateKey: Void?
 
 }
