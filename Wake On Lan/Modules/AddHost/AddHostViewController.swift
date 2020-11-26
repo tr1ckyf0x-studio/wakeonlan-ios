@@ -11,6 +11,7 @@ import UIKit
 class AddHostViewController: UIViewController {
 
     // MARK: - Properties
+
     var presenter: (AddHostViewOutput & ChooseIconModuleOutput)?
 
     private lazy var addHostView: AddHostView = {
@@ -34,6 +35,7 @@ class AddHostViewController: UIViewController {
 }
 
 // MARK: - Private
+
 private extension AddHostViewController {
     func setupTableView() {
         addHostView.tableView.delegate = presenter?.tableManager
@@ -48,6 +50,7 @@ private extension AddHostViewController {
 }
 
 // MARK: - AddHostViewInput
+
 extension AddHostViewController: AddHostViewInput {
     func reloadTable() {
         addHostView.tableView.reloadData()
@@ -55,6 +58,7 @@ extension AddHostViewController: AddHostViewInput {
 }
 
 // MARK: - AddHostViewDelegate
+
 extension AddHostViewController: AddHostViewDelegate {
     func addHostViewDidPressBackButton(_ view: AddHostView) {
         presenter?.viewDidPressBackButton(self)
