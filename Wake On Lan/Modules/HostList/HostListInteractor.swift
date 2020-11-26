@@ -31,6 +31,15 @@ final class HostListInteractor: HostListInteractorInput {
         presenter?.interactor(self, didFetchHosts: hosts)
     }
 
+    func deleteHost(_ host: Host) {
+        guard let context = host.managedObjectContext else { return }
+        context.perform { [weak self] in
+            context.delete(host)
+            self?.coreDataService.saveContext(context)
+            DDLogDebug("Host deleted")
+        }
+    }
+
     func wakeHost(_ host: Host) {
         do {
             try wakeOnLanService.sendMagicPacket(to: host)
@@ -41,23 +50,18 @@ final class HostListInteractor: HostListInteractorInput {
         }
     }
 
-    func deleteHost(_ host: Host) {
-        guard let context = host.managedObjectContext else { return }
-        context.perform { [weak self] in
-            context.delete(host)
-            self?.coreDataService.saveContext(context)
-            DDLogDebug("Host deleted")
-        }
-    }
-
 }
+
+// MARK: - HostListCacheTrackerDelegate
 
 extension HostListInteractor: HostListCacheTrackerDelegate {
 
     typealias Object = Host
 
-    func cacheTracker(_ tracker: CacheTracker,
-                      didChangeContent content: [Content]) {
+    func cacheTracker(
+        _ tracker: CacheTracker,
+        didChangeContent content: [Content]
+    ) {
         DDLogDebug("CacheTracker changed content")
         presenter?.interactor(self, didChangeContent: content)
     }
