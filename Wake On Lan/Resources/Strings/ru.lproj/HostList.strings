@@ -8,3 +8,4 @@
 
 "hosts" = "Устройства";
 "packetSent" = "ПАКЕТ ОТПРАВЛЕН";
+"checkWifiConnection" = "Вы должны быть подключены к сети Wi-Fi";

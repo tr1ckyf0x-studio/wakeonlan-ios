@@ -8,3 +8,4 @@
 
 "hosts" = "Hosts";
 "packetSent" = "PACKET SENT";
+"checkWifiConnection" = "You must be connected to a Wi-Fi network";

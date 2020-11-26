@@ -26,6 +26,7 @@ class AddHostPresenter {
 }
 
 // MARK: - AddHostViewOutput
+
 extension AddHostPresenter: AddHostViewOutput {
 
     func viewDidLoad(_ view: AddHostViewInput) {
@@ -54,6 +55,7 @@ extension AddHostPresenter: AddHostViewOutput {
 }
 
 // MARK: - AddHostInteractorOutput
+
 extension AddHostPresenter: AddHostInteractorOutput {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm) {
         router?.popCurrentController(animated: true)
@@ -65,6 +67,7 @@ extension AddHostPresenter: AddHostInteractorOutput {
 }
 
 // MARK: - AddHostTableManagerDelegate
+
 extension AddHostPresenter: AddHostTableManagerDelegate {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel) {
         router?.routeToChooseIcon()
@@ -72,6 +75,7 @@ extension AddHostPresenter: AddHostTableManagerDelegate {
 }
 
 // MARK: - ChooseIconModuleOutput
+
 extension AddHostPresenter: ChooseIconModuleOutput {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel) {
         addHostForm.iconModel = iconModel

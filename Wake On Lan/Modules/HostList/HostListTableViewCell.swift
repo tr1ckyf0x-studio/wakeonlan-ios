@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import Reachability
+import CocoaLumberjackSwift
 
 // MARK: - HostListTableViewCell
 
 final class HostListTableViewCell: UITableViewCell {
+
+    // MARK: - Typealiases
+
+    typealias Default = HostListNotificationView<NotificationViewType.Default>
+    typealias Failure = HostListNotificationView<NotificationViewType.Failure>
 
     // MARK: - Properties
 
@@ -86,6 +93,7 @@ final class HostListTableViewCell: UITableViewCell {
     }()
 
     // MARK: - Init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -104,6 +112,7 @@ final class HostListTableViewCell: UITableViewCell {
     }
 
     // MARK: - Public
+
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
         let image = UIImage(
             named: model.iconName,
@@ -117,8 +126,13 @@ final class HostListTableViewCell: UITableViewCell {
         self.delegate = delegate
     }
 
-    // MARK: - Private
-    private func setupScrollView() {
+}
+
+// MARK: - Private
+
+private extension HostListTableViewCell {
+
+    func setupScrollView() {
         contentView.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -129,7 +143,7 @@ final class HostListTableViewCell: UITableViewCell {
         }
     }
 
-    private func setupBaseView() {
+    func setupBaseView() {
         scrollViewContentView.addSubview(baseView)
         baseView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
@@ -142,7 +156,7 @@ final class HostListTableViewCell: UITableViewCell {
         }
     }
 
-    private func setupDeleteView() {
+    func setupDeleteView() {
         scrollViewContentView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
             make.top.bottom.equalTo(baseView)
@@ -152,7 +166,7 @@ final class HostListTableViewCell: UITableViewCell {
         }
     }
 
-    private func setupImageView() {
+    func setupImageView() {
         baseView.addSubview(deviceImageView)
         deviceImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
@@ -163,7 +177,7 @@ final class HostListTableViewCell: UITableViewCell {
         }
     }
 
-    private func setupHostTitle() {
+    func setupHostTitle() {
         baseView.addSubview(hostTitle)
         hostTitle.snp.makeConstraints {
             $0.leading.equalTo(deviceImageView.snp.trailing).offset(16)
@@ -171,7 +185,7 @@ final class HostListTableViewCell: UITableViewCell {
         }
     }
 
-    private func setupMacAddressTitle() {
+    func setupMacAddressTitle() {
         baseView.addSubview(macAddressTitle)
         macAddressTitle.snp.makeConstraints {
             $0.leading.equalTo(hostTitle.snp.leading)
@@ -179,7 +193,7 @@ final class HostListTableViewCell: UITableViewCell {
         }
     }
 
-    private func setupInfoButton() {
+    func setupInfoButton() {
         baseView.addSubview(infoButton)
         infoButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -191,22 +205,31 @@ final class HostListTableViewCell: UITableViewCell {
     }
 
     // MARK: - Action
-    @objc private func didTapInfoButton() {
+
+    @objc func didTapInfoButton() {
         guard let model = self.model else { return }
         delegate?.hostListCellDidTapInfo(self, model: model)
     }
 
-    @objc private func didTapDeleteButton() {
+    @objc func didTapDeleteButton() {
         guard let model = self.model else { return }
         delegate?.hostListCellDidTapDelete(self, model: model)
     }
 
-    @objc private func displayNotification() {
-        let notificationView = NotificationView()
+    @objc func displayNotification() {
+        guard let reachability = try? Reachability() else {
+            DDLogWarn("It is impossible to determine the connection type")
+            return
+        }
+
+        let isReachableViaWiFi = reachability.connection == .wifi
+        let notificationView = isReachableViaWiFi ? Default() : Failure()
+
         baseView.addSubview(notificationView)
         notificationView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
 
         let animationDuration = 0.2
@@ -240,6 +263,7 @@ final class HostListTableViewCell: UITableViewCell {
 }
 
 // MARK: - UIScrollViewDelegate
+
 extension HostListTableViewCell: UIScrollViewDelegate {
 
     // NOTE: Prevents left swiping
@@ -252,87 +276,6 @@ extension HostListTableViewCell: UIScrollViewDelegate {
         default:
             scrollView.isPagingEnabled = true
         }
-    }
-
-}
-
-// MARK: - NotificationView
-private final class NotificationView: UIView {
-
-    static let height: CGFloat = 20
-
-    private lazy var notificationLabel: UILabel = {
-        let label = UILabel()
-        label.text = R.string.hostList.packetSent()
-        label.textColor = .white
-        label.textAlignment = .center
-        label.backgroundColor = R.color.lightGray()
-        label.font = R.font.robotoMedium(size: 12)
-        label.makeShadow()
-
-        return label
-    }()
-
-    // MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupBaseView()
-        setupNotificationLabel()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - Private
-    private func setupBaseView() {
-        alpha = .zero
-        layer.cornerRadius = 10
-        layer.masksToBounds = false
-        backgroundColor = R.color.lightGray()
-        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-    }
-
-    private func setupNotificationLabel() {
-        addSubview(notificationLabel)
-        notificationLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(10)
-            $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalToSuperview()
-        }
-    }
-
-    // MARK: - intrinsicContentSize
-    override var intrinsicContentSize: CGSize {
-        .init(width: notificationLabel.intrinsicContentSize.width * 2, height: Self.height)
-    }
-
-}
-
-private extension UILabel {
-
-    private enum Constants {
-        static let shadowSize: CGFloat = 2
-        static let shadowDistance: CGFloat = 10
-        static let shadowRadius: CGFloat = 5
-        static let shadowOpacity: Float = 0.6
-        static let cornerRadius: CGFloat = 10
-    }
-
-    func makeShadow() {
-        let xPosition = -(Constants.cornerRadius + Constants.shadowSize * 2)
-        let yPosition = NotificationView.height - (Constants.shadowSize * 0.4) + Constants.shadowDistance
-        let labelWidth = intrinsicContentSize.width
-        let width = [labelWidth * 2,
-                     Constants.shadowSize * 2,
-                     Constants.cornerRadius].reduce(.zero, +)
-        let contactRect =
-            CGRect(x: xPosition, y: yPosition, width: width, height: Constants.shadowSize)
-        layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
-        layer.shadowRadius = Constants.shadowRadius
-        layer.shadowOpacity = Constants.shadowOpacity
-        layer.masksToBounds = false
     }
 
 }

@@ -30,6 +30,7 @@ targets:
       - carthage: SnapKit
       - carthage: CocoaLumberjack
       - carthage: CocoaLumberjackSwift
+      - carthage: Reachability
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
