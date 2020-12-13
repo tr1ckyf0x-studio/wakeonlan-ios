@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLUIComponents
 
 protocol ChooseIconViewInput: UIViewController {
     var presenter: ChooseIconViewOutput! { get set }
@@ -32,11 +33,10 @@ extension ChooseIconViewOutput {
 
 protocol ChooseIconRouterProtocol: class {
     var viewController: ChooseIconViewInput? { get }
-
 }
 
 // MARK: - Module delegate
+
 protocol ChooseIconModuleOutput: class {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel)
-
 }

@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import WOLUIComponents
 
 protocol ChooseIconTableManagerDelegate: class {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)
-
 }
 
 class ChooseIconTableManager: NSObject {

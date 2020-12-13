@@ -6,7 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import WOLUIComponents
+
 protocol AddHostTableManagerDelegate: class {
-    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager,
-                                          _ model: IconModel)
+    func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel)
 }

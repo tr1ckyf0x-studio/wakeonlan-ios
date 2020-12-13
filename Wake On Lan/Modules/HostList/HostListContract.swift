@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import WOLUIComponents
 
 typealias Content = HostListCacheTracker<Host, HostListInteractor>.Transaction<Host>
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOLUIComponents
 
 enum FormItem {
     case text(_ formItem: TextFormItem)

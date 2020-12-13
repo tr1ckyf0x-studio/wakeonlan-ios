@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLUIComponents
 
 final class HostListViewController: UIViewController {
 

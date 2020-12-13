@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class TableEmptyView: UIView {
+public final class EmptyView: UIView {
 
     private lazy var containerView = UIView()
 
@@ -21,11 +21,13 @@ class TableEmptyView: UIView {
         label.textColor = R.color.lightGray()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+
         return label
     }()
 
     // MARK: - Init
-    override init(frame: CGRect) {
+
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
         setupView()
@@ -39,7 +41,7 @@ class TableEmptyView: UIView {
 
 // MARK: - Private methods
 
-private extension TableEmptyView {
+private extension EmptyView {
     func setupView() {
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -68,8 +70,8 @@ private extension TableEmptyView {
 
 // MARK: - ConfigurableStateView
 
-extension TableEmptyView: DisplaysStateView {
-    func configure(with viewModel: StateableViewModel) {
+extension EmptyView: DisplaysStateView {
+    public func configure(with viewModel: StateableViewModel) {
         titleLabel.text = viewModel.title
         imageView.image = viewModel.image
         backgroundColor = viewModel.backgroundColor

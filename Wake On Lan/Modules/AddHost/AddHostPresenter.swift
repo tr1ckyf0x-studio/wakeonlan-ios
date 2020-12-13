@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOLUIComponents
 
 class AddHostPresenter {
     weak var view: AddHostViewInput?

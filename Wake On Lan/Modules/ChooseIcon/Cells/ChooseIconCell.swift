@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLUIComponents
 
 class ChooseIconCell: UICollectionViewCell {
 

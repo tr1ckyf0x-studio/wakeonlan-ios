@@ -11,6 +11,14 @@ target 'Wake on LAN' do
   target 'WakeOnLanTests' do
     inherit! :search_paths
   end
+
+end
+
+target 'WOLUIComponents' do
+  use_frameworks!
+  
+  pod "R.swift"
+  inherit! :search_paths
 end
 
 post_install do |installer|

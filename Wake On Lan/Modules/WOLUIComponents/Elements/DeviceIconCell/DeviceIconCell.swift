@@ -9,11 +9,11 @@
 import UIKit
 import SnapKit
 
-class DeviceIconCell: UITableViewCell {
+public final class DeviceIconCell: UITableViewCell {
 
-    typealias ChangeIconBlock = (_ model: IconModel) -> Void
+    public typealias ChangeIconBlock = (_ model: IconModel) -> Void
 
-    var didTapChangeIconBlock: ChangeIconBlock?
+    public var didTapChangeIconBlock: ChangeIconBlock?
 
     private lazy var baseView: DeviceIconView = {
         let view = DeviceIconView()
@@ -35,6 +35,7 @@ class DeviceIconCell: UITableViewCell {
     private var model: IconModel?
 
     // MARK: - Init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -48,14 +49,19 @@ class DeviceIconCell: UITableViewCell {
     }
 
     // MARK: - Public
-    func configure(with model: IconModel?) {
+
+    public func configure(with model: IconModel?) {
         guard let model = model else { return }
         self.model = model
         baseView.configure(with: model)
     }
 
-    // MARK: - Private
-    private func setupDeviceIconView() {
+}
+
+// MARK: - Private
+
+private extension DeviceIconCell {
+    func setupDeviceIconView() {
         contentView.addSubview(baseView)
         baseView.snp.makeConstraints {
             // TODO: Add offset after implementing custom header/footer views
@@ -65,7 +71,7 @@ class DeviceIconCell: UITableViewCell {
         }
     }
 
-    private func setupChangeIconLabel() {
+    func setupChangeIconLabel() {
         contentView.addSubview(changeIconLabel)
         changeIconLabel.snp.makeConstraints {
             $0.top.equalTo(baseView.snp.bottom).offset(8)
@@ -73,10 +79,10 @@ class DeviceIconCell: UITableViewCell {
             $0.centerX.equalToSuperview()
         }
     }
-
 }
 
 // MARK: - DeviceIconViewDelegate
+
 extension DeviceIconCell: DeviceIconViewDelegate {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView) {
         guard let model = self.model else { return }

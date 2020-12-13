@@ -9,6 +9,7 @@
 import UIKit
 import Reachability
 import CocoaLumberjackSwift
+import WOLUIComponents
 
 // MARK: - HostListTableViewCell
 

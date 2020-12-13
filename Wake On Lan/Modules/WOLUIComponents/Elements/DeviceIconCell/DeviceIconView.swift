@@ -12,11 +12,12 @@ protocol DeviceIconViewDelegate: class {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView)
 }
 
-class DeviceIconView: UIView {
+final class DeviceIconView: UIView {
+
+    // MARK: - Properties
 
     weak var delegate: DeviceIconViewDelegate?
 
-    // MARK: - Properties
     private lazy var deviceImageView: UIImageView = {
         let image = R.image.desktop()?.withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
@@ -33,6 +34,7 @@ class DeviceIconView: UIView {
     }()
 
     // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupDeviceImageView()
@@ -43,12 +45,15 @@ class DeviceIconView: UIView {
     }
 
     func configure(with model: IconModel) {
-        deviceImageView.image = UIImage(named: model.pictureName,
-                                        in: Bundle.main,
-                                        compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
+        deviceImageView.image = UIImage(
+            named: model.pictureName,
+            in: Bundle.main,
+            compatibleWith: nil
+        )?.withRenderingMode(.alwaysTemplate)
     }
 
     // MARK: - Private
+
     private func setupDeviceImageView() {
         addSubview(deviceImageView)
         deviceImageView.snp.makeConstraints {
@@ -60,6 +65,7 @@ class DeviceIconView: UIView {
     }
 
     // MARK: - Action
+
     @objc private func didTapChangeIcon() {
         delegate?.deviceIconViewDidTapChangeIcon(self)
     }

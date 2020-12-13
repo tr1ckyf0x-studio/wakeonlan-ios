@@ -24,6 +24,7 @@ targets:
       - path: "Wake on LAN"
         excludes:
           - "**/*.secret"
+          - "Modules/WOLUIComponents/**" # temporary
       - path: "Wake on LAN/R.generated.swift"
         optional: true
     dependencies:
@@ -31,16 +32,18 @@ targets:
       - carthage: CocoaLumberjack
       - carthage: CocoaLumberjackSwift
       - carthage: Reachability
+      - target: WOLUIComponents
+        embed: false
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
         DISPLAY_NAME: "Wake on LAN"
-
         DEVELOPMENT_TEAM: 3HSG7M3SCR
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wakeonlan
         CODE_SIGN_IDENTITY: "Apple Development"
         CODE_SIGN_STYLE: Automatic
         PROVISIONING_PROFILE_SPECIFIER: ""
+        INFOPLIST_FILE: "Wake on LAN/Info.plist"
     preBuildScripts:
     - name: "R.Swift"
       script: |
@@ -72,3 +75,36 @@ targets:
       - target: "Wake on LAN"
       - carthage: Nimble
       - carthage: Quick
+
+  WOLUIComponents:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: WOLUIComponents
+    dependencies:
+      - carthage: SnapKit
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+      - path: "Wake on LAN/Resources"
+      - path: "Wake on LAN/Assets.xcassets"
+      - path: "Wake on LAN/Colors.xcassets"
+    preBuildScripts:
+    - name: "R.Swift"
+      script: |
+              "$PODS_ROOT/R.swift/rswift" generate --accessLevel public "$SRCROOT/Wake on LAN/Modules/${frameworkName}/R.generated.swift"
+      inputFiles:
+        - $TEMP_DIR/rswift-lastrun
+      outputFiles:
+        - $SRCROOT/Wake on LAN/Modules/${frameworkName}/R.generated.swift
+
+targetTemplates:
+  Framework:
+    settings:
+      base:
+        INFOPLIST_FILE: "Wake on LAN/Modules/${frameworkName}/Info.plist"
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wakeonlan.${frameworkName}
+        CODE_SIGN_IDENTITY: "Apple Development"
+        CODE_SIGN_STYLE: Automatic
+        PROVISIONING_PROFILE_SPECIFIER: ""
+    platform: iOS
+    type: framework

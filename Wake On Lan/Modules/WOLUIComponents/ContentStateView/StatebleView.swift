@@ -9,33 +9,19 @@
 import UIKit
 import SnapKit
 
-enum ViewState {
-    case `default`
-    case empty
-    case error
-    case waiting
-
-}
-
-protocol DisplaysStateView where Self: UIView {
-    func configure(with viewModel: StateableViewModel)
-
-}
-
 // MARK: - StateableView
 
-protocol StateableView: AnyObject {
+public protocol StateableView: AnyObject {
     var currentState: ViewState? { get set }
 
     func showState(_ state: ViewState)
     func clearState()
     func view(for state: ViewState) -> DisplaysStateView?
-
 }
 
 extension StateableView where Self: UIView {
 
-    var currentState: ViewState? {
+    public var currentState: ViewState? {
         get {
             objc_getAssociatedObject(
                 self,
@@ -54,15 +40,15 @@ extension StateableView where Self: UIView {
         }
     }
 
-    func view(for state: ViewState) -> DisplaysStateView? { nil }
+    public func view(for state: ViewState) -> DisplaysStateView? { nil }
 
-    func clearState() {
+    public func clearState() {
         currentState = .default
         let stateView = viewWithTag(Constants.viewTag)
         stateView?.removeFromSuperview()
     }
 
-    func showState(_ state: ViewState) {
+    public func showState(_ state: ViewState) {
         currentState = state
         clearState()
         guard let stateView = view(for: state) else { return }
@@ -76,10 +62,24 @@ extension StateableView where Self: UIView {
 
 }
 
+// MARK: - ViewState
+
+public enum ViewState {
+    case `default`
+    case empty
+    case error
+    case waiting
+}
+
+// MARK: - DisplaysStateView
+
+public protocol DisplaysStateView where Self: UIView {
+    func configure(with viewModel: StateableViewModel)
+}
+
 // MARK: - Constants
 
 private enum Constants {
     static let viewTag = UUID().hashValue
     static var associateKey: Void?
-
 }

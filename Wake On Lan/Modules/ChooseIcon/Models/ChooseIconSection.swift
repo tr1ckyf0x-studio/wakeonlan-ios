@@ -7,20 +7,7 @@
 //
 
 import UIKit
-
-// MARK: - IconModel
-
-struct IconModel {
-    var pictureName: String = R.image.other.name
-}
-
-extension IconModel: Equatable {
-    static func == (lhs: IconModel, rhs: IconModel) -> Bool {
-        lhs.pictureName == rhs.pictureName
-    }
-}
-
-// MARK: - Section Model
+import WOLUIComponents
 
 enum ChooseIconSectionItem {
     case icon(_ model: IconModel)

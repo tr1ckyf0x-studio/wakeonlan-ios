@@ -6,6 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import WOLUIComponents
+
 class ChooseIconPresenter {
     weak var view: ChooseIconViewInput!
     weak var moduleDelegate: ChooseIconModuleOutput?
@@ -14,16 +16,23 @@ class ChooseIconPresenter {
     private(set) lazy var tableManager = ChooseIconTableManager(with: sections)
 
     private let sections: [ChooseIconSection] = {
-        [[R.image.other, R.image.desktop, R.image.router, R.image.scanner, R.image.tv]
-                .map {
-                        .icon(IconModel(pictureName: $0.name))
-                }]
-                .map { ChooseIconSection.section(content: $0) }
+        [
+            [
+                R.image.other,
+                R.image.desktop,
+                R.image.router,
+                R.image.scanner,
+                R.image.tv
+            ]
+            .map { .icon(IconModel(pictureName: $0.name)) }
+        ]
+        .map { ChooseIconSection.section(content: $0) }
     }()
 
 }
 
 // MARK: - ChooseIconViewOutput
+
 extension ChooseIconPresenter: ChooseIconViewOutput {
 
     func viewDidLoad(_ view: ChooseIconViewInput) {
@@ -38,6 +47,7 @@ extension ChooseIconPresenter: ChooseIconViewOutput {
 }
 
 // MARK: - ChooseIconTableManagerDelegate
+
 extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
         moduleDelegate?.chooseIconModuleDidSelectIcon(icon)
