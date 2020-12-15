@@ -19,8 +19,6 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
         return view
     }()
 
-    private var bottomcontentViewConstraint: NSLayoutConstraint?
-
     private var tapGestureRecognizer: UITapGestureRecognizer
 
     private var dimmingView: UIView {
@@ -56,18 +54,6 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
         return view
     }
 
-//    private var startYPosition: CGFloat {
-//        guard let view = presentedView, let superview = view.superview else { return 0 }
-//        let startPoint = superview.frame.maxY - view.bounds.height
-//        let y = startPoint < safeAreaInsetsTop ? safeAreaInsetsTop : startPoint
-//        return y
-//    }
-//
-//    private var safeAreaInsetsTop: CGFloat {
-//        let safeAreaInsetsTop = UIApplication.shared.keyWindow!.safeAreaInsets.top
-//        return safeAreaInsetsTop == 0 ? 20 : safeAreaInsetsTop
-//    }
-
     override var presentedView: UIView? {
         contentView
     }
@@ -79,22 +65,21 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
 
     override func containerViewWillLayoutSubviews() {
         super.containerViewWillLayoutSubviews()
-        installPresentedViewInCustomViews()
+        addPresentedViewInCustomViews()
     }
 
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
 
-        installCustomViews()
-        installPresentedViewInCustomViews()
+        addCustomViews()
+        addPresentedViewInCustomViews()
         animateDimmingViewIn()
     }
 
     override func presentationTransitionDidEnd(_ completed: Bool) {
         super.presentationTransitionDidEnd(completed)
-        if !completed {
-            removeCustomViews()
-        }
+        if completed { return }
+        removeCustomViews()
     }
 
     override func dismissalTransitionWillBegin() {
@@ -111,7 +96,7 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
 
 // MARK: - Private methods
 extension SelfSizingBottomSheetModalPresentationController {
-    private func installCustomViews() {
+    private func addCustomViews() {
         guard let containerView = containerView else {
             assertionFailure("Can't set up custom views without a container view. Transition must not be started yet.")
             return
@@ -120,20 +105,17 @@ extension SelfSizingBottomSheetModalPresentationController {
         containerView.addSubview(dimmingView)
         containerView.addSubview(contentView)
 
-        let bottomcontentViewConstraint = contentView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-        self.bottomcontentViewConstraint = bottomcontentViewConstraint
+        dimmingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        contentView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+        }
 
         NSLayoutConstraint.activate([
-            dimmingView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            dimmingView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: dimmingView.bottomAnchor),
-            containerView.trailingAnchor.constraint(equalTo: dimmingView.trailingAnchor),
-
             // Fit the card to the bottom of the screen within the readable width.
-            contentView.topAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: containerView.readableContentGuide.topAnchor, multiplier: 1),
-            contentView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            bottomcontentViewConstraint,
-            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor), {
+            contentView.topAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: containerView.readableContentGuide.topAnchor, multiplier: 1), {
                 // Weakly squeeze the content toward the bottom. This functions
                 // just like the `verticalFittingPriority` in
                 // `UIView.systemLayoutSizeFitting` to get the card to try
@@ -145,8 +127,8 @@ extension SelfSizingBottomSheetModalPresentationController {
         ])
     }
 
-    private func installPresentedViewInCustomViews() {
-        guard !presentedViewController.view.isDescendant(of: contentView) else { return }
+    private func addPresentedViewInCustomViews() {
+        if presentedViewController.view.isDescendant(of: contentView) { return }
 
         presentedViewController.view.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(presentedViewController.view)

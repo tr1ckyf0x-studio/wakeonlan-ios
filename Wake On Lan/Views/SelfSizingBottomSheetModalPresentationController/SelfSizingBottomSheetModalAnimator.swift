@@ -1,16 +1,21 @@
 //
 //  SelfSizingBottomSheetModalAnimator.swift
-//  MOBAPP_B2C
+//  Wake on LAN
 //
-//  Created by Владислав Лисянский on 30.11.2020.
+//  Created by Владислав Лисянский on 15.12.2020.
+//  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
 import UIKit
 
 class SelfSizingBottomSheetModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
+    private enum Configuration {
+        static let transitionDuration = 0.33
+    }
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.33
+        Configuration.transitionDuration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
