@@ -10,8 +10,6 @@ import UIKit
 
 class SelfSizingBottomSheetModalPresentationController: UIPresentationController {
 
-    private var _dimmingView: UIView?
-
     private let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -19,48 +17,33 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
         return view
     }()
 
-    private var tapGestureRecognizer: UITapGestureRecognizer
+    private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(recognizer:)))
+        gestureRecognizer.cancelsTouchesInView = false
+        return gestureRecognizer
+    }()
 
-    private var dimmingView: UIView {
-        if let dimmedView = _dimmingView {
-            return dimmedView
-        }
-        guard let containerView = containerView else { return UIView() }
-        let view = UIView(frame: CGRect(x: 0,
-                                        y: 0,
-                                        width: containerView.bounds.width,
-                                        height: containerView.bounds.height))
+    private lazy var dimmingView: UIView = {
+        let view = UIView()
+        view.addGestureRecognizer(tapGestureRecognizer)
+        return view
+    }()
 
-        // Blur Effect
-        let blurEffect = UIBlurEffect(style: .dark)
+    private lazy var blurEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark) // TODO: вынести в Appearance
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        view.addSubview(blurEffectView)
+        return blurEffectView
+    }()
 
-        // Vibrancy Effect
+    private lazy var vibrancyEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-        vibrancyEffectView.frame = view.bounds
-
-        // Add the vibrancy view to the blur view
-        blurEffectView.contentView.addSubview(vibrancyEffectView)
-
-        _dimmingView = view
-
-        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(recognizer:)))
-        tapGestureRecognizer.cancelsTouchesInView = false
-        _dimmingView?.addGestureRecognizer(tapGestureRecognizer)
-
-        return view
-    }
+        return vibrancyEffectView
+    }()
 
     override var presentedView: UIView? {
         contentView
-    }
-
-    override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
-        self.tapGestureRecognizer = UITapGestureRecognizer()
-        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
 
     override func containerViewWillLayoutSubviews() {
@@ -104,8 +87,18 @@ extension SelfSizingBottomSheetModalPresentationController {
 
         containerView.addSubview(dimmingView)
         containerView.addSubview(contentView)
+        dimmingView.addSubview(blurEffectView)
+        blurEffectView.contentView.addSubview(vibrancyEffectView)
 
         dimmingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        blurEffectView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        vibrancyEffectView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
@@ -115,7 +108,11 @@ extension SelfSizingBottomSheetModalPresentationController {
 
         NSLayoutConstraint.activate([
             // Fit the card to the bottom of the screen within the readable width.
-            contentView.topAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: containerView.readableContentGuide.topAnchor, multiplier: 1), {
+            contentView.topAnchor.constraint(
+                greaterThanOrEqualToSystemSpacingBelow: containerView.readableContentGuide.topAnchor,
+                multiplier: 1
+            ),
+            {
                 // Weakly squeeze the content toward the bottom. This functions
                 // just like the `verticalFittingPriority` in
                 // `UIView.systemLayoutSizeFitting` to get the card to try
