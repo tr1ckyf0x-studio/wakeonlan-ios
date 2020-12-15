@@ -10,11 +10,13 @@ import UIKit
 
 class ChooseIconViewController: UIViewController {
 
-    // MARK: - Constants
-
-    private enum Constants {
-        static let cornerRadius: CGFloat = 15.0
-        static let animationDuration: TimeInterval = 0.5
+    private let appearance = Appearance(); struct Appearance {
+        let cancelButtonFontSize: CGFloat = 20.0
+        let cornerRadius: CGFloat = 15.0
+        let cancelButtonEdgeMargin: CGFloat = 8.0
+        let cancelButtonHeight: CGFloat = 57.0
+        let chooseIconViewEdgeMargin: CGFloat = 8.0
+        let chooseIconViewHeight: CGFloat = 1.0
     }
 
     // MARK: - Properties
@@ -23,7 +25,7 @@ class ChooseIconViewController: UIViewController {
 
     private lazy var chooseIconView: ChooseIconView = {
         let view = ChooseIconView(frame: .zero)
-        view.layer.cornerRadius = Constants.cornerRadius
+        view.layer.cornerRadius = appearance.cornerRadius
 
         return view
     }()
@@ -33,8 +35,8 @@ class ChooseIconViewController: UIViewController {
         button.setTitle(R.string.addHost.cancel(), for: .normal)
         button.backgroundColor = R.color.soft()
         button.setTitleColor(.systemBlue, for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 20.0)
-        button.layer.cornerRadius = Constants.cornerRadius
+        button.titleLabel?.font = .boldSystemFont(ofSize: appearance.cancelButtonFontSize)
+        button.layer.cornerRadius = appearance.cornerRadius
         button.addTarget(self, action: #selector(closeViewController), for: .touchUpInside)
 
         return button
@@ -70,19 +72,18 @@ private extension ChooseIconViewController {
     func setupCancelButton() {
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-8)
-            $0.height.equalTo(57)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(appearance.cancelButtonEdgeMargin)
+            $0.height.equalTo(appearance.cancelButtonHeight)
         }
     }
 
     func setupChooseIconView() {
         view.addSubview(chooseIconView)
         chooseIconView.snp.makeConstraints {
-            $0.top.greaterThanOrEqualToSuperview().offset(8)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            $0.bottom.equalTo(cancelButton.snp.top).offset(-8)
-            $0.height.equalTo(1) // Because needs to be updated
+            $0.top.greaterThanOrEqualToSuperview().offset(appearance.chooseIconViewEdgeMargin)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(appearance.chooseIconViewEdgeMargin)
+            $0.bottom.equalTo(cancelButton.snp.top).offset(-appearance.chooseIconViewEdgeMargin)
+            $0.height.equalTo(appearance.chooseIconViewHeight) // Because needs to be updated
         }
     }
 
@@ -102,7 +103,7 @@ extension ChooseIconViewController: ChooseIconViewInput {
     func updateIconViewHeight() {
         guard let height = chooseIconCollectionLayout?.containerHeight else { return }
         chooseIconView.snp.updateConstraints {
-            $0.height.equalTo(height + 8 + 8)
+            $0.height.equalTo(height + appearance.chooseIconViewEdgeMargin * 2)
         }
     }
 
