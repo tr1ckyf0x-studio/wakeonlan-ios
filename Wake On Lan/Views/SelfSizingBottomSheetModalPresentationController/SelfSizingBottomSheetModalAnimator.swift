@@ -19,13 +19,18 @@ class SelfSizingBottomSheetModalAnimator: NSObject, UIViewControllerAnimatedTran
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let from = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
+        let from = transitionContext.viewController(
+            forKey: UITransitionContextViewControllerKey.from
+        )
 
-        UIView.animate(withDuration: transitionDuration(using: transitionContext),
-                       animations: { () -> Void in
-                        from?.view.frame.origin.y = UIScreen.main.bounds.size.height
-        }, completion: { _ in
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+        UIView.animate(
+            withDuration: transitionDuration(using: transitionContext),
+            animations: {
+                from?.view.frame.origin.y = UIScreen.main.bounds.size.height
+            },
+            completion: { _ in
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+            }
+        )
     }
 }

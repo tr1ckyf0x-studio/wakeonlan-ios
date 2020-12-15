@@ -10,9 +10,12 @@ import UIKit
 
 class SelfSizingBottomSheetModalPresentationController: UIPresentationController {
 
+    private let appearance = Appearance(); struct Appearance {
+        let blurEffectstyle: UIBlurEffect.Style = .dark
+    }
+
     private let contentView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
     }()
@@ -30,13 +33,13 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
     }()
 
     private lazy var blurEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .dark) // TODO: вынести в Appearance
+        let blurEffect = UIBlurEffect(style: appearance.blurEffectstyle)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         return blurEffectView
     }()
 
     private lazy var vibrancyEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: appearance.blurEffectstyle)
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
         return vibrancyEffectView
@@ -106,6 +109,7 @@ extension SelfSizingBottomSheetModalPresentationController {
             make.leading.trailing.bottom.equalToSuperview()
         }
 
+        // TODO: Refactor using SnapKit
         NSLayoutConstraint.activate([
             // Fit the card to the bottom of the screen within the readable width.
             contentView.topAnchor.constraint(
@@ -127,15 +131,11 @@ extension SelfSizingBottomSheetModalPresentationController {
     private func addPresentedViewInCustomViews() {
         if presentedViewController.view.isDescendant(of: contentView) { return }
 
-        presentedViewController.view.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(presentedViewController.view)
 
-        NSLayoutConstraint.activate([
-            presentedViewController.view.topAnchor.constraint(equalTo: contentView.topAnchor),
-            presentedViewController.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: presentedViewController.view.bottomAnchor),
-            contentView.trailingAnchor.constraint(equalTo: presentedViewController.view.trailingAnchor)
-        ])
+        presentedViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 
     private func removeCustomViews() {
@@ -147,13 +147,13 @@ extension SelfSizingBottomSheetModalPresentationController {
         dimmingView.alpha = 0
         presentingViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 1
-        }, completion: nil)
+        })
     }
 
     private func animateDimmingViewOut() {
         presentingViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 0
-        }, completion: nil)
+        })
     }
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
