@@ -15,10 +15,12 @@ class AddHostRouter: AddHostRouterProtocol {
         // TODO: Needs to be refactored(viewConroller cast)
         guard let addHostViewController = viewController as? AddHostViewController else { return }
         let chooseIconViewController = ChooseIconViewController()
-        chooseIconViewController.modalPresentationStyle = .overCurrentContext
         let configurator = ChooseIconConfigurator()
         configurator.configure(viewController: chooseIconViewController,
                                moduleDelegate: addHostViewController.presenter)
+        chooseIconViewController.modalPresentationStyle = .custom
+        let transitioningDelegate = SelfSizingBottomSheetModalTransitionDelegate()
+        chooseIconViewController.transitioningDelegate = transitioningDelegate
         viewController?.present(chooseIconViewController, animated: true)
     }
 

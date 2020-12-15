@@ -25,13 +25,9 @@ class ChooseIconPresenter {
 
 // MARK: - ChooseIconViewOutput
 extension ChooseIconPresenter: ChooseIconViewOutput {
-    func viewDidLoad(_ view: ChooseIconViewInput) {
-        view.makePresentingViewControllerDimmed()
-        tableManager.delegate = self
-    }
 
-    func viewWillDisappear(_ view: ChooseIconViewInput) {
-        view.makePresentingViewControllerTransparent()
+    func viewDidLoad(_ view: ChooseIconViewInput) {
+        tableManager.delegate = self
     }
 
     func viewWillLayoutSubviews(_ view: ChooseIconViewInput) {

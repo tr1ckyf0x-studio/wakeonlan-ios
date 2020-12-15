@@ -53,7 +53,6 @@ class ChooseIconViewController: UIViewController {
 
         setupCancelButton()
         setupChooseIconView()
-        setupDismissingTap()
 
         presenter.viewDidLoad(self)
     }
@@ -63,42 +62,10 @@ class ChooseIconViewController: UIViewController {
         presenter.viewWillLayoutSubviews(self)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        presenter.viewWillDisappear(self)
-    }
-
-    // MARK: - Utilities
-    func makePresentingViewControllerDimmed() {
-        UIView.animate(withDuration: Constants.animationDuration) {
-            self.presentingViewController?.view.alpha = 0.5
-        }
-    }
-
-    func makePresentingViewControllerTransparent() {
-        UIView.animate(withDuration: Constants.animationDuration) {
-            self.presentingViewController?.view.alpha = 1.0
-        }
-    }
-
 }
 
 // MARK: - Private
 private extension ChooseIconViewController {
-    func setupDismissingTap() {
-        let tapGestureRecognizer =
-            UITapGestureRecognizer(target: self, action: #selector(closeViewController))
-        view.addGestureRecognizer(tapGestureRecognizer)
-    }
-
-    func setupChooseIconView() {
-        view.addSubview(chooseIconView)
-        chooseIconView.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
-            $0.bottom.equalTo(cancelButton.snp.top).offset(-8)
-            $0.height.equalTo(1) // Because needs to be updated
-        }
-    }
 
     func setupCancelButton() {
         view.addSubview(cancelButton)
@@ -106,6 +73,16 @@ private extension ChooseIconViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-8)
             $0.height.equalTo(57)
+        }
+    }
+
+    func setupChooseIconView() {
+        view.addSubview(chooseIconView)
+        chooseIconView.snp.makeConstraints {
+            $0.top.greaterThanOrEqualToSuperview().offset(8)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(8)
+            $0.bottom.equalTo(cancelButton.snp.top).offset(-8)
+            $0.height.equalTo(1) // Because needs to be updated
         }
     }
 
