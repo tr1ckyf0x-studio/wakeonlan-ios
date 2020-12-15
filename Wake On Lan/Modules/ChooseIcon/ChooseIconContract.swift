@@ -11,10 +11,6 @@ import UIKit
 protocol ChooseIconViewInput: UIViewController {
     var presenter: ChooseIconViewOutput! { get set }
 
-    func makePresentingViewControllerDimmed()
-
-    func makePresentingViewControllerTransparent()
-
     func reloadCollectionViewLayout()
 
     func updateIconViewHeight()
@@ -26,8 +22,6 @@ protocol ChooseIconViewOutput {
     func viewDidLoad(_ view: ChooseIconViewInput)
 
     func viewWillLayoutSubviews(_ view: ChooseIconViewInput)
-
-    func viewWillDisappear(_ view: ChooseIconViewInput)
 }
 
 extension ChooseIconViewOutput {
