@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  IconModel.swift
 //  WOLUIComponents
 //
 //  Created by Dmitry on 13.12.2020.
