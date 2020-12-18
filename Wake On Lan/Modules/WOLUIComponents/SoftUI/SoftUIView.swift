@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLResources
 
 public final class SoftUIView: UIView, SoftUIRepresentable {
 

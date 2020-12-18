@@ -8,3 +8,5 @@
 
 "wrong mac address length" = "MAC Address length MUST be equal to %@";
 "wake on lan unexpected error" = "Unexpected error occured";
+"empty view message" = "There are no droids you are looking for";
+"change icon" = "Tap to change icon";

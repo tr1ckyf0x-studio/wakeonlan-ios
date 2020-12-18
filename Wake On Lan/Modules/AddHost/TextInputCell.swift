@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import WOLResources
 
 private class AddHostFailureView: UIView {
 

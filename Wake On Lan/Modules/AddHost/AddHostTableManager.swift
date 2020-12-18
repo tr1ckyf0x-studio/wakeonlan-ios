@@ -8,6 +8,7 @@
 
 import UIKit
 import WOLUIComponents
+import WOLResources
 
 // TODO: Implement custom header/footer views
 class AddHostTableManager: NSObject {

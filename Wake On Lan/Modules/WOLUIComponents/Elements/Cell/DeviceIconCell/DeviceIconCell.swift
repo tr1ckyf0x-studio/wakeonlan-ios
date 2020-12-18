@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import WOLResources
 
 public final class DeviceIconCell: UITableViewCell {
 
@@ -27,7 +28,7 @@ public final class DeviceIconCell: UITableViewCell {
         label.backgroundColor = .clear
         label.textColor = R.color.gray()
         label.font = .systemFont(ofSize: 12)
-        label.text = R.string.addHost.changeIcon()
+        label.text = R.string.wakeOnLan.changeIcon()
 
         return label
     }()

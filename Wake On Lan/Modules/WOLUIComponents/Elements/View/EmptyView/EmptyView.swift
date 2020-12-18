@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import WOLResources
 
 public final class EmptyView: UIView {
 
@@ -17,7 +18,7 @@ public final class EmptyView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = R.string.tableEmptyView.emptyViewMessage()
+        label.text = R.string.wakeOnLan.emptyViewMessage()
         label.textColor = R.color.lightGray()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLResources
 
 protocol NotificationViewStyle {
 

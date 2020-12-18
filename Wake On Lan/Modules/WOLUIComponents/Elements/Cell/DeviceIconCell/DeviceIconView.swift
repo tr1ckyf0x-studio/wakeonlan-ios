@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLResources
 
 protocol DeviceIconViewDelegate: class {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView)
@@ -47,7 +48,7 @@ final class DeviceIconView: UIView {
     func configure(with model: IconModel) {
         deviceImageView.image = UIImage(
             named: model.pictureName,
-            in: Bundle.main,
+            in: Bundle(identifier: "com.tr1ckyf0x.wakeonlan.WOLResources"),
             compatibleWith: nil
         )?.withRenderingMode(.alwaysTemplate)
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 import WOLUIComponents
+import WOLResources
 
 class AddHostForm: Form {
 

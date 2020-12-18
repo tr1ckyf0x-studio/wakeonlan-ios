@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import WOLUIComponents
+import WOLResources
 
 protocol HostListViewDelegate: class {
     func hostListViewDidPressAddButton(_ view: HostListView)
@@ -44,7 +45,7 @@ final class HostListView: UIView {
     lazy var emptyView: EmptyView = {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
-            title: R.string.tableEmptyView.emptyViewMessage(),
+            title: R.string.wakeOnLan.emptyViewMessage(),
             image: R.image.droids(),
             backgroundColor: R.color.soft()
         )

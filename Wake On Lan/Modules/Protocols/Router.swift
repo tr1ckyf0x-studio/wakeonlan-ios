@@ -9,9 +9,9 @@
 import UIKit
 
 protocol Router {
-    func popCurrentController(animated: Bool)
-
     var viewController: UIViewController? { get }
+
+    func popCurrentController(animated: Bool)
 }
 
 extension Router {

@@ -10,6 +10,7 @@ import UIKit
 import Reachability
 import CocoaLumberjackSwift
 import WOLUIComponents
+import WOLResources
 
 // MARK: - HostListTableViewCell
 
@@ -117,7 +118,7 @@ final class HostListTableViewCell: UITableViewCell {
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
         let image = UIImage(
             named: model.iconName,
-            in: Bundle.main,
+            in: Bundle(identifier: "com.tr1ckyf0x.wakeonlan.WOLResources"),
             compatibleWith: nil
         )?.withRenderingMode(.alwaysTemplate)
         deviceImageView.image = image

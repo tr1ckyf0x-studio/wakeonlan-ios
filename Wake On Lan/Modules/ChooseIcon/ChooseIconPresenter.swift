@@ -7,6 +7,7 @@
 //
 
 import WOLUIComponents
+import WOLResources
 
 class ChooseIconPresenter {
     weak var view: ChooseIconViewInput!

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLResources
 
 class ChooseIconView: UIView {
 

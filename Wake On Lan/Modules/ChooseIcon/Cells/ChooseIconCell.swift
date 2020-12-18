@@ -8,6 +8,7 @@
 
 import UIKit
 import WOLUIComponents
+import WOLResources
 
 class ChooseIconCell: UICollectionViewCell {
 
@@ -41,10 +42,11 @@ class ChooseIconCell: UICollectionViewCell {
 
     // MARK: - Private
     private func setupDeviceImage(with imageName: String) {
-        let image = UIImage(named: imageName,
-                            in: Bundle.main,
-                            compatibleWith: nil)?
-            .withRenderingMode(.alwaysTemplate)
+        let image = UIImage(
+            named: imageName,
+            in: Bundle(identifier: "com.tr1ckyf0x.wakeonlan.WOLResources"),
+            compatibleWith: nil
+        )?.withRenderingMode(.alwaysTemplate)
         deviceButton.setImage(image, for: .normal)
         deviceButton.imageView?.tintColor = R.color.lightGray()
     }

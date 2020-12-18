@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WOLResources
 
 public struct IconModel {
     public let pictureName: String

@@ -14,7 +14,7 @@ target 'Wake on LAN' do
 
 end
 
-target 'WOLUIComponents' do
+target 'WOLResources' do
   use_frameworks!
   
   pod "R.swift"

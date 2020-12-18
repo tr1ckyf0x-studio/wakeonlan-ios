@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLResources
 
 class ChooseIconViewController: UIViewController {
 

@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import WOLUIComponents
+import WOLResources
 
 protocol AddHostViewDelegate: class {
     func addHostViewDidPressSaveButton(_ view: AddHostView)

@@ -8,3 +8,5 @@
 
 "wrong mac address length" = "MAC адрес должен состоять из %@ байт";
 "wake on lan unexpected error" = "Произошла непредвиденная ошибка";
+"empty view message" = "Здесь нет дроидов, которых вы ищете";
+"change icon" = "Нажмите, чтобы сменить иконку";
