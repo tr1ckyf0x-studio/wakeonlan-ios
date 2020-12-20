@@ -11,7 +11,7 @@ import SnapKit
 import WOLUIComponents
 import WOLResources
 
-protocol HostListViewDelegate: class {
+protocol HostListViewDelegate: AnyObject {
     func hostListViewDidPressAddButton(_ view: HostListView)
 }
 

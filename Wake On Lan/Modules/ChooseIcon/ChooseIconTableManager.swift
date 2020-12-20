@@ -9,7 +9,7 @@
 import UIKit
 import WOLUIComponents
 
-protocol ChooseIconTableManagerDelegate: class {
+protocol ChooseIconTableManagerDelegate: AnyObject {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)
 }
 
@@ -25,6 +25,7 @@ class ChooseIconTableManager: NSObject {
 }
 
 // MARK: - UICollectionViewDelegate
+
 extension ChooseIconTableManager: UICollectionViewDelegate {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -34,15 +35,20 @@ extension ChooseIconTableManager: UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionViewDataSource
+
 extension ChooseIconTableManager: UICollectionViewDataSource {
 
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         sections[section].content.count
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let sectionModel = sections[indexPath.section].content[indexPath.row]
         var cell: UICollectionViewCell?
 

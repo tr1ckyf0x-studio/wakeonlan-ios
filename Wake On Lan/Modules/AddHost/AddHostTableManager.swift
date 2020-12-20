@@ -43,7 +43,9 @@ extension AddHostTableManager: UITableViewDataSource {
         case .text(let textFormItem):
             let textInputCell =
                 tableView.dequeueReusableCell(
-                    withIdentifier: TextInputCell.reuseIdentifier, for: indexPath) as? TextInputCell
+                    withIdentifier: "\(TextInputCell.self)",
+                    for: indexPath
+                ) as? TextInputCell
             textFormItem.indexPath = indexPath
             textInputCell?.configure(with: model)
             // Scroll table view to next responder

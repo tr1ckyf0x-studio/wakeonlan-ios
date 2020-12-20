@@ -31,12 +31,12 @@ extension ChooseIconViewOutput {
     func viewWillLayoutSubviews(_ view: ChooseIconViewInput) { }
 }
 
-protocol ChooseIconRouterProtocol: class {
+protocol ChooseIconRouterProtocol: AnyObject {
     var viewController: ChooseIconViewInput? { get }
 }
 
 // MARK: - Module delegate
 
-protocol ChooseIconModuleOutput: class {
+protocol ChooseIconModuleOutput: AnyObject {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel)
 }

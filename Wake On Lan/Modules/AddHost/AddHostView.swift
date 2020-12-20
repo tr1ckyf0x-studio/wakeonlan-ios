@@ -12,7 +12,7 @@ import WOLUIComponents
 import WOLResources
 import SharedExtensions
 
-protocol AddHostViewDelegate: class {
+protocol AddHostViewDelegate: AnyObject {
     func addHostViewDidPressSaveButton(_ view: AddHostView)
     func addHostViewDidPressBackButton(_ view: AddHostView)
 }
@@ -26,7 +26,7 @@ class AddHostView: UIView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(
             TextInputCell.self,
-            forCellReuseIdentifier: TextInputCell.reuseIdentifier
+            forCellReuseIdentifier: "\(TextInputCell.self)"
         )
         tableView.register(
             DeviceIconCell.self,

@@ -9,7 +9,7 @@
 import Foundation
 import SharedProtocols
 
-protocol AddHostViewOutput: class {
+protocol AddHostViewOutput: AnyObject {
     var tableManager: AddHostTableManager { get }
 
     func viewDidLoad(_ view: AddHostViewInput)
@@ -17,20 +17,20 @@ protocol AddHostViewOutput: class {
     func viewDidPressBackButton(_ view: AddHostViewInput)
 }
 
-protocol AddHostViewInput: class {
+protocol AddHostViewInput: AnyObject {
     func reloadTable()
 }
 
-protocol AddHostInteractorInput: class {
+protocol AddHostInteractorInput: AnyObject {
     func saveForm(_ form: AddHostForm)
     func updateForm(_ form: AddHostForm)
 }
 
-protocol AddHostInteractorOutput: class {
+protocol AddHostInteractorOutput: AnyObject {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm)
     func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm)
 }
 
-protocol AddHostRouterProtocol: class, Router {
+protocol AddHostRouterProtocol: AnyObject, Router {
     func routeToChooseIcon()
 }

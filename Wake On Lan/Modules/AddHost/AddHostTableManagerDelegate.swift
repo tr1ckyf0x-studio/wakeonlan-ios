@@ -8,6 +8,6 @@
 
 import WOLUIComponents
 
-protocol AddHostTableManagerDelegate: class {
+protocol AddHostTableManagerDelegate: AnyObject {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel)
 }

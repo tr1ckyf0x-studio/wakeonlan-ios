@@ -9,7 +9,7 @@
 import UIKit
 import WOLResources
 
-protocol DeviceIconViewDelegate: class {
+protocol DeviceIconViewDelegate: AnyObject {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView)
 }
 

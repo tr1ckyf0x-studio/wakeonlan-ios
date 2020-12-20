@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol HostListTableViewCellDelegate: class {
+protocol HostListTableViewCellDelegate: AnyObject {
 
     func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host)
 

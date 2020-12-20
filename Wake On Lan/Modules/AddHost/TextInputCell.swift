@@ -54,8 +54,6 @@ private class AddHostFailureView: UIView {
 
 class TextInputCell: UITableViewCell {
 
-    static let reuseIdentifier = String(describing: self)
-
     typealias OnExpandCompletion = () -> Void
     typealias OnExpandAction = (_ completion: OnExpandCompletion?) -> Void
     typealias OnNextResponderAction = (_ indexPath: IndexPath) -> Void
