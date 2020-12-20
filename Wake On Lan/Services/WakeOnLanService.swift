@@ -83,7 +83,14 @@ final class WakeOnLanService {
         let sockaddrLen = socklen_t(MemoryLayout<sockaddr>.stride)
         var targetCast = unsafeBitCast(target, to: sockaddr.self)
 
-        guard sendto(udpSocket, &packet, packet.count, 0, &targetCast, sockaddrLen) == packet.count else {
+        guard sendto(
+                udpSocket,
+                &packet,
+                packet.count,
+                0,
+                &targetCast,
+                sockaddrLen
+        ) == packet.count else {
             let error = String(utf8String: strerror(errno)) ?? ""
             throw Self.Error.send(reason: error)
         }
@@ -101,7 +108,10 @@ final class WakeOnLanService {
             throw Self.Error.wrongMacAddressLength
         }
 
-        let body = Array(repeating: macComponents, count: Constants.magicPocketBodyLength).flatMap { $0 }
+        let body = Array(
+            repeating: macComponents,
+            count: Constants.magicPocketBodyLength
+        ).flatMap { $0 }
 
         let magicPacketBytes = header + body
 

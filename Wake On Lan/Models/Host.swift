@@ -18,28 +18,21 @@ final class Host: NSManagedObject {
 
     private(set) var macAddress: String {
         get {
-            HostCoreDataFormatter.decompress(
-                data: macAddressData, ofType: .macAddress)
+            HostCoreDataFormatter.decompress(data: macAddressData, ofType: .macAddress)
         }
         set {
-            macAddressData = HostCoreDataFormatter.compress(
-                string: newValue, ofType: .macAddress)
+            macAddressData = HostCoreDataFormatter.compress(string: newValue, ofType: .macAddress)
         }
     }
 
     private(set) var ipAddress: String? {
         get {
             guard let ipAddressData = ipAddressData else { return nil }
-            return HostCoreDataFormatter.decompress(
-                data: ipAddressData, ofType: .ipAddress)
+            return HostCoreDataFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
         }
         set {
-            guard let ipAddress = newValue else {
-                ipAddressData = nil
-                return
-            }
-            ipAddressData = HostCoreDataFormatter.compress(
-                string: ipAddress, ofType: .ipAddress)
+            guard let ipAddress = newValue else { ipAddressData = nil; return }
+            ipAddressData = HostCoreDataFormatter.compress(string: ipAddress, ofType: .ipAddress)
         }
     }
 
@@ -49,19 +42,20 @@ final class Host: NSManagedObject {
     }
 
     // MARK: - Private
+
     @NSManaged private var primitiveCreatedAt: Date
 
 }
 
 // MARK: - CRUD
+
 extension Host {
 
-    static func insert(into context: NSManagedObjectContext,
-                       form: AddHostForm) {
-        guard let macAddress = form.macAddress,
+    static func insert(into context: NSManagedObjectContext, form: AddHostForm) {
+        guard
+            let macAddress = form.macAddress,
             let title = form.title,
-            let iconName = form.iconModel?.pictureName
-            else { return }
+            let iconName = form.iconModel?.pictureName else { return }
         let host: Host = context.insertObject()
         host.iconName = iconName
         host.title = title
@@ -70,10 +64,13 @@ extension Host {
         host.port = form.port
     }
 
-    static func update(object: Host,
-                       into context: NSManagedObjectContext,
-                       with form: AddHostForm) {
-        guard let macAddress = form.macAddress,
+    static func update(
+        object: Host,
+        into context: NSManagedObjectContext,
+        with form: AddHostForm
+    ) {
+        guard
+            let macAddress = form.macAddress,
             let title = form.title,
             let iconName = form.iconModel?.pictureName,
             let updateObject = context.object(with: object.objectID) as? Self else { return }
@@ -91,9 +88,9 @@ extension Host {
 }
 
 // MARK: - Managed
+
 extension Host: Managed {
     static var defaultSortDescriptors: [NSSortDescriptor] {
         [NSSortDescriptor(key: #keyPath(createdAt), ascending: false)]
     }
-
 }
