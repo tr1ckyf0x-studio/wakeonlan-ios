@@ -9,12 +9,12 @@
 import Foundation
 import WOLUIComponents
 
-class AddHostPresenter {
+class AddHostPresenter<Router: AddHostRouterProtocol> {
     weak var view: AddHostViewInput?
 
     var interactor: AddHostInteractorInput?
 
-    var router: AddHostRouterProtocol?
+    var router: Router?
 
     private(set) var tableManager = AddHostTableManager()
 

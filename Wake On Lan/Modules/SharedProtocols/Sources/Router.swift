@@ -9,7 +9,9 @@
 import UIKit
 
 public protocol Router {
-    var viewController: UIViewController? { get }
+    associatedtype ViewControllerType: UIViewController
+
+    var viewController: ViewControllerType? { get }
 
     func popCurrentController(animated: Bool)
 }

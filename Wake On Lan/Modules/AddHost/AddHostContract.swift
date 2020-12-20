@@ -31,6 +31,6 @@ protocol AddHostInteractorOutput: AnyObject {
     func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm)
 }
 
-protocol AddHostRouterProtocol: AnyObject, Router {
+protocol AddHostRouterProtocol: AnyObject, Router where ViewControllerType == AddHostViewController {
     func routeToChooseIcon()
 }

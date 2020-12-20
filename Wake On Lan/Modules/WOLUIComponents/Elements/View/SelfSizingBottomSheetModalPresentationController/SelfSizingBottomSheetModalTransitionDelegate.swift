@@ -8,15 +8,15 @@
 
 import UIKit
 
-class SelfSizingBottomSheetModalTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
+public class SelfSizingBottomSheetModalTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
 
-    func animationController(
+    public func animationController(
         forDismissed dismissed: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
         SelfSizingBottomSheetModalAnimator()
     }
 
-    func presentationController(
+    public func presentationController(
         forPresented presented: UIViewController,
         presenting: UIViewController?,
         source: UIViewController

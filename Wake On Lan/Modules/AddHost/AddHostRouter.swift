@@ -7,19 +7,21 @@
 //
 
 import UIKit
+import WOLUIComponents
 
 class AddHostRouter: AddHostRouterProtocol {
-    var viewController: UIViewController?
+    var viewController: AddHostViewController?
 
     func routeToChooseIcon() {
-        // TODO: Needs to be refactored(viewConroller cast)
-        guard let addHostViewController = viewController as? AddHostViewController else { return }
         let chooseIconViewController = ChooseIconViewController()
         let configurator = ChooseIconConfigurator()
         configurator.configure(
             viewController: chooseIconViewController,
-            moduleDelegate: addHostViewController.presenter
+            moduleDelegate: viewController?.presenter
         )
+        chooseIconViewController.modalPresentationStyle = .custom
+        let transitioningDelegate = SelfSizingBottomSheetModalTransitionDelegate()
+        chooseIconViewController.transitioningDelegate = transitioningDelegate
         viewController?.present(chooseIconViewController, animated: true)
     }
 
