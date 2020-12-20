@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol Router {
+public protocol Router {
     var viewController: UIViewController? { get }
 
     func popCurrentController(animated: Bool)
 }
 
-extension Router {
+public extension Router {
     func popCurrentController(animated: Bool) {
         guard let navigationController = viewController?.navigationController else { return }
         navigationController.popViewController(animated: animated)

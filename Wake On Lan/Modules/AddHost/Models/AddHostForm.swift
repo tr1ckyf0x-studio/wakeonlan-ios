@@ -10,7 +10,7 @@ import Foundation
 import WOLUIComponents
 import WOLResources
 
-class AddHostForm: Form {
+final class AddHostForm: FormRepresentable {
 
     // MARK: - Error
     enum Error: LocalizedError {

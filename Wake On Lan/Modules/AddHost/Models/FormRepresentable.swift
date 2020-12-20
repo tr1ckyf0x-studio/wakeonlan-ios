@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Form {
+protocol FormRepresentable {
     var formSections: [FormSection] { get }
     var isValid: Bool { get }
 }

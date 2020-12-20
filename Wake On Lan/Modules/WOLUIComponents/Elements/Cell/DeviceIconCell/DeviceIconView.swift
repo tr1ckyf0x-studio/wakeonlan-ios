@@ -47,9 +47,7 @@ final class DeviceIconView: UIView {
 
     func configure(with model: IconModel) {
         deviceImageView.image = UIImage(
-            named: model.pictureName,
-            in: Bundle(identifier: "com.tr1ckyf0x.wakeonlan.WOLResources"),
-            compatibleWith: nil
+            named: model.pictureName
         )?.withRenderingMode(.alwaysTemplate)
     }
 

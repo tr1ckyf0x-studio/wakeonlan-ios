@@ -37,10 +37,7 @@ extension BundleInfoProvider: ProvidesBundleInfo {
                 ofType: Configuration.resource.type
             ),
             let plist = FileManager.default.contents(atPath: path),
-            let bundleInfo = try? PropertyListDecoder().decode(
-                BundleInfo.self,
-                from: plist
-            ) else {
+            let bundleInfo = try? PropertyListDecoder().decode(BundleInfo.self, from: plist) else {
             fatalError("\(self) : Can't get bundle info!")
         }
         completion(bundleInfo)

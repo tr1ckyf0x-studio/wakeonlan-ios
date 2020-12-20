@@ -21,8 +21,10 @@ protocol CoreDataServiceProtocol {
 
     func createChildConcurrentContext() -> NSManagedObjectContext
 
-    func saveContext(_ context: NSManagedObjectContext,
-                     completionHandler: SaveCompletionHandler?)
+    func saveContext(
+        _ context: NSManagedObjectContext,
+        completionHandler: SaveCompletionHandler?
+    )
 }
 
 extension CoreDataServiceProtocol {
@@ -50,8 +52,10 @@ extension CoreDataServiceProtocol {
     }
 
     // MARK: - Core Data Saving support
-    func saveContext(_ context: NSManagedObjectContext,
-                     completionHandler: SaveCompletionHandler? = nil) {
+    func saveContext(
+        _ context: NSManagedObjectContext,
+        completionHandler: SaveCompletionHandler? = nil
+    ) {
         switch context.concurrencyType {
         case .privateQueueConcurrencyType:
             context.performAndWait {

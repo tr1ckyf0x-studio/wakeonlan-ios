@@ -32,6 +32,7 @@ public final class FontRegister {
 // MARK: - RegistersFont
 
 extension FontRegister: RegistersFont {
+
     public func registerAvailableFonts() {
         provider.fetchBundleInfo { bundleInfo in
             guard let appFonts = bundleInfo.appFonts else { return }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SharedProtocols
 
 protocol AddHostViewOutput: class {
     var tableManager: AddHostTableManager { get }

@@ -42,10 +42,12 @@ enum FormSection {
         case port
     }
 
-    case section(content: [Item],
-                 header: FormSectionHeader? = nil,
-                 footer: FormSectionFooter? = nil,
-                 kind: FormSection.Kind? = nil)
+    case section(
+            content: [Item],
+            header: FormSectionHeader? = nil,
+            footer: FormSectionFooter? = nil,
+            kind: FormSection.Kind? = nil
+         )
 
     var items: [Item] {
         switch self {

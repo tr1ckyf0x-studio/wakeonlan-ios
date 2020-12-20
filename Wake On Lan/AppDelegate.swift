@@ -10,7 +10,7 @@ import UIKit
 import Resolver
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     @Injected private var coreDataService: CoreDataServiceProtocol
@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         plugins.forEach {
             _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions)
         }
-
         coreDataService.createHostContainer { [unowned self] in
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let hostListViewController = HostListViewController()

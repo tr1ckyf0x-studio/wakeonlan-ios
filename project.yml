@@ -26,6 +26,8 @@ targets:
           - "**/*.secret"
           - "Modules/WOLUIComponents/**" # temporary
           - "Modules/WOLResources/**" # temporary
+          - "Modules/SharedExtensions/**" # temporary
+          - "Modules/SharedProtocols/**" # temporary
         optional: true
     dependencies:
       - carthage: SnapKit
@@ -34,6 +36,11 @@ targets:
       - carthage: Reachability
       - target: WOLUIComponents
         embed: false
+      - target: SharedExtensions
+        embed: false
+      - target: SharedProtocols
+        embed: false
+
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
@@ -78,6 +85,26 @@ targets:
       - carthage: SnapKit
       - target: WOLResources
         embed: false
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+    
+  SharedExtensions:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: SharedExtensions
+    dependencies:
+      - carthage: SnapKit
+      - target: WOLResources
+        embed: false
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+
+  SharedProtocols:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: SharedProtocols
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
 

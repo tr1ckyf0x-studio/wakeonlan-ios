@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import WOLUIComponents
 import WOLResources
+import SharedExtensions
 
 protocol AddHostViewDelegate: class {
     func addHostViewDidPressSaveButton(_ view: AddHostView)
@@ -24,9 +25,13 @@ class AddHostView: UIView {
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(
-            TextInputCell.self, forCellReuseIdentifier: TextInputCell.reuseIdentifier)
+            TextInputCell.self,
+            forCellReuseIdentifier: TextInputCell.reuseIdentifier
+        )
         tableView.register(
-            DeviceIconCell.self, forCellReuseIdentifier: "\(DeviceIconCell.self)")
+            DeviceIconCell.self,
+            forCellReuseIdentifier: "\(DeviceIconCell.self)"
+        )
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
@@ -43,7 +48,7 @@ class AddHostView: UIView {
                          action: #selector(saveButtonPressed),
                          for: .touchUpInside)
         let spacing: CGFloat = 6
-        button.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        button.imageEdgeInsets = .init(offset: spacing)
         button.imageView?.contentMode = .scaleAspectFit
 
         return UIBarButtonItem(with: button)
@@ -56,7 +61,7 @@ class AddHostView: UIView {
                          action: #selector(backButtonPressed),
                          for: .touchUpInside)
         let spacing: CGFloat = 5
-        button.imageEdgeInsets = .init(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        button.imageEdgeInsets = .init(offset: spacing)
 
         return UIBarButtonItem(with: button)
     }()

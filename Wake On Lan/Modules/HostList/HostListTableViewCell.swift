@@ -117,9 +117,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
         let image = UIImage(
-            named: model.iconName,
-            in: Bundle(identifier: "com.tr1ckyf0x.wakeonlan.WOLResources"),
-            compatibleWith: nil
+            named: model.iconName
         )?.withRenderingMode(.alwaysTemplate)
         deviceImageView.image = image
         hostTitle.text = model.title

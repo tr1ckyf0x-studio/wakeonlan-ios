@@ -8,22 +8,7 @@
 
 import UIKit
 
-enum ChooseIconCollectionDisplay {
-    case grid(columns: Int)
-}
-
-extension ChooseIconCollectionDisplay: Equatable {
-
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        switch (lhs, rhs) {
-        case let (grid(lcolumns), .grid(rcolumns)):
-            return lcolumns == rcolumns
-        }
-    }
-
-}
-
-class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
+final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
 
     // MARK: - Constants
     private enum Constants {
@@ -92,6 +77,23 @@ class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
     override func invalidateLayout() {
         super.invalidateLayout()
         configureLayoutIfNeeded()
+    }
+
+}
+
+// MARK: - ChooseIconCollectionDisplay
+
+enum ChooseIconCollectionDisplay {
+    case grid(columns: Int)
+}
+
+extension ChooseIconCollectionDisplay: Equatable {
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case let (grid(lcolumns), .grid(rcolumns)):
+            return lcolumns == rcolumns
+        }
     }
 
 }
