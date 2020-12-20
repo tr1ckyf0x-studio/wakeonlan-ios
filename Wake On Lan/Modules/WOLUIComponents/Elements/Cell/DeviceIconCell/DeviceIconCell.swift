@@ -59,7 +59,7 @@ public final class DeviceIconCell: UITableViewCell {
 
 }
 
-// MARK: - Private
+// MARK: - Private methods
 
 private extension DeviceIconCell {
     func setupDeviceIconView() {
