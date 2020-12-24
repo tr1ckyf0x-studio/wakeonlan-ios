@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
+import CoreDataService
 
 final class HostListDataStore {
 

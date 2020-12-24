@@ -14,7 +14,9 @@ class SelfSizingBottomSheetModalAnimator: NSObject, UIViewControllerAnimatedTran
         static let transitionDuration = 0.33
     }
 
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(
+        using transitionContext: UIViewControllerContextTransitioning?
+    ) -> TimeInterval {
         Configuration.transitionDuration
     }
 
@@ -22,7 +24,6 @@ class SelfSizingBottomSheetModalAnimator: NSObject, UIViewControllerAnimatedTran
         let from = transitionContext.viewController(
             forKey: UITransitionContextViewControllerKey.from
         )
-
         UIView.animate(
             withDuration: transitionDuration(using: transitionContext),
             animations: {

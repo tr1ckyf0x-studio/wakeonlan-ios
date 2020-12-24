@@ -20,7 +20,7 @@ final class AddHostTableManager: NSObject {
 
     var sections: [FormSection] {
         guard let form = form else { return [] }
-        return form.formSections
+        return form.sections
     }
 
 }

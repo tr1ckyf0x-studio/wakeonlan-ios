@@ -1,5 +1,5 @@
 //
-//  CoreDataService.swift
+//  CoreDataServiceProtocol.swift
 //  Wake on LAN
 //
 //  Created by Владислав Лисянский on 02.11.2020.
@@ -10,7 +10,7 @@ import Foundation
 import CocoaLumberjackSwift
 import CoreData
 
-protocol CoreDataServiceProtocol {
+public protocol CoreDataServiceProtocol {
     typealias SaveCompletionHandler = () -> Void
 
     var persistentContainer: NSPersistentContainer { get }
@@ -26,11 +26,11 @@ protocol CoreDataServiceProtocol {
 
 extension CoreDataServiceProtocol {
 
-    var mainContext: NSManagedObjectContext {
+    public var mainContext: NSManagedObjectContext {
         persistentContainer.viewContext
     }
 
-    func createHostContainer(completion: @escaping () -> Void) {
+    public func createHostContainer(completion: @escaping () -> Void) {
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 DDLogError("Persistent stores were not loaded due to error: \(error)")
@@ -41,16 +41,16 @@ extension CoreDataServiceProtocol {
         }
     }
 
-    func createChildConcurrentContext() -> NSManagedObjectContext {
+    public func createChildConcurrentContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = mainContext
         DDLogVerbose("Child concurrent context was created")
         return context
     }
 
-    // MARK: - Core Data Saving support
+    // MARK: - Core Data Savingpublic  support
 
-    func saveContext(
+    public func saveContext(
         _ context: NSManagedObjectContext,
         completionHandler: SaveCompletionHandler? = nil
     ) {

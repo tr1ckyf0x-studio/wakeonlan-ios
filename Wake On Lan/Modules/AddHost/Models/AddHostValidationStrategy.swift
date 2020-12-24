@@ -16,6 +16,7 @@ enum AddHostValidationStrategy {
 }
 
 // MARK: - RegExPatternRepresentable
+
 extension AddHostValidationStrategy: RegExPatternRepresentable {
     var regExPattern: String {
         switch self {

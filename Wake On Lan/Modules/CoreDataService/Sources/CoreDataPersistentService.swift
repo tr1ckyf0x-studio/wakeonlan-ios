@@ -9,21 +9,17 @@
 import CoreData
 import CocoaLumberjackSwift
 
-private enum Constants {
-    static let persistentContainerName = "HostsDataModel"
-}
-
 // MARK: - PersistentContainer
 
-enum PersistentContainer {
-    struct SQLite: PersistentContainerType {
-        static let store = NSSQLiteStoreType
-        static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = nil
+public enum PersistentContainer {
+    public struct SQLite: PersistentContainerType {
+        public static let store = NSSQLiteStoreType
+        public static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = nil
     }
 
-    struct InMemory: PersistentContainerType {
-        static let store = NSInMemoryStoreType
-        static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
+    public struct InMemory: PersistentContainerType {
+        public static let store = NSInMemoryStoreType
+        public static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
             let description = NSPersistentStoreDescription()
             description.type = store
             return [description]
@@ -33,16 +29,16 @@ enum PersistentContainer {
 
 // MARK: - PersistentContainerType
 
-protocol PersistentContainerType {
+public protocol PersistentContainerType {
     static var store: String { get }
     static var persistentStoreDescriptions: [NSPersistentStoreDescription]? { get }
 }
 
 // MARK: - CoreDataService
 
-struct CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
+public struct CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
 
-    var persistentContainer: NSPersistentContainer = {
+    public var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: Constants.persistentContainerName)
         if let persistentStoreDescriptions = T.self.persistentStoreDescriptions {
             container.persistentStoreDescriptions = persistentStoreDescriptions
@@ -51,4 +47,14 @@ struct CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
         return container
     }()
 
+    // MARK: - Init
+
+    public init() { }
+
+}
+
+// MARK: - Private
+
+private enum Constants {
+    static let persistentContainerName = "HostsDataModel"
 }

@@ -9,10 +9,14 @@
 import Foundation
 import WOLUIComponents
 import WOLResources
+import SharedModels
+import SharedProtocols
+import CoreDataService
 
-final class AddHostForm: FormRepresentable {
+final class AddHostForm: AddHostFormRepresentable {
 
     // MARK: - Error
+
     enum Error: LocalizedError {
         case invalidMACAddress
         case invalidIPAddress
@@ -41,6 +45,7 @@ final class AddHostForm: FormRepresentable {
     }
 
     // MARK: - Constants
+
     private enum Placeholder {
         static let title = "e.g. MacBook or NAS"
         static let macAddress = "XX:XX:XX:XX:XX:XX"
@@ -49,7 +54,8 @@ final class AddHostForm: FormRepresentable {
     }
 
     // MARK: - Properties
-    private(set) var formSections = [FormSection]()
+
+    private(set) var sections = [FormSection]()
 
     private(set) var host: Host? {
         didSet {
@@ -63,12 +69,13 @@ final class AddHostForm: FormRepresentable {
     }
 
     var iconModel: IconModel? = .init()
-    var title: String?
-    var macAddress: String?
-    var ipAddress: String?
-    var port: String?
+    private(set) var title: String?
+    private(set) var macAddress: String?
+    private(set) var ipAddress: String?
+    private(set) var port: String?
 
     // MARK: - Section items
+
     private lazy var iconSectionItems: [FormItem] = {
         guard let model = iconModel else { return [] }
 
@@ -106,7 +113,7 @@ final class AddHostForm: FormRepresentable {
     private lazy var ipAddressItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = Placeholder.ipAddress
-        item.defaultValue = "255.255.255.255"
+        item.defaultValue = Placeholder.ipAddress
         item.onValueChanged = { [weak self] value in
             self?.ipAddress = value
         }
@@ -121,7 +128,7 @@ final class AddHostForm: FormRepresentable {
     private lazy var portItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = Placeholder.port
-        item.defaultValue = "9"
+        item.defaultValue = Placeholder.port
         item.onValueChanged = { [weak self] value in
             self?.port = value
         }
@@ -135,6 +142,7 @@ final class AddHostForm: FormRepresentable {
     }()
 
     // MARK: - Init
+
     init(host: Host? = nil) {
         makeSections()
         // swiftlint:disable inert_defer
@@ -142,49 +150,63 @@ final class AddHostForm: FormRepresentable {
     }
 
     // MARK: - Private
+
     private func makeSections() {
         let titleFormItem = FormItem.text(titleItem)
         let macAddressFormItem = FormItem.text(macAddressItem)
         let ipAddressFormItem = FormItem.text(ipAddressItem)
         let portFormItem = FormItem.text(portItem)
 
-        let deviceIconSection = FormSection.section(content: iconSectionItems,
-                                                    kind: .deviceIcon)
+        let deviceIconSection = FormSection.section(
+            content: iconSectionItems,
+            kind: .deviceIcon
+        )
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
             header: .init(header: R.string.addHost.title()),
             footer: .init(footer: R.string.addHost.titleDescription()),
-            kind: .title)
+            kind: .title
+        )
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
             header: .init(header: R.string.addHost.macAddress()),
             footer: .init(footer: R.string.addHost.macAddressDescription()),
-            kind: .macAddress)
+            kind: .macAddress
+        )
 
         let ipAddressSection = FormSection.section(
             content: [ipAddressFormItem],
             header: .init(header: R.string.addHost.ipAddress(), mandatory: false),
             footer: .init(footer: R.string.addHost.ipAddressDescription()),
-            kind: .ipAddress)
+            kind: .ipAddress
+        )
 
         let portSection = FormSection.section(
             content: [portFormItem],
             header: .init(header: R.string.addHost.port(), mandatory: false),
             footer: .init(footer: R.string.addHost.portDescription()),
-            kind: .port)
+            kind: .port
+        )
 
-        formSections =
-            [deviceIconSection, titleSection, macAddressSection, ipAddressSection, portSection]
+        sections = [
+            deviceIconSection,
+            titleSection,
+            macAddressSection,
+            ipAddressSection,
+            portSection
+        ]
     }
 
 }
 
+// MARK: - FormValidable
+
 extension AddHostForm {
 
     var isValid: Bool {
-        formSections.allSatisfy { formSection -> Bool in
+        sections.allSatisfy { formSection -> Bool in
             formSection.items.allSatisfy { formItem -> Bool in
                 formItem.isValid
             }

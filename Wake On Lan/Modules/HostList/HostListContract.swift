@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import CoreData
+import CoreDataService
 import WOLUIComponents
 
 typealias Content = HostListCacheTracker<Host, HostListInteractor>.Transaction<Host>

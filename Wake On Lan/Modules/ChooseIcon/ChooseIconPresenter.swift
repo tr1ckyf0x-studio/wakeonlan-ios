@@ -6,6 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import SharedModels
 import WOLUIComponents
 import WOLResources
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import WOLResources
+import CoreDataService
 
 final class WakeOnLanService {
 
@@ -97,7 +98,10 @@ final class WakeOnLanService {
     }
 
     private func createMagicPacket(for macAddress: String) throws -> [UInt8] {
-        let header = [UInt8](repeating: Constants.magicPocketHeaderByte, count: Constants.magicPocketHeaderLength)
+        let header = [UInt8](
+            repeating: Constants.magicPocketHeaderByte,
+            count: Constants.magicPocketHeaderLength
+        )
         let macComponents = macAddress
             .components(separatedBy: Constants.macAddressDigitSeparator)
             .compactMap { digit -> UInt8? in

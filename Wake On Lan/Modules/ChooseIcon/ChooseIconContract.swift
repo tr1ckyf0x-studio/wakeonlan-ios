@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SharedModels
 import WOLUIComponents
 
 protocol ChooseIconViewInput: UIViewController {

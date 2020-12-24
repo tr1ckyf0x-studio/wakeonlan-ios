@@ -13,6 +13,7 @@ enum AddHostFormatterStrategy {
 }
 
 // MARK: - FormatPatternRepresentable
+
 extension AddHostFormatterStrategy: FormatPatternRepresentable {
     var formatPattern: String {
         switch self {

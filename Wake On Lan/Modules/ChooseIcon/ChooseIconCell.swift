@@ -6,15 +6,17 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import SharedModels
 import UIKit
-import WOLUIComponents
 import WOLResources
+import WOLUIComponents
 
 class ChooseIconCell: UICollectionViewCell {
 
     typealias TapIconBlock = (_ cell: ChooseIconCell) -> Void
 
     // MARK: - Properties
+
     private var didTapIconBlock: TapIconBlock?
 
     private lazy var deviceButton: SoftUIButton = {
@@ -25,6 +27,7 @@ class ChooseIconCell: UICollectionViewCell {
     }()
 
     // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupDeviceIconView()
@@ -35,12 +38,14 @@ class ChooseIconCell: UICollectionViewCell {
     }
 
     // MARK: - Public
+
     func configure(with model: IconModel, didTapBlock: @escaping TapIconBlock) {
         didTapIconBlock = didTapBlock
         setupDeviceImage(with: model.pictureName)
     }
 
     // MARK: - Private
+
     private func setupDeviceImage(with imageName: String) {
         let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         deviceButton.setImage(image, for: .normal)
@@ -55,6 +60,7 @@ class ChooseIconCell: UICollectionViewCell {
     }
 
     // MARK: - Action
+
     @objc private func didTapDeviceButton(_ sender: UIButton) {
         didTapIconBlock?(self)
     }

@@ -28,6 +28,8 @@ targets:
           - "Modules/WOLResources/**" # temporary
           - "Modules/SharedExtensions/**" # temporary
           - "Modules/SharedProtocols/**" # temporary
+          - "Modules/CoreDataService/**" # temporary
+          - "Modules/SharedModels/**" # temporary
         optional: true
     dependencies:
       - carthage: SnapKit
@@ -39,6 +41,10 @@ targets:
       - target: SharedExtensions
         embed: false
       - target: SharedProtocols
+        embed: false
+      - target: SharedModels
+        embed: false
+      - target: CoreDataService
         embed: false
 
     settings:
@@ -85,6 +91,8 @@ targets:
       - carthage: SnapKit
       - target: WOLResources
         embed: false
+      - target: SharedModels
+        embed: false
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
     
@@ -105,6 +113,19 @@ targets:
       - Framework
     templateAttributes:
       frameworkName: SharedProtocols
+    dependencies:
+      - target: SharedModels
+        embed: false
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+  
+  SharedModels:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: SharedModels
+    dependencies:
+      - target: WOLResources
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
 
@@ -123,6 +144,21 @@ targets:
         - $TEMP_DIR/rswift-lastrun
       outputFiles:
         - $SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift
+    
+  CoreDataService:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: CoreDataService
+    dependencies:
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
+      - target: SharedModels
+        embed: false
+      - target: SharedProtocols
+        embed: false
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
 
 targetTemplates:
   Framework:

@@ -9,13 +9,13 @@
 import CoreData
 import Foundation
 
-protocol Managed: AnyObject, NSFetchRequestResult {
+public protocol Managed: AnyObject, NSFetchRequestResult {
     static var entityName: String { get }
     static var sortedFetchRequest: NSFetchRequest<Self> { get }
     static var defaultSortDescriptors: [NSSortDescriptor] { get }
 }
 
-extension Managed {
+public extension Managed {
     // TODO: Implement it
     static var defaultSortDescriptors: [NSSortDescriptor] { [] }
 
@@ -27,7 +27,7 @@ extension Managed {
 
 }
 
-extension Managed where Self: NSManagedObject {
+public extension Managed where Self: NSManagedObject {
     static var entityName: String {
         guard let name = entity().name else {
             fatalError("Name for entity \(self) does not assigned!")

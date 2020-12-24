@@ -6,9 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import Resolver
-import CoreData
+import CoreDataService
 import CocoaLumberjackSwift
 
 class AddHostInteractor: AddHostInteractorInput {

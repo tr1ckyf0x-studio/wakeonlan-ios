@@ -7,14 +7,17 @@
 //
 
 import Foundation
-import WOLUIComponents
+import SharedModels
+import SharedProtocols
 
 enum FormItem {
     case text(_ formItem: TextFormItem)
     case icon(_ iconModel: IconModel)
 }
 
-extension FormItem: FormValidable, FormMandatoryable {
+// MARK: - Validable
+
+extension FormItem: Validable {
     var isValid: Bool {
         switch self {
         case let .text(formItem):
@@ -25,6 +28,11 @@ extension FormItem: FormValidable, FormMandatoryable {
         }
     }
 
+}
+
+// MARK: - Mandatoryable
+
+extension FormItem: Mandatoryable {
     var isMandatory: Bool {
         get {
             switch self {
@@ -45,5 +53,4 @@ extension FormItem: FormValidable, FormMandatoryable {
             }
         }
     }
-
 }

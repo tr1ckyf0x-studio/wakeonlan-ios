@@ -6,8 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-import CoreData
+import CoreDataService
 
 enum HostListSectionItem {
     case host(Host)

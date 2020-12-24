@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreDataService
 
 final class HostListRouter: HostListRouterProtocol {
 

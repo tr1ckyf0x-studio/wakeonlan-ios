@@ -8,6 +8,7 @@
 
 import UIKit
 import Resolver
+import CoreDataService
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {

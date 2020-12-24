@@ -6,10 +6,10 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import CoreDataService
+import CocoaLumberjackSwift
 import Foundation
 import Resolver
-import CoreData
-import CocoaLumberjackSwift
 
 final class HostListInteractor: HostListInteractorInput {
 
@@ -21,9 +21,11 @@ final class HostListInteractor: HostListInteractorInput {
 
     private lazy var cacheTracker: HostListCacheTracker<Host, HostListInteractor> = {
         DDLogVerbose("HostListCacheTracker initialized")
-        return HostListCacheTracker(with: Host.sortedFetchRequest,
-                                    context: coreDataService.mainContext,
-                                    delegate: self)
+        return HostListCacheTracker(
+            with: Host.sortedFetchRequest,
+            context: coreDataService.mainContext,
+            delegate: self
+        )
     }()
 
     func fetchHosts() {
@@ -35,7 +37,7 @@ final class HostListInteractor: HostListInteractorInput {
         guard let context = host.managedObjectContext else { return }
         context.perform { [weak self] in
             context.delete(host)
-            self?.coreDataService.saveContext(context)
+            self?.coreDataService.saveContext(context, completionHandler: nil)
             DDLogDebug("Host deleted")
         }
     }

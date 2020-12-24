@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SharedProtocols
 
-class TextFormItem: FormValidable, FormMandatoryable {
+class TextFormItem: Validable, Mandatoryable {
     var value: String? {
         didSet {
             onValueChanged?(value)

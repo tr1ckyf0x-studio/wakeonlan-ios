@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import WOLUIComponents
+import SharedModels
 
 protocol AddHostTableManagerDelegate: AnyObject {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel)

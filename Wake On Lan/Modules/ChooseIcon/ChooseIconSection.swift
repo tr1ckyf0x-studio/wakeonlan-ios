@@ -6,8 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
-import WOLUIComponents
+import SharedModels
 
 enum ChooseIconSectionItem {
     case icon(_ model: IconModel)

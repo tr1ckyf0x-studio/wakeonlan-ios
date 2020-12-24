@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum HostCoreDataFormatter {
+enum CoreDataHostFormatter {
 
     enum DataType {
         case macAddress

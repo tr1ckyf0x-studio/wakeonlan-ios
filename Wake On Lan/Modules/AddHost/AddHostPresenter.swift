@@ -6,8 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-import WOLUIComponents
+import SharedModels
 
 class AddHostPresenter<Router: AddHostRouterProtocol> {
     weak var view: AddHostViewInput?

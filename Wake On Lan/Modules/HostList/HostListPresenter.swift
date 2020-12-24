@@ -8,6 +8,7 @@
 
 import Foundation
 import CocoaLumberjackSwift
+import CoreDataService
 
 final class HostListPresenter {
 

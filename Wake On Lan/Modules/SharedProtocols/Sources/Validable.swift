@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol FormValidable {
+public protocol Validable {
     var isValid: Bool { get }
-}
-
-protocol FormMandatoryable {
-    var isMandatory: Bool { get }
 }

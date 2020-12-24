@@ -7,36 +7,37 @@
 //
 
 import CoreData
+import SharedProtocols
 
-final class Host: NSManagedObject {
-    @NSManaged private(set) var createdAt: Date
-    @NSManaged private(set) var title: String
-    @NSManaged private(set) var iconName: String
+public final class Host: NSManagedObject {
+    @NSManaged public private(set) var createdAt: Date
+    @NSManaged public private(set) var title: String
+    @NSManaged public private(set) var iconName: String
+    @NSManaged public private(set) var port: String?
     @NSManaged private var macAddressData: Data
     @NSManaged private var ipAddressData: Data?
-    @NSManaged private(set) var port: String?
 
-    private(set) var macAddress: String {
+    public private(set) var macAddress: String {
         get {
-            HostCoreDataFormatter.decompress(data: macAddressData, ofType: .macAddress)
+            CoreDataHostFormatter.decompress(data: macAddressData, ofType: .macAddress)
         }
         set {
-            macAddressData = HostCoreDataFormatter.compress(string: newValue, ofType: .macAddress)
+            macAddressData = CoreDataHostFormatter.compress(string: newValue, ofType: .macAddress)
         }
     }
 
-    private(set) var ipAddress: String? {
+    public private(set) var ipAddress: String? {
         get {
             guard let ipAddressData = ipAddressData else { return nil }
-            return HostCoreDataFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
+            return CoreDataHostFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
         }
         set {
             guard let ipAddress = newValue else { ipAddressData = nil; return }
-            ipAddressData = HostCoreDataFormatter.compress(string: ipAddress, ofType: .ipAddress)
+            ipAddressData = CoreDataHostFormatter.compress(string: ipAddress, ofType: .ipAddress)
         }
     }
 
-    override func awakeFromInsert() {
+    override public func awakeFromInsert() {
         super.awakeFromInsert()
         primitiveCreatedAt = Date()
     }
@@ -49,9 +50,9 @@ final class Host: NSManagedObject {
 
 // MARK: - CRUD
 
-extension Host {
+public extension Host {
 
-    static func insert(into context: NSManagedObjectContext, form: AddHostForm) {
+    static func insert<T: AddHostFormRepresentable>(into context: NSManagedObjectContext, form: T) {
         guard
             let macAddress = form.macAddress,
             let title = form.title,
@@ -64,10 +65,10 @@ extension Host {
         host.port = form.port
     }
 
-    static func update(
+    static func update<T: AddHostFormRepresentable>(
         object: Host,
         into context: NSManagedObjectContext,
-        with form: AddHostForm
+        with form: T
     ) {
         guard
             let macAddress = form.macAddress,
@@ -90,7 +91,7 @@ extension Host {
 // MARK: - Managed
 
 extension Host: Managed {
-    static var defaultSortDescriptors: [NSSortDescriptor] {
+    public static var defaultSortDescriptors: [NSSortDescriptor] {
         [NSSortDescriptor(key: #keyPath(createdAt), ascending: false)]
     }
 }

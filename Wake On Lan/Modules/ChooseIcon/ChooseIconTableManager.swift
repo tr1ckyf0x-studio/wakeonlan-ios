@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import WOLUIComponents
+import SharedModels
 
 protocol ChooseIconTableManagerDelegate: AnyObject {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)
