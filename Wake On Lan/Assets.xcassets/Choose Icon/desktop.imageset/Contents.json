@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "1024@2x.png",
+      "filename" : "ic_desktop@2x.png",
       "idiom" : "iphone",
       "scale" : "2x"
     },
     {
-      "filename" : "1024@3x.png",
+      "filename" : "ic_desktop@3x.png",
       "idiom" : "iphone",
       "scale" : "3x"
     }
