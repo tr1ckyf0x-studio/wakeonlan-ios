@@ -60,8 +60,8 @@ class ChooseIconViewController: UIViewController {
         presenter.viewDidLoad(self)
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         presenter.viewWillLayoutSubviews(self)
     }
 

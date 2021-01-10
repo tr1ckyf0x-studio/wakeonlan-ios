@@ -11,6 +11,7 @@ import UIKit
 final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
 
     // MARK: - Constants
+
     private enum Constants {
         static let numberOfColumns = 4
         static let spaceBetweenColumns: CGFloat = 16
@@ -19,6 +20,7 @@ final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
     }
 
     // MARK: - Properties
+
     var display: ChooseIconCollectionDisplay = .grid(columns: Constants.numberOfColumns) {
         didSet {
             guard display == oldValue else {
@@ -48,6 +50,7 @@ final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
      }
 
     // MARK: - Init
+
     override init() {
         super.init()
         sectionInset = Constants.insets
@@ -60,6 +63,7 @@ final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
     }
 
     // MARK: - Private
+
     private func configureLayoutIfNeeded() {
         switch display {
         case .grid(let column):
