@@ -136,6 +136,9 @@ targets:
       frameworkName: WOLResources
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
+      - path: "Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
+        optional: true
+        createIntermediateGroups: true
     preBuildScripts:
     - name: "R.Swift"
       script: |
