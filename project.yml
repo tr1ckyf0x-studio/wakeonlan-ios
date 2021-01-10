@@ -36,16 +36,12 @@ targets:
       - carthage: CocoaLumberjack
       - carthage: CocoaLumberjackSwift
       - carthage: Reachability
+      - target: WOLResources
       - target: WOLUIComponents
-        embed: false
       - target: SharedExtensions
-        embed: false
       - target: SharedProtocols
-        embed: false
       - target: SharedModels
-        embed: false
       - target: CoreDataService
-        embed: false
 
     settings:
       base:
