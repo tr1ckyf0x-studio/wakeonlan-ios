@@ -24,15 +24,7 @@ targets:
       - path: "Wake on LAN"
         excludes:
           - "**/*.secret"
-          - "Modules/WOLUIComponents/**" # temporary
-          - "Modules/WOLResources/**" # temporary
-          - "Modules/SharedExtensions/**" # temporary
-          - "Modules/SharedProtocols/**" # temporary
-          - "Modules/CoreDataService/**" # temporary
-          - "Modules/SharedModels/**" # temporary
-          - "Modules/AddHost/**" # temporary
-          - "Modules/HostList/**" # temporary
-          - "Modules/WakeOnLanService/**" # temporary
+          - "Modules/**/"
         optional: true
     dependencies:
       - carthage: SnapKit
