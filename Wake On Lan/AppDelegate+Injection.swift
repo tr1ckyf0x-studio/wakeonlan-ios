@@ -6,8 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Resolver
 import CoreDataService
+import Resolver
+import WakeOnLanService
 
 extension Resolver: ResolverRegistering {
     public static func registerAllServices() {

@@ -9,6 +9,7 @@
 import UIKit
 import Resolver
 import CoreDataService
+import HostList
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {

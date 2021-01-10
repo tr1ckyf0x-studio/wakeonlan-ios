@@ -27,6 +27,7 @@ class AddHostView: UIView {
     }
 
     // MARK: - Properties
+
     weak var delegate: AddHostViewDelegate?
 
     lazy var tableView: UITableView = {
@@ -82,6 +83,7 @@ class AddHostView: UIView {
     }()
 
     // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = R.color.white()
@@ -96,6 +98,7 @@ class AddHostView: UIView {
 }
 
 // MARK: - Private
+
 private extension AddHostView {
 
     func registerNotifications() {

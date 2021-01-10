@@ -10,7 +10,7 @@ import UIKit
 import WOLUIComponents
 import WOLResources
 
-final class HostListViewController: UIViewController {
+public final class HostListViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -24,17 +24,17 @@ final class HostListViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    override func loadView() {
+    override public func loadView() {
         view = hostListView
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         presenter?.viewDidLoad(self)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
     }

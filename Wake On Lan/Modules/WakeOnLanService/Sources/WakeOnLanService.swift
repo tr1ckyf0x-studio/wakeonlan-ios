@@ -6,11 +6,11 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import CoreDataService
 import Foundation
 import WOLResources
-import CoreDataService
 
-final class WakeOnLanService {
+public final class WakeOnLanService {
 
     private enum Constants {
         static let magicPocketHeaderLength = 6
@@ -23,12 +23,12 @@ final class WakeOnLanService {
         static let magicPocketDefaultPort = "9"
     }
 
-    enum Error: LocalizedError {
+    public enum Error: LocalizedError {
         case wrongMacAddressLength
         case socketSetup(reason: String)
         case send(reason: String)
 
-        var errorDescription: String? {
+        public var errorDescription: String? {
             switch self {
             case .wrongMacAddressLength:
                 return R.string.wakeOnLan.wrongMacAddressLength("\(Constants.macAddressBytesCount)")
@@ -38,7 +38,7 @@ final class WakeOnLanService {
             }
         }
 
-        var failureReason: String? {
+        public var failureReason: String? {
             switch self {
             case let .socketSetup(reason), let .send(reason):
                 return reason
@@ -49,7 +49,9 @@ final class WakeOnLanService {
         }
     }
 
-    func sendMagicPacket(to host: Host) throws {
+    public init() { }
+
+    public func sendMagicPacket(to host: Host) throws {
         var udpSocket: Int32
         var target = sockaddr_in()
 

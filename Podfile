@@ -14,9 +14,24 @@ target 'Wake on LAN' do
 
 end
 
-target 'WOLResources' do
+target 'AddHost' do
   use_frameworks!
   
+  pod "Resolver"
+  pod "R.swift"
+  inherit! :search_paths
+end
+
+target 'HostList' do
+  use_frameworks!
+  
+  pod "Resolver"
+  inherit! :search_paths
+end
+
+target 'WOLResources' do
+  use_frameworks!
+
   pod "R.swift"
   inherit! :search_paths
 end

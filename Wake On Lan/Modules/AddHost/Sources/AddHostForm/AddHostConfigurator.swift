@@ -7,10 +7,14 @@
 //
 
 import Foundation
+import CoreDataService
 
-class AddHostConfigurator {
-    func configure(viewController: AddHostViewController, addHostForm: AddHostForm = AddHostForm()) {
-        let presenter = AddHostPresenter<AddHostRouter>(addHostForm: addHostForm)
+public final class AddHostConfigurator {
+
+    public init() { }
+
+    public func configure(viewController: AddHostViewController, with host: Host? = nil ) {
+        let presenter = AddHostPresenter<AddHostRouter>(addHostForm: AddHostForm(host: host))
         let interactor = AddHostInteractor()
         let router = AddHostRouter()
 

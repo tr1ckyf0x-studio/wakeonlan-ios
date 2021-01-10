@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddHostViewController: UIViewController {
+public class AddHostViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -21,11 +21,12 @@ class AddHostViewController: UIViewController {
     }()
 
     // MARK: - Lifecycle
-    override func loadView() {
+
+    override public func loadView() {
         view = addHostView
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupNavigationBar()

@@ -143,7 +143,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
     // MARK: - Init
 
-    init(host: Host? = nil) {
+    public init(host: Host? = nil) {
         makeSections()
         // swiftlint:disable inert_defer
         defer { self.host = host } // Otherwise didSet does not call
@@ -205,7 +205,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
 extension AddHostForm {
 
-    var isValid: Bool {
+    public var isValid: Bool {
         sections.allSatisfy { formSection -> Bool in
             formSection.items.allSatisfy { formItem -> Bool in
                 formItem.isValid

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreDataService
+import AddHost
 
 final class HostListRouter: HostListRouterProtocol {
 
@@ -16,10 +17,7 @@ final class HostListRouter: HostListRouterProtocol {
     func routeToAddHost(with host: Host? = nil) {
         let addHostViewController = AddHostViewController()
         let addHostConfigurator = AddHostConfigurator()
-        addHostConfigurator.configure(
-            viewController: addHostViewController,
-            addHostForm: AddHostForm(host: host)
-        )
+        addHostConfigurator.configure(viewController: addHostViewController, with: host)
         viewController?.navigationController?.pushViewController(
             addHostViewController,
             animated: true

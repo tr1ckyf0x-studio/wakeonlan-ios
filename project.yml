@@ -30,18 +30,24 @@ targets:
           - "Modules/SharedProtocols/**" # temporary
           - "Modules/CoreDataService/**" # temporary
           - "Modules/SharedModels/**" # temporary
+          - "Modules/AddHost/**" # temporary
+          - "Modules/HostList/**" # temporary
+          - "Modules/WakeOnLanService/**" # temporary
         optional: true
     dependencies:
       - carthage: SnapKit
       - carthage: CocoaLumberjack
       - carthage: CocoaLumberjackSwift
       - carthage: Reachability
-      - target: WOLResources
-      - target: WOLUIComponents
+      - target: AddHost
+      - target: CoreDataService
+      - target: HostList
       - target: SharedExtensions
       - target: SharedProtocols
       - target: SharedModels
-      - target: CoreDataService
+      - target: WakeOnLanService
+      - target: WOLResources
+      - target: WOLUIComponents
 
     settings:
       base:
@@ -78,17 +84,55 @@ targets:
       - carthage: Nimble
       - carthage: Quick
 
-  WOLUIComponents:
+  AddHost:
     templates:
       - Framework
     templateAttributes:
-      frameworkName: WOLUIComponents
+      frameworkName: AddHost
     dependencies:
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
       - carthage: SnapKit
-      - target: WOLResources
-        embed: false
+      - target: CoreDataService
+      - target: SharedExtensions
       - target: SharedModels
-        embed: false
+      - target: SharedProtocols
+      - target: WOLResources
+      - target: WOLUIComponents
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+
+  CoreDataService:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: CoreDataService
+    dependencies:
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
+      - target: SharedModels
+      - target: SharedProtocols
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+
+  HostList:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: HostList
+    dependencies:
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
+      - carthage: SnapKit
+      - carthage: Reachability
+      - target: AddHost # TODO: Remove dependency, use protocol
+      - target: CoreDataService
+      - target: SharedExtensions
+      - target: SharedModels
+      - target: SharedProtocols
+      - target: WOLResources
+      - target: WOLUIComponents
+      - target: WakeOnLanService
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
     
@@ -100,7 +144,6 @@ targets:
     dependencies:
       - carthage: SnapKit
       - target: WOLResources
-        embed: false
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
 
@@ -111,7 +154,6 @@ targets:
       frameworkName: SharedProtocols
     dependencies:
       - target: SharedModels
-        embed: false
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
   
@@ -124,7 +166,7 @@ targets:
       - target: WOLResources
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
-
+      
   WOLResources:
     templates:
       - Framework
@@ -143,19 +185,27 @@ targets:
         - $TEMP_DIR/rswift-lastrun
       outputFiles:
         - $SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift
-    
-  CoreDataService:
+  
+  WOLUIComponents:
     templates:
       - Framework
     templateAttributes:
-      frameworkName: CoreDataService
+      frameworkName: WOLUIComponents
     dependencies:
-      - carthage: CocoaLumberjack
-      - carthage: CocoaLumberjackSwift
+      - carthage: SnapKit
       - target: SharedModels
-        embed: false
-      - target: SharedProtocols
-        embed: false
+      - target: WOLResources
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+  
+  WakeOnLanService:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: WakeOnLanService
+    dependencies:
+      - target: CoreDataService
+      - target: WOLResources
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
 

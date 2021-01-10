@@ -6,10 +6,11 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import CoreDataService
 import CocoaLumberjackSwift
+import CoreDataService
 import Foundation
 import Resolver
+import WakeOnLanService
 
 final class HostListInteractor: HostListInteractorInput {
 
