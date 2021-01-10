@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import Foundation
 import CocoaLumberjackSwift
 
 // MARK: - PersistentContainer
@@ -36,10 +37,25 @@ public protocol PersistentContainerType {
 
 // MARK: - CoreDataService
 
-public struct CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
+public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
 
-    public var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: Constants.persistentContainerName)
+    private lazy var managedObjectModel: NSManagedObjectModel = {
+        let customKitBundle = Bundle(for: Self.self)
+        let modelURL = customKitBundle.url(
+            forResource: Constants.persistentContainerName,
+            withExtension: Constants.persistentContainerExtension
+        )
+        let model = modelURL.flatMap { NSManagedObjectModel(contentsOf: $0) }
+        guard let unwrapped = model else { fatalError("\(self) : Cannot load Core Data model") }
+
+        return unwrapped
+    }()
+
+    public lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(
+            name: Constants.persistentContainerName,
+            managedObjectModel: managedObjectModel
+        )
         if let persistentStoreDescriptions = T.self.persistentStoreDescriptions {
             container.persistentStoreDescriptions = persistentStoreDescriptions
         }
@@ -57,4 +73,5 @@ public struct CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoc
 
 private enum Constants {
     static let persistentContainerName = "HostsDataModel"
+    static let persistentContainerExtension = "momd"
 }
