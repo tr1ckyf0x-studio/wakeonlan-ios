@@ -67,7 +67,7 @@ final class HostListView: UIView {
                 action: #selector(didTapAddButton(_:)),
                 for: .touchUpInside
             )
-            let spacing: CGFloat = 5
+            let spacing: CGFloat = 6
             button.imageEdgeInsets = .init(
                 top: spacing,
                 left: spacing,

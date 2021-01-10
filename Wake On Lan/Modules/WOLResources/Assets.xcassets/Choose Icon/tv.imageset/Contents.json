@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "1024_tv@2x.png",
+      "filename" : "ic_tv@2x.png",
       "idiom" : "iphone",
       "scale" : "2x"
     },
     {
-      "filename" : "1024_tv@3x.png",
+      "filename" : "ic_tv@3x.png",
       "idiom" : "iphone",
       "scale" : "3x"
     }

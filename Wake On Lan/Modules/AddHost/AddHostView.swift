@@ -19,6 +19,13 @@ protocol AddHostViewDelegate: AnyObject {
 
 class AddHostView: UIView {
 
+    private let appearance = Appearance(); struct Appearance {
+        let saveItemBarButtonVerticalInset: CGFloat = 0
+        let saveItemBarButtonHorizontalInset: CGFloat = 6.0
+        let backBarButtonVerticalInset: CGFloat = 6.0
+        let backBarButtonHorizontalInset: CGFloat = 0
+    }
+
     // MARK: - Properties
     weak var delegate: AddHostViewDelegate?
 
@@ -47,8 +54,12 @@ class AddHostView: UIView {
         button.addTarget(self,
                          action: #selector(saveButtonPressed),
                          for: .touchUpInside)
-        let spacing: CGFloat = 6
-        button.imageEdgeInsets = .init(offset: spacing)
+        button.imageEdgeInsets = .init(
+            top: appearance.saveItemBarButtonVerticalInset,
+            left: appearance.saveItemBarButtonHorizontalInset,
+            bottom: appearance.saveItemBarButtonVerticalInset,
+            right: appearance.saveItemBarButtonHorizontalInset
+        )
         button.imageView?.contentMode = .scaleAspectFit
 
         return UIBarButtonItem(with: button)
@@ -60,9 +71,13 @@ class AddHostView: UIView {
         button.addTarget(self,
                          action: #selector(backButtonPressed),
                          for: .touchUpInside)
-        let spacing: CGFloat = 5
-        button.imageEdgeInsets = .init(offset: spacing)
-
+        button.imageEdgeInsets = .init(
+            top: appearance.backBarButtonVerticalInset,
+            left: appearance.backBarButtonHorizontalInset,
+            bottom: appearance.backBarButtonVerticalInset,
+            right: appearance.backBarButtonHorizontalInset
+        )
+        button.imageView?.contentMode = .scaleAspectFit
         return UIBarButtonItem(with: button)
     }()
 
