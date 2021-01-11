@@ -12,8 +12,8 @@ import WakeOnLanService
 
 extension Resolver: ResolverRegistering {
     public static func registerAllServices() {
-        register { WakeOnLanService() }.scope(application)
-        register(CoreDataServiceProtocol.self) { CoreDataService<SQLite>() }.scope(application)
+        register { WakeOnLanService() }.scope(.application)
+        register(CoreDataServiceProtocol.self) { CoreDataService<SQLite>() }.scope(.application)
     }
 }
 
