@@ -24,31 +24,34 @@ targets:
       - path: "Wake on LAN"
         excludes:
           - "**/*.secret"
-      - path: "Wake on LAN/R.generated.swift"
+          - "Modules/**/"
         optional: true
     dependencies:
       - carthage: SnapKit
       - carthage: CocoaLumberjack
       - carthage: CocoaLumberjackSwift
       - carthage: Reachability
+      - target: AddHost
+      - target: CoreDataService
+      - target: HostList
+      - target: SharedExtensions
+      - target: SharedProtocols
+      - target: SharedModels
+      - target: WakeOnLanService
+      - target: WOLResources
+      - target: WOLUIComponents
+
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
         DISPLAY_NAME: "Wake on LAN"
-
         DEVELOPMENT_TEAM: 3HSG7M3SCR
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wakeonlan
         CODE_SIGN_IDENTITY: "Apple Development"
         CODE_SIGN_STYLE: Automatic
         PROVISIONING_PROFILE_SPECIFIER: ""
+        INFOPLIST_FILE: "Wake on LAN/Info.plist"
     preBuildScripts:
-    - name: "R.Swift"
-      script: |
-              "$PODS_ROOT/R.swift/rswift" generate "$SRCROOT/Wake on LAN/R.generated.swift"
-      inputFiles:
-        - $TEMP_DIR/rswift-lastrun
-      outputFiles:
-        - $SRCROOT/Wake on LAN/R.generated.swift
     - name: "Swiftlint"
       script: |
               if which swiftlint >/dev/null; then
@@ -72,3 +75,140 @@ targets:
       - target: "Wake on LAN"
       - carthage: Nimble
       - carthage: Quick
+
+  AddHost:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: AddHost
+    dependencies:
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
+      - carthage: SnapKit
+      - target: CoreDataService
+      - target: SharedExtensions
+      - target: SharedModels
+      - target: SharedProtocols
+      - target: WOLResources
+      - target: WOLUIComponents
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+
+  CoreDataService:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: CoreDataService
+    dependencies:
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
+      - target: SharedModels
+      - target: SharedProtocols
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+
+  HostList:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: HostList
+    dependencies:
+      - carthage: CocoaLumberjack
+      - carthage: CocoaLumberjackSwift
+      - carthage: SnapKit
+      - carthage: Reachability
+      - target: AddHost # TODO: Remove dependency, use protocol
+      - target: CoreDataService
+      - target: SharedExtensions
+      - target: SharedModels
+      - target: SharedProtocols
+      - target: WOLResources
+      - target: WOLUIComponents
+      - target: WakeOnLanService
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+    
+  SharedExtensions:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: SharedExtensions
+    dependencies:
+      - carthage: SnapKit
+      - target: WOLResources
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+
+  SharedProtocols:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: SharedProtocols
+    dependencies:
+      - target: SharedModels
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+  
+  SharedModels:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: SharedModels
+    dependencies:
+      - target: WOLResources
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+      
+  WOLResources:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: WOLResources
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+      - path: "Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
+        optional: true
+        createIntermediateGroups: true
+    preBuildScripts:
+    - name: "R.Swift"
+      script: |
+              "$PODS_ROOT/R.swift/rswift" generate --accessLevel public "$SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
+      inputFiles:
+        - $TEMP_DIR/rswift-lastrun
+      outputFiles:
+        - $SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift
+  
+  WOLUIComponents:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: WOLUIComponents
+    dependencies:
+      - carthage: SnapKit
+      - target: SharedModels
+      - target: WOLResources
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+  
+  WakeOnLanService:
+    templates:
+      - Framework
+    templateAttributes:
+      frameworkName: WakeOnLanService
+    dependencies:
+      - target: CoreDataService
+      - target: WOLResources
+    sources:
+      - path: "Wake on LAN/Modules/${frameworkName}"
+
+targetTemplates:
+  Framework:
+    settings:
+      base:
+        INFOPLIST_FILE: "Wake on LAN/Modules/${frameworkName}/Info.plist"
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wakeonlan.${frameworkName}
+        CODE_SIGN_IDENTITY: "Apple Development"
+        CODE_SIGN_STYLE: Automatic
+        PROVISIONING_PROFILE_SPECIFIER: ""
+    platform: iOS
+    type: framework

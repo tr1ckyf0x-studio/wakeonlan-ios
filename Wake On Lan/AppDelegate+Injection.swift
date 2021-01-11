@@ -6,11 +6,18 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
+import CoreDataService
 import Resolver
+import WakeOnLanService
 
 extension Resolver: ResolverRegistering {
     public static func registerAllServices() {
-        registerGlobalServices()
+        register { WakeOnLanService() }.scope(application)
+        register(CoreDataServiceProtocol.self) { CoreDataService<SQLite>() }.scope(application)
     }
+}
+
+private extension Resolver {
+    typealias SQLite = PersistentContainer.SQLite
+    typealias InMemory = PersistentContainer.InMemory
 }
