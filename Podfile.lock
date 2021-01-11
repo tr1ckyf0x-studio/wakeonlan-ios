@@ -74,7 +74,7 @@ PODS:
   - R.swift (5.3.1):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
-  - Resolver (1.3.0)
+  - Resolver (1.4.0)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   R.swift: 56ec7e3aef34b9eee47a659e42462db2c1cc5ac3
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
-  Resolver: 1f584622db490e82e3d5787ae133ff0aa28c270e
+  Resolver: 9371a9c561477b2ff76408114fa3ba7e94d17afe
 
 PODFILE CHECKSUM: d02df6fe00694b12d85c1b3c42fbeab6f4e35ac8
 
