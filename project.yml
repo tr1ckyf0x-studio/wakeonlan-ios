@@ -207,8 +207,8 @@ targetTemplates:
       base:
         INFOPLIST_FILE: "Wake on LAN/Modules/${frameworkName}/Info.plist"
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wakeonlan.${frameworkName}
-        CODE_SIGN_IDENTITY: "Apple Development"
+        CODE_SIGN_IDENTITY: ""
         CODE_SIGN_STYLE: Automatic
-        PROVISIONING_PROFILE_SPECIFIER: ""
+        PROVISIONING_PROFILE_SPECIFIER: "Automatic"
     platform: iOS
     type: framework
