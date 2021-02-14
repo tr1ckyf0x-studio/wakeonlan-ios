@@ -31,8 +31,6 @@ public final class HostListViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        edgesForExtendedLayout = []
-        // navigationController?.navigationBar.isTranslucent = true
         presenter?.viewDidLoad(self)
     }
 

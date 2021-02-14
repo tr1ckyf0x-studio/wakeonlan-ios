@@ -115,24 +115,15 @@ extension HostListTableManager: UITableViewDelegate {
 
 extension HostListTableManager: HostListTableViewCellDelegate {
 
-    func hostListCellDidTap(
-        _ cell: HostListTableViewCell,
-        model: Host
-    ) {
+    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapHostCell(self, host: model)
     }
 
-    func hostListCellDidTapDelete(
-        _ cell: HostListTableViewCell,
-        model: Host
-    ) {
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapDeleteButton(self, host: model)
     }
 
-    func hostListCellDidTapInfo(
-        _ cell: HostListTableViewCell,
-        model: Host
-    ) {
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapInfoButton(self, host: model)
     }
 
