@@ -9,7 +9,7 @@
 import UIKit
 import WOLResources
 
-class ChooseIconViewController: UIViewController {
+final class ChooseIconViewController: UIViewController {
 
     private let appearance = Appearance(); struct Appearance {
         let cancelButtonFontSize: CGFloat = 20.0
@@ -35,7 +35,11 @@ class ChooseIconViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle(R.string.addHost.cancel(), for: .normal)
         button.backgroundColor = R.color.soft()
-        button.setTitleColor(.systemBlue, for: .normal)
+        if #available(iOS 13.0, *) {
+            button.setTitleColor(.secondaryLabel, for: .normal)
+        } else {
+            button.setTitleColor(.systemBlue, for: .normal)
+        }
         button.titleLabel?.font = .boldSystemFont(ofSize: appearance.cancelButtonFontSize)
         button.layer.cornerRadius = appearance.cornerRadius
         button.addTarget(self, action: #selector(closeViewController), for: .touchUpInside)
@@ -95,6 +99,7 @@ private extension ChooseIconViewController {
 }
 
 // MARK: - ChooseIconViewInput
+
 extension ChooseIconViewController: ChooseIconViewInput {
 
     func reloadCollectionViewLayout() {
@@ -102,7 +107,12 @@ extension ChooseIconViewController: ChooseIconViewInput {
     }
 
     func updateIconViewHeight() {
-        guard let height = chooseIconCollectionLayout?.containerHeight else { return }
+        guard
+            let height = chooseIconCollectionLayout?.containerHeight,
+            height > .zero
+        else {
+            return
+        }
         chooseIconView.snp.updateConstraints {
             $0.height.equalTo(height + appearance.chooseIconViewEdgeMargin * 2)
         }

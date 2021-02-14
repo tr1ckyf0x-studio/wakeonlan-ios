@@ -28,9 +28,11 @@ final class DeviceIconView: UIView {
         imageView.isUserInteractionEnabled = true
 
         // Add tap gesture recognizer
-        imageView.addGestureRecognizer({
-            UITapGestureRecognizer(target: self, action: #selector(didTapChangeIcon))
-            }())
+        imageView.addGestureRecognizer(
+            {
+                UITapGestureRecognizer(target: self, action: #selector(didTapChangeIcon))
+            }()
+        )
 
         return imageView
     }()

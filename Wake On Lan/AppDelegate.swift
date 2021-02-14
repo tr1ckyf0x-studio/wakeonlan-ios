@@ -10,6 +10,7 @@ import UIKit
 import Resolver
 import CoreDataService
 import HostList
+import WOLResources
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +39,18 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             let navigationController = UINavigationController(
                 rootViewController: hostListViewController
             )
+
+            // Change background color.
+            UINavigationBar.appearance().barTintColor = R.color.soft()
+
+            // Remove bottom line
+            UINavigationBar.appearance().shadowImage = UIImage()
+            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+
+            // To change colour of tappable items.
+            UINavigationBar.appearance().tintColor = R.color.soft()
+            UINavigationBar.appearance().isTranslucent = false
+
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
         }

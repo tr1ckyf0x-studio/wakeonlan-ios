@@ -18,6 +18,7 @@ final class HostListPresenter {
     var router: HostListRouterProtocol?
     var interactor: HostListInteractorInput?
     var tableManager: HostListTableManager = .init()
+
 }
 
 // MARK: - HostListViewOutput
