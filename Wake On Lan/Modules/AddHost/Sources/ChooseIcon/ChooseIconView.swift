@@ -9,7 +9,7 @@
 import UIKit
 import WOLResources
 
-class ChooseIconView: UIView {
+final class ChooseIconView: UIView {
 
     lazy var collectionView: UICollectionView = {
         let layout = ChooseIconCollectionLayout()
