@@ -50,35 +50,30 @@ class AddHostView: UIView {
     }()
 
     lazy var saveItemButton: UIBarButtonItem = {
-        let button = SoftUIButton(roundShape: true)
-        button.setImage(R.image.save(), for: .normal)
-        button.addTarget(self,
-                         action: #selector(saveButtonPressed),
-                         for: .touchUpInside)
-        button.imageEdgeInsets = .init(
-            top: appearance.saveItemBarButtonVerticalInset,
-            left: appearance.saveItemBarButtonHorizontalInset,
-            bottom: appearance.saveItemBarButtonVerticalInset,
-            right: appearance.saveItemBarButtonHorizontalInset
-        )
-        button.imageView?.contentMode = .scaleAspectFit
+        let button = SoftUIView(circleShape: true)
+        let image = R.image.save()?.with(tintColor: R.color.lightGray() ?? .init())
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        button.configure(with: SoftUIViewModel(contentView: imageView))
+        imageView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(6)
+        }
+        button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
 
         return UIBarButtonItem(with: button)
     }()
 
     lazy var backBarButton: UIBarButtonItem = {
-        let button = SoftUIButton(roundShape: true)
-        button.setImage(R.image.back(), for: .normal)
-        button.addTarget(self,
-                         action: #selector(backButtonPressed),
-                         for: .touchUpInside)
-        button.imageEdgeInsets = .init(
-            top: appearance.backBarButtonVerticalInset,
-            left: appearance.backBarButtonHorizontalInset,
-            bottom: appearance.backBarButtonVerticalInset,
-            right: appearance.backBarButtonHorizontalInset
-        )
-        button.imageView?.contentMode = .scaleAspectFit
+        let button = SoftUIView(circleShape: true)
+        let image = R.image.back()?.with(tintColor: R.color.lightGray() ?? .init())
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        button.configure(with: SoftUIViewModel(contentView: imageView))
+        imageView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(6)
+        }
+        button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+
         return UIBarButtonItem(with: button)
     }()
 
@@ -146,8 +141,8 @@ private extension AddHostView {
 
 private extension UIBarButtonItem {
 
-    convenience init(with button: UIButton) {
-        self.init(customView: button)
+    convenience init(with view: SoftUIView) {
+        self.init(customView: view)
         customView?.snp.makeConstraints {
             $0.size.equalTo(32)
         }

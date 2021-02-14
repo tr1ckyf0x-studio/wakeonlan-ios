@@ -10,13 +10,15 @@ import Foundation
 
 public extension String {
 
+    static let empty: String = .init()
+
     func matches(_ regex: String) -> Bool {
         range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
 
     func formatted(by mask: String, _ separator: String) -> String {
         let cleanString = components(separatedBy: separator).joined()
-        var result = ""
+        var result = String.empty
         var index = cleanString.startIndex
         for char in mask where index < cleanString.endIndex {
             if char == Configuration.maskSymbol {

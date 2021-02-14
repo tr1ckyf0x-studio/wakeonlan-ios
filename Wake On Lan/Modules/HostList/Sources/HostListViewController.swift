@@ -31,6 +31,8 @@ public final class HostListViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        edgesForExtendedLayout = []
+        // navigationController?.navigationBar.isTranslucent = true
         presenter?.viewDidLoad(self)
     }
 
@@ -45,7 +47,10 @@ public final class HostListViewController: UIViewController {
         navigationItem.title = R.string.hostList.hosts()
         navigationItem.rightBarButtonItem = hostListView.addItemButton
         navigationItem.largeTitleDisplayMode = .always
-        guard let navigationBar = navigationController?.navigationBar else { return }
+        guard let navigationController = navigationController else { return }
+        navigationController.view.backgroundColor = R.color.soft()
+        let navigationBar = navigationController.navigationBar
+        navigationBar.tintColor = R.color.soft()
         navigationBar.barTintColor = R.color.soft()
         navigationBar.prefersLargeTitles = true
         let largeTitleTextAttributes = [NSAttributedString.Key.font: R.font.robotoBold(size: 36)!]

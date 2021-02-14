@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WOLResources
 
 public class AddHostViewController: UIViewController {
 
@@ -30,6 +31,7 @@ public class AddHostViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupNavigationBar()
+        view.backgroundColor = R.color.soft()
         presenter?.viewDidLoad(self)
     }
 

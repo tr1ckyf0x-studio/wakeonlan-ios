@@ -7,6 +7,7 @@
 //
 
 import SharedModels
+import SharedProtocols
 
 class AddHostPresenter<Router: AddHostRouterProtocol> {
     weak var view: AddHostViewInput?

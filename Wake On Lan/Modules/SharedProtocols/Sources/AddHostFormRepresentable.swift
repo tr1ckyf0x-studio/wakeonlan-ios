@@ -9,7 +9,7 @@
 import SharedModels
 
 public protocol AddHostFormRepresentable: Validable {
-    associatedtype SectionType: AddHostFormSectionRepresentable
+    associatedtype SectionType: AddHostFormSectionRepresentable = Void
 
     var sections: [SectionType] { get }
     var iconModel: IconModel? { get set }
