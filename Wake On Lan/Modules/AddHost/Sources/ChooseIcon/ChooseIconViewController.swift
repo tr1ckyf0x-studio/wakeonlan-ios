@@ -35,11 +35,7 @@ final class ChooseIconViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle(R.string.addHost.cancel(), for: .normal)
         button.backgroundColor = R.color.soft()
-        if #available(iOS 13.0, *) {
-            button.setTitleColor(.secondaryLabel, for: .normal)
-        } else {
-            button.setTitleColor(.systemBlue, for: .normal)
-        }
+        button.setTitleColor(R.color.gray(), for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: appearance.cancelButtonFontSize)
         button.layer.cornerRadius = appearance.cornerRadius
         button.addTarget(self, action: #selector(closeViewController), for: .touchUpInside)
@@ -72,6 +68,7 @@ final class ChooseIconViewController: UIViewController {
 }
 
 // MARK: - Private
+
 private extension ChooseIconViewController {
 
     func setupCancelButton() {

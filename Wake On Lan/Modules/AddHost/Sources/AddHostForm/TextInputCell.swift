@@ -10,7 +10,7 @@ import SnapKit
 import WOLUIComponents
 import WOLResources
 
-class TextInputCell: UITableViewCell {
+final class TextInputCell: UITableViewCell {
 
     typealias OnExpandCompletion = () -> Void
     typealias OnExpandAction = (_ completion: OnExpandCompletion?) -> Void
@@ -103,6 +103,7 @@ class TextInputCell: UITableViewCell {
             target: self,
             action: #selector(didTapDoneButton)
         )
+        doneButton.tintColor = R.color.lightGray()
         let flexibleSpace = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace,
             target: nil,
@@ -146,7 +147,7 @@ extension TextInputCell: UITextFieldDelegate {
                 return true
         }
         nextResponder.becomeFirstResponder()
-        if let indexPath = self.textFormItem?.indexPath {
+        if let indexPath = textFormItem?.indexPath {
             onNextResponderAction?(indexPath)
         }
         return true
@@ -155,9 +156,11 @@ extension TextInputCell: UITextFieldDelegate {
     // NOTE: Grabbed from
     // https://www.hackingwithswift.com/example-code/uikit/
     // how-to-limit-the-number-of-characters-in-a-uitextfield-or-uitextview
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
         guard let maxLength = textFormItem?.maxLength else { return true }
         let currentText = textField.text ?? String.empty
         guard let stringRange = Range(range, in: currentText) else { return false }
@@ -197,11 +200,7 @@ private class AddHostFailureView: UIView {
 
     private let failureLabel: UILabel = {
         let label = UILabel()
-        if #available(iOS 13.0, *) {
-            label.textColor = .systemRed
-        } else {
-            // Fallback on earlier versions
-        }
+        label.textColor = R.color.red()
         // TODO: Consider another font
         label.font = .boldSystemFont(ofSize: 12.0)
 
@@ -212,7 +211,6 @@ private class AddHostFailureView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        // backgroundColor = R.color.red()
         backgroundColor = .clear
     }
 
@@ -220,7 +218,7 @@ private class AddHostFailureView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: Public
+    // MARK: - Methods
 
     func configure(with reason: AddHostForm.Error) {
         failureLabel.text = reason.description

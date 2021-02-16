@@ -42,11 +42,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var deleteButton: SoftUIView = {
         let button = SoftUIView()
-        let imageView = UIImageView(
-            image: R.image.trash()?.with(
-                tintColor: R.color.lightGray() ?? .init()
-            )
-        )
+        let imageView = UIImageView(image: R.image.trash()?.with(tintColor: R.color.lightGray() ?? .init()))
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -93,11 +89,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var infoButton: SoftUIView = {
         let button = SoftUIView(circleShape: true)
-        let imageView = UIImageView(
-            image: R.image.more()?.with(
-                tintColor: R.color.lightGray() ?? .init()
-            )
-        )
+        let imageView = UIImageView(image: R.image.more()?.with(tintColor: R.color.lightGray() ?? .init()))
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -129,11 +121,9 @@ final class HostListTableViewCell: UITableViewCell {
     // MARK: - Public
 
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
-        let image = UIImage(
-            named: model.iconName
-        )?.withRenderingMode(.alwaysTemplate)
-        deviceImageView.image = image
+        let image = UIImage(named: model.iconName)?.withRenderingMode(.alwaysTemplate)
         hostTitle.text = model.title
+        deviceImageView.image = image
         macAddressTitle.text = model.macAddress
         self.model = model
         self.delegate = delegate

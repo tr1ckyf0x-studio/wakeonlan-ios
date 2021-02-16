@@ -14,10 +14,7 @@ final class ChooseIconView: UIView {
     lazy var collectionView: UICollectionView = {
         let layout = ChooseIconCollectionLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(
-            ChooseIconCell.self,
-            forCellWithReuseIdentifier: "\(ChooseIconCell.self)"
-        )
+        collectionView.register(ChooseIconCell.self, forCellWithReuseIdentifier: "\(ChooseIconCell.self)")
         collectionView.alwaysBounceVertical = true
 
         return collectionView

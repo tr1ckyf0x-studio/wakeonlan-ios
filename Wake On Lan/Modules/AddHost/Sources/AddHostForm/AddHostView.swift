@@ -17,13 +17,12 @@ protocol AddHostViewDelegate: AnyObject {
     func addHostViewDidPressBackButton(_ view: AddHostView)
 }
 
-class AddHostView: UIView {
+final class AddHostView: UIView {
+
+    // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        let saveItemBarButtonVerticalInset: CGFloat = 0
-        let saveItemBarButtonHorizontalInset: CGFloat = 6.0
-        let backBarButtonVerticalInset: CGFloat = 6.0
-        let backBarButtonHorizontalInset: CGFloat = 0
+        let barButtonImageViewInset: CGFloat = 6.0
     }
 
     // MARK: - Properties
@@ -32,14 +31,8 @@ class AddHostView: UIView {
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.register(
-            TextInputCell.self,
-            forCellReuseIdentifier: "\(TextInputCell.self)"
-        )
-        tableView.register(
-            DeviceIconCell.self,
-            forCellReuseIdentifier: "\(DeviceIconCell.self)"
-        )
+        tableView.register(TextInputCell.self, forCellReuseIdentifier: "\(TextInputCell.self)")
+        tableView.register(DeviceIconCell.self, forCellReuseIdentifier: "\(DeviceIconCell.self)")
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
@@ -56,7 +49,7 @@ class AddHostView: UIView {
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(6)
+            $0.edges.equalToSuperview().inset(appearance.barButtonImageViewInset)
         }
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
 
@@ -70,7 +63,7 @@ class AddHostView: UIView {
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(6)
+            $0.edges.equalToSuperview().inset(appearance.barButtonImageViewInset)
         }
         button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
 
@@ -96,17 +89,15 @@ class AddHostView: UIView {
 
 private extension AddHostView {
 
+    typealias ObserverArgs = (selector: Selector, notification: NSNotification.Name)
+
     func registerNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow(notification:)),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide(notification:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil)
+        [
+            ObserverArgs(#selector(keyboardWillShow(notification:)), UIResponder.keyboardWillShowNotification),
+            ObserverArgs(#selector(keyboardWillHide(notification:)), UIResponder.keyboardWillHideNotification)
+        ].forEach {
+            NotificationCenter.default.addObserver(self, selector: $0.selector, name: $0.notification, object: nil)
+        }
     }
 
     func setupTableView() {

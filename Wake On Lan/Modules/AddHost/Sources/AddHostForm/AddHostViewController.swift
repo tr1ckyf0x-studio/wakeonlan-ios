@@ -9,7 +9,7 @@
 import UIKit
 import WOLResources
 
-public class AddHostViewController: UIViewController {
+public final class AddHostViewController: UIViewController {
 
     // MARK: - Properties
 

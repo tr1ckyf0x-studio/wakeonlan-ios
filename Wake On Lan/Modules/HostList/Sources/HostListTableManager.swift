@@ -35,31 +35,16 @@ final class HostListTableManager: NSObject {
         content.forEach {
             switch $0 {
             case let .insert(indexPath, object):
-                dataStore.insertObject(
-                    object,
-                    at: indexPath.row,
-                    in: indexPath.section
-                )
+                dataStore.insertObject(object, at: indexPath.row, in: indexPath.section)
 
             case let .update(indexPath, object):
-                dataStore.updateObject(
-                    object,
-                    at: indexPath.row,
-                    in: indexPath.section
-                )
+                dataStore.updateObject(object, at: indexPath.row, in: indexPath.section)
 
             case let .move(oldIndexPath, newIndexPath):
-                dataStore.moveObject(
-                    from: oldIndexPath.row,
-                    to: newIndexPath.row,
-                    in: oldIndexPath.section
-                )
+                dataStore.moveObject(from: oldIndexPath.row, to: newIndexPath.row, in: oldIndexPath.section)
 
             case let .delete(indexPath):
-                dataStore.removeObject(
-                    at: indexPath.row,
-                    in: indexPath.section
-                )
+                dataStore.removeObject(at: indexPath.row, in: indexPath.section)
             }
         }
     }
