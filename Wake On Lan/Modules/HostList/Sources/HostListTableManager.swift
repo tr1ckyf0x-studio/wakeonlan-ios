@@ -35,31 +35,16 @@ final class HostListTableManager: NSObject {
         content.forEach {
             switch $0 {
             case let .insert(indexPath, object):
-                dataStore.insertObject(
-                    object,
-                    at: indexPath.row,
-                    in: indexPath.section
-                )
+                dataStore.insertObject(object, at: indexPath.row, in: indexPath.section)
 
             case let .update(indexPath, object):
-                dataStore.updateObject(
-                    object,
-                    at: indexPath.row,
-                    in: indexPath.section
-                )
+                dataStore.updateObject(object, at: indexPath.row, in: indexPath.section)
 
             case let .move(oldIndexPath, newIndexPath):
-                dataStore.moveObject(
-                    from: oldIndexPath.row,
-                    to: newIndexPath.row,
-                    in: oldIndexPath.section
-                )
+                dataStore.moveObject(from: oldIndexPath.row, to: newIndexPath.row, in: oldIndexPath.section)
 
             case let .delete(indexPath):
-                dataStore.removeObject(
-                    at: indexPath.row,
-                    in: indexPath.section
-                )
+                dataStore.removeObject(at: indexPath.row, in: indexPath.section)
             }
         }
     }
@@ -74,24 +59,18 @@ extension HostListTableManager: UITableViewDataSource {
         sections.count
     }
 
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         sections[section].items.count
     }
 
-    func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         let model = sections[indexPath.section].items[indexPath.row]
-        switch model {
-        case let .host(host):
+        if case let .host(host) = model {
             let hostCell = tableView.dequeueReusableCell(
                 withIdentifier: "\(HostListTableViewCell.self)",
-                for: indexPath) as? HostListTableViewCell
+                for: indexPath
+            ) as? HostListTableViewCell
             hostCell?.configure(with: host, delegate: self)
             cell = hostCell
         }
@@ -107,17 +86,11 @@ extension HostListTableManager: UITableViewDataSource {
 
 extension HostListTableManager: UITableViewDelegate {
 
-    func tableView(
-        _ tableView: UITableView,
-        titleForHeaderInSection section: Int
-    ) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         sections[section].header
     }
 
-    func tableView(
-        _ tableView: UITableView,
-        titleForFooterInSection section: Int
-    ) -> String? {
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         sections[section].footer
     }
 
@@ -127,24 +100,15 @@ extension HostListTableManager: UITableViewDelegate {
 
 extension HostListTableManager: HostListTableViewCellDelegate {
 
-    func hostListCellDidTap(
-        _ cell: HostListTableViewCell,
-        model: Host
-    ) {
+    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapHostCell(self, host: model)
     }
 
-    func hostListCellDidTapDelete(
-        _ cell: HostListTableViewCell,
-        model: Host
-    ) {
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapDeleteButton(self, host: model)
     }
 
-    func hostListCellDidTapInfo(
-        _ cell: HostListTableViewCell,
-        model: Host
-    ) {
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host) {
         delegate?.tableManagerDidTapInfoButton(self, host: model)
     }
 
