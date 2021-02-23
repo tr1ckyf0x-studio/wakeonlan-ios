@@ -29,32 +29,33 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.alwaysBounceHorizontal = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.isPagingEnabled = true
         scrollView.delegate = self
+        scrollView.isPagingEnabled = true
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
 
         return scrollView
     }()
 
     private let scrollViewContentView = UIView()
 
-    private lazy var deleteButton: SoftUIButton = {
-        let button = SoftUIButton(roundShape: false)
-        button.setImage(R.image.trash(), for: .normal)
-        button.addTarget(self,
-                         action: #selector(didTapDeleteButton),
-                         for: .touchUpInside)
+    private lazy var deleteButton: SoftUIView = {
+        let button = SoftUIView()
+        let imageView = UIImageView(image: R.image.trash()?.with(tintColor: R.color.lightGray() ?? .init()))
+        button.configure(with: SoftUIViewModel(contentView: imageView))
+        imageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        button.addTarget(self, action: #selector(didTapDeleteButton), for: .touchUpInside)
 
         return button
     }()
 
-    private lazy var baseView: SoftUIButton = {
-        let view = SoftUIButton()
-        view.addTarget(self,
-                       action: #selector(displayNotification),
-                       for: .touchUpInside)
+    private lazy var baseView: SoftUIView = {
+        let view = SoftUIView()
+        view.type = .normal
+        view.addTarget(self, action: #selector(displayNotification), for: .touchUpInside)
 
         return view
     }()
@@ -86,9 +87,13 @@ final class HostListTableViewCell: UITableViewCell {
         return label
     }()
 
-    private lazy var infoButton: SoftUIButton = {
-        let button = SoftUIButton(roundShape: true)
-        button.setImage(R.image.more(), for: .normal)
+    private lazy var infoButton: SoftUIView = {
+        let button = SoftUIView(circleShape: true)
+        let imageView = UIImageView(image: R.image.more()?.with(tintColor: R.color.lightGray() ?? .init()))
+        button.configure(with: SoftUIViewModel(contentView: imageView))
+        imageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
         button.addTarget(self, action: #selector(didTapInfoButton), for: .touchUpInside)
 
         return button
@@ -116,11 +121,9 @@ final class HostListTableViewCell: UITableViewCell {
     // MARK: - Public
 
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
-        let image = UIImage(
-            named: model.iconName
-        )?.withRenderingMode(.alwaysTemplate)
-        deviceImageView.image = image
+        let image = UIImage(named: model.iconName)?.withRenderingMode(.alwaysTemplate)
         hostTitle.text = model.title
+        deviceImageView.image = image
         macAddressTitle.text = model.macAddress
         self.model = model
         self.delegate = delegate
@@ -160,7 +163,7 @@ private extension HostListTableViewCell {
         scrollViewContentView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
             make.top.bottom.equalTo(baseView)
-            make.leading.equalTo(baseView.snp.trailing).offset(16)
+            make.leading.equalTo(baseView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-16)
             make.width.equalTo(deleteButton.snp.height)
         }
@@ -234,23 +237,27 @@ private extension HostListTableViewCell {
 
         let animationDuration = 0.2
         let hideNotificationAnimated = { () -> Void in
-            UIView.animate(withDuration: animationDuration,
-                           animations: { notificationView.alpha = 0.0 },
-                           completion: { _ in
-                            notificationView.removeFromSuperview()
-                           })
+            UIView.animate(
+                withDuration: animationDuration,
+                animations: { notificationView.alpha = 0.0 },
+                completion: { _ in
+                    notificationView.removeFromSuperview()
+                }
+            )
         }
 
         let displayNotificationAnimated = { () -> Void in
-            UIView.animate(withDuration: animationDuration,
-                           animations: { notificationView.alpha = 1.0 },
-                           completion: { _ in
-                            DispatchQueue.main.asyncAfter(
-                                deadline: .now() + 0.5,
-                                execute: {
-                                    hideNotificationAnimated()
-                                })
-                           })
+            UIView.animate(
+                withDuration: animationDuration,
+                animations: { notificationView.alpha = 1.0 },
+                completion: { _ in
+                    DispatchQueue.main.asyncAfter(
+                        deadline: .now() + 0.5,
+                        execute: {
+                            hideNotificationAnimated()
+                        })
+                }
+            )
         }
 
         guard let model = self.model else { return }

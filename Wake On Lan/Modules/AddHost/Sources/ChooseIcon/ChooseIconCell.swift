@@ -11,7 +11,7 @@ import UIKit
 import WOLResources
 import WOLUIComponents
 
-class ChooseIconCell: UICollectionViewCell {
+final class ChooseIconCell: UICollectionViewCell {
 
     typealias TapIconBlock = (_ cell: ChooseIconCell) -> Void
 
@@ -19,8 +19,8 @@ class ChooseIconCell: UICollectionViewCell {
 
     private var didTapIconBlock: TapIconBlock?
 
-    private lazy var deviceButton: SoftUIButton = {
-        let button = SoftUIButton()
+    private lazy var deviceButton: SoftUIView = {
+        let button = SoftUIView()
         button.addTarget(self, action: #selector(didTapDeviceButton(_:)), for: .touchUpInside)
 
         return button
@@ -48,8 +48,13 @@ class ChooseIconCell: UICollectionViewCell {
 
     private func setupDeviceImage(with imageName: String) {
         let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-        deviceButton.setImage(image, for: .normal)
-        deviceButton.imageView?.tintColor = R.color.lightGray()
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = R.color.lightGray()
+        imageView.contentMode = .scaleAspectFit
+        deviceButton.configure(with: SoftUIViewModel(contentView: imageView))
+        imageView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(6)
+        }
     }
 
     private func setupDeviceIconView() {

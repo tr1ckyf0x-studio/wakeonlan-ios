@@ -9,20 +9,19 @@
 import UIKit
 import WOLResources
 
-class ChooseIconView: UIView {
+final class ChooseIconView: UIView {
 
     lazy var collectionView: UICollectionView = {
         let layout = ChooseIconCollectionLayout()
-        let collectionView =
-            UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(ChooseIconCell.self,
-                                forCellWithReuseIdentifier: "\(ChooseIconCell.self)")
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(ChooseIconCell.self, forCellWithReuseIdentifier: "\(ChooseIconCell.self)")
         collectionView.alwaysBounceVertical = true
 
         return collectionView
     }()
 
     // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = R.color.soft()
@@ -37,7 +36,9 @@ class ChooseIconView: UIView {
         addSubview(collectionView)
         collectionView.backgroundColor = .clear
         collectionView.snp.makeConstraints {
-            $0.edges.equalTo(safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(safeAreaLayoutGuide)
+            $0.top.equalTo(safeAreaLayoutGuide).inset(8)
+            $0.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
 

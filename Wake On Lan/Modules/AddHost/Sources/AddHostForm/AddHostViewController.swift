@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import WOLResources
 
-public class AddHostViewController: UIViewController {
+public final class AddHostViewController: UIViewController {
 
     // MARK: - Properties
 
@@ -30,6 +31,7 @@ public class AddHostViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupNavigationBar()
+        view.backgroundColor = R.color.soft()
         presenter?.viewDidLoad(self)
     }
 

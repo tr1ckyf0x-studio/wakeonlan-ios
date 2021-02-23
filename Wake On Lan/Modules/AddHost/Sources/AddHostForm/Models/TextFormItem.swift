@@ -16,7 +16,7 @@ class TextFormItem: Validable, Mandatoryable {
         }
     }
 
-    var placeholder = ""
+    var placeholder = String.empty
     var indexPath: IndexPath?
     var onValueChanged: ((String?) -> Void)?
     var validator: TextValidator?
@@ -41,7 +41,7 @@ class TextFormItem: Validable, Mandatoryable {
         guard let formatter = self.formatter else {
             return value
         }
-        return formatter.format(text: value ?? "")
+        return formatter.format(text: value ?? String.empty)
     }
 
 }

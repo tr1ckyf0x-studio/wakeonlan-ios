@@ -31,11 +31,11 @@ final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
     }
 
     var containerHeight: CGFloat {
-        guard let itemsCount = collectionView?.numberOfItems(inSection: 0) else { return .zero }
+        guard let itemsCount = collectionView?.numberOfItems(inSection: .zero) else { return .zero }
         let numberOfRows = (CGFloat(itemsCount) / CGFloat(Constants.numberOfColumns)).rounded(.up)
         let itemHeight = itemSize.height
         var totalHeight = minimumInteritemSpacing * (numberOfRows - 1)
-        totalHeight += numberOfRows * itemHeight
+        totalHeight += numberOfRows * itemHeight + minimumInteritemSpacing
 
         return totalHeight
     }

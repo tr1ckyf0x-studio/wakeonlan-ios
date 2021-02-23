@@ -10,6 +10,7 @@ import UIKit
 import Resolver
 import CoreDataService
 import HostList
+import WOLResources
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +21,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
         FirebaseAppDelegatePlugin(),
-        FontRegisterAppDelegatePlugin()
+        FontRegisterAppDelegatePlugin(),
+        NavigationBarAppearanceAppDelegatePlugin()
     ]
 
     func application(

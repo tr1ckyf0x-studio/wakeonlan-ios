@@ -38,6 +38,7 @@ final class HostListView: UIView {
         )
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = R.color.soft()
 
         return tableView
     }()
@@ -54,26 +55,19 @@ final class HostListView: UIView {
         return emptyView
     }()
 
-    // swiftlint:disable closure_body_length
     lazy var addItemButton: UIBarButtonItem = {
-        let addButton: SoftUIButton = {
-            let button = SoftUIButton(cornerRadius: 16.0)
-            button.setImage(
-                R.image.add(),
-                for: .normal
-            )
+        let addButton: SoftUIView = {
+            let button = SoftUIView(circleShape: true)
+            let imageView = UIImageView(image: R.image.add()?.with(tintColor: R.color.lightGray() ?? .init()))
+            button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(
                 self,
                 action: #selector(didTapAddButton(_:)),
                 for: .touchUpInside
             )
-            let spacing: CGFloat = 6
-            button.imageEdgeInsets = .init(
-                top: spacing,
-                left: spacing,
-                bottom: spacing,
-                right: spacing
-            )
+            imageView.snp.makeConstraints {
+                $0.edges.equalToSuperview().inset(6)
+            }
 
             return button
         }()
@@ -89,7 +83,6 @@ final class HostListView: UIView {
 
         return barButton
     }()
-    // swiftlint:enable closure_body_length
 
     // MARK: - Init
 
