@@ -187,6 +187,7 @@ targets:
       - framework: "Carthage/Build/SnapKit.xcframework"
       - target: SharedModels
       - target: WOLResources
+      - target: SharedExtensions
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
   

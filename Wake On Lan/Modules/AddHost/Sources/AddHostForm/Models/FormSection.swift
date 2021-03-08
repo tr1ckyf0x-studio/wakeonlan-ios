@@ -52,6 +52,15 @@ enum FormSection {
         }
 
     }
+
+    // MARK: - rowsCount
+
+    var rowsCount: Int {
+        switch self {
+            case let .section(content, _, _, _):
+                return content.count
+        }
+    }
 }
 
 // MARK: - AddHostFormSectionRepresentable

@@ -23,3 +23,5 @@
 // Action sheet
 "cancel" = "Отмена";
 "choose icon" = "Выберите иконку";
+
+"add host" = "Добавить хост";

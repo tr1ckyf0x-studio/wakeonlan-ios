@@ -23,3 +23,5 @@
 // Action sheet
 "cancel" = "Cancel";
 "choose icon" = "Choose Icon";
+
+"add host" = "Add host";
