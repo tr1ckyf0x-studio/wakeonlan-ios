@@ -25,3 +25,9 @@
 "choose icon" = "Выберите иконку";
 
 "add host" = "Добавить хост";
+
+// Placeholder
+"AddHost.Placeholder.Title" = "MacBook или NAS";
+"AddHost.Placeholder.MacAddress" = "XX:XX:XX:XX:XX:XX";
+"AddHost.Placeholder.IpAddress" = "255.255.255.255";
+"AddHost.Placeholder.Port" = "9";

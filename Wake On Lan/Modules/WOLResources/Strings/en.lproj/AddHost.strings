@@ -25,3 +25,9 @@
 "choose icon" = "Choose Icon";
 
 "add host" = "Add host";
+
+// Placeholder
+"AddHost.Placeholder.Title" = "e.g. MacBook or NAS";
+"AddHost.Placeholder.MacAddress" = "XX:XX:XX:XX:XX:XX";
+"AddHost.Placeholder.IpAddress" = "255.255.255.255";
+"AddHost.Placeholder.Port" = "9";

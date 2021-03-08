@@ -6,12 +6,12 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import CoreDataService
 import Foundation
-import WOLUIComponents
-import WOLResources
 import SharedModels
 import SharedProtocols
-import CoreDataService
+import WOLResources
+import WOLUIComponents
 
 final class AddHostForm: AddHostFormRepresentable {
 
@@ -47,10 +47,10 @@ final class AddHostForm: AddHostFormRepresentable {
     // MARK: - Constants
 
     private enum Placeholder {
-        static let title = "e.g. MacBook or NAS"
-        static let macAddress = "XX:XX:XX:XX:XX:XX"
-        static let ipAddress = "255.255.255.255"
-        static let port = "9"
+        static let title = R.string.addHost.addHostPlaceholderTitle()
+        static let macAddress = R.string.addHost.addHostPlaceholderMacAddress()
+        static let ipAddress = R.string.addHost.addHostPlaceholderIpAddress()
+        static let port = R.string.addHost.addHostPlaceholderPort()
     }
 
     // MARK: - Properties
@@ -206,10 +206,8 @@ final class AddHostForm: AddHostFormRepresentable {
 extension AddHostForm {
 
     public var isValid: Bool {
-        sections.allSatisfy { formSection -> Bool in
-            formSection.items.allSatisfy { formItem -> Bool in
-                formItem.isValid
-            }
+        sections.allSatisfy {
+            $0.items.allSatisfy { $0.isValid }
         }
     }
 

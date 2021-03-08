@@ -6,42 +6,44 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import SharedProtocols
+import UIKit
 
-class TextFormItem: Validable, Mandatoryable {
+final class TextFormItem: Validable, Mandatoryable {
     var value: String? {
         didSet {
             onValueChanged?(value)
         }
     }
-
-    var placeholder = String.empty
-    var indexPath: IndexPath?
-    var onValueChanged: ((String?) -> Void)?
-    var validator: TextValidator?
-    var formatter: TextFormatter?
+    var placeholder: String = .empty
     var defaultValue: String?
-    var failureReason: AddHostForm.Error?
-    var keyboardType: UIKeyboardType = .asciiCapable
-    var isMandatory: Bool = true
-    var maxLength: Int?
-    var needsUppercased: Bool = false
-
-    var isValid: Bool {
-        let defaultReplacedValue = value ?? defaultValue
-        guard let validator = validator,
-            let value = defaultReplacedValue
-            else { return !isMandatory }
-
-        return validator.validate(value: value)
+    var formatted: String? {
+        formatter.flatMap { $0.format(text: value ?? .empty) }
     }
 
-    var formatted: String? {
-        guard let formatter = self.formatter else {
-            return value
+    var indexPath: IndexPath?
+    var onValueChanged: ((String?) -> Void)?
+
+    var validator: TextValidator?
+    var formatter: TextFormatter?
+
+    var maxLength: Int?
+    var isMandatory: Bool = true
+    var needsUppercased: Bool = false
+    var failureReason: AddHostForm.Error?
+    var keyboardType: UIKeyboardType = .asciiCapable
+
+    var isValid: Bool {
+        let needsDefaultValue = [value == nil, value == .empty].contains { $0 == true }
+        let defaultReplacedValue = needsDefaultValue ? defaultValue : value
+        guard
+            let validator = validator,
+            let value = defaultReplacedValue
+        else {
+            return !isMandatory
         }
-        return formatter.format(text: value ?? String.empty)
+
+        return validator.validate(value: value)
     }
 
 }

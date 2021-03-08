@@ -62,7 +62,7 @@ extension AddHostViewController: AddHostViewInput {
         }
         addHostView.tableView.reloadRows(at: indexPaths, with: .none)
     }
-    
+
     func reloadTable() {
         addHostView.tableView.reloadData()
     }

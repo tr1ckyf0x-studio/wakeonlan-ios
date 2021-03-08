@@ -14,9 +14,10 @@ final class ChooseIconViewController: UIViewController {
     private let appearance = Appearance(); struct Appearance {
         let cancelButtonFontSize: CGFloat = 20.0
         let cornerRadius: CGFloat = 15.0
-        let cancelButtonEdgeMargin: CGFloat = 8.0
+        let cancelButtonEdgeMargin: CGFloat = 16.0
         let cancelButtonHeight: CGFloat = 57.0
-        let chooseIconViewEdgeMargin: CGFloat = 8.0
+        let chooseIconViewEdgeMargin: CGFloat = 16.0
+        let chooseIconViewBottomMargin: CGFloat = 8.0
     }
 
     // MARK: - Properties
@@ -81,10 +82,10 @@ private extension ChooseIconViewController {
     func setupChooseIconView() {
         view.addSubview(chooseIconView)
         chooseIconView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(appearance.chooseIconViewEdgeMargin)
+            $0.leading.equalToSuperview().offset(appearance.chooseIconViewEdgeMargin)
             $0.top.greaterThanOrEqualToSuperview()
             $0.trailing.equalToSuperview().inset(appearance.chooseIconViewEdgeMargin)
-            $0.bottom.equalTo(cancelButton.snp.top).offset(-appearance.chooseIconViewEdgeMargin)
+            $0.bottom.equalTo(cancelButton.snp.top).offset(-appearance.chooseIconViewBottomMargin)
         }
     }
 
