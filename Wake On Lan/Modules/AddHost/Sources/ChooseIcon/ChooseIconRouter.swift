@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-class ChooseIconRouter: ChooseIconRouterProtocol {
+final class ChooseIconRouter: ChooseIconRouterProtocol {
     var viewController: ChooseIconViewInput?
 
     init(viewController: ChooseIconViewInput) {

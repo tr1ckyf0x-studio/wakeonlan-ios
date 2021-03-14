@@ -10,7 +10,7 @@ import Resolver
 import CoreDataService
 import CocoaLumberjackSwift
 
-class AddHostInteractor: AddHostInteractorInput {
+final class AddHostInteractor: AddHostInteractorInput {
 
     weak var presenter: AddHostInteractorOutput?
 

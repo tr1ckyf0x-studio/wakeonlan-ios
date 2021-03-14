@@ -32,6 +32,7 @@ public final class AddHostViewController: UIViewController {
         setupTableView()
         setupNavigationBar()
         view.backgroundColor = R.color.soft()
+        title = R.string.addHost.addHost()
         presenter?.viewDidLoad(self)
     }
 
@@ -55,6 +56,13 @@ private extension AddHostViewController {
 // MARK: - AddHostViewInput
 
 extension AddHostViewController: AddHostViewInput {
+    func reloadTable(with section: FormSection) {
+        let indexPaths: [IndexPath] = section.items.enumerated().map {
+            .init(row: $0.offset, section: section.kind?.rawValue ?? .zero)
+        }
+        addHostView.tableView.reloadRows(at: indexPaths, with: .none)
+    }
+
     func reloadTable() {
         addHostView.tableView.reloadData()
     }

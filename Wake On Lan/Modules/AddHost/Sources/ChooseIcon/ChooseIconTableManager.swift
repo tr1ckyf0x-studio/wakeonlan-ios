@@ -13,7 +13,7 @@ protocol ChooseIconTableManagerDelegate: AnyObject {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)
 }
 
-class ChooseIconTableManager: NSObject {
+final class ChooseIconTableManager: NSObject {
     var sections: [ChooseIconSection]
     weak var delegate: ChooseIconTableManagerDelegate?
 
@@ -52,8 +52,7 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
         let sectionModel = sections[indexPath.section].content[indexPath.row]
         var cell: UICollectionViewCell?
 
-        switch sectionModel {
-        case .icon(let model):
+        if case let .icon(model) = sectionModel {
             let iconCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "\(ChooseIconCell.self)",
                 for: indexPath
@@ -61,11 +60,11 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
             let didTapIconBlock: ChooseIconCell.TapIconBlock = { [unowned self] _ in
                 self.delegate?.tableManager(self, didTapIcon: model)
             }
-            iconCell?.configure(with: model, didTapBlock: didTapIconBlock)
-            cell = iconCell
 
-        default:
-            break
+            iconCell.map {
+                $0.configure(with: model, didTapBlock: didTapIconBlock)
+                cell = $0
+            }
         }
 
         guard let unwrappedCell = cell else {
