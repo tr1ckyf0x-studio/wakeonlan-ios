@@ -19,6 +19,7 @@ protocol AddHostViewOutput: AnyObject {
 
 protocol AddHostViewInput: AnyObject {
     func reloadTable()
+    func reloadTable(with section: FormSection)
 }
 
 protocol AddHostInteractorInput: AnyObject {

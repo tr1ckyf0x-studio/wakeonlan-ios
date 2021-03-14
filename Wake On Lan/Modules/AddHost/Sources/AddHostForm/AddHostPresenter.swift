@@ -9,7 +9,7 @@
 import SharedModels
 import SharedProtocols
 
-class AddHostPresenter<Router: AddHostRouterProtocol> {
+final class AddHostPresenter<Router: AddHostRouterProtocol> {
     weak var view: AddHostViewInput?
 
     var interactor: AddHostInteractorInput?
@@ -80,8 +80,14 @@ extension AddHostPresenter: AddHostTableManagerDelegate {
 extension AddHostPresenter: ChooseIconModuleOutput {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel) {
         addHostForm.iconModel = iconModel
-        // NOTE: We can use reloadTable without performance issues
-        // because table consists only one section and row
-        view?.reloadTable()
+        addHostForm.sections.forEach {
+            guard
+                case let .section(_, _, _, kind) = $0,
+                kind == .deviceIcon
+            else {
+                return
+            }
+            view?.reloadTable(with: $0)
+        }
     }
 }

@@ -101,7 +101,10 @@ extension AddHostTableManager: UITableViewDelegate {
             let sectionHeader = sections[section].header, !sectionHeader.isMandatory,
             let header = view as? UITableViewHeaderFooterView,
             let headerLabel = header.textLabel,
-            let headerText = headerLabel.text else { return }
+            let headerText = headerLabel.text
+        else {
+            return
+        }
         // Make source attributed string
         let sourceAttributes: [NSAttributedString.Key: UIFont] = [.font: headerLabel.font]
         let sourceAttributedString = NSMutableAttributedString(

@@ -14,10 +14,10 @@ final class ChooseIconViewController: UIViewController {
     private let appearance = Appearance(); struct Appearance {
         let cancelButtonFontSize: CGFloat = 20.0
         let cornerRadius: CGFloat = 15.0
-        let cancelButtonEdgeMargin: CGFloat = 8.0
+        let cancelButtonEdgeMargin: CGFloat = 16.0
         let cancelButtonHeight: CGFloat = 57.0
-        let chooseIconViewEdgeMargin: CGFloat = 8.0
-        let chooseIconViewHeight: CGFloat = 1.0
+        let chooseIconViewEdgeMargin: CGFloat = 16.0
+        let chooseIconViewBottomMargin: CGFloat = 8.0
     }
 
     // MARK: - Properties
@@ -74,7 +74,7 @@ private extension ChooseIconViewController {
     func setupCancelButton() {
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(appearance.cancelButtonEdgeMargin)
+            $0.leading.trailing.bottom.equalToSuperview().inset(appearance.cancelButtonEdgeMargin)
             $0.height.equalTo(appearance.cancelButtonHeight)
         }
     }
@@ -82,10 +82,10 @@ private extension ChooseIconViewController {
     func setupChooseIconView() {
         view.addSubview(chooseIconView)
         chooseIconView.snp.makeConstraints {
-            $0.top.greaterThanOrEqualToSuperview().offset(appearance.chooseIconViewEdgeMargin)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(appearance.chooseIconViewEdgeMargin)
-            $0.bottom.equalTo(cancelButton.snp.top).offset(-appearance.chooseIconViewEdgeMargin)
-            $0.height.equalTo(appearance.chooseIconViewHeight) // Because needs to be updated
+            $0.leading.equalToSuperview().offset(appearance.chooseIconViewEdgeMargin)
+            $0.top.greaterThanOrEqualToSuperview()
+            $0.trailing.equalToSuperview().inset(appearance.chooseIconViewEdgeMargin)
+            $0.bottom.equalTo(cancelButton.snp.top).offset(-appearance.chooseIconViewBottomMargin)
         }
     }
 
@@ -110,7 +110,7 @@ extension ChooseIconViewController: ChooseIconViewInput {
         else {
             return
         }
-        chooseIconView.snp.updateConstraints {
+        chooseIconView.snp.makeConstraints {
             $0.height.equalTo(height + appearance.chooseIconViewEdgeMargin * 2)
         }
     }

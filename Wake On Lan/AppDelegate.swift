@@ -6,11 +6,12 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
-import Resolver
 import CoreDataService
 import HostList
+import Resolver
+import UIKit
 import WOLResources
+import WOLUIComponents
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,8 +22,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
         FirebaseAppDelegatePlugin(),
-        FontRegisterAppDelegatePlugin(),
-        NavigationBarAppearanceAppDelegatePlugin()
+        FontRegisterAppDelegatePlugin()
     ]
 
     func application(
@@ -37,7 +37,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             let hostListViewController = HostListViewController()
             let hostListConfigurator = HostListConfigurator()
             hostListConfigurator.configure(viewController: hostListViewController)
-            let navigationController = UINavigationController(
+            let navigationController = WOLNavigationController(
                 rootViewController: hostListViewController
             )
             self.window?.rootViewController = navigationController

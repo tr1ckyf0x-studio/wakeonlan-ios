@@ -11,6 +11,11 @@ import WOLResources
 
 final class ChooseIconView: UIView {
 
+    private let appearance = Appearance(); struct Appearance {
+        let collectionViewTopOffset: CGFloat = 8.0
+        let collectionViewBottomOffset: CGFloat = 8.0
+    }
+
     lazy var collectionView: UICollectionView = {
         let layout = ChooseIconCollectionLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -36,9 +41,10 @@ final class ChooseIconView: UIView {
         addSubview(collectionView)
         collectionView.backgroundColor = .clear
         collectionView.snp.makeConstraints {
-            $0.leading.trailing.equalTo(safeAreaLayoutGuide)
-            $0.top.equalTo(safeAreaLayoutGuide).inset(8)
-            $0.bottom.equalTo(safeAreaLayoutGuide)
+            $0.leading.equalToSuperview()
+            $0.top.equalToSuperview().offset(appearance.collectionViewTopOffset)
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(appearance.collectionViewBottomOffset)
         }
     }
 

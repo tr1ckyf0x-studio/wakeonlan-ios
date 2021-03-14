@@ -10,7 +10,7 @@ import SharedModels
 import WOLUIComponents
 import WOLResources
 
-class ChooseIconPresenter {
+final class ChooseIconPresenter {
     weak var view: ChooseIconViewInput!
     weak var moduleDelegate: ChooseIconModuleOutput?
     var router: ChooseIconRouterProtocol!
