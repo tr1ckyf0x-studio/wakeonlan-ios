@@ -37,7 +37,7 @@ final class TextInputCell: UITableViewCell {
 
     private var textFormItem: TextFormItem?
 
-    private var expanded: Bool = false {
+    private var expanded = false {
         didSet {
             if expanded == oldValue { return }
             switch expanded {

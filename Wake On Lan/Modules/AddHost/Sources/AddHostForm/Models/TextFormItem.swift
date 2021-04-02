@@ -28,8 +28,8 @@ final class TextFormItem: Validable, Mandatoryable {
     var formatter: TextFormatter?
 
     var maxLength: Int?
-    var isMandatory: Bool = true
-    var needsUppercased: Bool = false
+    var isMandatory = true
+    var needsUppercased = false
     var failureReason: AddHostForm.Error?
     var keyboardType: UIKeyboardType = .asciiCapable
 

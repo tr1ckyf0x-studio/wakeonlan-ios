@@ -94,7 +94,7 @@ public class SoftUIView: UIControl {
         }
     }
 
-    private var circleShape: Bool = false
+    private var circleShape = false
 
     // MARK: - Layers
 
