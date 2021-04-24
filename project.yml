@@ -45,11 +45,11 @@ targets:
       base:
         TARGETED_DEVICE_FAMILY: 1
         DISPLAY_NAME: "Wake on LAN"
-        DEVELOPMENT_TEAM: 3HSG7M3SCR
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wakeonlan
+        DEVELOPMENT_TEAM: SGM5527A99
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: Automatic
-        PROVISIONING_PROFILE_SPECIFIER: ""
+        CODE_SIGN_STYLE: Manual
+        PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         INFOPLIST_FILE: "Wake on LAN/Info.plist"
     preBuildScripts:
     - name: "Swiftlint"
