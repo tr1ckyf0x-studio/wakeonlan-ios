@@ -195,3 +195,8 @@ Temporary Items
 .gitsecret/keys/random_seed
 !*.secret
 Wake On Lan/GoogleService-Info.plist
+DevelopmentKeys/Dev key password.txt
+DevelopmentKeys/Vladislav Lisianskii Apple Development private.p12
+DevelopmentKeys/Vladislav Lisianskii Apple Development public.pem
+DevelopmentKeys/Vladislav Lisianskii Apple Development.cer
+DevelopmentKeys/Wake_On_Lan_Development.mobileprovision
