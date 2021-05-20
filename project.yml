@@ -16,6 +16,17 @@ attributes:
   CLASSPREFIX: WO
   ORGANIZATIONNAME: "Владислав Лисянский"
 
+packages:
+  FirebaseAnalytics:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 8.0.0
+  FirebaseCrashlytics:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 8.0.0
+  Reachability:
+    url: https://github.com/ashleymills/Reachability.swift
+    from: 5.0.0
+
 targets:
   Wake on LAN:
     platform: iOS
@@ -30,7 +41,6 @@ targets:
       - framework: "Carthage/Build/SnapKit.xcframework"
       - framework: "Carthage/Build/CocoaLumberjack.xcframework"
       - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
-      - framework: "Carthage/Build/Reachability.xcframework"
       - target: AddHost
       - target: CoreDataService
       - target: HostList
@@ -40,6 +50,9 @@ targets:
       - target: WakeOnLanService
       - target: WOLResources
       - target: WOLUIComponents
+      - package: FirebaseAnalytics
+      - package: FirebaseCrashlytics
+      - package: Reachability
 
     settings:
       base:
@@ -51,6 +64,7 @@ targets:
         CODE_SIGN_STYLE: Manual
         PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         INFOPLIST_FILE: "Wake on LAN/Info.plist"
+        OTHER_LDFLAGS: $(inherited) -ObjC
     preBuildScripts:
     - name: "Swiftlint"
       script: |
@@ -62,7 +76,7 @@ targets:
     postBuildScripts:
       - name: "Crashlytics"
         script: |
-                ${PODS_ROOT}/FirebaseCrashlytics/run
+                ${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run
         inputFiles:
           - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
           - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
@@ -116,7 +130,6 @@ targets:
       - framework: "Carthage/Build/CocoaLumberjack.xcframework"
       - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
       - framework: "Carthage/Build/SnapKit.xcframework"
-      - framework: "Carthage/Build/Reachability.xcframework"
       - target: AddHost # TODO: Remove dependency, use protocol
       - target: CoreDataService
       - target: SharedExtensions
@@ -125,6 +138,7 @@ targets:
       - target: WOLResources
       - target: WOLUIComponents
       - target: WakeOnLanService
+      - package: Reachability
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
     
