@@ -26,6 +26,12 @@ packages:
   Reachability:
     url: https://github.com/ashleymills/Reachability.swift
     from: 5.0.0
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit
+    from: 5.0.0
+  CocoaLumberjackSwift:
+    url: https://github.com/CocoaLumberjack/CocoaLumberjack
+    from: 3.7.0
 
 targets:
   Wake on LAN:
@@ -38,9 +44,11 @@ targets:
           - "Modules/**/"
         optional: true
     dependencies:
-      - framework: "Carthage/Build/SnapKit.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
+      - package: FirebaseAnalytics
+      - package: FirebaseCrashlytics
+      - package: Reachability
+      - package: SnapKit
+      - package: CocoaLumberjackSwift
       - target: AddHost
       - target: CoreDataService
       - target: HostList
@@ -50,9 +58,6 @@ targets:
       - target: WakeOnLanService
       - target: WOLResources
       - target: WOLUIComponents
-      - package: FirebaseAnalytics
-      - package: FirebaseCrashlytics
-      - package: Reachability
 
     settings:
       base:
@@ -96,9 +101,8 @@ targets:
     templateAttributes:
       frameworkName: AddHost
     dependencies:
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
-      - framework: "Carthage/Build/SnapKit.xcframework"
+      - package: CocoaLumberjackSwift
+      - package: SnapKit
       - target: CoreDataService
       - target: SharedExtensions
       - target: SharedModels
@@ -114,8 +118,7 @@ targets:
     templateAttributes:
       frameworkName: CoreDataService
     dependencies:
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
+      - package: CocoaLumberjackSwift
       - target: SharedModels
       - target: SharedProtocols
     sources:
@@ -127,9 +130,9 @@ targets:
     templateAttributes:
       frameworkName: HostList
     dependencies:
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
-      - framework: "Carthage/Build/SnapKit.xcframework"
+      - package: CocoaLumberjackSwift
+      - package: Reachability
+      - package: SnapKit
       - target: AddHost # TODO: Remove dependency, use protocol
       - target: CoreDataService
       - target: SharedExtensions
@@ -138,7 +141,6 @@ targets:
       - target: WOLResources
       - target: WOLUIComponents
       - target: WakeOnLanService
-      - package: Reachability
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
     
@@ -148,7 +150,7 @@ targets:
     templateAttributes:
       frameworkName: SharedExtensions
     dependencies:
-      - framework: "Carthage/Build/SnapKit.xcframework"
+      - package: SnapKit
       - target: WOLResources
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
@@ -198,7 +200,7 @@ targets:
     templateAttributes:
       frameworkName: WOLUIComponents
     dependencies:
-      - framework: "Carthage/Build/SnapKit.xcframework"
+      - package: SnapKit
       - target: SharedModels
       - target: WOLResources
       - target: SharedExtensions
