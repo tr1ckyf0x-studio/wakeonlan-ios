@@ -38,6 +38,12 @@ packages:
   Quick:
     url: https://github.com/Quick/Quick
     from: 4.0.0
+  Resolver:
+    url: https://github.com/hmlongco/Resolver
+    from: 1.4.0
+  Rswift:
+    url: https://github.com/mac-cain13/R.swift.Library
+    from: 5.4.0
 
 targets:
   Wake on LAN:
@@ -55,6 +61,7 @@ targets:
       - package: Reachability
       - package: SnapKit
       - package: CocoaLumberjackSwift
+      - package: Resolver
       - target: AddHost
       - target: CoreDataService
       - target: HostList
@@ -109,6 +116,7 @@ targets:
     dependencies:
       - package: CocoaLumberjackSwift
       - package: SnapKit
+      - package: Resolver
       - target: CoreDataService
       - target: SharedExtensions
       - target: SharedModels
@@ -139,6 +147,7 @@ targets:
       - package: CocoaLumberjackSwift
       - package: Reachability
       - package: SnapKit
+      - package: Resolver
       - target: AddHost # TODO: Remove dependency, use protocol
       - target: CoreDataService
       - target: SharedExtensions
@@ -186,6 +195,8 @@ targets:
       - Framework
     templateAttributes:
       frameworkName: WOLResources
+    dependencies:
+      - package: Rswift
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
       - path: "Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
@@ -194,7 +205,7 @@ targets:
     preBuildScripts:
     - name: "R.Swift"
       script: |
-              "$PODS_ROOT/R.swift/rswift" generate --accessLevel public "$SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
+              "rswift" generate --accessLevel public "$SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
       inputFiles:
         - $TEMP_DIR/rswift-lastrun
       outputFiles:
