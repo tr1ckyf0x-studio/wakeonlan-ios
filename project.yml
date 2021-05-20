@@ -32,6 +32,12 @@ packages:
   CocoaLumberjackSwift:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
     from: 3.7.0
+  Nimble:
+    url: https://github.com/Quick/Nimble
+    from: 9.0.0
+  Quick:
+    url: https://github.com/Quick/Quick
+    from: 4.0.0
 
 targets:
   Wake on LAN:
@@ -92,8 +98,8 @@ targets:
       - path: "Wake On LAN Tests"
     dependencies:
       - target: "Wake on LAN"
-      - framework: "Carthage/Build/Nimble.xcframework"
-      - framework: "Carthage/Build/Quick.xcframework"
+      - package: Quick
+      - package: Nimble
 
   AddHost:
     templates:
