@@ -5,8 +5,6 @@ target 'Wake on LAN' do
 
   pod "Resolver"
   pod "R.swift"
-  pod 'Firebase/Analytics'
-  pod 'Firebase/Crashlytics'
 
   target 'WakeOnLanTests' do
     inherit! :search_paths
