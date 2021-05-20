@@ -1,6 +1,0 @@
-github "SnapKit/SnapKit" ~> 5.0.1
-github "CocoaLumberjack/CocoaLumberjack"
-github "ashleymills/Reachability.swift"
-
-github "Quick/Quick"
-github "Quick/Nimble"

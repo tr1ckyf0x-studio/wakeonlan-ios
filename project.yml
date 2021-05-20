@@ -16,6 +16,35 @@ attributes:
   CLASSPREFIX: WO
   ORGANIZATIONNAME: "Владислав Лисянский"
 
+packages:
+  FirebaseAnalytics:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 8.0.0
+  FirebaseCrashlytics:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 8.0.0
+  Reachability:
+    url: https://github.com/ashleymills/Reachability.swift
+    from: 5.0.0
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit
+    from: 5.0.0
+  CocoaLumberjackSwift:
+    url: https://github.com/CocoaLumberjack/CocoaLumberjack
+    from: 3.7.0
+  Nimble:
+    url: https://github.com/Quick/Nimble
+    from: 9.0.0
+  Quick:
+    url: https://github.com/Quick/Quick
+    from: 4.0.0
+  Resolver:
+    url: https://github.com/hmlongco/Resolver
+    from: 1.4.0
+  Rswift:
+    url: https://github.com/mac-cain13/R.swift.Library
+    from: 5.4.0
+
 targets:
   Wake on LAN:
     platform: iOS
@@ -27,10 +56,12 @@ targets:
           - "Modules/**/"
         optional: true
     dependencies:
-      - framework: "Carthage/Build/SnapKit.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
-      - framework: "Carthage/Build/Reachability.xcframework"
+      - package: FirebaseAnalytics
+      - package: FirebaseCrashlytics
+      - package: Reachability
+      - package: SnapKit
+      - package: CocoaLumberjackSwift
+      - package: Resolver
       - target: AddHost
       - target: CoreDataService
       - target: HostList
@@ -51,6 +82,7 @@ targets:
         CODE_SIGN_STYLE: Manual
         PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         INFOPLIST_FILE: "Wake on LAN/Info.plist"
+        OTHER_LDFLAGS: $(inherited) -ObjC
     preBuildScripts:
     - name: "Swiftlint"
       script: |
@@ -62,7 +94,7 @@ targets:
     postBuildScripts:
       - name: "Crashlytics"
         script: |
-                ${PODS_ROOT}/FirebaseCrashlytics/run
+                ${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run
         inputFiles:
           - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
           - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
@@ -73,8 +105,8 @@ targets:
       - path: "Wake On LAN Tests"
     dependencies:
       - target: "Wake on LAN"
-      - framework: "Carthage/Build/Nimble.xcframework"
-      - framework: "Carthage/Build/Quick.xcframework"
+      - package: Quick
+      - package: Nimble
 
   AddHost:
     templates:
@@ -82,9 +114,9 @@ targets:
     templateAttributes:
       frameworkName: AddHost
     dependencies:
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
-      - framework: "Carthage/Build/SnapKit.xcframework"
+      - package: CocoaLumberjackSwift
+      - package: SnapKit
+      - package: Resolver
       - target: CoreDataService
       - target: SharedExtensions
       - target: SharedModels
@@ -100,8 +132,7 @@ targets:
     templateAttributes:
       frameworkName: CoreDataService
     dependencies:
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
+      - package: CocoaLumberjackSwift
       - target: SharedModels
       - target: SharedProtocols
     sources:
@@ -113,10 +144,10 @@ targets:
     templateAttributes:
       frameworkName: HostList
     dependencies:
-      - framework: "Carthage/Build/CocoaLumberjack.xcframework"
-      - framework: "Carthage/Build/CocoaLumberjackSwift.xcframework"
-      - framework: "Carthage/Build/SnapKit.xcframework"
-      - framework: "Carthage/Build/Reachability.xcframework"
+      - package: CocoaLumberjackSwift
+      - package: Reachability
+      - package: SnapKit
+      - package: Resolver
       - target: AddHost # TODO: Remove dependency, use protocol
       - target: CoreDataService
       - target: SharedExtensions
@@ -134,7 +165,7 @@ targets:
     templateAttributes:
       frameworkName: SharedExtensions
     dependencies:
-      - framework: "Carthage/Build/SnapKit.xcframework"
+      - package: SnapKit
       - target: WOLResources
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
@@ -164,6 +195,8 @@ targets:
       - Framework
     templateAttributes:
       frameworkName: WOLResources
+    dependencies:
+      - package: Rswift
     sources:
       - path: "Wake on LAN/Modules/${frameworkName}"
       - path: "Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
@@ -172,7 +205,7 @@ targets:
     preBuildScripts:
     - name: "R.Swift"
       script: |
-              "$PODS_ROOT/R.swift/rswift" generate --accessLevel public "$SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
+              "rswift" generate --accessLevel public "$SRCROOT/Wake on LAN/Modules/${frameworkName}/Generated/R.generated.swift"
       inputFiles:
         - $TEMP_DIR/rswift-lastrun
       outputFiles:
@@ -184,7 +217,7 @@ targets:
     templateAttributes:
       frameworkName: WOLUIComponents
     dependencies:
-      - framework: "Carthage/Build/SnapKit.xcframework"
+      - package: SnapKit
       - target: SharedModels
       - target: WOLResources
       - target: SharedExtensions
