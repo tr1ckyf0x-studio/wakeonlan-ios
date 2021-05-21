@@ -27,19 +27,19 @@ final class AddHostForm: AddHostFormRepresentable {
         var description: String {
             switch self {
             case .invalidMACAddress:
-                return R.string.addHostFailure.invalidMACAddress()
+                return WOLResources.L10n.AddHostFailure.invalidMACAddress
 
             case .invalidIPAddress:
-                return R.string.addHostFailure.invalidIPAddress()
+                return WOLResources.L10n.AddHostFailure.invalidIPAddress
 
             case .invalidPort:
-                return R.string.addHostFailure.invalidPort()
+                return WOLResources.L10n.AddHostFailure.invalidPort
 
             case .invalidTitle:
-                return R.string.addHostFailure.invalidTitle()
+                return WOLResources.L10n.AddHostFailure.invalidTitle
 
             case .unknown:
-                return R.string.addHostFailure.unknown()
+                return WOLResources.L10n.AddHostFailure.unknown
             }
         }
     }
@@ -47,10 +47,10 @@ final class AddHostForm: AddHostFormRepresentable {
     // MARK: - Constants
 
     private enum Placeholder {
-        static let title = R.string.addHost.addHostPlaceholderTitle()
-        static let macAddress = R.string.addHost.addHostPlaceholderMacAddress()
-        static let ipAddress = R.string.addHost.addHostPlaceholderIpAddress()
-        static let port = R.string.addHost.addHostPlaceholderPort()
+        static let title = WOLResources.L10n.AddHost.AddHost.Placeholder.title
+        static let macAddress = WOLResources.L10n.AddHost.AddHost.Placeholder.macAddress
+        static let ipAddress = WOLResources.L10n.AddHost.AddHost.Placeholder.ipAddress
+        static let port = WOLResources.L10n.AddHost.AddHost.Placeholder.port
     }
 
     // MARK: - Properties
@@ -164,29 +164,29 @@ final class AddHostForm: AddHostFormRepresentable {
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
-            header: .init(header: R.string.addHost.title()),
-            footer: .init(footer: R.string.addHost.titleDescription()),
+            header: .init(header: WOLResources.L10n.AddHost.title),
+            footer: .init(footer: WOLResources.L10n.AddHost.titleDescription),
             kind: .title
         )
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
-            header: .init(header: R.string.addHost.macAddress()),
-            footer: .init(footer: R.string.addHost.macAddressDescription()),
+            header: .init(header: WOLResources.L10n.AddHost.macAddress),
+            footer: .init(footer: WOLResources.L10n.AddHost.macAddressDescription),
             kind: .macAddress
         )
 
         let ipAddressSection = FormSection.section(
             content: [ipAddressFormItem],
-            header: .init(header: R.string.addHost.ipAddress(), mandatory: false),
-            footer: .init(footer: R.string.addHost.ipAddressDescription()),
+            header: .init(header: WOLResources.L10n.AddHost.ipAddress, mandatory: false),
+            footer: .init(footer: WOLResources.L10n.AddHost.ipAddressDescription),
             kind: .ipAddress
         )
 
         let portSection = FormSection.section(
             content: [portFormItem],
-            header: .init(header: R.string.addHost.port(), mandatory: false),
-            footer: .init(footer: R.string.addHost.portDescription()),
+            header: .init(header: WOLResources.L10n.AddHost.port, mandatory: false),
+            footer: .init(footer: WOLResources.L10n.AddHost.portDescription),
             kind: .port
         )
 

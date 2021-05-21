@@ -38,7 +38,7 @@ final class HostListView: UIView {
         )
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = R.color.soft()
+        tableView.backgroundColor = WOLResources.Asset.Colors.soft.color
 
         return tableView
     }()
@@ -46,19 +46,31 @@ final class HostListView: UIView {
     lazy var emptyView: EmptyView = {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
-            title: R.string.wakeOnLan.emptyViewMessage(),
-            image: R.image.droids(),
-            backgroundColor: R.color.soft()
+            title: WOLResources.L10n.WakeOnLan.emptyViewMessage,
+            image: WOLResources.Asset.Assets.droids.image,
+            backgroundColor: WOLResources.Asset.Colors.soft.color
         )
         emptyView.configure(with: viewModel)
 
         return emptyView
     }()
 
+    // swiftlint:disable closure_body_length
     lazy var addItemButton: UIBarButtonItem = {
         let addButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
-            let imageView = UIImageView(image: R.image.add()?.with(tintColor: R.color.lightGray() ?? .init()))
+            let imageView = UIImageView(image: WOLResources
+                                            .Asset
+                                            .Assets
+                                            .add
+                                            .image
+                                            .with(tintColor: WOLResources
+                                                    .Asset
+                                                    .Colors
+                                                    .lightGray
+                                                    .color
+                                            )
+            )
             button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(
                 self,
@@ -88,7 +100,7 @@ final class HostListView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = R.color.soft()
+        backgroundColor = WOLResources.Asset.Colors.soft.color
         setupTableView()
     }
 

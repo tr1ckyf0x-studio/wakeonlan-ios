@@ -14,9 +14,9 @@ public class SoftUITextField: UITextField {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        var mainColor: CGColor { (R.color.soft() ?? .init()).resolved }
-        var darkShadowColor: CGColor { (R.color.darkSoftShadow() ?? .init()).resolved }
-        var lightShadowColor: CGColor { (R.color.lightSoftShadow() ?? .init()).resolved }
+        var mainColor: CGColor { WOLResources.Asset.Colors.soft.color.resolved }
+        var darkShadowColor: CGColor { WOLResources.Asset.Colors.darkSoftShadow.color.resolved }
+        var lightShadowColor: CGColor { WOLResources.Asset.Colors.lightSoftShadow.color.resolved }
 
         var darkShadowOpacity: Float {
             guard #available(iOS 13.0, *) else { return 1 }

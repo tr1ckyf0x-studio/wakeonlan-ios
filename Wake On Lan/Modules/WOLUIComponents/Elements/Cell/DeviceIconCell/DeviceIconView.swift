@@ -21,10 +21,15 @@ final class DeviceIconView: UIView {
     weak var delegate: DeviceIconViewDelegate?
 
     private lazy var deviceImageView: UIImageView = {
-        let image = R.image.desktop()?.withRenderingMode(.alwaysTemplate)
+        let image = WOLResources
+            .Asset
+            .Assets
+            .desktop
+            .image
+            .withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.layer.cornerRadius = 14
-        imageView.tintColor = R.color.lightGray()
+        imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
         imageView.isUserInteractionEnabled = true
 
         // Add tap gesture recognizer

@@ -43,15 +43,15 @@ public final class HostListViewController: UIViewController {
     // MARK: - Private
 
     private func setupNavigationBar() {
-        navigationItem.title = R.string.hostList.hosts()
+        navigationItem.title = WOLResources.L10n.HostList.hosts
         navigationItem.rightBarButtonItem = hostListView.addItemButton
         navigationItem.largeTitleDisplayMode = .always
         guard let navigationController = navigationController else { return }
-        navigationController.view.backgroundColor = R.color.soft()
+        navigationController.view.backgroundColor = WOLResources.Asset.Colors.soft.color
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true
         let largeTitleTextAttributes = [
-            NSAttributedString.Key.font: R.font.robotoBold(size: 36) ?? UIFont()
+            NSAttributedString.Key.font: WOLResources.FontFamily.Roboto.bold.font(size: 36)
         ]
         navigationBar.largeTitleTextAttributes = largeTitleTextAttributes
     }

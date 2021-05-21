@@ -12,20 +12,20 @@ import WOLResources
 protocol NotificationViewStyle {
 
     static var text: String { get }
-    static var backgroundColor: UIColor? { get }
+    static var backgroundColor: UIColor { get }
 
 }
 
 enum NotificationViewType {
 
     struct Default: NotificationViewStyle {
-        static let text = R.string.hostList.packetSent()
-        static let backgroundColor = R.color.lightGray()
+        static let text = WOLResources.L10n.HostList.packetSent
+        static let backgroundColor = WOLResources.Asset.Colors.lightGray.color
     }
 
     struct Failure: NotificationViewStyle {
-        static let text = R.string.hostList.checkWifiConnection()
-        static let backgroundColor = R.color.red()
+        static let text = WOLResources.L10n.HostList.checkWifiConnection
+        static let backgroundColor = WOLResources.Asset.Colors.red.color
     }
 
 }
@@ -48,10 +48,10 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
     private lazy var notificationLabel: UILabel = {
         let label = UILabel()
         label.text = style.text
-        label.textColor = R.color.white()
+        label.textColor = WOLResources.Asset.Colors.white.color
         label.textAlignment = .center
         label.backgroundColor = style.backgroundColor
-        label.font = R.font.robotoMedium(size: 12)
+        label.font = WOLResources.FontFamily.Roboto.medium.font(size: 12)
 
         return label
     }()
