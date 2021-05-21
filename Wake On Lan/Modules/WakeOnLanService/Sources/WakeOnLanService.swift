@@ -31,10 +31,10 @@ public final class WakeOnLanService {
         public var errorDescription: String? {
             switch self {
             case .wrongMacAddressLength:
-                return R.string.wakeOnLan.wrongMacAddressLength("\(Constants.macAddressBytesCount)")
+                return WOLResources.L10n.WakeOnLan.wrongMacAddressLength("\(Constants.macAddressBytesCount)")
 
             case .socketSetup, .send:
-                return R.string.wakeOnLan.wakeOnLanUnexpectedError()
+                return WOLResources.L10n.WakeOnLan.wakeOnLanUnexpectedError
             }
         }
 

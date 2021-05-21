@@ -20,11 +20,11 @@ final class ChooseIconPresenter {
     private let sections: [ChooseIconSection] = {
         [
             [
-                R.image.other,
-                R.image.desktop,
-                R.image.router,
-                R.image.scanner,
-                R.image.tv
+                WOLResources.Asset.Assets.other,
+                WOLResources.Asset.Assets.desktop,
+                WOLResources.Asset.Assets.router,
+                WOLResources.Asset.Assets.scanner,
+                WOLResources.Asset.Assets.tv
             ]
             .map { .icon(IconModel(pictureName: $0.name)) }
         ]

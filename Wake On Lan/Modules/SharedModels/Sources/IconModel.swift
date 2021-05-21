@@ -15,7 +15,7 @@ public protocol IconModelRepresentable {
 public struct IconModel: IconModelRepresentable {
     public let pictureName: String
 
-    public init(pictureName: String = R.image.other.name) {
+    public init(pictureName: String = WOLResources.Asset.Assets.other.name) {
         self.pictureName = pictureName
     }
 }

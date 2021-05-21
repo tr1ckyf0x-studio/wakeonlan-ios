@@ -37,14 +37,14 @@ final class AddHostView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
-        tableView.backgroundColor = R.color.soft()
+        tableView.backgroundColor = WOLResources.Asset.Colors.soft.color
 
         return tableView
     }()
 
     lazy var saveItemButton: UIBarButtonItem = {
         let button = SoftUIView(circleShape: true)
-        let image = R.image.save()?.with(tintColor: R.color.lightGray() ?? .init())
+        let image = WOLResources.Asset.Assets.save.image.with(tintColor: WOLResources.Asset.Colors.lightGray.color)
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
@@ -58,7 +58,7 @@ final class AddHostView: UIView {
 
     lazy var backBarButton: UIBarButtonItem = {
         let button = SoftUIView(circleShape: true)
-        let image = R.image.back()?.with(tintColor: R.color.lightGray() ?? .init())
+        let image = WOLResources.Asset.Assets.back.image.with(tintColor: WOLResources.Asset.Colors.lightGray.color)
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
@@ -74,7 +74,7 @@ final class AddHostView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = R.color.white()
+        backgroundColor = WOLResources.Asset.Colors.white.color
         setupTableView()
         registerNotifications()
     }

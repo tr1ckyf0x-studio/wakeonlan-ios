@@ -1,8 +1,8 @@
 *.xcodeproj
 *.xcworkspace
 
-### R.Swift ###
-*.generated.swift
+### SwiftGen ###
+**/Generated
 
 
 # Created by https://www.gitignore.io/api/swift,appcode

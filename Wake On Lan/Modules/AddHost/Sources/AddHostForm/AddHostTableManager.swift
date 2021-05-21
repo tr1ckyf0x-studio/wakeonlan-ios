@@ -131,11 +131,11 @@ private extension NSMutableAttributedString {
     func appendOptional() {
         let additionalAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.italicSystemFont(ofSize: 12),
-            .foregroundColor: R.color.lightGray() ?? UIColor()
+            .foregroundColor: WOLResources.Asset.Colors.lightGray.color
         ]
         let additionalAttributedString =
             NSMutableAttributedString(
-                string: " - " + R.string.addHost.optional(),
+                string: " - " + WOLResources.L10n.AddHost.optional,
                 attributes: additionalAttributes
             )
         guard let attributedText =

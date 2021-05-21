@@ -42,7 +42,18 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var deleteButton: SoftUIView = {
         let button = SoftUIView()
-        let imageView = UIImageView(image: R.image.trash()?.with(tintColor: R.color.lightGray() ?? .init()))
+        let imageView = UIImageView(image: WOLResources
+                                        .Asset
+                                        .Assets
+                                        .trash
+                                        .image
+                                        .with(tintColor: WOLResources
+                                                .Asset
+                                                .Colors
+                                                .lightGray
+                                                .color
+                                        )
+        )
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -62,15 +73,15 @@ final class HostListTableViewCell: UITableViewCell {
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = R.color.lightGray()
+        imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
 
         return imageView
     }()
 
     private let hostTitle: UILabel = {
         let label = UILabel()
-        label.font = R.font.robotoMedium(size: 18)
-        label.textColor = R.color.gray()
+        label.font = WOLResources.FontFamily.Roboto.medium.font(size: 18)
+        label.textColor = WOLResources.Asset.Colors.gray.color
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -79,8 +90,8 @@ final class HostListTableViewCell: UITableViewCell {
 
     private let macAddressTitle: UILabel = {
         let label = UILabel()
-        label.font = R.font.robotoLight(size: 14)
-        label.textColor = R.color.darkGray()
+        label.font = WOLResources.FontFamily.Roboto.light.font(size: 14)
+        label.textColor = WOLResources.Asset.Colors.darkGray.color
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -89,7 +100,18 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var infoButton: SoftUIView = {
         let button = SoftUIView(circleShape: true)
-        let imageView = UIImageView(image: R.image.more()?.with(tintColor: R.color.lightGray() ?? .init()))
+        let imageView = UIImageView(image: WOLResources
+                                        .Asset
+                                        .Assets
+                                        .more
+                                        .image
+                                        .with(tintColor: WOLResources
+                                                .Asset
+                                                .Colors
+                                                .lightGray
+                                                .color
+                                        )
+        )
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -104,7 +126,7 @@ final class HostListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = R.color.soft()
+        backgroundColor = WOLResources.Asset.Colors.soft.color
         setupScrollView()
         setupBaseView()
         setupDeleteView()
