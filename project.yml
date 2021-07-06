@@ -81,6 +81,10 @@ targets:
         PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         INFOPLIST_FILE: "Wake on LAN/Info.plist"
         OTHER_LDFLAGS: $(inherited) -ObjC
+      configs:
+        Release:
+          PROVISIONING_PROFILE_SPECIFIER: "Wake on LAN Distribution"
+          CODE_SIGN_IDENTITY: "Apple Distribution"
     preBuildScripts:
     - name: "Swiftlint"
       script: |
