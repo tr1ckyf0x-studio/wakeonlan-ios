@@ -17,7 +17,7 @@ public final class FontRegister {
 
     // MARK: - Properties
 
-    private lazy var bundle = Bundle(for: Self.self)
+    private lazy var bundle = Bundle.module
 
     private let provider: ProvidesBundleInfo
 

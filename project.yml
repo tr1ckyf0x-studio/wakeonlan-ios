@@ -43,6 +43,26 @@ packages:
     url: https://github.com/hmlongco/Resolver
     from: 1.4.0
 
+  # Local packages
+  WOLResources:
+    path: Wake On Lan/Modules/WOLResources
+  SharedModels:
+    path: Wake On Lan/Modules/SharedModels
+  SharedProtocols:
+    path: Wake On Lan/Modules/SharedProtocols
+  CoreDataService:
+    path: Wake On Lan/Modules/CoreDataService
+  WakeOnLanService:
+    path: Wake On Lan/Modules/WakeOnLanService
+  SharedExtensions:
+    path: Wake On Lan/Modules/SharedExtensions
+  WOLUIComponents:
+    path: Wake On Lan/Modules/WOLUIComponents
+  AddHost:
+    path: Wake On Lan/Modules/AddHost
+  HostList:
+    path: Wake On Lan/Modules/HostList
+
 targets:
   Wake on LAN:
     platform: iOS
@@ -60,15 +80,15 @@ targets:
       - package: SnapKit
       - package: CocoaLumberjackSwift
       - package: Resolver
-      - target: AddHost
-      - target: CoreDataService
-      - target: HostList
-      - target: SharedExtensions
-      - target: SharedProtocols
-      - target: SharedModels
-      - target: WakeOnLanService
-      - target: WOLResources
-      - target: WOLUIComponents
+      - package: WOLResources
+      - package: SharedModels
+      - package: SharedProtocols
+      - package: CoreDataService
+      - package: WakeOnLanService
+      - package: SharedExtensions
+      - package: WOLUIComponents
+      - package: AddHost
+      - package: HostList
 
     settings:
       base:
@@ -109,138 +129,3 @@ targets:
       - target: "Wake on LAN"
       - package: Quick
       - package: Nimble
-
-  AddHost:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: AddHost
-    dependencies:
-      - package: CocoaLumberjackSwift
-      - package: SnapKit
-      - package: Resolver
-      - target: CoreDataService
-      - target: SharedExtensions
-      - target: SharedModels
-      - target: SharedProtocols
-      - target: WOLResources
-      - target: WOLUIComponents
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-
-  CoreDataService:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: CoreDataService
-    dependencies:
-      - package: CocoaLumberjackSwift
-      - target: SharedModels
-      - target: SharedProtocols
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-
-  HostList:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: HostList
-    dependencies:
-      - package: CocoaLumberjackSwift
-      - package: Reachability
-      - package: SnapKit
-      - package: Resolver
-      - target: AddHost # TODO: Remove dependency, use protocol
-      - target: CoreDataService
-      - target: SharedExtensions
-      - target: SharedModels
-      - target: SharedProtocols
-      - target: WOLResources
-      - target: WOLUIComponents
-      - target: WakeOnLanService
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-    
-  SharedExtensions:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: SharedExtensions
-    dependencies:
-      - package: SnapKit
-      - target: WOLResources
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-
-  SharedProtocols:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: SharedProtocols
-    dependencies:
-      - target: SharedModels
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-  
-  SharedModels:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: SharedModels
-    dependencies:
-      - target: WOLResources
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-      
-  WOLResources:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: WOLResources
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-    preBuildScripts:
-    - name: "Swiftgen"
-      script: |
-              if command -v swiftgen &> /dev/null
-              then
-                swiftgen config run --config $SRCROOT/Wake\ on\ LAN/Modules/${frameworkName}/swiftgen.yml
-              else
-                echo "warning: SwiftGen is not installed. Run 'brew install swiftgen' to install it."
-              fi
-  
-  WOLUIComponents:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: WOLUIComponents
-    dependencies:
-      - package: SnapKit
-      - target: SharedModels
-      - target: WOLResources
-      - target: SharedExtensions
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-  
-  WakeOnLanService:
-    templates:
-      - Framework
-    templateAttributes:
-      frameworkName: WakeOnLanService
-    dependencies:
-      - target: CoreDataService
-      - target: WOLResources
-    sources:
-      - path: "Wake on LAN/Modules/${frameworkName}"
-
-targetTemplates:
-  Framework:
-    settings:
-      base:
-        INFOPLIST_FILE: "Wake on LAN/Modules/${frameworkName}/Info.plist"
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wakeonlan.${frameworkName}
-        CODE_SIGN_IDENTITY: ""
-        CODE_SIGN_STYLE: Automatic
-        PROVISIONING_PROFILE_SPECIFIER: "Automatic"
-    platform: iOS
-    type: framework
