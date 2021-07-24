@@ -78,7 +78,7 @@ excluded: # paths to ignore during linting. Takes precedence over included.
 - Carthage 
 - Pods 
 - Wake On Lan/R.generated.swift
-- "Wake On Lan/Modules/*/Generated/R.generated.swift"
+- "Wake On Lan/Modules/**/Generated/*.swift"
 
 # # configurable rules can be customized from this configuration file 
 # # binary rules can set their severity level 

@@ -15,7 +15,7 @@ public protocol Managed: NSFetchRequestResult {
     static var defaultSortDescriptors: [NSSortDescriptor] { get }
 }
 
-public extension Managed {
+public extension Managed where Self: NSManagedObject {
     // TODO: Implement it
     static var defaultSortDescriptors: [NSSortDescriptor] { [] }
 

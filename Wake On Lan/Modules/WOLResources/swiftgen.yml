@@ -12,10 +12,10 @@
 ##   SwiftGen will parse all `.strings` files found in that folder.
 strings:
   inputs:
-    - Strings/en.lproj
+    - Sources/Resources/Strings/en.lproj
   outputs:
     - templateName: structured-swift5
-      output: Generated/Strings+Generated.swift
+      output: Sources/Generated/Strings+Generated.swift
       params:
         publicAccess: true
 
@@ -26,22 +26,22 @@ strings:
 ##   - To know which params are supported for a template, use `swiftgen template doc xcassets swift5` to open the template documentation on GitHub.
 xcassets:
   inputs:
-    - Assets.xcassets
-    - Colors.xcassets
+    - Sources/Resources/Assets.xcassets
+    - Sources/Resources/Colors.xcassets
   outputs:
     - templateName: swift5
       params:
         forceProvidesNamespaces: true
-      output: Generated/XCAssets+Generated.swift
+      output: Sources/Generated/XCAssets+Generated.swift
       params:
         publicAccess: true
 
 
 fonts:
-  inputs: Fonts
+  inputs: Sources/Resources/Fonts
   outputs:
     templateName: swift5
-    output: Generated/Fonts.swift
+    output: Sources/Generated/Fonts.swift
     params:
       publicAccess: true
 
