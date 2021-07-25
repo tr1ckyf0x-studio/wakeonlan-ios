@@ -54,9 +54,12 @@ final class DeviceIconView: UIView {
     }
 
     func configure(with model: IconModel) {
-        deviceImageView.image = UIImage(
-            named: model.pictureName
-        )?.withRenderingMode(.alwaysTemplate)
+        let image = Bundle.allBundles.lazy
+            .compactMap { bundle in
+                UIImage(named: model.pictureName, in: bundle, compatibleWith: nil)
+            }
+            .first
+        deviceImageView.image = image?.withRenderingMode(.alwaysTemplate)
     }
 
     // MARK: - Private

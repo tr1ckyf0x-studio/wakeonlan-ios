@@ -143,7 +143,12 @@ final class HostListTableViewCell: UITableViewCell {
     // MARK: - Public
 
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
-        let image = UIImage(named: model.iconName)?.withRenderingMode(.alwaysTemplate)
+        let image = Bundle.allBundles.lazy
+            .compactMap { bundle in
+                UIImage(named: model.iconName, in: bundle, compatibleWith: nil)
+            }
+            .first?
+            .withRenderingMode(.alwaysTemplate)
         hostTitle.text = model.title
         deviceImageView.image = image
         macAddressTitle.text = model.macAddress
