@@ -106,6 +106,14 @@ targets:
           PROVISIONING_PROFILE_SPECIFIER: "Wake on LAN Distribution"
           CODE_SIGN_IDENTITY: "Apple Distribution"
     preBuildScripts:
+    - name: "Swiftgen"
+      script: |
+              if command -v swiftgen &> /dev/null
+              then
+                swiftgen config run --config $SRCROOT/Wake\ on\ LAN/Modules/**/swiftgen.yml
+              else
+                echo "warning: SwiftGen is not installed. Run 'brew install swiftgen' to install it."
+              fi
     - name: "Swiftlint"
       script: |
               if which swiftlint >/dev/null; then
