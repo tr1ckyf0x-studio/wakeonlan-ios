@@ -20,13 +20,13 @@ attributes:
 packages:
   FirebaseAnalytics:
     url: https://github.com/firebase/firebase-ios-sdk
-    from: 8.0.0
+    from: 8.4.0
   FirebaseCrashlytics:
     url: https://github.com/firebase/firebase-ios-sdk
-    from: 8.0.0
+    from: 8.4.0
   Reachability:
     url: https://github.com/ashleymills/Reachability.swift
-    from: 5.0.0
+    from: 5.1.0
   SnapKit:
     url: https://github.com/SnapKit/SnapKit
     from: 5.0.0
@@ -41,7 +41,7 @@ packages:
     from: 4.0.0
   Resolver:
     url: https://github.com/hmlongco/Resolver
-    from: 1.4.0
+    from: 1.4.3
 
   # Local packages
   WOLResources:
