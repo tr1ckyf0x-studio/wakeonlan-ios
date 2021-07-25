@@ -47,7 +47,12 @@ final class ChooseIconCell: UICollectionViewCell {
     // MARK: - Private
 
     private func setupDeviceImage(with imageName: String) {
-        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        let image = Bundle.allBundles.lazy
+            .compactMap { bundle in
+                UIImage(named: imageName, in: bundle, compatibleWith: nil)
+            }
+            .first?
+            .withRenderingMode(.alwaysTemplate)
         let imageView = UIImageView(image: image)
         imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
         imageView.contentMode = .scaleAspectFit
