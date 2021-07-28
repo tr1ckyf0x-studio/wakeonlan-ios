@@ -94,17 +94,18 @@ targets:
       base:
         TARGETED_DEVICE_FAMILY: 1
         DISPLAY_NAME: "Wake on LAN"
-        DEVELOPMENT_TEAM: SGM5527A99
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
-        CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: Manual
-        PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         INFOPLIST_FILE: "Wake on LAN/Info.plist"
         OTHER_LDFLAGS: $(inherited) -ObjC
+        DEVELOPMENT_TEAM: SGM5527A99
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
+        CODE_SIGN_STYLE: Manual
       configs:
+        Debug:
+          CODE_SIGN_IDENTITY: "Apple Development"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         Release:
-          PROVISIONING_PROFILE_SPECIFIER: "Wake on LAN Distribution"
           CODE_SIGN_IDENTITY: "Apple Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AppStore"
     preBuildScripts:
     - name: "Swiftgen"
       script: |
