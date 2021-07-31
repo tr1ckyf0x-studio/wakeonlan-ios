@@ -10,10 +10,6 @@ import UIKit
 
 public extension UIColor {
     var resolved: CGColor {
-        if #available(iOS 13.0, *) {
-            return self.resolvedColor(with: .current).cgColor
-        } else {
-            return self.cgColor
-        }
+        self.resolvedColor(with: .current).cgColor
     }
 }
