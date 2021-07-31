@@ -44,7 +44,9 @@ public final class HostListViewController: UIViewController {
 
     private func setupNavigationBar() {
         navigationItem.title = WOLResources.L10n.HostList.hosts
-        navigationItem.rightBarButtonItem = hostListView.addItemButton
+        navigationItem.rightBarButtonItems = [hostListView.addItemButton,
+                                              hostListView.barButtonSpacer,
+                                              hostListView.aboutButton]
         navigationItem.largeTitleDisplayMode = .always
         guard let navigationController = navigationController else { return }
         navigationController.view.backgroundColor = WOLResources.Asset.Colors.soft.color
@@ -97,8 +99,13 @@ extension HostListViewController: HostListViewInput {
 // MARK: - HostListViewDelegate
 
 extension HostListViewController: HostListViewDelegate {
+
     func hostListViewDidPressAddButton(_ view: HostListView) {
         presenter?.viewDidPressAddButton(self)
+    }
+
+    func hostListViewDidPressAboutButton(_ view: HostListView) {
+        presenter?.viewDidPressAboutButton(self)
     }
 
 }

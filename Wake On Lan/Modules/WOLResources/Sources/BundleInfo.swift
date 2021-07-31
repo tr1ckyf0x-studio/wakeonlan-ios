@@ -9,11 +9,11 @@
 import Foundation
 
 public struct BundleInfo {
-    let displayName: String
-    let identifier: String
-    let name: String
-    let version: String
-    let appFonts: [String]?
+    public let displayName: String
+    public let identifier: String
+    public let name: String
+    public let version: String
+    public let appFonts: [String]?
 }
 
 // MARK: - Codable

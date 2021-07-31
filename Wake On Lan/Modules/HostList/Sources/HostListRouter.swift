@@ -9,6 +9,7 @@
 import UIKit
 import CoreDataService
 import AddHost
+import AboutScreen
 
 final class HostListRouter: HostListRouterProtocol {
 
@@ -20,6 +21,16 @@ final class HostListRouter: HostListRouterProtocol {
         addHostConfigurator.configure(viewController: addHostViewController, with: host)
         viewController?.navigationController?.pushViewController(
             addHostViewController,
+            animated: true
+        )
+    }
+
+    func routeToAbout() {
+        let aboutScreenViewController = AboutScreenViewController()
+        let aboutScreenConfigurator = AboutScreenConfigurator()
+        aboutScreenConfigurator.configure(viewController: aboutScreenViewController)
+        viewController?.navigationController?.pushViewController(
+            aboutScreenViewController,
             animated: true
         )
     }

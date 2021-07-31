@@ -13,6 +13,7 @@ import WOLResources
 
 protocol HostListViewDelegate: AnyObject {
     func hostListViewDidPressAddButton(_ view: HostListView)
+    func hostListViewDidPressAboutButton(_ view: HostListView)
 }
 
 final class HostListView: UIView {
@@ -20,7 +21,8 @@ final class HostListView: UIView {
     // MARK: - Constants
 
     private enum Constants {
-        static let addItemButtonDimensions = 32.0
+        static let barButtonDimensions = 32.0
+        static let barButtonSpacing: CGFloat = 16.0
     }
 
     // MARK: - Properties
@@ -56,6 +58,48 @@ final class HostListView: UIView {
     }()
 
     // swiftlint:disable closure_body_length
+    lazy var aboutButton: UIBarButtonItem = {
+        let aboutButton: SoftUIView = {
+            let button = SoftUIView(circleShape: true)
+            let image = UIImage(sfSymbol: .questionmark, withConfiguration: .init(weight: .semibold))
+            let imageView = UIImageView(image: image)
+            imageView.tintColor = WOLResources
+                .Asset
+                .Colors
+                .lightGray
+                .color
+            button.configure(with: SoftUIViewModel(contentView: imageView))
+            button.addTarget(
+                self,
+                action: #selector(didTapAboutButton(_:)),
+                for: .touchUpInside
+            )
+            imageView.snp.makeConstraints {
+                $0.center.equalToSuperview()
+            }
+
+            return button
+        }()
+
+        let barButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: aboutButton)
+            button.customView?.snp.makeConstraints {
+                $0.size.equalTo(Constants.barButtonDimensions)
+            }
+
+            return button
+        }()
+
+        return barButton
+    }()
+
+    lazy var barButtonSpacer: UIBarButtonItem = {
+        let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer.width = Constants.barButtonSpacing
+        return spacer
+    }()
+
+    // swiftlint:disable closure_body_length
     lazy var addItemButton: UIBarButtonItem = {
         let addButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
@@ -82,7 +126,7 @@ final class HostListView: UIView {
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: addButton)
             button.customView?.snp.makeConstraints {
-                $0.size.equalTo(Constants.addItemButtonDimensions)
+                $0.size.equalTo(Constants.barButtonDimensions)
             }
 
             return button
@@ -118,6 +162,10 @@ private extension HostListView {
 
     @objc func didTapAddButton(_ sender: UIButton) {
         delegate?.hostListViewDidPressAddButton(self)
+    }
+
+    @objc func didTapAboutButton(_ sender: UIButton) {
+        delegate?.hostListViewDidPressAboutButton(self)
     }
 
 }
