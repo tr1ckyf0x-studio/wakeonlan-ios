@@ -14,12 +14,13 @@ public final class EmptyView: UIView {
 
     private lazy var containerView = UIView()
 
-    private lazy var imageView = UIImageView(image: WOLResources.Asset.Assets.droids.image)
+    private lazy var imageView = UIImageView(image: WOLResources.Asset.Assets.owl.image)
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = WOLResources.L10n.WakeOnLan.emptyViewMessage
         label.textColor = WOLResources.Asset.Colors.lightGray.color
+        label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
@@ -47,7 +48,7 @@ private extension EmptyView {
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.leading.top.greaterThanOrEqualToSuperview().offset(8)
+            make.leading.top.greaterThanOrEqualToSuperview().offset(16)
         }
 
         containerView.addSubview(imageView)
@@ -55,13 +56,13 @@ private extension EmptyView {
             make.centerX.equalToSuperview()
             make.leading.greaterThanOrEqualToSuperview()
             make.top.equalToSuperview()
-            make.width.equalTo(imageView.snp.height).multipliedBy(612.0 / 726.0)
+            make.width.equalTo(imageView.snp.height)
             make.width.equalToSuperview().multipliedBy(0.5)
         }
 
         containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.top.equalTo(imageView.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
             make.leading.greaterThanOrEqualToSuperview()
             make.bottom.equalToSuperview()
