@@ -18,6 +18,6 @@ public extension UIImage {
         )
     }
 
-    private class Dummy { }
+    private final class Dummy { }
 
 }
