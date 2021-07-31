@@ -1,0 +1,14 @@
+//
+//  UIImage+SFSymbol.swift
+//  
+//
+//  Created by Vladislav Lisianskii on 31.07.2021.
+//
+
+import UIKit
+
+extension UIImage {
+    public convenience init?(sfSymbol: SFSymbol, withConfiguration configuration: SymbolConfiguration? = nil) {
+        self.init(systemName: sfSymbol.systemName, withConfiguration: configuration)
+    }
+}

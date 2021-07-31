@@ -59,18 +59,13 @@ final class HostListView: UIView {
     lazy var addItemButton: UIBarButtonItem = {
         let addButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
-            let imageView = UIImageView(image: WOLResources
-                                            .Asset
-                                            .Assets
-                                            .add
-                                            .image
-                                            .with(tintColor: WOLResources
-                                                    .Asset
-                                                    .Colors
-                                                    .lightGray
-                                                    .color
-                                            )
-            )
+            let image = UIImage(sfSymbol: .plus, withConfiguration: .init(weight: .semibold))
+            let imageView = UIImageView(image: image)
+            imageView.tintColor = WOLResources
+                .Asset
+                .Colors
+                .lightGray
+                .color
             button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(
                 self,

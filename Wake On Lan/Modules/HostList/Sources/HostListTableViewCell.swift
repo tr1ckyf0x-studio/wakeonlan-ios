@@ -42,18 +42,14 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var deleteButton: SoftUIView = {
         let button = SoftUIView()
-        let imageView = UIImageView(image: WOLResources
-                                        .Asset
-                                        .Assets
-                                        .trash
-                                        .image
-                                        .with(tintColor: WOLResources
-                                                .Asset
-                                                .Colors
-                                                .lightGray
-                                                .color
-                                        )
-        )
+        let symbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 36, weight: .regular))
+        let image = UIImage(sfSymbol: .trash, withConfiguration: symbolConfiguration)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = WOLResources
+            .Asset
+            .Colors
+            .lightGray
+            .color
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -100,18 +96,14 @@ final class HostListTableViewCell: UITableViewCell {
 
     private lazy var infoButton: SoftUIView = {
         let button = SoftUIView(circleShape: true)
-        let imageView = UIImageView(image: WOLResources
-                                        .Asset
-                                        .Assets
-                                        .more
-                                        .image
-                                        .with(tintColor: WOLResources
-                                                .Asset
-                                                .Colors
-                                                .lightGray
-                                                .color
-                                        )
-        )
+        let imageConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24, weight: .semibold))
+        let image = UIImage(sfSymbol: .ellipsis, withConfiguration: imageConfiguration)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = WOLResources
+            .Asset
+            .Colors
+            .lightGray
+            .color
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()

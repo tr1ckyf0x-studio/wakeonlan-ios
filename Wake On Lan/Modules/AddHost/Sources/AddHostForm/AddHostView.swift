@@ -44,8 +44,13 @@ final class AddHostView: UIView {
 
     lazy var saveItemButton: UIBarButtonItem = {
         let button = SoftUIView(circleShape: true)
-        let image = WOLResources.Asset.Assets.save.image.with(tintColor: WOLResources.Asset.Colors.lightGray.color)
+        let image = UIImage(sfSymbol: .checkmark, withConfiguration: .init(weight: .semibold))
         let imageView = UIImageView(image: image)
+        imageView.tintColor = WOLResources
+            .Asset
+            .Colors
+            .lightGray
+            .color
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
@@ -58,8 +63,13 @@ final class AddHostView: UIView {
 
     lazy var backBarButton: UIBarButtonItem = {
         let button = SoftUIView(circleShape: true)
-        let image = WOLResources.Asset.Assets.back.image.with(tintColor: WOLResources.Asset.Colors.lightGray.color)
+        let image = UIImage(sfSymbol: .chevronBackward, withConfiguration: .init(weight: .semibold))
         let imageView = UIImageView(image: image)
+        imageView.tintColor = WOLResources
+            .Asset
+            .Colors
+            .lightGray
+            .color
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
