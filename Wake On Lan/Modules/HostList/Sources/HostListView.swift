@@ -47,7 +47,7 @@ final class HostListView: UIView {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
             title: WOLResources.L10n.WakeOnLan.emptyViewMessage,
-            image: WOLResources.Asset.Assets.droids.image,
+            image: WOLResources.Asset.Assets.owl.image,
             backgroundColor: WOLResources.Asset.Colors.soft.color
         )
         emptyView.configure(with: viewModel)
