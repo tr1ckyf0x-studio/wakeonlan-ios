@@ -51,7 +51,7 @@ public final class HostListViewController: UIViewController {
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true
         let largeTitleTextAttributes = [
-            NSAttributedString.Key.font: WOLResources.FontFamily.Roboto.bold.font(size: 36)
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
         ]
         navigationBar.largeTitleTextAttributes = largeTitleTextAttributes
     }

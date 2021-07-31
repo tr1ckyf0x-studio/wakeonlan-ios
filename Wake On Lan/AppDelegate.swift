@@ -21,8 +21,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
-        FirebaseAppDelegatePlugin(),
-        FontRegisterAppDelegatePlugin()
+        FirebaseAppDelegatePlugin()
     ]
 
     func application(

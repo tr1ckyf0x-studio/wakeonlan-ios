@@ -51,7 +51,7 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
         label.textColor = WOLResources.Asset.Colors.white.color
         label.textAlignment = .center
         label.backgroundColor = style.backgroundColor
-        label.font = WOLResources.FontFamily.Roboto.medium.font(size: 12)
+        label.font = .systemFont(ofSize: 12, weight: .medium)
 
         return label
     }()

@@ -22,13 +22,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(name: "WOLResources",
                 path: "Sources",
-                exclude: [],
-                resources: [
-                    .process("Resources/Fonts/Roboto-Bold.ttf"),
-                    .process("Resources/Fonts/Roboto-Light.ttf"),
-                    .process("Resources/Fonts/Roboto-Medium.ttf"),
-                    .process("Resources/Fonts/Roboto-Thin.ttf")
-                ]
+                exclude: []
         )
     ]
 )

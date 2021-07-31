@@ -76,7 +76,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private let hostTitle: UILabel = {
         let label = UILabel()
-        label.font = WOLResources.FontFamily.Roboto.medium.font(size: 18)
+        label.font = .systemFont(ofSize: 18, weight: .medium)
         label.textColor = WOLResources.Asset.Colors.gray.color
         label.numberOfLines = 1
         label.textAlignment = .left
@@ -86,7 +86,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private let macAddressTitle: UILabel = {
         let label = UILabel()
-        label.font = WOLResources.FontFamily.Roboto.light.font(size: 14)
+        label.font = .systemFont(ofSize: 14, weight: .light)
         label.textColor = WOLResources.Asset.Colors.darkGray.color
         label.numberOfLines = 1
         label.textAlignment = .left

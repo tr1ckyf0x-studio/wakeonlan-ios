@@ -37,13 +37,13 @@ xcassets:
         publicAccess: true
 
 
-fonts:
-  inputs: Sources/Resources/Fonts
-  outputs:
-    templateName: swift5
-    output: Sources/Generated/Fonts.swift
-    params:
-      publicAccess: true
+# fonts:
+#   inputs: Sources/Resources/Fonts
+#   outputs:
+#     templateName: swift5
+#     output: Sources/Generated/Fonts.swift
+#     params:
+#       publicAccess: true
 
 
 ## Generate constants for your storyboards and XIBs.
