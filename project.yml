@@ -29,13 +29,13 @@ packages:
     from: 5.1.0
   SnapKit:
     url: https://github.com/SnapKit/SnapKit
-    from: 5.0.0
+    from: 5.0.1
   CocoaLumberjackSwift:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
-    from: 3.7.0
+    from: 3.7.2
   Nimble:
     url: https://github.com/Quick/Nimble
-    from: 9.0.0
+    from: 9.2.0
   Quick:
     url: https://github.com/Quick/Quick
     from: 4.0.0
