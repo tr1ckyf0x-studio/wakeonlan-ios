@@ -21,12 +21,7 @@ final class DeviceIconView: UIView {
     weak var delegate: DeviceIconViewDelegate?
 
     private lazy var deviceImageView: UIImageView = {
-        let image = WOLResources
-            .Asset
-            .Assets
-            .desktop
-            .image
-            .withRenderingMode(.alwaysTemplate)
+        let image = UIImage(sfSymbol: HostIcon.desktopcomputer)
         let imageView = UIImageView(image: image)
         imageView.layer.cornerRadius = 14
         imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
@@ -54,12 +49,8 @@ final class DeviceIconView: UIView {
     }
 
     func configure(with model: IconModel) {
-        let image = Bundle.allBundles.lazy
-            .compactMap { bundle in
-                UIImage(named: model.pictureName, in: bundle, compatibleWith: nil)
-            }
-            .first
-        deviceImageView.image = image?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(sfSymbol: model.sfSymbol)
+        deviceImageView.image = image
     }
 
     // MARK: - Private
