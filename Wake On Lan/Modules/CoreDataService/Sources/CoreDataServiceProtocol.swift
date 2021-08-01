@@ -27,7 +27,9 @@ public protocol CoreDataServiceProtocol {
 extension CoreDataServiceProtocol {
 
     public var mainContext: NSManagedObjectContext {
-        persistentContainer.viewContext
+        let context = persistentContainer.viewContext
+        context.automaticallyMergesChangesFromParent = true
+        return context
     }
 
     public func createHostContainer(completion: @escaping () -> Void) {
@@ -54,6 +56,7 @@ extension CoreDataServiceProtocol {
     public func createChildConcurrentContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = mainContext
+        context.automaticallyMergesChangesFromParent = true
         DDLogVerbose("Child concurrent context was created")
         return context
     }
