@@ -70,6 +70,7 @@ final class HostListTableViewCell: UITableViewCell {
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
+        imageView.contentMode = .scaleAspectFit
 
         return imageView
     }()
@@ -135,12 +136,8 @@ final class HostListTableViewCell: UITableViewCell {
     // MARK: - Public
 
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
-        let image = Bundle.allBundles.lazy
-            .compactMap { bundle in
-                UIImage(named: model.iconName, in: bundle, compatibleWith: nil)
-            }
-            .first?
-            .withRenderingMode(.alwaysTemplate)
+        let sfSymbol = SFSymbolRepresentableFactory.sfSymbolRepresentable(for: model.iconName)
+        let image = sfSymbol.flatMap { UIImage(sfSymbol: $0) }
         hostTitle.text = model.title
         deviceImageView.image = image
         macAddressTitle.text = model.macAddress

@@ -26,6 +26,7 @@ final class DeviceIconView: UIView {
         imageView.layer.cornerRadius = 14
         imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
         imageView.isUserInteractionEnabled = true
+        imageView.contentMode = .scaleAspectFit
 
         // Add tap gesture recognizer
         imageView.addGestureRecognizer(
