@@ -41,18 +41,13 @@ final class ChooseIconCell: UICollectionViewCell {
 
     func configure(with model: IconModel, didTapBlock: @escaping TapIconBlock) {
         didTapIconBlock = didTapBlock
-        setupDeviceImage(with: model.pictureName)
+        setupDeviceImage(with: model.sfSymbol)
     }
 
     // MARK: - Private
 
-    private func setupDeviceImage(with imageName: String) {
-        let image = Bundle.allBundles.lazy
-            .compactMap { bundle in
-                UIImage(named: imageName, in: bundle, compatibleWith: nil)
-            }
-            .first?
-            .withRenderingMode(.alwaysTemplate)
+    private func setupDeviceImage(with sfSymbol: SFSymbolRepresentable) {
+        let image = UIImage(sfSymbol: sfSymbol)
         let imageView = UIImageView(image: image)
         imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
         imageView.contentMode = .scaleAspectFit

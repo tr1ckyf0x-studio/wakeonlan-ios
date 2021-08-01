@@ -43,7 +43,7 @@ final class HostListTableViewCell: UITableViewCell {
     private lazy var deleteButton: SoftUIView = {
         let button = SoftUIView()
         let symbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 36, weight: .regular))
-        let image = UIImage(sfSymbol: .trash, withConfiguration: symbolConfiguration)
+        let image = UIImage(sfSymbol: ButtonIcon.trash, withConfiguration: symbolConfiguration)
         let imageView = UIImageView(image: image)
         imageView.tintColor = WOLResources
             .Asset
@@ -97,7 +97,7 @@ final class HostListTableViewCell: UITableViewCell {
     private lazy var infoButton: SoftUIView = {
         let button = SoftUIView(circleShape: true)
         let imageConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24, weight: .semibold))
-        let image = UIImage(sfSymbol: .ellipsis, withConfiguration: imageConfiguration)
+        let image = UIImage(sfSymbol: ButtonIcon.ellipsis, withConfiguration: imageConfiguration)
         let imageView = UIImageView(image: image)
         imageView.tintColor = WOLResources
             .Asset

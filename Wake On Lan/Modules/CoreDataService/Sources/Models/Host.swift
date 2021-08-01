@@ -56,9 +56,9 @@ public extension Host {
         guard
             let macAddress = form.macAddress,
             let title = form.title,
-            let iconName = form.iconModel?.pictureName else { return }
+            let iconName = form.iconModel?.sfSymbol else { return }
         let host: Host = context.insertObject()
-        host.iconName = iconName
+        host.iconName = iconName.systemName
         host.title = title
         host.macAddress = macAddress
         host.ipAddress = form.ipAddress
@@ -73,10 +73,10 @@ public extension Host {
         guard
             let macAddress = form.macAddress,
             let title = form.title,
-            let iconName = form.iconModel?.pictureName,
+            let iconName = form.iconModel?.sfSymbol,
             let updateObject = context.object(with: object.objectID) as? Self else { return }
         updateObject.title = title
-        updateObject.iconName = iconName
+        updateObject.iconName = iconName.systemName
         updateObject.macAddress = macAddress
         if let ipAddress = form.ipAddress {
             updateObject.ipAddress = ipAddress

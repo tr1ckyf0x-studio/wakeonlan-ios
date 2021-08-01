@@ -9,14 +9,14 @@
 import WOLResources
 
 public protocol IconModelRepresentable {
-    var pictureName: String { get }
+    var sfSymbol: SFSymbolRepresentable { get }
 }
 
 public struct IconModel: IconModelRepresentable {
-    public let pictureName: String
+    public let sfSymbol: SFSymbolRepresentable
 
-    public init(pictureName: String = WOLResources.Asset.Assets.other.name) {
-        self.pictureName = pictureName
+    public init(sfSymbol: SFSymbolRepresentable = HostIcon.desktopcomputer) {
+        self.sfSymbol = sfSymbol
     }
 }
 
@@ -24,6 +24,6 @@ public struct IconModel: IconModelRepresentable {
 
 extension IconModel: Equatable {
     public static func == (lhs: IconModel, rhs: IconModel) -> Bool {
-        lhs.pictureName == rhs.pictureName
+        lhs.sfSymbol.systemName == rhs.sfSymbol.systemName
     }
 }

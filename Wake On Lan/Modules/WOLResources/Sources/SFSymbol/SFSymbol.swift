@@ -7,36 +7,59 @@
 
 import Foundation
 
-public enum SFSymbol: String {
+public protocol SFSymbolRepresentable {
+    var systemName: String { get }
+}
+
+private protocol RawStringInitializable {
+    init?(rawString: String)
+}
+
+private extension RawStringInitializable where Self: RawRepresentable, RawValue == String {
+    init?(rawString: String) {
+        self.init(rawValue: rawString)
+    }
+}
+
+public extension SFSymbolRepresentable where Self: RawRepresentable, RawValue == String {
+    var systemName: String {
+        rawValue
+    }
+}
+
+public enum ButtonIcon: String, SFSymbolRepresentable, RawStringInitializable {
     case questionmark
     case plus
-    case chevronBackward
+    case chevronBackward = "chevron.backward"
     case checkmark
     case ellipsis
     case trash
 }
 
-// MARK: - Public methods
-extension SFSymbol {
-    public var systemName: String {
-        switch self {
-        case .questionmark:
-            return rawValue
+public enum HostIcon: String, CaseIterable, SFSymbolRepresentable, RawStringInitializable {
+    case desktopcomputer
+    case tv
+    case pc
+    case macproGen1 = "macpro.gen1"
+    case macproGen3 = "macpro.gen3"
+    case serverRack = "server.rack"
+    case xserve
+    case laptopcomputer
+    case macmini
+    case printer
+    case scanner
+    case externalDriveConnected = "externaldrive.connected.to.line.below"
+    case externalDriveWifi = "externaldrive.badge.wifi"
+}
 
-        case .plus:
-            return rawValue
+public enum SFSymbolRepresentableFactory {
+    private typealias SymbolType = SFSymbolRepresentable & RawStringInitializable
 
-        case .chevronBackward:
-            return "chevron.backward"
+    private static let hostTypes = [ButtonIcon.self, HostIcon.self] as [SymbolType.Type]
 
-        case .checkmark:
-            return rawValue
-
-        case .ellipsis:
-            return rawValue
-
-        case .trash:
-            return rawValue
-        }
+    public static func sfSymbolRepresentable(for rawValue: String) -> SFSymbolRepresentable? {
+        hostTypes.lazy.compactMap { type -> SFSymbolRepresentable? in
+            type.init(rawString: rawValue)
+        }.first
     }
 }

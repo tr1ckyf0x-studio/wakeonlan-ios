@@ -60,7 +60,8 @@ final class AddHostForm: AddHostFormRepresentable {
     private(set) var host: Host? {
         didSet {
             guard let host = host else { return }
-            iconModel = IconModel(pictureName: host.iconName)
+            let sfSymbol = SFSymbolRepresentableFactory.sfSymbolRepresentable(for: host.iconName)
+            iconModel = sfSymbol.map(IconModel.init(sfSymbol:))
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
             ipAddressItem.value = host.ipAddress

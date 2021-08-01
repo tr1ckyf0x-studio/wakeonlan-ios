@@ -19,14 +19,9 @@ final class ChooseIconPresenter {
 
     private let sections: [ChooseIconSection] = {
         [
-            [
-                WOLResources.Asset.Assets.other,
-                WOLResources.Asset.Assets.desktop,
-                WOLResources.Asset.Assets.router,
-                WOLResources.Asset.Assets.scanner,
-                WOLResources.Asset.Assets.tv
-            ]
-            .map { .icon(IconModel(pictureName: $0.name)) }
+            HostIcon.allCases
+                .map(IconModel.init(sfSymbol:))
+                .map { .icon($0) }
         ]
         .map { ChooseIconSection.section(content: $0) }
     }()
