@@ -99,6 +99,7 @@ targets:
         DEVELOPMENT_TEAM: SGM5527A99
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
         CODE_SIGN_STYLE: Manual
+        CODE_SIGN_ENTITLEMENTS: "Wake on LAN/Wake on LAN.entitlements"
       configs:
         Debug:
           CODE_SIGN_IDENTITY: "Apple Development"

@@ -14,15 +14,19 @@ public final class Host: NSManagedObject {
     @NSManaged public private(set) var title: String
     @NSManaged public private(set) var iconName: String
     @NSManaged public private(set) var port: String?
-    @NSManaged private var macAddressData: Data
+    @NSManaged private var macAddressData: Data?
     @NSManaged private var ipAddressData: Data?
 
-    public private(set) var macAddress: String {
+    public private(set) var macAddress: String? {
         get {
-            CoreDataHostFormatter.decompress(data: macAddressData, ofType: .macAddress)
+            macAddressData.map { data in
+                CoreDataHostFormatter.decompress(data: data, ofType: .macAddress)
+            }
         }
         set {
-            macAddressData = CoreDataHostFormatter.compress(string: newValue, ofType: .macAddress)
+            macAddressData = newValue.map { value in
+                CoreDataHostFormatter.compress(string: value, ofType: .macAddress)
+            }
         }
     }
 

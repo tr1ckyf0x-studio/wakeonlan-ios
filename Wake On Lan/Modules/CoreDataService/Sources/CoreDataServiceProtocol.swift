@@ -13,7 +13,7 @@ import CoreData
 public protocol CoreDataServiceProtocol {
     typealias SaveCompletionHandler = () -> Void
 
-    var persistentContainer: NSPersistentContainer { get }
+    var persistentContainer: NSPersistentCloudKitContainer { get }
 
     var mainContext: NSManagedObjectContext { get }
 
@@ -37,6 +37,16 @@ extension CoreDataServiceProtocol {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
             DDLogDebug("Persistent stores were loaded")
+
+//            #if DEBUG
+//            do {
+//                // Use the container to initialize the development schema.
+//                try persistentContainer.initializeCloudKitSchema(options: [])
+//            } catch {
+//                print(error)
+//            }
+//            #endif
+
             DispatchQueue.main.async { completion() }
         }
     }
