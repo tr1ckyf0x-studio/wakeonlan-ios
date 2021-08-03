@@ -18,10 +18,7 @@ attributes:
   ORGANIZATIONNAME: "Владислав Лисянский"
 
 packages:
-  FirebaseAnalytics:
-    url: https://github.com/firebase/firebase-ios-sdk
-    from: 8.4.0
-  FirebaseCrashlytics:
+  Firebase:
     url: https://github.com/firebase/firebase-ios-sdk
     from: 8.4.0
   Reachability:
@@ -76,8 +73,10 @@ targets:
           - "Modules/**/"
         optional: true
     dependencies:
-      - package: FirebaseAnalytics
-      - package: FirebaseCrashlytics
+      - package: Firebase
+        product: FirebaseAnalytics
+      - package: Firebase
+        product: FirebaseCrashlytics
       - package: Reachability
       - package: SnapKit
       - package: CocoaLumberjackSwift
