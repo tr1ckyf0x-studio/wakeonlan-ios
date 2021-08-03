@@ -21,6 +21,7 @@ let package = Package(
         .package(path: "../CoreDataService"),
         .package(path: "../SharedExtensions"),
         .package(path: "../WOLUIComponents"),
+        .package(path: "../RouterProtocol"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.7.0"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.0.0"),
         .package(url: "https://github.com/hmlongco/Resolver", from: "1.4.0")
@@ -37,6 +38,7 @@ let package = Package(
                 "CoreDataService",
                 "SharedExtensions",
                 "WOLUIComponents",
+                "RouterProtocol",
                 "SnapKit",
                 "Resolver",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
