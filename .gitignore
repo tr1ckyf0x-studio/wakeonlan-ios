@@ -201,3 +201,6 @@ DevelopmentKeys/Vladislav\ Lisianskii\ Apple\ Development\ public.pem
 DevelopmentKeys/development.cer
 DevelopmentKeys/Wake_On_Lan_Development.mobileprovision
 fastlane/AuthKey_65K8M54759.p8
+DevelopmentKeys/Wake_On_Lan_Watch_App_Development.mobileprovision
+DevelopmentKeys/Wake_On_Lan_Watch_Development.mobileprovision
+DevelopmentKeys/Wake_On_Lan_Watch_Extension_Development.mobileprovision
