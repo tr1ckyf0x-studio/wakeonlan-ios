@@ -51,8 +51,8 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
         return unwrapped
     }()
 
-    public lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(
+    public lazy var persistentContainer: NSPersistentCloudKitContainer = {
+        let container = NSPersistentCloudKitContainer(
             name: Constants.persistentContainerName,
             managedObjectModel: managedObjectModel
         )

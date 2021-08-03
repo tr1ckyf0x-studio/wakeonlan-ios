@@ -99,7 +99,9 @@ public final class WakeOnLanService {
         }
     }
 
-    private func createMagicPacket(for macAddress: String) throws -> [UInt8] {
+    private func createMagicPacket(for macAddress: String?) throws -> [UInt8] {
+        guard let macAddress = macAddress else { throw Self.Error.wrongMacAddressLength }
+        
         let header = [UInt8](
             repeating: Constants.magicPocketHeaderByte,
             count: Constants.magicPocketHeaderLength
