@@ -9,7 +9,7 @@
 import CoreData
 import SharedProtocols
 
-public final class Host: NSManagedObject {
+public final class Host: NSManagedObject, HostRepresentable {
     @NSManaged public private(set) var createdAt: Date
     @NSManaged public private(set) var title: String
     @NSManaged public private(set) var iconName: String
