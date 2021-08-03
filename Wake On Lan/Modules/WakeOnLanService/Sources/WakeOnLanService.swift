@@ -6,9 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import CoreDataService
 import Foundation
 import WOLResources
+import SharedProtocols
 
 public final class WakeOnLanService {
 
@@ -51,7 +51,7 @@ public final class WakeOnLanService {
 
     public init() { }
 
-    public func sendMagicPacket(to host: Host) throws {
+    public func sendMagicPacket(to host: HostRepresentable) throws {
         var udpSocket: Int32
         var target = sockaddr_in()
 
