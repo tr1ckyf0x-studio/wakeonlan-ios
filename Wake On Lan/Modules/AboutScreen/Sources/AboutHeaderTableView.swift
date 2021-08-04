@@ -6,11 +6,13 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
+import SnapKit
 import UIKit
 import WOLResources
-import SnapKit
 
-final class AboutHeaderTableCell: UITableViewCell {
+final class AboutHeaderTableView: UIView {
+
+    // MARK: - Properties
 
     private lazy var appNameLabel: UILabel = {
         let label = UILabel()
@@ -26,20 +28,20 @@ final class AboutHeaderTableCell: UITableViewCell {
         return label
     }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
+    // MARK: - Init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubviews()
+        makeConstraints()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
-// MARK: - Internal methods
-
-extension AboutHeaderTableCell {
+extension AboutHeaderTableView {
     func configure(appName: String, appVersion: String?) {
         appNameLabel.text = appName
         appVersionLabel.text = "\(L10n.AboutScreen.version) \(appVersion ?? .empty)"
@@ -48,13 +50,14 @@ extension AboutHeaderTableCell {
 
 // MARK: - Private methods
 
-private extension AboutHeaderTableCell {
-    func setupViews() {
-        contentView.backgroundColor = WOLResources.Asset.Colors.soft.color
+private extension AboutHeaderTableView {
 
-        contentView.addSubview(appNameLabel)
-        contentView.addSubview(appVersionLabel)
+    func addSubviews() {
+        addSubview(appNameLabel)
+        addSubview(appVersionLabel)
+    }
 
+    func makeConstraints() {
         appNameLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(16)
@@ -63,7 +66,6 @@ private extension AboutHeaderTableCell {
         appVersionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(appNameLabel.snp.bottom).offset(8)
-            make.bottom.equalToSuperview().inset(16)
         }
     }
 }

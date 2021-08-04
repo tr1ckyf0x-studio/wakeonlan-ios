@@ -33,5 +33,4 @@ extension AboutScreenInteractor: AboutScreenInteractorInput {
             self.presenter?.interactor(self, didFetchBundleInfo: info)
         }
     }
-
 }

@@ -8,11 +8,17 @@
 
 import SnapKit
 import UIKit
-import WOLUIComponents
 import WOLResources
+import WOLUIComponents
 
 protocol AboutScreenViewDelegate: AnyObject {
     func aboutScreenViewDidPressBackButton(_ view: AboutScreenView)
+}
+
+protocol AboutScreenViewRepresentable {
+    func configure(with appName: String, appVersion: String?)
+    func configureTableView(with manager: ManagingAboutScreenTable)
+    func reloadData()
 }
 
 final class AboutScreenView: UIView {
@@ -24,6 +30,7 @@ final class AboutScreenView: UIView {
         let backBarButtonImage = UIImage(sfSymbol: .chevronBackward, withConfiguration: .init(weight: .semibold))
         let backBarTintColor = WOLResources.Asset.Colors.lightGray.color
         let backBarButtonSize: CGFloat = 32.0
+        let tableHeaderSize: CGRect = .init(origin: .zero, size: .init(width: 210, height: 105))
     }
 
     // MARK: - Properties
@@ -44,24 +51,28 @@ final class AboutScreenView: UIView {
         }
         button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
 
-        return UIBarButtonItem(customView: button)
+        return .init(customView: button)
     }()
 
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(AboutHeaderTableCell.self, forCellReuseIdentifier: "\(AboutHeaderTableCell.self)")
         tableView.register(MenuButtonTableCell.self, forCellReuseIdentifier: "\(MenuButtonTableCell.self)")
         tableView.separatorStyle = .none
-        tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = WOLResources.Asset.Colors.soft.color
+        tableView.tableHeaderView = self.tableHeaderView
+
         return tableView
     }()
+
+    private lazy var tableHeaderView = AboutHeaderTableView(frame: appearance.tableHeaderSize)
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        backgroundColor = WOLResources.Asset.Colors.soft.color
+        addSubviews()
+        makeConstraints()
     }
 
     required init?(coder: NSCoder) {
@@ -69,13 +80,34 @@ final class AboutScreenView: UIView {
     }
 }
 
-// MARK: - Private methods
+// MARK: - AboutScreenViewRepresentable
+
+extension AboutScreenView: AboutScreenViewRepresentable {
+
+    func reloadData() {
+        tableView.reloadData()
+    }
+
+    func configureTableView(with manager: ManagingAboutScreenTable) {
+        tableView.dataSource = manager
+        tableView.delegate = manager
+    }
+
+    func configure(with appName: String, appVersion: String?) {
+        tableHeaderView.configure(appName: appName, appVersion: appVersion)
+    }
+
+}
+
+// MARK: - Private
+
 private extension AboutScreenView {
 
-    func setupViews() {
-        backgroundColor = WOLResources.Asset.Colors.soft.color
+    func addSubviews() {
         addSubview(tableView)
+    }
 
+    func makeConstraints() {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -84,5 +116,4 @@ private extension AboutScreenView {
     @objc func backButtonPressed() {
         delegate?.aboutScreenViewDidPressBackButton(self)
     }
-
 }

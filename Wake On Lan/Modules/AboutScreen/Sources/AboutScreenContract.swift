@@ -11,20 +11,28 @@ import WOLResources
 
 protocol AboutScreenViewOutput: AnyObject {
 
-    var tableManager: AboutScreenTableManager? { get }
-
     func viewDidLoad(_ view: AboutScreenViewInput)
 
     func viewDidPressBackButton(_ view: AboutScreenViewInput)
 
 }
 
-protocol AboutScreenViewInput: AnyObject { }
+protocol AboutScreenViewInput: AnyObject {
+
+    func configure(with appName: String, appVersion: String?, rows: [MenuButtonCellViewModel])
+
+    func displayShareApp(with appURL: String)
+
+}
 
 protocol AboutScreenInteractorInput: AnyObject {
+
     func fetchBundleInfo()
+
 }
 
 protocol AboutScreenInteractorOutput: AnyObject {
+
     func interactor(_: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo)
+
 }

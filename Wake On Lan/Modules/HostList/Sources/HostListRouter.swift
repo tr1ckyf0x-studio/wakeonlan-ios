@@ -6,10 +6,10 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
-import CoreDataService
 import AddHost
 import AboutScreen
+import CoreDataService
+import UIKit
 
 final class HostListRouter: HostListRouterProtocol {
 
@@ -34,5 +34,4 @@ final class HostListRouter: HostListRouterProtocol {
             animated: true
         )
     }
-
 }

@@ -8,60 +8,33 @@
 
 import UIKit
 
-final class AboutScreenTableManager: NSObject {
+public protocol ManagingAboutScreenTable: UITableViewDataSource, UITableViewDelegate {
+    var rows: [MenuButtonCellViewModel] { get set }
+}
 
-    // MARK: - Properties
-
-    var sections: [AboutScreenSectionModel] = []
+public final class AboutScreenTableManager: NSObject, ManagingAboutScreenTable {
+    public var rows: [MenuButtonCellViewModel] = []
 }
 
 // MARK: - UITableViewDataSource
 
 extension AboutScreenTableManager: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        rows.count
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].items.count
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = rows[indexPath.row]
+        guard
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "\(MenuButtonTableCell.self)",
+                for: indexPath
+            ) as? MenuButtonTableCell
+        else {
+            return .init()
+        }
+        cell.configure(with: model)
+
+        return cell
     }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = sections[indexPath.section].items[indexPath.row]
-        return {
-            switch model {
-            case let .header(appName, appVersion):
-                let headerCell = tableView.dequeueReusableCell(
-                    withIdentifier: "\(AboutHeaderTableCell.self)",
-                    for: indexPath
-                ) as? AboutHeaderTableCell
-                headerCell?.configure(appName: appName, appVersion: appVersion)
-                return headerCell
-
-            case let .menuButton(title, action):
-                let menuButtonCell = tableView.dequeueReusableCell(
-                    withIdentifier: "\(MenuButtonTableCell.self)",
-                    for: indexPath
-                ) as? MenuButtonTableCell
-                menuButtonCell?.configure(title: title, action: action)
-                return menuButtonCell
-            }
-        }() ?? .init()
-    }
-
-}
-
-// MARK: - UITableViewDelegate
-
-extension AboutScreenTableManager: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section].header
-    }
-
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        sections[section].footer
-    }
-
 }

@@ -10,15 +10,14 @@ import Foundation
 
 public final class AboutScreenConfigurator {
 
+    // MARK: - Init
+
     public init() { }
 
     public func configure(viewController: AboutScreenViewController) {
         let presenter = AboutScreenPresenter()
         let interactor = AboutScreenInteractor()
         let router = AboutScreenRouter()
-        let tableManager = AboutScreenTableManager()
-
-        presenter.tableManager = tableManager
 
         presenter.interactor = interactor
         interactor.presenter = presenter
@@ -29,5 +28,4 @@ public final class AboutScreenConfigurator {
         presenter.router = router
         router.viewController = viewController
     }
-
 }
