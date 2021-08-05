@@ -40,7 +40,7 @@ final class HostListView: UIView {
         )
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = WOLResources.Asset.Colors.soft.color
+        tableView.backgroundColor = Asset.Colors.soft.color
 
         return tableView
     }()
@@ -48,26 +48,21 @@ final class HostListView: UIView {
     lazy var emptyView: EmptyView = {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
-            title: WOLResources.L10n.WakeOnLan.emptyViewMessage,
-            image: WOLResources.Asset.Assets.owl.image,
-            backgroundColor: WOLResources.Asset.Colors.soft.color
+            title: L10n.WakeOnLan.emptyViewMessage,
+            image: Asset.Assets.owl.image,
+            backgroundColor: Asset.Colors.soft.color
         )
         emptyView.configure(with: viewModel)
 
         return emptyView
     }()
 
-    // swiftlint:disable closure_body_length
     lazy var aboutButton: UIBarButtonItem = {
         let aboutButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
-            let image = UIImage(sfSymbol: .questionmark, withConfiguration: .init(weight: .semibold))
+            let image = UIImage(sfSymbol: ButtonIcon.questionmark, withConfiguration: .init(weight: .semibold))
             let imageView = UIImageView(image: image)
-            imageView.tintColor = WOLResources
-                .Asset
-                .Colors
-                .lightGray
-                .color
+            imageView.tintColor = Asset.Colors.lightGray.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(
                 self,
@@ -139,7 +134,7 @@ final class HostListView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = WOLResources.Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.soft.color
         setupTableView()
     }
 

@@ -60,7 +60,10 @@ public extension Host {
         guard
             let macAddress = form.macAddress,
             let title = form.title,
-            let iconName = form.iconModel?.sfSymbol else { return }
+            let iconName = form.iconModel?.sfSymbol
+        else {
+            return
+        }
         let host: Host = context.insertObject()
         host.iconName = iconName.systemName
         host.title = title

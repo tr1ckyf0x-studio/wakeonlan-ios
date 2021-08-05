@@ -24,7 +24,7 @@ final class AboutScreenPresenter {
     weak var view: AboutScreenViewInput?
 
     var interactor: AboutScreenInteractorInput?
-    
+
     var router: AboutScreenRouter?
 
     private let reviewRequester: RequestsReview
@@ -74,17 +74,14 @@ private extension AboutScreenPresenter {
 
     func makeRows(from bundleInfo: BundleInfo) -> [MenuButtonCellViewModel] {
         [
-            // TODO: Move to Resources
-            .init(title: "Rate App", action: { [weak self] in
+            .init(title: L10n.AboutScreen.rateApp, action: { [weak self] in
                 self?.reviewRequester.requestReview()
             }),
-            // TODO: Move to Resources
-            .init(title: "GitHub", action: { [weak self] in
+            .init(title: L10n.AboutScreen.github, action: { [weak self] in
                 guard let url = URL(string: Configuration.gitHubURL) else { return }
                 self?.urlOpener.open(url: url)
             }),
-            // TODO: Move to Resources
-            .init(title: "Share App", action: { [weak self] in
+            .init(title: L10n.AboutScreen.shareApp, action: { [weak self] in
                 self?.view?.displayShareApp(with: Configuration.appStoreURL)
             })
         ]

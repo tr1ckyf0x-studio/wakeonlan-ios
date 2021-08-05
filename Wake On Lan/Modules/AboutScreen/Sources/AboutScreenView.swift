@@ -27,8 +27,11 @@ final class AboutScreenView: UIView {
 
     private let appearance = Appearance(); struct Appearance {
         let barButtonImageViewInset: CGFloat = 6.0
-        let backBarButtonImage = UIImage(sfSymbol: .chevronBackward, withConfiguration: .init(weight: .semibold))
-        let backBarTintColor = WOLResources.Asset.Colors.lightGray.color
+        let backBarButtonImage = UIImage(
+            sfSymbol: ButtonIcon.chevronBackward,
+            withConfiguration: .init(weight: .semibold)
+        )
+        let backBarTintColor = Asset.Colors.lightGray.color
         let backBarButtonSize: CGFloat = 32.0
         let tableHeaderSize: CGRect = .init(origin: .zero, size: .init(width: 210, height: 105))
     }
@@ -58,7 +61,7 @@ final class AboutScreenView: UIView {
         let tableView = UITableView()
         tableView.register(MenuButtonTableCell.self, forCellReuseIdentifier: "\(MenuButtonTableCell.self)")
         tableView.separatorStyle = .none
-        tableView.backgroundColor = WOLResources.Asset.Colors.soft.color
+        tableView.backgroundColor = Asset.Colors.soft.color
         tableView.tableHeaderView = self.tableHeaderView
 
         return tableView
@@ -70,7 +73,7 @@ final class AboutScreenView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = WOLResources.Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.soft.color
         addSubviews()
         makeConstraints()
     }

@@ -6,6 +6,7 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
+import RouterProtocol
 import SharedProtocols
 import UIKit
 

@@ -16,14 +16,14 @@ final class AboutHeaderTableView: UIView {
 
     private lazy var appNameLabel: UILabel = {
         let label = UILabel()
-        label.font = FontFamily.Roboto.medium.font(size: 36)
+        label.font = .systemFont(ofSize: 36, weight: .medium)
         label.textColor = Asset.Colors.gray900.color
         return label
     }()
 
     private lazy var appVersionLabel: UILabel = {
         let label = UILabel()
-        label.font = FontFamily.Roboto.medium.font(size: 12)
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = Asset.Colors.gray.color
         return label
     }()

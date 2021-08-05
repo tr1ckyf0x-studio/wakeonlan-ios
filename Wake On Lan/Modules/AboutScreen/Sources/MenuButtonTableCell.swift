@@ -24,8 +24,8 @@ final class MenuButtonTableCell: UITableViewCell {
 
     private lazy var buttonTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = WOLResources.FontFamily.Roboto.bold.font(size: 14)
-        label.textColor = WOLResources.Asset.Colors.lightGray.color
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.textColor = Asset.Colors.lightGray.color
         return label
     }()
 
@@ -35,7 +35,7 @@ final class MenuButtonTableCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = WOLResources.Asset.Colors.soft.color
+        contentView.backgroundColor = Asset.Colors.soft.color
         addSubviews()
         makeConstraints()
     }

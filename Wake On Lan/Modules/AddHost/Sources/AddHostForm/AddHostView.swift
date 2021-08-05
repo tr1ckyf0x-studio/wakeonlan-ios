@@ -6,11 +6,11 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import SnapKit
+import SharedExtensions
+import UIKit
 import WOLUIComponents
 import WOLResources
-import SharedExtensions
 
 protocol AddHostViewDelegate: AnyObject {
     func addHostViewDidPressSaveButton(_ view: AddHostView)
@@ -37,7 +37,7 @@ final class AddHostView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
-        tableView.backgroundColor = WOLResources.Asset.Colors.soft.color
+        tableView.backgroundColor = Asset.Colors.soft.color
 
         return tableView
     }()
@@ -46,11 +46,7 @@ final class AddHostView: UIView {
         let button = SoftUIView(circleShape: true)
         let image = UIImage(sfSymbol: ButtonIcon.checkmark, withConfiguration: .init(weight: .semibold))
         let imageView = UIImageView(image: image)
-        imageView.tintColor = WOLResources
-            .Asset
-            .Colors
-            .lightGray
-            .color
+        imageView.tintColor = Asset.Colors.lightGray.color
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
@@ -65,11 +61,7 @@ final class AddHostView: UIView {
         let button = SoftUIView(circleShape: true)
         let image = UIImage(sfSymbol: ButtonIcon.chevronBackward, withConfiguration: .init(weight: .semibold))
         let imageView = UIImageView(image: image)
-        imageView.tintColor = WOLResources
-            .Asset
-            .Colors
-            .lightGray
-            .color
+        imageView.tintColor = Asset.Colors.lightGray.color
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
@@ -84,7 +76,7 @@ final class AddHostView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = WOLResources.Asset.Colors.white.color
+        backgroundColor = Asset.Colors.white.color
         setupTableView()
         registerNotifications()
     }

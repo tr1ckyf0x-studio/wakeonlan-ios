@@ -14,12 +14,12 @@ public final class EmptyView: UIView {
 
     private lazy var containerView = UIView()
 
-    private lazy var imageView = UIImageView(image: WOLResources.Asset.Assets.owl.image)
+    private lazy var imageView = UIImageView(image: Asset.Assets.owl.image)
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = WOLResources.L10n.WakeOnLan.emptyViewMessage
-        label.textColor = WOLResources.Asset.Colors.lightGray.color
+        label.text = L10n.WakeOnLan.emptyViewMessage
+        label.textColor = Asset.Colors.lightGray.color
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
