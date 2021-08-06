@@ -19,6 +19,7 @@ let package = Package(
         .package(path: "../WOLUIComponents"),
         .package(path: "../SharedProtocols"),
         .package(path: "../SharedExtensions"),
+        .package(path: "../RouterProtocol"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.0.0")
     ],
     targets: [
@@ -31,6 +32,7 @@ let package = Package(
                 "WOLUIComponents",
                 "SharedProtocols",
                 "SharedExtensions",
+                "RouterProtocol",
                 "SnapKit"
             ],
             path: "Sources")
