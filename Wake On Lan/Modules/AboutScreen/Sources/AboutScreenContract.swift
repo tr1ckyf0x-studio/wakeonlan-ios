@@ -19,7 +19,7 @@ protocol AboutScreenViewOutput: AnyObject {
 
 protocol AboutScreenViewInput: AnyObject {
 
-    func configure(with appName: String, appVersion: String?, rows: [MenuButtonCellViewModel])
+    func configure(with sections: [AboutScreenSectionModel])
 
     func displayShareApp(with appURL: String)
 

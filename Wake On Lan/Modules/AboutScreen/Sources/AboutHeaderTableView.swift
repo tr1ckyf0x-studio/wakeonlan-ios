@@ -10,9 +10,15 @@ import SnapKit
 import UIKit
 import WOLResources
 
-final class AboutHeaderTableView: UIView {
+final class AboutHeaderTableView: UITableViewHeaderFooterView {
 
     // MARK: - Properties
+
+    private lazy var logoImageView: UIImageView = {
+        let image = Asset.Assets.owl.image
+        let imageView = UIImageView(image: image)
+        return imageView
+    }()
 
     private lazy var appNameLabel: UILabel = {
         let label = UILabel()
@@ -30,8 +36,9 @@ final class AboutHeaderTableView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        setupView()
         addSubviews()
         makeConstraints()
     }
@@ -52,20 +59,33 @@ extension AboutHeaderTableView {
 
 private extension AboutHeaderTableView {
 
+    func setupView() {
+        tintColor = Asset.Colors.soft.color
+    }
+
     func addSubviews() {
+        addSubview(logoImageView)
         addSubview(appNameLabel)
         addSubview(appVersionLabel)
     }
 
     func makeConstraints() {
+        logoImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
+            make.width.equalTo(logoImageView.snp.height)
+            make.width.equalToSuperview().multipliedBy(0.4)
+        }
+
         appNameLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(16)
+            make.top.equalTo(logoImageView.snp.bottom).offset(16)
         }
 
         appVersionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(appNameLabel.snp.bottom).offset(8)
+            make.bottom.equalToSuperview().inset(16)
         }
     }
 }

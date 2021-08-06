@@ -16,7 +16,6 @@ protocol AboutScreenViewDelegate: AnyObject {
 }
 
 protocol AboutScreenViewRepresentable {
-    func configure(with appName: String, appVersion: String?)
     func configureTableView(with manager: ManagingAboutScreenTable)
     func reloadData()
 }
@@ -33,7 +32,6 @@ final class AboutScreenView: UIView {
         )
         let backBarTintColor = Asset.Colors.lightGray.color
         let backBarButtonSize: CGFloat = 32.0
-        let tableHeaderSize: CGRect = .init(origin: .zero, size: .init(width: 210, height: 105))
     }
 
     // MARK: - Properties
@@ -59,15 +57,21 @@ final class AboutScreenView: UIView {
 
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(MenuButtonTableCell.self, forCellReuseIdentifier: "\(MenuButtonTableCell.self)")
+        tableView.register(
+            MenuButtonTableCell.self,
+            forCellReuseIdentifier: "\(MenuButtonTableCell.self)"
+        )
+        tableView.register(
+            AboutHeaderTableView.self,
+            forHeaderFooterViewReuseIdentifier: "\(AboutHeaderTableView.self)"
+        )
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.backgroundColor = Asset.Colors.soft.color
-        tableView.tableHeaderView = self.tableHeaderView
 
         return tableView
     }()
-
-    private lazy var tableHeaderView = AboutHeaderTableView(frame: appearance.tableHeaderSize)
 
     // MARK: - Init
 
@@ -94,10 +98,6 @@ extension AboutScreenView: AboutScreenViewRepresentable {
     func configureTableView(with manager: ManagingAboutScreenTable) {
         tableView.dataSource = manager
         tableView.delegate = manager
-    }
-
-    func configure(with appName: String, appVersion: String?) {
-        tableHeaderView.configure(appName: appName, appVersion: appVersion)
     }
 
 }

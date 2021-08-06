@@ -58,9 +58,8 @@ extension AboutScreenViewController: AboutScreenViewDelegate {
 
 extension AboutScreenViewController: AboutScreenViewInput {
 
-    func configure(with appName: String, appVersion: String?, rows: [MenuButtonCellViewModel]) {
-        aboutScreenView.configure(with: appName, appVersion: appVersion)
-        tableManager.rows = rows
+    func configure(with sections: [AboutScreenSectionModel]) {
+        tableManager.sections = sections
         aboutScreenView.reloadData()
     }
 

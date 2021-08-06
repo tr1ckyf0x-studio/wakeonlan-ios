@@ -9,32 +9,67 @@
 import UIKit
 
 public protocol ManagingAboutScreenTable: UITableViewDataSource, UITableViewDelegate {
-    var rows: [MenuButtonCellViewModel] { get set }
+    var sections: [AboutScreenSectionModel] { get set }
 }
 
 public final class AboutScreenTableManager: NSObject, ManagingAboutScreenTable {
-    public var rows: [MenuButtonCellViewModel] = []
+    public var sections: [AboutScreenSectionModel] = []
 }
 
 // MARK: - UITableViewDataSource
 
 extension AboutScreenTableManager: UITableViewDataSource {
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        rows.count
+        sections[section].items.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = rows[indexPath.row]
-        guard
-            let cell = tableView.dequeueReusableCell(
+        let model = sections[indexPath.section].items[indexPath.row]
+
+        var cell: UITableViewCell?
+
+        switch model {
+        case let .menuButton(menuButtonCellViewModel):
+            let menuButtonCell = tableView.dequeueReusableCell(
                 withIdentifier: "\(MenuButtonTableCell.self)",
                 for: indexPath
             ) as? MenuButtonTableCell
-        else {
-            return .init()
+
+            menuButtonCell?.configure(with: menuButtonCellViewModel)
+
+            cell = menuButtonCell
         }
-        cell.configure(with: model)
+
+        guard let cell = cell else {
+            fatalError("Cell was not initialized")
+        }
 
         return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension AboutScreenTableManager: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let model = sections[section]
+
+        var headerView: UIView?
+
+        switch model {
+        case let .mainSection(_, appName, appVersion):
+            let view = tableView.dequeueReusableHeaderFooterView(
+                withIdentifier: "\(AboutHeaderTableView.self)"
+            ) as? AboutHeaderTableView
+
+            view?.configure(appName: appName, appVersion: appVersion)
+            headerView = view
+        }
+
+        return headerView
     }
 }
