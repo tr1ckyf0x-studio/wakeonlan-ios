@@ -60,11 +60,8 @@ extension AboutScreenPresenter: AboutScreenViewOutput {
 extension AboutScreenPresenter: AboutScreenInteractorOutput {
 
     func interactor(_: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo) {
-        view?.configure(
-            with: bundleInfo.displayName,
-            appVersion: bundleInfo.version,
-            rows: makeRows(from: bundleInfo)
-        )
+        let sections = makeSections(from: bundleInfo)
+        view?.configure(with: sections)
     }
 }
 
@@ -72,8 +69,8 @@ extension AboutScreenPresenter: AboutScreenInteractorOutput {
 
 private extension AboutScreenPresenter {
 
-    func makeRows(from bundleInfo: BundleInfo) -> [MenuButtonCellViewModel] {
-        [
+    func makeSections(from bundleInfo: BundleInfo) -> [AboutScreenSectionModel] {
+        let rows: [MenuButtonCellViewModel] = [
             .init(title: L10n.AboutScreen.rateApp, action: { [weak self] in
                 self?.reviewRequester.requestReview()
             }),
@@ -85,5 +82,17 @@ private extension AboutScreenPresenter {
                 self?.view?.displayShareApp(with: Configuration.appStoreURL)
             })
         ]
+
+        let cellViewModels = rows.map { (cellViewModel: MenuButtonCellViewModel) -> AboutScreenSectionItem in
+            AboutScreenSectionItem.menuButton(cellViewModel)
+        }
+
+        let mainSection = AboutScreenSectionModel.mainSection(
+            content: cellViewModels,
+            appName: bundleInfo.displayName,
+            appVersion: bundleInfo.version
+        )
+
+        return [mainSection]
     }
 }
