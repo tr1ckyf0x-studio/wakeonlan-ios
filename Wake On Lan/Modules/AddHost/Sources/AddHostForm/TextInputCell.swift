@@ -60,7 +60,7 @@ final class TextInputCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = WOLResources.Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.soft.color
         configureViews()
     }
 
@@ -79,16 +79,16 @@ final class TextInputCell: UITableViewCell {
         contentView.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(44)
-            make.leading.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(16)
             make.top.equalToSuperview()
-            make.trailing.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(16)
         }
     }
 
     private func configureFailureLabel() {
         contentView.addSubview(failureView)
         failureView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(15)
+            $0.leading.trailing.equalToSuperview().inset(32)
             $0.top.equalTo(textField.snp.bottom)
             $0.bottom.equalTo(contentView.snp.bottom)
         }
@@ -103,7 +103,7 @@ final class TextInputCell: UITableViewCell {
             target: self,
             action: #selector(didTapDoneButton)
         )
-        doneButton.tintColor = WOLResources.Asset.Colors.lightGray.color
+        doneButton.tintColor = Asset.Colors.lightGray.color
         let flexibleSpace = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace,
             target: nil,
@@ -141,10 +141,11 @@ extension TextInputCell: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextResponderTag = textField.tag + 1
-        guard let nextResponder =
-            superview?.viewWithTag(nextResponderTag) else {
-                textField.resignFirstResponder()
-                return true
+        guard
+            let nextResponder = superview?.viewWithTag(nextResponderTag)
+        else {
+            textField.resignFirstResponder()
+            return true
         }
         nextResponder.becomeFirstResponder()
         if let indexPath = textFormItem?.indexPath {
@@ -200,7 +201,7 @@ private class AddHostFailureView: UIView {
 
     private let failureLabel: UILabel = {
         let label = UILabel()
-        label.textColor = WOLResources.Asset.Colors.red.color
+        label.textColor = Asset.Colors.red.color
         // TODO: Consider another font
         label.font = .boldSystemFont(ofSize: 12.0)
 
@@ -227,8 +228,8 @@ private class AddHostFailureView: UIView {
     func show() {
         addSubview(failureLabel)
         failureLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.greaterThanOrEqualToSuperview().offset(20)
+            $0.leading.equalToSuperview()
+            $0.trailing.greaterThanOrEqualToSuperview()
             $0.top.equalToSuperview().offset(10)
             $0.bottom.equalToSuperview().inset(10).priority(.low)
         }

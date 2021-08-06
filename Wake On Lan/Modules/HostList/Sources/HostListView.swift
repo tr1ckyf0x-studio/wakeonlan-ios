@@ -13,6 +13,7 @@ import WOLResources
 
 protocol HostListViewDelegate: AnyObject {
     func hostListViewDidPressAddButton(_ view: HostListView)
+    func hostListViewDidPressAboutButton(_ view: HostListView)
 }
 
 final class HostListView: UIView {
@@ -20,7 +21,8 @@ final class HostListView: UIView {
     // MARK: - Constants
 
     private enum Constants {
-        static let addItemButtonDimensions = 32.0
+        static let barButtonDimensions = 32.0
+        static let barButtonSpacing: CGFloat = 16.0
     }
 
     // MARK: - Properties
@@ -38,7 +40,7 @@ final class HostListView: UIView {
         )
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = WOLResources.Asset.Colors.soft.color
+        tableView.backgroundColor = Asset.Colors.soft.color
 
         return tableView
     }()
@@ -46,13 +48,50 @@ final class HostListView: UIView {
     lazy var emptyView: EmptyView = {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
-            title: WOLResources.L10n.WakeOnLan.emptyViewMessage,
-            image: WOLResources.Asset.Assets.owl.image,
-            backgroundColor: WOLResources.Asset.Colors.soft.color
+            title: L10n.WakeOnLan.emptyViewMessage,
+            image: Asset.Assets.owl.image,
+            backgroundColor: Asset.Colors.soft.color
         )
         emptyView.configure(with: viewModel)
 
         return emptyView
+    }()
+
+    lazy var aboutButton: UIBarButtonItem = {
+        let aboutButton: SoftUIView = {
+            let button = SoftUIView(circleShape: true)
+            let image = UIImage(sfSymbol: ButtonIcon.questionmark, withConfiguration: .init(weight: .semibold))
+            let imageView = UIImageView(image: image)
+            imageView.tintColor = Asset.Colors.lightGray.color
+            button.configure(with: SoftUIViewModel(contentView: imageView))
+            button.addTarget(
+                self,
+                action: #selector(didTapAboutButton(_:)),
+                for: .touchUpInside
+            )
+            imageView.snp.makeConstraints {
+                $0.center.equalToSuperview()
+            }
+
+            return button
+        }()
+
+        let barButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: aboutButton)
+            button.customView?.snp.makeConstraints {
+                $0.size.equalTo(Constants.barButtonDimensions)
+            }
+
+            return button
+        }()
+
+        return barButton
+    }()
+
+    lazy var barButtonSpacer: UIBarButtonItem = {
+        let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer.width = Constants.barButtonSpacing
+        return spacer
     }()
 
     // swiftlint:disable closure_body_length
@@ -82,7 +121,7 @@ final class HostListView: UIView {
         let barButton: UIBarButtonItem = {
             let button = UIBarButtonItem(customView: addButton)
             button.customView?.snp.makeConstraints {
-                $0.size.equalTo(Constants.addItemButtonDimensions)
+                $0.size.equalTo(Constants.barButtonDimensions)
             }
 
             return button
@@ -95,7 +134,7 @@ final class HostListView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = WOLResources.Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.soft.color
         setupTableView()
     }
 
@@ -118,6 +157,10 @@ private extension HostListView {
 
     @objc func didTapAddButton(_ sender: UIButton) {
         delegate?.hostListViewDidPressAddButton(self)
+    }
+
+    @objc func didTapAboutButton(_ sender: UIButton) {
+        delegate?.hostListViewDidPressAboutButton(self)
     }
 
 }

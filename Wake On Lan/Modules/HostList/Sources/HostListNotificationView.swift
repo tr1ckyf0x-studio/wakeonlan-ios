@@ -19,13 +19,13 @@ protocol NotificationViewStyle {
 enum NotificationViewType {
 
     struct Default: NotificationViewStyle {
-        static let text = WOLResources.L10n.HostList.packetSent
-        static let backgroundColor = WOLResources.Asset.Colors.lightGray.color
+        static let text = L10n.HostList.packetSent
+        static let backgroundColor = Asset.Colors.lightGray.color
     }
 
     struct Failure: NotificationViewStyle {
-        static let text = WOLResources.L10n.HostList.checkWifiConnection
-        static let backgroundColor = WOLResources.Asset.Colors.red.color
+        static let text = L10n.HostList.checkWifiConnection
+        static let backgroundColor = Asset.Colors.red.color
     }
 
 }
@@ -48,7 +48,7 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
     private lazy var notificationLabel: UILabel = {
         let label = UILabel()
         label.text = style.text
-        label.textColor = WOLResources.Asset.Colors.white.color
+        label.textColor = Asset.Colors.white.color
         label.textAlignment = .center
         label.backgroundColor = style.backgroundColor
         label.font = .systemFont(ofSize: 12, weight: .medium)

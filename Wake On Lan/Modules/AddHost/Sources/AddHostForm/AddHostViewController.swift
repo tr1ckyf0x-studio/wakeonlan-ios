@@ -31,8 +31,8 @@ public final class AddHostViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupNavigationBar()
-        view.backgroundColor = WOLResources.Asset.Colors.soft.color
-        title = WOLResources.L10n.AddHost.addHost
+        view.backgroundColor = Asset.Colors.soft.color
+        title = L10n.AddHost.addHost
         presenter?.viewDidLoad(self)
     }
 

@@ -7,59 +7,65 @@
 
 import Foundation
 
+// MARK: - SFSymbolFactory
+
+public enum SFSymbolFactory {
+    private typealias SymbolType = SFSymbolRepresentable & RawStringInitable
+
+    private static let hostTypes: [SymbolType.Type] = [ButtonIcon.self, HostIcon.self]
+
+    public static func build(from rawValue: String) -> SFSymbolRepresentable? {
+        hostTypes.lazy.compactMap { $0.init(rawString: rawValue) }.first
+    }
+}
+
+// MARK: - SFSymbolRepresentable
+
 public protocol SFSymbolRepresentable {
     var systemName: String { get }
 }
 
-private protocol RawStringInitializable {
-    init?(rawString: String)
-}
-
-private extension RawStringInitializable where Self: RawRepresentable, RawValue == String {
-    init?(rawString: String) {
-        self.init(rawValue: rawString)
-    }
-}
-
 public extension SFSymbolRepresentable where Self: RawRepresentable, RawValue == String {
-    var systemName: String {
-        rawValue
-    }
+    var systemName: String { rawValue }
 }
 
-public enum ButtonIcon: String, SFSymbolRepresentable, RawStringInitializable {
-    case questionmark
-    case plus
-    case chevronBackward = "chevron.backward"
+// MARK: - ButtonIcon
+
+public enum ButtonIcon: String, SFSymbolRepresentable, RawStringInitable {
     case checkmark
+    case chevronBackward = "chevron.backward"
     case ellipsis
+    case plus
+    case questionmark
     case trash
 }
 
-public enum HostIcon: String, CaseIterable, SFSymbolRepresentable, RawStringInitializable {
+// MARK: - HostIcon
+
+public enum HostIcon: String, CaseIterable, SFSymbolRepresentable, RawStringInitable {
     case desktopcomputer
-    case tv
-    case pc
-    case macproGen1 = "macpro.gen1"
-    case macproGen3 = "macpro.gen3"
-    case serverRack = "server.rack"
-    case xserve
-    case laptopcomputer
-    case macmini
-    case printer
-    case scanner
     case externalDriveConnected = "externaldrive.connected.to.line.below"
     case externalDriveWifi = "externaldrive.badge.wifi"
+    case laptopcomputer
+    case macproGen1 = "macpro.gen1"
+    case macproGen3 = "macpro.gen3"
+    case macmini
+    case pc
+    case printer
+    case scanner
+    case serverRack = "server.rack"
+    case tv
+    case xserve
 }
 
-public enum SFSymbolRepresentableFactory {
-    private typealias SymbolType = SFSymbolRepresentable & RawStringInitializable
+// MARK: - Private
 
-    private static let hostTypes = [ButtonIcon.self, HostIcon.self] as [SymbolType.Type]
+private protocol RawStringInitable {
+    init?(rawString: String)
+}
 
-    public static func sfSymbolRepresentable(for rawValue: String) -> SFSymbolRepresentable? {
-        hostTypes.lazy.compactMap { type -> SFSymbolRepresentable? in
-            type.init(rawString: rawValue)
-        }.first
+private extension RawStringInitable where Self: RawRepresentable, RawValue == String {
+    init?(rawString: String) {
+        self.init(rawValue: rawString)
     }
 }

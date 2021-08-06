@@ -16,6 +16,7 @@ protocol HostListViewOutput: AnyObject {
 
     func viewDidLoad(_ view: HostListViewInput)
     func viewDidPressAddButton(_ view: HostListViewInput)
+    func viewDidPressAboutButton(_ view: HostListViewInput)
 }
 
 protocol HostListViewInput: AnyObject {
@@ -39,4 +40,5 @@ protocol HostListInteractorOutput: AnyObject {
 
 protocol HostListRouterProtocol: AnyObject {
     func routeToAddHost(with host: Host?)
+    func routeToAbout()
 }

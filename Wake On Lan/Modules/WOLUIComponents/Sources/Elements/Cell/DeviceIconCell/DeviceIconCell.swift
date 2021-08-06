@@ -27,9 +27,9 @@ public final class DeviceIconCell: UITableViewCell {
     private let changeIconLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.textColor = WOLResources.Asset.Colors.gray.color
+        label.textColor = Asset.Colors.gray.color
         label.font = .systemFont(ofSize: 12)
-        label.text = WOLResources.L10n.WakeOnLan.changeIcon
+        label.text = L10n.WakeOnLan.changeIcon
 
         return label
     }()

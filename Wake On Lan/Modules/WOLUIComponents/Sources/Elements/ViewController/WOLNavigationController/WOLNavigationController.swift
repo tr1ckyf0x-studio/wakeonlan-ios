@@ -28,14 +28,14 @@ private extension WOLNavigationController {
 
     private func configure() {
         // Change background color
-        navigationBar.barTintColor = WOLResources.Asset.Colors.soft.color
+        navigationBar.barTintColor = Asset.Colors.soft.color
 
         // Remove bottom line
         navigationBar.shadowImage = UIImage()
         navigationBar.setBackgroundImage(UIImage(), for: .default)
 
         // Change color of tappable items
-        navigationBar.tintColor = WOLResources.Asset.Colors.soft.color
+        navigationBar.tintColor = Asset.Colors.soft.color
         navigationBar.isTranslucent = false
     }
 

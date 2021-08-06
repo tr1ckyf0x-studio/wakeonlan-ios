@@ -27,19 +27,19 @@ final class AddHostForm: AddHostFormRepresentable {
         var description: String {
             switch self {
             case .invalidMACAddress:
-                return WOLResources.L10n.AddHostFailure.invalidMACAddress
+                return L10n.AddHostFailure.invalidMACAddress
 
             case .invalidIPAddress:
-                return WOLResources.L10n.AddHostFailure.invalidIPAddress
+                return L10n.AddHostFailure.invalidIPAddress
 
             case .invalidPort:
-                return WOLResources.L10n.AddHostFailure.invalidPort
+                return L10n.AddHostFailure.invalidPort
 
             case .invalidTitle:
-                return WOLResources.L10n.AddHostFailure.invalidTitle
+                return L10n.AddHostFailure.invalidTitle
 
             case .unknown:
-                return WOLResources.L10n.AddHostFailure.unknown
+                return L10n.AddHostFailure.unknown
             }
         }
     }
@@ -47,10 +47,10 @@ final class AddHostForm: AddHostFormRepresentable {
     // MARK: - Constants
 
     private enum Placeholder {
-        static let title = WOLResources.L10n.AddHost.AddHost.Placeholder.title
-        static let macAddress = WOLResources.L10n.AddHost.AddHost.Placeholder.macAddress
-        static let ipAddress = WOLResources.L10n.AddHost.AddHost.Placeholder.ipAddress
-        static let port = WOLResources.L10n.AddHost.AddHost.Placeholder.port
+        static let title = L10n.AddHost.AddHost.Placeholder.title
+        static let macAddress = L10n.AddHost.AddHost.Placeholder.macAddress
+        static let ipAddress = L10n.AddHost.AddHost.Placeholder.ipAddress
+        static let port = L10n.AddHost.AddHost.Placeholder.port
     }
 
     // MARK: - Properties
@@ -60,8 +60,8 @@ final class AddHostForm: AddHostFormRepresentable {
     private(set) var host: Host? {
         didSet {
             guard let host = host else { return }
-            let sfSymbol = SFSymbolRepresentableFactory.sfSymbolRepresentable(for: host.iconName)
-            iconModel = sfSymbol.map(IconModel.init(sfSymbol:))
+            let sfSymbol = SFSymbolFactory.build(from: host.iconName)
+            iconModel = sfSymbol.map { IconModel(sfSymbol: $0) }
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
             ipAddressItem.value = host.ipAddress
@@ -165,29 +165,29 @@ final class AddHostForm: AddHostFormRepresentable {
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
-            header: .init(header: WOLResources.L10n.AddHost.title),
-            footer: .init(footer: WOLResources.L10n.AddHost.titleDescription),
+            header: .init(header: L10n.AddHost.title),
+            footer: .init(footer: L10n.AddHost.titleDescription),
             kind: .title
         )
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
-            header: .init(header: WOLResources.L10n.AddHost.macAddress),
-            footer: .init(footer: WOLResources.L10n.AddHost.macAddressDescription),
+            header: .init(header: L10n.AddHost.macAddress),
+            footer: .init(footer: L10n.AddHost.macAddressDescription),
             kind: .macAddress
         )
 
         let ipAddressSection = FormSection.section(
             content: [ipAddressFormItem],
-            header: .init(header: WOLResources.L10n.AddHost.ipAddress, mandatory: false),
-            footer: .init(footer: WOLResources.L10n.AddHost.ipAddressDescription),
+            header: .init(header: L10n.AddHost.ipAddress, mandatory: false),
+            footer: .init(footer: L10n.AddHost.ipAddressDescription),
             kind: .ipAddress
         )
 
         let portSection = FormSection.section(
             content: [portFormItem],
-            header: .init(header: WOLResources.L10n.AddHost.port, mandatory: false),
-            footer: .init(footer: WOLResources.L10n.AddHost.portDescription),
+            header: .init(header: L10n.AddHost.port, mandatory: false),
+            footer: .init(footer: L10n.AddHost.portDescription),
             kind: .port
         )
 
