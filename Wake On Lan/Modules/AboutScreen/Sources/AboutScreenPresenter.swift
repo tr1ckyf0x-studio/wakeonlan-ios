@@ -71,14 +71,14 @@ private extension AboutScreenPresenter {
 
     func makeSections(from bundleInfo: BundleInfo) -> [AboutScreenSectionModel] {
         let rows: [MenuButtonCellViewModel] = [
-            .init(title: L10n.AboutScreen.rateApp, action: { [weak self] in
+            .init(title: L10n.AboutScreen.rateApp, symbol: ButtonIcon.star, action: { [weak self] in
                 self?.reviewRequester.requestReview()
             }),
-            .init(title: L10n.AboutScreen.github, action: { [weak self] in
+            .init(title: L10n.AboutScreen.github, symbol: ButtonIcon.tag, action: { [weak self] in
                 guard let url = URL(string: Configuration.gitHubURL) else { return }
                 self?.urlOpener.open(url: url)
             }),
-            .init(title: L10n.AboutScreen.shareApp, action: { [weak self] in
+            .init(title: L10n.AboutScreen.shareApp, symbol: ButtonIcon.share, action: { [weak self] in
                 self?.view?.displayShareApp(with: Configuration.appStoreURL)
             })
         ]
