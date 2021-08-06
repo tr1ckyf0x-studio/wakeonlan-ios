@@ -41,17 +41,19 @@ extension AddHostTableManager: UITableViewDataSource {
         let model = sections[indexPath.section].items[indexPath.row]
         switch model {
         case .text(let textFormItem):
-            let textInputCell =
-                tableView.dequeueReusableCell(
-                    withIdentifier: "\(TextInputCell.self)",
-                    for: indexPath
-                ) as? TextInputCell
+            let textInputCell = tableView.dequeueReusableCell(
+                withIdentifier: "\(TextInputCell.self)",
+                for: indexPath
+            ) as? TextInputCell
             textFormItem.indexPath = indexPath
             textInputCell?.configure(with: model)
             // Scroll table view to next responder
             textInputCell?.onNextResponderAction = { indexPath in
-                guard let nextIndexPath =
-                    tableView.nextIndexPath(for: indexPath) else { return }
+                guard
+                    let nextIndexPath = tableView.nextIndexPath(for: indexPath)
+                else {
+                    return
+                }
                 tableView.scrollToRow(at: nextIndexPath, at: .top, animated: true)
             }
             // NOTE: We need to hide failure label in
@@ -131,15 +133,18 @@ private extension NSMutableAttributedString {
     func appendOptional() {
         let additionalAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.italicSystemFont(ofSize: 12),
-            .foregroundColor: WOLResources.Asset.Colors.lightGray.color
+            .foregroundColor: Asset.Colors.lightGray.color
         ]
         let additionalAttributedString =
             NSMutableAttributedString(
-                string: " - " + WOLResources.L10n.AddHost.optional,
+                string: " - " + L10n.AddHost.optional,
                 attributes: additionalAttributes
             )
-        guard let attributedText =
-                additionalAttributedString.copy() as? NSAttributedString else { return }
+        guard
+            let attributedText = additionalAttributedString.copy() as? NSAttributedString
+        else {
+            return
+        }
         append(attributedText)
     }
 

@@ -69,7 +69,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
+        imageView.tintColor = Asset.Colors.lightGray.color
         imageView.contentMode = .scaleAspectFit
 
         return imageView
@@ -78,7 +78,7 @@ final class HostListTableViewCell: UITableViewCell {
     private let hostTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .medium)
-        label.textColor = WOLResources.Asset.Colors.gray.color
+        label.textColor = Asset.Colors.gray.color
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -88,7 +88,7 @@ final class HostListTableViewCell: UITableViewCell {
     private let macAddressTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = WOLResources.Asset.Colors.darkGray.color
+        label.textColor = Asset.Colors.darkGray.color
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -119,7 +119,7 @@ final class HostListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = WOLResources.Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.soft.color
         setupScrollView()
         setupBaseView()
         setupDeleteView()
@@ -136,7 +136,7 @@ final class HostListTableViewCell: UITableViewCell {
     // MARK: - Public
 
     func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
-        let sfSymbol = SFSymbolRepresentableFactory.sfSymbolRepresentable(for: model.iconName)
+        let sfSymbol = SFSymbolFactory.build(from: model.iconName)
         let image = sfSymbol.flatMap { UIImage(sfSymbol: $0) }
         hostTitle.text = model.title
         deviceImageView.image = image

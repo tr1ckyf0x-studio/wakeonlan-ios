@@ -15,9 +15,9 @@ public class SoftUIView: UIControl {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        var mainColor: CGColor { WOLResources.Asset.Colors.soft.color.resolved }
-        var darkShadowColor: CGColor { WOLResources.Asset.Colors.darkSoftShadow.color.resolved }
-        var lightShadowColor: CGColor { WOLResources.Asset.Colors.lightSoftShadow.color.resolved }
+        var mainColor: CGColor { Asset.Colors.soft.color.resolved }
+        var darkShadowColor: CGColor { Asset.Colors.darkSoftShadow.color.resolved }
+        var lightShadowColor: CGColor { Asset.Colors.lightSoftShadow.color.resolved }
 
         var darkShadowOpacity: Float {
             guard #available(iOS 13.0, *) else { return 1 }
@@ -217,7 +217,7 @@ public class SoftUIView: UIControl {
 extension SoftUIView: ConfigurableSoftUIView {
 
     public func configure(with model: DescribesSoftUIViewModel) {
-        contentView.map { $0.transform = .identity }
+        contentView.map { $0.transform = model.selectedTransform ?? .identity }
         [contentView, selectedContentView].compactMap { $0 }.forEach {
             $0.removeFromSuperview()
         }

@@ -61,6 +61,8 @@ packages:
     path: Wake On Lan/Modules/HostList
   RouterProtocol:
     path: Wake On Lan/Modules/RouterProtocol
+  AboutScreen:
+    path: Wake On Lan/Modules/AboutScreen
 
 targets:
   Wake on LAN:
@@ -90,6 +92,7 @@ targets:
       - package: WOLUIComponents
       - package: AddHost
       - package: HostList
+      - package: AboutScreen
 
     settings:
       base:

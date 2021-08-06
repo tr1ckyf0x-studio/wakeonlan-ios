@@ -24,7 +24,7 @@ final class DeviceIconView: UIView {
         let image = UIImage(sfSymbol: HostIcon.desktopcomputer)
         let imageView = UIImageView(image: image)
         imageView.layer.cornerRadius = 14
-        imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
+        imageView.tintColor = Asset.Colors.lightGray.color
         imageView.isUserInteractionEnabled = true
         imageView.contentMode = .scaleAspectFit
 

@@ -34,6 +34,9 @@ extension HostListPresenter: HostListViewOutput {
         router?.routeToAddHost(with: nil)
     }
 
+    func viewDidPressAboutButton(_ view: HostListViewInput) {
+        router?.routeToAbout()
+    }
 }
 
 // MARK: - HostListInteractorOutput

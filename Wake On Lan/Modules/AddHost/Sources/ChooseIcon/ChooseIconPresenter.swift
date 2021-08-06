@@ -17,14 +17,13 @@ final class ChooseIconPresenter {
 
     private(set) lazy var tableManager = ChooseIconTableManager(with: sections)
 
-    private let sections: [ChooseIconSection] = {
+    private let sections: [ChooseIconSection] =
         [
             HostIcon.allCases
-                .map(IconModel.init(sfSymbol:))
+                .map { IconModel(sfSymbol: $0) }
                 .map { .icon($0) }
         ]
-        .map { ChooseIconSection.section(content: $0) }
-    }()
+        .map { .section(content: $0) }
 
 }
 
@@ -46,6 +45,7 @@ extension ChooseIconPresenter: ChooseIconViewOutput {
 // MARK: - ChooseIconTableManagerDelegate
 
 extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
+
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
         moduleDelegate?.chooseIconModuleDidSelectIcon(icon)
         view.dismiss(animated: true)
