@@ -38,6 +38,9 @@ public enum ButtonIcon: String, SFSymbolRepresentable, RawStringInitable {
     case plus
     case questionmark
     case trash
+    case star = "star.fill"
+    case share = "square.and.arrow.up"
+    case tag
 }
 
 // MARK: - HostIcon

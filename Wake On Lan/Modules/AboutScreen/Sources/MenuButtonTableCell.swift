@@ -17,9 +17,23 @@ final class MenuButtonTableCell: UITableViewCell {
 
     private lazy var buttonBodyView: SoftUIView = {
         let view = SoftUIView()
-        view.configure(with: SoftUIViewModel(contentView: buttonTitleLabel))
+        view.configure(with: SoftUIViewModel(contentView: buttonContentView))
         view.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return view
+    }()
+
+    private lazy var buttonContentView: UIView = {
+        let view = UIView()
+        view.addSubview(buttonImageView)
+        view.addSubview(buttonTitleLabel)
+        return view
+    }()
+
+    private lazy var buttonImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = Asset.Colors.lightGray.color
+        return imageView
     }()
 
     private lazy var buttonTitleLabel: UILabel = {
@@ -56,6 +70,7 @@ final class MenuButtonTableCell: UITableViewCell {
 
 extension MenuButtonTableCell {
     func configure(with model: MenuButtonCellViewModel) {
+        buttonImageView.image = UIImage(sfSymbol: model.symbol, withConfiguration: .init(weight: .semibold))
         buttonTitleLabel.text = model.title
         self.action = model.action
     }
@@ -76,9 +91,20 @@ private extension MenuButtonTableCell {
             make.bottom.equalToSuperview().inset(8)
         }
 
-        buttonTitleLabel.snp.makeConstraints { make in
+        buttonContentView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(16)
         }
+
+        buttonImageView.snp.makeConstraints { make in
+            make.leading.centerY.equalToSuperview()
+        }
+
+        buttonTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(buttonImageView.snp.trailing).offset(8)
+            make.top.bottom.trailing.equalToSuperview()
+        }
+
+        buttonImageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 
     @objc func buttonPressed() {
