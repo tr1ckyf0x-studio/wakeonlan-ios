@@ -49,9 +49,13 @@ final class AboutHeaderTableView: UITableViewHeaderFooterView {
 }
 
 extension AboutHeaderTableView {
-    func configure(appName: String, appVersion: String?) {
+    func configure(appName: String, appVersion: String?, build: String?) {
         appNameLabel.text = appName
-        appVersionLabel.text = "\(L10n.AboutScreen.version) \(appVersion ?? .empty)"
+
+        let appVersion = appVersion ?? .empty
+        let build = build ?? .empty
+        let versionText = "\(appVersion) build \(build)"
+        appVersionLabel.text = "\(L10n.AboutScreen.version) \(versionText)"
     }
 }
 

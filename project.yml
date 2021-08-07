@@ -97,7 +97,7 @@ targets:
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
-        DISPLAY_NAME: "Wake on LAN"
+        DISPLAY_NAME: "Awake"
         INFOPLIST_FILE: "Wake on LAN/Info.plist"
         OTHER_LDFLAGS: $(inherited) -ObjC
         DEVELOPMENT_TEAM: SGM5527A99

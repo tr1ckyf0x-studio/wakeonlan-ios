@@ -15,11 +15,11 @@ public enum AboutScreenSectionModel {
 
     public typealias Item = AboutScreenSectionItem
 
-    case mainSection(content: [Item], appName: String, appVersion: String?)
+    case mainSection(content: [Item], appName: String, appVersion: String?, build: String?)
 
     var items: [Item] {
         switch self {
-        case let .mainSection(content, _, _): return content
+        case let .mainSection(content, _, _, _): return content
         }
     }
 }
