@@ -61,12 +61,12 @@ extension AboutScreenTableManager: UITableViewDelegate {
         var headerView: UIView?
 
         switch model {
-        case let .mainSection(_, appName, appVersion):
+        case let .mainSection(_, appName, appVersion, build):
             let view = tableView.dequeueReusableHeaderFooterView(
                 withIdentifier: "\(AboutHeaderTableView.self)"
             ) as? AboutHeaderTableView
 
-            view?.configure(appName: appName, appVersion: appVersion)
+            view?.configure(appName: appName, appVersion: appVersion, build: build)
             headerView = view
         }
 

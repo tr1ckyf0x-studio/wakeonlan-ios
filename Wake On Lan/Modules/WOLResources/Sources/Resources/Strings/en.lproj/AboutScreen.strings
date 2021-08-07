@@ -6,7 +6,6 @@
   Copyright © 2021 Владислав Лисянский. All rights reserved.
 */
 
-"application name" = "Wake On LAN";
 "version" = "Version";
 "rate app" = "Rate App";
 "github" = "GitHub";

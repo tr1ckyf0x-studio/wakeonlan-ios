@@ -90,7 +90,8 @@ private extension AboutScreenPresenter {
         let mainSection = AboutScreenSectionModel.mainSection(
             content: cellViewModels,
             appName: bundleInfo.displayName,
-            appVersion: bundleInfo.version
+            appVersion: bundleInfo.version,
+            build: bundleInfo.build
         )
 
         return [mainSection]
