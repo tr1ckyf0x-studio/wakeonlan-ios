@@ -77,8 +77,6 @@ targets:
         optional: true
     dependencies:
       - package: Firebase
-        product: FirebaseAnalytics
-      - package: Firebase
         product: FirebaseCrashlytics
       - package: Reachability
       - package: SnapKit
