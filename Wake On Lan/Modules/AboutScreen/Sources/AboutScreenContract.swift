@@ -10,29 +10,21 @@ import Foundation
 import WOLResources
 
 protocol AboutScreenViewOutput: AnyObject {
-
     func viewDidLoad(_ view: AboutScreenViewInput)
 
     func viewDidPressBackButton(_ view: AboutScreenViewInput)
-
 }
 
 protocol AboutScreenViewInput: AnyObject {
-
-    func configure(with sections: [AboutScreenSectionModel])
+    func configure(with viewModel: AboutScreenViewViewModel)
 
     func displayShareApp(with appURL: String)
-
 }
 
 protocol AboutScreenInteractorInput: AnyObject {
-
     func fetchBundleInfo()
-
 }
 
 protocol AboutScreenInteractorOutput: AnyObject {
-
     func interactor(_: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo)
-
 }

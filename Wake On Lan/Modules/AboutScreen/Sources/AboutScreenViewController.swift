@@ -17,22 +17,10 @@ public final class AboutScreenViewController: UIViewController {
     private lazy var aboutScreenView: AboutScreenView = {
         let view = AboutScreenView()
         view.delegate = self
-        view.configureTableView(with: tableManager)
         return view
     }()
 
-    private let tableManager: ManagingAboutScreenTable
-
     // MARK: - Lifecycle
-
-    public init(with manager: ManagingAboutScreenTable = AboutScreenTableManager()) {
-        tableManager = manager
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override public func loadView() {
         view = aboutScreenView
@@ -48,7 +36,6 @@ public final class AboutScreenViewController: UIViewController {
 // MARK: - AboutScreenViewDelegate
 
 extension AboutScreenViewController: AboutScreenViewDelegate {
-
     func aboutScreenViewDidPressBackButton(_ view: AboutScreenView) {
         presenter?.viewDidPressBackButton(self)
     }
@@ -57,10 +44,8 @@ extension AboutScreenViewController: AboutScreenViewDelegate {
 // MARK: - AboutScreenViewInput
 
 extension AboutScreenViewController: AboutScreenViewInput {
-
-    func configure(with sections: [AboutScreenSectionModel]) {
-        tableManager.sections = sections
-        aboutScreenView.reloadData()
+    func configure(with viewModel: AboutScreenViewViewModel) {
+        aboutScreenView.configure(with: viewModel)
     }
 
     func displayShareApp(with appURL: String) {
@@ -73,16 +58,13 @@ extension AboutScreenViewController: AboutScreenViewInput {
 
         present(viewController, animated: true)
     }
-
 }
 
 // MARK: - Private
 
 private extension AboutScreenViewController {
-
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = aboutScreenView.backBarButton
     }
-
 }

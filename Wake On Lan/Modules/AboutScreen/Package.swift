@@ -10,7 +10,8 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "AboutScreen",
-            targets: ["AboutScreen"])
+            targets: ["AboutScreen"]
+        )
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -19,7 +20,7 @@ let package = Package(
         .package(path: "../WOLUIComponents"),
         .package(path: "../SharedProtocols"),
         .package(path: "../SharedExtensions"),
-        .package(path: "../RouterProtocol"),
+        .package(path: "../SharedRouter"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.0.0")
     ],
     targets: [
@@ -32,9 +33,10 @@ let package = Package(
                 "WOLUIComponents",
                 "SharedProtocols",
                 "SharedExtensions",
-                "RouterProtocol",
+                "SharedRouter",
                 "SnapKit"
             ],
-            path: "Sources")
+            path: "Sources"
+        )
     ]
 )

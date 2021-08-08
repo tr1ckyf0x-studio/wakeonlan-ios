@@ -8,7 +8,7 @@
 
 import Foundation
 import SharedProtocols
-import RouterProtocol
+import SharedRouter
 
 protocol AddHostViewOutput: AnyObject {
     var tableManager: AddHostTableManager { get }

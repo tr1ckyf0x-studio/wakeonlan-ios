@@ -16,8 +16,7 @@ protocol AboutScreenViewDelegate: AnyObject {
 }
 
 protocol AboutScreenViewRepresentable {
-    func configureTableView(with manager: ManagingAboutScreenTable)
-    func reloadData()
+    func configure(with viewModel: AboutScreenViewViewModel)
 }
 
 final class AboutScreenView: UIView {
@@ -25,13 +24,16 @@ final class AboutScreenView: UIView {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        let barButtonImageViewInset: CGFloat = 6.0
-        let backBarButtonImage = UIImage(
-            sfSymbol: ButtonIcon.chevronBackward,
-            withConfiguration: .init(weight: .semibold)
-        )
-        let backBarTintColor = Asset.Colors.lightGray.color
         let backBarButtonSize: CGFloat = 32.0
+        let backBarButtonImageViewInset: CGFloat = 6.0
+        let backBarButtonTintColor = Asset.Colors.lightGray.color
+        let backBarButtonImage = UIImage(sfSymbol: ButtonIcon.chevronBackward, withConfiguration: .init(weight: .semibold))
+
+        let stackSpacing: CGFloat = 16.0
+        let stackViewTopOffset: CGFloat = 24.0
+        let stackButtonHeight: CGFloat = 48.0
+        let leadingStackOffset: CGFloat = 16.0
+        let trailingStackInset: CGFloat = 16.0
     }
 
     // MARK: - Properties
@@ -41,11 +43,11 @@ final class AboutScreenView: UIView {
     lazy var backBarButton: UIBarButtonItem = {
         let imageView = UIImageView(image: appearance.backBarButtonImage)
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = appearance.backBarTintColor
+        imageView.tintColor = appearance.backBarButtonTintColor
         let button = SoftUIView(circleShape: true)
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(appearance.barButtonImageViewInset)
+            $0.edges.equalToSuperview().inset(appearance.backBarButtonImageViewInset)
         }
         button.snp.makeConstraints { make in
             make.size.equalTo(appearance.backBarButtonSize)
@@ -55,23 +57,18 @@ final class AboutScreenView: UIView {
         return .init(customView: button)
     }()
 
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(
-            MenuButtonTableCell.self,
-            forCellReuseIdentifier: "\(MenuButtonTableCell.self)"
-        )
-        tableView.register(
-            AboutHeaderTableView.self,
-            forHeaderFooterViewReuseIdentifier: "\(AboutHeaderTableView.self)"
-        )
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = Asset.Colors.soft.color
+    private let baseScrollView = UIScrollView()
 
-        return tableView
-    }()
+    private let contentView = UIView()
+
+    private let headerView = AboutScreenHeaderView()
+
+    private lazy var stackView: UIStackView = {
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+        $0.spacing = appearance.stackSpacing
+        return $0
+    }(UIStackView())
 
     // MARK: - Init
 
@@ -90,29 +87,49 @@ final class AboutScreenView: UIView {
 // MARK: - AboutScreenViewRepresentable
 
 extension AboutScreenView: AboutScreenViewRepresentable {
+    func configure(with viewModel: AboutScreenViewViewModel) {
+        // Configure header view
+        headerView.configure(with: viewModel.headerViewModel)
 
-    func reloadData() {
-        tableView.reloadData()
+        // Configure menu buttons
+        viewModel.buttonListViewModel.forEach {
+            let buttonView = AboutScreenMenuButtonView()
+            buttonView.configure(with: $0)
+            buttonView.snp.makeConstraints {
+                $0.height.equalTo(appearance.stackButtonHeight)
+            }
+            stackView.addArrangedSubview(buttonView)
+        }
     }
-
-    func configureTableView(with manager: ManagingAboutScreenTable) {
-        tableView.dataSource = manager
-        tableView.delegate = manager
-    }
-
 }
 
 // MARK: - Private
 
 private extension AboutScreenView {
-
     func addSubviews() {
-        addSubview(tableView)
+        addSubview(baseScrollView)
+        baseScrollView.addSubview(contentView)
+        contentView.addSubview(headerView)
+        contentView.addSubview(stackView)
     }
 
     func makeConstraints() {
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        baseScrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(self)
+        }
+        headerView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview()
+        }
+        stackView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(appearance.leadingStackOffset)
+            $0.top.equalTo(headerView.snp.bottom).offset(appearance.stackViewTopOffset)
+            $0.trailing.equalToSuperview().inset(appearance.trailingStackInset)
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
 
