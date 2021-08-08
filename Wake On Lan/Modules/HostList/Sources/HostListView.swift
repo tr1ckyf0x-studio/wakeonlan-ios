@@ -64,11 +64,7 @@ final class HostListView: UIView {
             let imageView = UIImageView(image: image)
             imageView.tintColor = Asset.Colors.lightGray.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
-            button.addTarget(
-                self,
-                action: #selector(didTapAboutButton(_:)),
-                for: .touchUpInside
-            )
+            button.addTarget(self, action: #selector(didTapAboutButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
                 $0.center.equalToSuperview()
             }
@@ -100,17 +96,9 @@ final class HostListView: UIView {
             let button = SoftUIView(circleShape: true)
             let image = UIImage(sfSymbol: ButtonIcon.plus, withConfiguration: .init(weight: .semibold))
             let imageView = UIImageView(image: image)
-            imageView.tintColor = WOLResources
-                .Asset
-                .Colors
-                .lightGray
-                .color
+            imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
-            button.addTarget(
-                self,
-                action: #selector(didTapAddButton(_:)),
-                for: .touchUpInside
-            )
+            button.addTarget(self, action: #selector(didTapAddButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
                 $0.edges.equalToSuperview().inset(6)
             }

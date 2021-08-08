@@ -8,6 +8,8 @@
 
 import Foundation
 import SharedProtocols
+import StoreKit
+import UIKit
 import WOLResources
 
 final class AboutScreenPresenter {
@@ -27,15 +29,15 @@ final class AboutScreenPresenter {
 
     var router: AboutScreenRouter?
 
-    private let reviewRequester: RequestsReview
+    private let reviewRequester: RequestsReview.Type
 
     private let urlOpener: OpensURL
 
     // MARK: - Init
 
     init(
-        reviewRequester: RequestsReview = ReviewRequester(),
-        urlOpener: OpensURL = URLOpener()
+        reviewRequester: RequestsReview.Type = SKStoreReviewController.self,
+        urlOpener: OpensURL = UIApplication.shared
     ) {
         self.reviewRequester = reviewRequester
         self.urlOpener = urlOpener
@@ -58,42 +60,45 @@ extension AboutScreenPresenter: AboutScreenViewOutput {
 // MARK: - AboutScreenInteractorOutput
 
 extension AboutScreenPresenter: AboutScreenInteractorOutput {
-
     func interactor(_: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo) {
-        let sections = makeSections(from: bundleInfo)
-        view?.configure(with: sections)
+        view?.configure(with: makeViewModel(from: bundleInfo))
     }
 }
 
 // MARK: - Private
 
 private extension AboutScreenPresenter {
-
-    func makeSections(from bundleInfo: BundleInfo) -> [AboutScreenSectionModel] {
-        let rows: [MenuButtonCellViewModel] = [
-            .init(title: L10n.AboutScreen.rateApp, symbol: ButtonIcon.star, action: { [weak self] in
-                self?.reviewRequester.requestReview()
-            }),
-            .init(title: L10n.AboutScreen.github, symbol: ButtonIcon.tag, action: { [weak self] in
-                guard let url = URL(string: Configuration.gitHubURL) else { return }
-                self?.urlOpener.open(url: url)
-            }),
-            .init(title: L10n.AboutScreen.shareApp, symbol: ButtonIcon.share, action: { [weak self] in
-                self?.view?.displayShareApp(with: Configuration.appStoreURL)
-            })
-        ]
-
-        let cellViewModels = rows.map { (cellViewModel: MenuButtonCellViewModel) -> AboutScreenSectionItem in
-            AboutScreenSectionItem.menuButton(cellViewModel)
-        }
-
-        let mainSection = AboutScreenSectionModel.mainSection(
-            content: cellViewModels,
-            appName: bundleInfo.displayName,
-            appVersion: bundleInfo.version,
-            build: bundleInfo.build
+    func makeViewModel(from bundleInfo: BundleInfo) -> AboutScreenViewViewModel {
+        .init(
+            headerViewModel: .init(
+                name: bundleInfo.displayName,
+                version: bundleInfo.version,
+                build: bundleInfo.build
+            ),
+            buttonListViewModel: [
+                .init(
+                    title: L10n.AboutScreen.rateApp,
+                    symbol: ButtonIcon.star,
+                    action: { [weak self] in
+                        self?.reviewRequester.requestReview()
+                    }
+                ),
+                .init(
+                    title: L10n.AboutScreen.github,
+                    symbol: ButtonIcon.tag,
+                    action: { [weak self] in
+                        guard let url = URL(string: Configuration.gitHubURL) else { return }
+                        self?.urlOpener.open(url: url)
+                    }
+                ),
+                .init(
+                    title: L10n.AboutScreen.shareApp,
+                    symbol: ButtonIcon.share,
+                    action: { [weak self] in
+                        self?.view?.displayShareApp(with: Configuration.appStoreURL)
+                    }
+                )
+            ]
         )
-
-        return [mainSection]
     }
 }

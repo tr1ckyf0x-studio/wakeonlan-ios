@@ -42,28 +42,28 @@ packages:
     from: 1.4.3
 
   # Local packages
-  WOLResources:
-    path: Wake On Lan/Modules/WOLResources
-  SharedModels:
-    path: Wake On Lan/Modules/SharedModels
-  SharedProtocols:
-    path: Wake On Lan/Modules/SharedProtocols
-  CoreDataService:
-    path: Wake On Lan/Modules/CoreDataService
-  WakeOnLanService:
-    path: Wake On Lan/Modules/WakeOnLanService
-  SharedExtensions:
-    path: Wake On Lan/Modules/SharedExtensions
-  WOLUIComponents:
-    path: Wake On Lan/Modules/WOLUIComponents
-  AddHost:
-    path: Wake On Lan/Modules/AddHost
-  HostList:
-    path: Wake On Lan/Modules/HostList
-  RouterProtocol:
-    path: Wake On Lan/Modules/RouterProtocol
   AboutScreen:
     path: Wake On Lan/Modules/AboutScreen
+  AddHost:
+    path: Wake On Lan/Modules/AddHost
+  CoreDataService:
+    path: Wake On Lan/Modules/CoreDataService
+  HostList:
+    path: Wake On Lan/Modules/HostList
+  SharedModels:
+    path: Wake On Lan/Modules/SharedModels
+  SharedExtensions:
+    path: Wake On Lan/Modules/SharedExtensions
+  SharedProtocols:
+    path: Wake On Lan/Modules/SharedProtocols
+  SharedRouter:
+    path: Wake On Lan/Modules/SharedRouter
+  WakeOnLanService:
+    path: Wake On Lan/Modules/WakeOnLanService
+  WOLResources:
+    path: Wake On Lan/Modules/WOLResources
+  WOLUIComponents:
+    path: Wake On Lan/Modules/WOLUIComponents
 
 targets:
   Wake on LAN:
@@ -76,22 +76,23 @@ targets:
           - "Modules/**/"
         optional: true
     dependencies:
+      - package: AboutScreen
+      - package: AddHost
+      - package: CocoaLumberjackSwift
+      - package: CoreDataService
       - package: Firebase
         product: FirebaseCrashlytics
+      - package: HostList
       - package: Reachability
-      - package: SnapKit
-      - package: CocoaLumberjackSwift
       - package: Resolver
-      - package: WOLResources
+      - package: SnapKit
+      - package: SharedExtensions
       - package: SharedModels
       - package: SharedProtocols
-      - package: CoreDataService
+      - package: SharedRouter
+      - package: WOLResources
       - package: WakeOnLanService
-      - package: SharedExtensions
       - package: WOLUIComponents
-      - package: AddHost
-      - package: HostList
-      - package: AboutScreen
 
     settings:
       base:

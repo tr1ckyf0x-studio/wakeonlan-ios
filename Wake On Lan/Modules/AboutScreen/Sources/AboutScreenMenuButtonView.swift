@@ -1,5 +1,5 @@
 //
-//  MenuButtonTableCell.swift
+//  AboutScreenMenuButtonView.swift
 //  AboutScreen
 //
 //  Created by Vladislav Lisianskii on 23.05.2021.
@@ -11,7 +11,14 @@ import UIKit
 import WOLResources
 import WOLUIComponents
 
-final class MenuButtonTableCell: UITableViewCell {
+final class AboutScreenMenuButtonView: UIView {
+
+    // MARK: - Appearance
+
+    private let appearance = Appearance(); struct Appearance {
+        let buttonContentViewEdgesInset: CGFloat = 8.0
+        let buttonTitleLabelLeadingOffset: CGFloat = 8.0
+    }
 
     // MARK: - Properties
 
@@ -47,9 +54,9 @@ final class MenuButtonTableCell: UITableViewCell {
 
     // MARK: - Init
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = Asset.Colors.soft.color
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = Asset.Colors.soft.color
         addSubviews()
         makeConstraints()
     }
@@ -57,42 +64,32 @@ final class MenuButtonTableCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Override
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        action = nil
-    }
 }
 
 // MARK: - Internal methods
 
-extension MenuButtonTableCell {
-    func configure(with model: MenuButtonCellViewModel) {
-        buttonImageView.image = UIImage(sfSymbol: model.symbol, withConfiguration: .init(weight: .semibold))
+extension AboutScreenMenuButtonView {
+    func configure(with model: AboutScreenMenuButtonViewViewModel) {
+        action = model.action
         buttonTitleLabel.text = model.title
-        self.action = model.action
+        buttonImageView.image = UIImage(sfSymbol: model.symbol, withConfiguration: .init(weight: .semibold))
     }
 }
 
 // MARK: - Private methods
 
-private extension MenuButtonTableCell {
+private extension AboutScreenMenuButtonView {
     func addSubviews() {
-        contentView.addSubview(buttonBodyView)
+        addSubview(buttonBodyView)
     }
 
     func makeConstraints() {
         buttonBodyView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.top.equalToSuperview().offset(8)
-            make.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(8)
+            make.edges.equalToSuperview()
         }
 
         buttonContentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(16)
+            make.edges.equalToSuperview().inset(appearance.buttonContentViewEdgesInset)
         }
 
         buttonImageView.snp.makeConstraints { make in
@@ -100,7 +97,7 @@ private extension MenuButtonTableCell {
         }
 
         buttonTitleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(buttonImageView.snp.trailing).offset(8)
+            make.leading.equalTo(buttonImageView.snp.trailing).offset(appearance.buttonTitleLabelLeadingOffset)
             make.top.bottom.trailing.equalToSuperview()
         }
 

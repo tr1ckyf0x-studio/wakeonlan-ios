@@ -10,23 +10,22 @@ import Foundation
 import WOLResources
 
 final class AboutScreenInteractor {
-
     // MARK: - Properties
 
     weak var presenter: AboutScreenInteractorOutput?
 
     private let bundleInfoProvider: ProvidesBundleInfo
 
+    // MARK: - Init
+
     init(bundleInfoProvider: ProvidesBundleInfo = BundleInfoProvider()) {
         self.bundleInfoProvider = bundleInfoProvider
     }
-
 }
 
 // MARK: - AboutScreenInteractorInput
 
 extension AboutScreenInteractor: AboutScreenInteractorInput {
-
     func fetchBundleInfo() {
         bundleInfoProvider.fetchBundleInfo { [weak self] info in
             guard let self = self else { return }
