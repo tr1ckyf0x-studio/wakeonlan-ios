@@ -14,6 +14,6 @@ public struct AboutScreenMenuButtonViewViewModel {
     let title: String
     /// Represents icon
     let symbol: SFSymbolRepresentable
-    /// Action that will be execute by tap
+    /// Action that will be executed by tap
     let action: (() -> Void)?
 }
