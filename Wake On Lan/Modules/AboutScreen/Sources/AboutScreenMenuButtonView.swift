@@ -16,8 +16,6 @@ final class AboutScreenMenuButtonView: UIView {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        let buttonBodyViewLeadingTrailingOffset: CGFloat = 16.0
-        let buttonBodyViewTopBottomOffset: CGFloat = 8.0
         let buttonContentViewEdgesInset: CGFloat = 8.0
         let buttonTitleLabelLeadingOffset: CGFloat = 8.0
     }
@@ -87,10 +85,7 @@ private extension AboutScreenMenuButtonView {
 
     func makeConstraints() {
         buttonBodyView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(appearance.buttonBodyViewLeadingTrailingOffset)
-            make.top.equalToSuperview().offset(appearance.buttonBodyViewTopBottomOffset)
-            make.trailing.equalToSuperview().inset(appearance.buttonBodyViewLeadingTrailingOffset)
-            make.bottom.equalToSuperview().inset(appearance.buttonBodyViewTopBottomOffset)
+            make.edges.equalToSuperview()
         }
 
         buttonContentView.snp.makeConstraints { make in

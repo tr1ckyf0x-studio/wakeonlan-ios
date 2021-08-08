@@ -29,7 +29,11 @@ final class AboutScreenView: UIView {
         let backBarButtonTintColor = Asset.Colors.lightGray.color
         let backBarButtonImage = UIImage(sfSymbol: ButtonIcon.chevronBackward, withConfiguration: .init(weight: .semibold))
 
+        let stackSpacing: CGFloat = 16.0
         let stackViewTopOffset: CGFloat = 24.0
+        let stackButtonHeight: CGFloat = 48.0
+        let leadingStackOffset: CGFloat = 16.0
+        let trailingStackInset: CGFloat = 16.0
     }
 
     // MARK: - Properties
@@ -59,8 +63,10 @@ final class AboutScreenView: UIView {
 
     private let headerView = AboutScreenHeaderView()
 
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         $0.axis = .vertical
+        $0.distribution = .fillEqually
+        $0.spacing = appearance.stackSpacing
         return $0
     }(UIStackView())
 
@@ -89,6 +95,9 @@ extension AboutScreenView: AboutScreenViewRepresentable {
         viewModel.buttonListViewModel.forEach {
             let buttonView = AboutScreenMenuButtonView()
             buttonView.configure(with: $0)
+            buttonView.snp.makeConstraints {
+                $0.height.equalTo(appearance.stackButtonHeight)
+            }
             stackView.addArrangedSubview(buttonView)
         }
     }
@@ -117,9 +126,9 @@ private extension AboutScreenView {
             $0.top.equalToSuperview()
         }
         stackView.snp.makeConstraints {
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(appearance.leadingStackOffset)
             $0.top.equalTo(headerView.snp.bottom).offset(appearance.stackViewTopOffset)
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(appearance.trailingStackInset)
             $0.bottom.lessThanOrEqualToSuperview()
         }
     }
