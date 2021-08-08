@@ -1,5 +1,5 @@
 //
-//  MenuButtonTableCellViewModel.swift
+//  AboutScreenMenuButtonViewViewModel.swift
 //  AboutScreen
 //
 //  Created by Dmitry on 04.08.2021.
@@ -9,14 +9,11 @@
 import Foundation
 import WOLResources
 
-public struct MenuButtonCellViewModel {
-
+public struct AboutScreenMenuButtonViewViewModel {
     /// Represents displayed title
     let title: String
-
     /// Represents icon
     let symbol: SFSymbolRepresentable
-
-    /// Action that will be execute by tap on cell
+    /// Action that will be execute by tap
     let action: (() -> Void)?
 }

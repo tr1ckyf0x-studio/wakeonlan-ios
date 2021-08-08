@@ -9,15 +9,9 @@
 import Foundation
 import StoreKit
 
-// TODO: Move to common framework
-
-protocol RequestsReview {
+public protocol RequestsReview {
     /// Requests application review
-    func requestReview()
+    static func requestReview()
 }
 
-struct ReviewRequester: RequestsReview {
-    func requestReview() {
-        SKStoreReviewController.requestReview()
-    }
-}
+extension SKStoreReviewController: RequestsReview { }

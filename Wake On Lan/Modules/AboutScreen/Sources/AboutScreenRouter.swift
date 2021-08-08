@@ -6,7 +6,7 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
-import RouterProtocol
+import SharedRouter
 import SharedProtocols
 import UIKit
 
@@ -17,5 +17,4 @@ final class AboutScreenRouter: Router {
     // MARK: - Properties
 
     weak var viewController: AboutScreenViewController?
-
 }

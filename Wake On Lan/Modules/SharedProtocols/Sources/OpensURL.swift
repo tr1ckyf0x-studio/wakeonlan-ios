@@ -8,15 +8,13 @@
 
 import UIKit
 
-// TODO: Move to common framework
-
-protocol OpensURL {
+public protocol OpensURL {
     /// Opens provided URL
     func open(url: URL)
 }
 
-struct URLOpener: OpensURL {
-    func open(url: URL) {
-        UIApplication.shared.open(url)
+extension UIApplication: OpensURL {
+    public func open(url: URL) {
+        open(url)
     }
 }
