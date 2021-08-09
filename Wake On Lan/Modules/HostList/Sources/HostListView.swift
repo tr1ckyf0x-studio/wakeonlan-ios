@@ -90,7 +90,6 @@ final class HostListView: UIView {
         return spacer
     }()
 
-    // swiftlint:disable closure_body_length
     lazy var addItemButton: UIBarButtonItem = {
         let addButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
