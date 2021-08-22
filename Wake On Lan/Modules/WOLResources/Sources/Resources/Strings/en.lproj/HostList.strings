@@ -7,5 +7,5 @@
 */
 
 "hosts" = "Hosts";
-"packetSent" = "PACKET SENT";
+"packetSent" = "Packet sent";
 "checkWifiConnection" = "You must be connected to a Wi-Fi network";

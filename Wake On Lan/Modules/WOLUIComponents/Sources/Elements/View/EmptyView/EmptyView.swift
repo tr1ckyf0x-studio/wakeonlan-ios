@@ -19,7 +19,7 @@ public final class EmptyView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.WakeOnLan.emptyViewMessage
-        label.textColor = Asset.Colors.lightGray.color
+        label.textColor = Asset.Colors.secondary.color
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0

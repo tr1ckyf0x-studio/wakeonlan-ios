@@ -13,6 +13,7 @@ protocol NotificationViewStyle {
 
     static var text: String { get }
     static var backgroundColor: UIColor { get }
+    static var textColor: UIColor { get }
 
 }
 
@@ -20,12 +21,14 @@ enum NotificationViewType {
 
     struct Default: NotificationViewStyle {
         static let text = L10n.HostList.packetSent
-        static let backgroundColor = Asset.Colors.lightGray.color
+        static let backgroundColor = Asset.Colors.secondary.color
+        static let textColor = Asset.Colors.primary.color
     }
 
     struct Failure: NotificationViewStyle {
         static let text = L10n.HostList.checkWifiConnection
-        static let backgroundColor = Asset.Colors.red.color
+        static let backgroundColor = Asset.Colors.warning.color
+        static let textColor = Asset.Colors.secondaryVariant.color.resolvedColor(with: .init(userInterfaceStyle: .dark))
     }
 
 }
@@ -48,7 +51,7 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
     private lazy var notificationLabel: UILabel = {
         let label = UILabel()
         label.text = style.text
-        label.textColor = Asset.Colors.white.color
+        label.textColor = style.textColor
         label.textAlignment = .center
         label.backgroundColor = style.backgroundColor
         label.font = .systemFont(ofSize: 12, weight: .medium)

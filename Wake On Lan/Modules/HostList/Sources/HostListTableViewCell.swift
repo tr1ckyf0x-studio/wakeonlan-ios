@@ -48,7 +48,7 @@ final class HostListTableViewCell: UITableViewCell {
         imageView.tintColor = WOLResources
             .Asset
             .Colors
-            .lightGray
+            .secondary
             .color
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
@@ -69,7 +69,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = Asset.Colors.lightGray.color
+        imageView.tintColor = Asset.Colors.secondary.color
         imageView.contentMode = .scaleAspectFit
 
         return imageView
@@ -78,7 +78,7 @@ final class HostListTableViewCell: UITableViewCell {
     private let hostTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .medium)
-        label.textColor = Asset.Colors.gray.color
+        label.textColor = Asset.Colors.secondaryVariant.color
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -88,7 +88,7 @@ final class HostListTableViewCell: UITableViewCell {
     private let macAddressTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = Asset.Colors.darkGray.color
+        label.textColor = Asset.Colors.secondaryVariant.color
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -103,7 +103,7 @@ final class HostListTableViewCell: UITableViewCell {
         imageView.tintColor = WOLResources
             .Asset
             .Colors
-            .lightGray
+            .secondary
             .color
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
@@ -119,7 +119,7 @@ final class HostListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.primary.color
         setupScrollView()
         setupBaseView()
         setupDeleteView()
@@ -249,6 +249,7 @@ private extension HostListTableViewCell {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(28)
         }
 
         let animationDuration = 0.2
@@ -268,7 +269,7 @@ private extension HostListTableViewCell {
                 animations: { notificationView.alpha = 1.0 },
                 completion: { _ in
                     DispatchQueue.main.asyncAfter(
-                        deadline: .now() + 0.5,
+                        deadline: .now() + 0.9,
                         execute: {
                             hideNotificationAnimated()
                         })

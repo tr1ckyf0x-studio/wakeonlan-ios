@@ -37,7 +37,7 @@ final class AddHostView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
-        tableView.backgroundColor = Asset.Colors.soft.color
+        tableView.backgroundColor = Asset.Colors.primary.color
 
         return tableView
     }()
@@ -46,7 +46,7 @@ final class AddHostView: UIView {
         let button = SoftUIView(circleShape: true)
         let image = UIImage(sfSymbol: ButtonIcon.checkmark, withConfiguration: .init(weight: .semibold))
         let imageView = UIImageView(image: image)
-        imageView.tintColor = Asset.Colors.lightGray.color
+        imageView.tintColor = Asset.Colors.secondary.color
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
@@ -61,7 +61,7 @@ final class AddHostView: UIView {
         let button = SoftUIView(circleShape: true)
         let image = UIImage(sfSymbol: ButtonIcon.chevronBackward, withConfiguration: .init(weight: .semibold))
         let imageView = UIImageView(image: image)
-        imageView.tintColor = Asset.Colors.lightGray.color
+        imageView.tintColor = Asset.Colors.secondary.color
         imageView.contentMode = .scaleAspectFit
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
@@ -76,7 +76,6 @@ final class AddHostView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Asset.Colors.white.color
         setupTableView()
         registerNotifications()
     }

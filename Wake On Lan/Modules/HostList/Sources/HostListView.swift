@@ -40,7 +40,7 @@ final class HostListView: UIView {
         )
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = Asset.Colors.soft.color
+        tableView.backgroundColor = Asset.Colors.primary.color
 
         return tableView
     }()
@@ -50,7 +50,7 @@ final class HostListView: UIView {
         let viewModel = StateableViewModel(
             title: L10n.WakeOnLan.emptyViewMessage,
             image: Asset.Assets.owl.image,
-            backgroundColor: Asset.Colors.soft.color
+            backgroundColor: Asset.Colors.primary.color
         )
         emptyView.configure(with: viewModel)
 
@@ -62,7 +62,7 @@ final class HostListView: UIView {
             let button = SoftUIView(circleShape: true)
             let image = UIImage(sfSymbol: ButtonIcon.questionmark, withConfiguration: .init(weight: .semibold))
             let imageView = UIImageView(image: image)
-            imageView.tintColor = Asset.Colors.lightGray.color
+            imageView.tintColor = Asset.Colors.secondary.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(self, action: #selector(didTapAboutButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
@@ -95,7 +95,7 @@ final class HostListView: UIView {
             let button = SoftUIView(circleShape: true)
             let image = UIImage(sfSymbol: ButtonIcon.plus, withConfiguration: .init(weight: .semibold))
             let imageView = UIImageView(image: image)
-            imageView.tintColor = WOLResources.Asset.Colors.lightGray.color
+            imageView.tintColor = WOLResources.Asset.Colors.secondary.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(self, action: #selector(didTapAddButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
@@ -121,7 +121,7 @@ final class HostListView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.primary.color
         setupTableView()
     }
 

@@ -60,7 +60,7 @@ final class TextInputCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.primary.color
         configureViews()
     }
 
@@ -103,7 +103,7 @@ final class TextInputCell: UITableViewCell {
             target: self,
             action: #selector(didTapDoneButton)
         )
-        doneButton.tintColor = Asset.Colors.lightGray.color
+        doneButton.tintColor = Asset.Colors.secondary.color
         let flexibleSpace = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace,
             target: nil,
@@ -201,7 +201,7 @@ private class AddHostFailureView: UIView {
 
     private let failureLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.red.color
+        label.textColor = Asset.Colors.warning.color
         // TODO: Consider another font
         label.font = .boldSystemFont(ofSize: 12.0)
 

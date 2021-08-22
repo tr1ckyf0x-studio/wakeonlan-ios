@@ -7,5 +7,5 @@
 */
 
 "hosts" = "Устройства";
-"packetSent" = "ПАКЕТ ОТПРАВЛЕН";
+"packetSent" = "Пакет отправлен";
 "checkWifiConnection" = "Вы должны быть подключены к сети Wi-Fi";

@@ -29,7 +29,7 @@ final class ChooseIconView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Asset.Colors.soft.color
+        backgroundColor = Asset.Colors.primary.color
         setupCollectionView()
     }
 
