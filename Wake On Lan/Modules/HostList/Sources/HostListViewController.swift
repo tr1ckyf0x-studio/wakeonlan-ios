@@ -49,13 +49,9 @@ public final class HostListViewController: UIViewController {
                                               hostListView.aboutButton]
         navigationItem.largeTitleDisplayMode = .always
         guard let navigationController = navigationController else { return }
-        navigationController.view.backgroundColor = Asset.Colors.soft.color
+        navigationController.view.backgroundColor = Asset.Colors.primary.color
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true
-        let largeTitleTextAttributes = [
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
-        ]
-        navigationBar.largeTitleTextAttributes = largeTitleTextAttributes
     }
 
     private func setupTableView() {

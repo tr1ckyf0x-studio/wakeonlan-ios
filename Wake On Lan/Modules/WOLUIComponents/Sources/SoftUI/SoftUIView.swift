@@ -15,19 +15,9 @@ public class SoftUIView: UIControl {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        var mainColor: CGColor { Asset.Colors.soft.color.resolved }
-        var darkShadowColor: CGColor { Asset.Colors.darkSoftShadow.color.resolved }
-        var lightShadowColor: CGColor { Asset.Colors.lightSoftShadow.color.resolved }
-
-        var darkShadowOpacity: Float {
-            guard #available(iOS 13.0, *) else { return 1 }
-            return UITraitCollection.current.userInterfaceStyle == .dark ? 0.6 : 1
-        }
-
-        var lightShadowOpacity: Float {
-            guard #available(iOS 13.0, *) else { return 1 }
-            return UITraitCollection.current.userInterfaceStyle == .dark ? 0.2 : 1
-        }
+        var mainColor: CGColor { Asset.Colors.primary.color.resolved }
+        var darkShadowColor: CGColor { Asset.Colors.darkShadow.color.resolved }
+        var lightShadowColor: CGColor { Asset.Colors.lightShadow.color.resolved }
 
         let shadowOffset = CGSize(width: 2, height: 2)
         let shadowRadius = CGFloat(2)
@@ -62,14 +52,6 @@ public class SoftUIView: UIControl {
             lightOuterShadowLayer.shadowColor = lightShadowColor
             lightInnerShadowLayer.shadowColor = lightShadowColor
         }
-    }
-
-    lazy var lightShadowOpacity: Float = appearance.lightShadowOpacity {
-        didSet { updateShadowOpacity() }
-    }
-
-    lazy var darkShadowOpacity: Float = appearance.darkShadowOpacity {
-        didSet { updateShadowOpacity() }
     }
 
     lazy var shadowOffset = appearance.shadowOffset {
@@ -137,7 +119,6 @@ public class SoftUIView: UIControl {
         super.init(frame: frame)
         addSublayers()
         updateSublayersShape()
-        updateShadowOpacity()
     }
 
     public required init?(coder: NSCoder) {
@@ -254,6 +235,7 @@ private extension SoftUIView {
         layer.shadowColor = shadowColor
         layer.shadowOffset = shadowOffset
         layer.shadowRadius = shadowRadius
+        layer.shadowOpacity = 1.0
         layer.backgroundColor = UIColor.clear.cgColor
 
         return layer
@@ -265,6 +247,7 @@ private extension SoftUIView {
         layer.shadowColor = shadowColor
         layer.shadowOffset = shadowOffset
         layer.shadowRadius = shadowRadius
+        layer.shadowOpacity = 1.0
         layer.backgroundColor = UIColor.clear.cgColor
         layer.fillRule = .evenOdd
 
@@ -310,8 +293,6 @@ private extension SoftUIView {
 
         darkShadowColor = appearance.darkShadowColor
         lightShadowColor = appearance.lightShadowColor
-        darkShadowOpacity = appearance.darkShadowOpacity
-        lightShadowOpacity = appearance.lightShadowOpacity
     }
 
     func updateContentView() {
@@ -328,11 +309,6 @@ private extension SoftUIView {
             contentView?.transform = .identity
             selectedContentView?.isHidden = true
         }
-    }
-
-    func updateShadowOpacity() {
-        [darkOuterShadowLayer, darkInnerShadowLayer].forEach { $0.shadowOpacity = darkShadowOpacity }
-        [lightOuterShadowLayer, lightInnerShadowLayer].forEach { $0.shadowOpacity = lightShadowOpacity }
     }
 
     func updateShadowLayers() {

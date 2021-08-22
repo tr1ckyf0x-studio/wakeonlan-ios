@@ -17,11 +17,11 @@ final class AboutScreenHeaderView: UIView {
         /// Application name font
         let appNameFont: UIFont = .systemFont(ofSize: 36, weight: .medium)
         /// Application name text color
-        let appNameTextColor = Asset.Colors.gray900.color
+        let appNameTextColor = Asset.Colors.secondaryVariant.color
         /// Application version
         let appVersionFont: UIFont = .systemFont(ofSize: 12, weight: .medium)
         /// Application text color
-        let appVersionTextColor = Asset.Colors.gray.color
+        let appVersionTextColor = Asset.Colors.secondary.color
         /// Application main logo
         let logoImage = Asset.Assets.owl.image
         /// Spacing between elements in stack
@@ -87,7 +87,7 @@ extension AboutScreenHeaderView {
 
 private extension AboutScreenHeaderView {
     func setupView() {
-        tintColor = Asset.Colors.soft.color
+        tintColor = Asset.Colors.primary.color
     }
 
     func addSubviews() {

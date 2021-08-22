@@ -14,19 +14,9 @@ public class SoftUITextField: UITextField {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        var mainColor: CGColor { Asset.Colors.soft.color.resolved }
-        var darkShadowColor: CGColor { Asset.Colors.darkSoftShadow.color.resolved }
-        var lightShadowColor: CGColor { Asset.Colors.lightSoftShadow.color.resolved }
-
-        var darkShadowOpacity: Float {
-            guard #available(iOS 13.0, *) else { return 1 }
-            return UITraitCollection.current.userInterfaceStyle == .dark ? 0.6 : 1
-        }
-
-        var lightShadowOpacity: Float {
-            guard #available(iOS 13.0, *) else { return 1 }
-            return UITraitCollection.current.userInterfaceStyle == .dark ? 0.2 : 1
-        }
+        var mainColor: CGColor { Asset.Colors.primary.color.resolved }
+        var darkShadowColor: CGColor { Asset.Colors.darkShadow.color.resolved }
+        var lightShadowColor: CGColor { Asset.Colors.lightShadow.color.resolved }
 
         let shadowOffset = CGSize(width: 2, height: 2)
         let shadowRadius = CGFloat(2)
@@ -54,14 +44,6 @@ public class SoftUITextField: UITextField {
 
     lazy var lightShadowColor = appearance.lightShadowColor {
         didSet { lightInnerShadowLayer.shadowColor = lightShadowColor }
-    }
-
-    lazy var lightShadowOpacity: Float = appearance.lightShadowOpacity {
-        didSet { updateShadowOpacity() }
-    }
-
-    lazy var darkShadowOpacity: Float = appearance.darkShadowOpacity {
-        didSet { updateShadowOpacity() }
     }
 
     lazy var shadowOffset = appearance.shadowOffset {
@@ -115,7 +97,6 @@ public class SoftUITextField: UITextField {
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
         updateSublayersShape()
-        updateShadowOpacity()
     }
 
     // MARK: - Override
@@ -161,6 +142,7 @@ private extension SoftUITextField {
         layer.shadowColor = shadowColor
         layer.shadowOffset = shadowOffset
         layer.shadowRadius = shadowRadius
+        layer.shadowOpacity = 1.0
         layer.backgroundColor = UIColor.clear.cgColor
         layer.fillRule = .evenOdd
 
@@ -199,13 +181,6 @@ private extension SoftUITextField {
 
         darkShadowColor = appearance.darkShadowColor
         lightShadowColor = appearance.lightShadowColor
-        darkShadowOpacity = appearance.darkShadowOpacity
-        lightShadowOpacity = appearance.lightShadowOpacity
-    }
-
-    func updateShadowOpacity() {
-        darkInnerShadowLayer.shadowOpacity = darkShadowOpacity
-        lightInnerShadowLayer.shadowOpacity = lightShadowOpacity
     }
 
 }

@@ -49,7 +49,7 @@ final class ChooseIconCell: UICollectionViewCell {
     private func setupDeviceImage(with sfSymbol: SFSymbolRepresentable) {
         let image = UIImage(sfSymbol: sfSymbol)
         let imageView = UIImageView(image: image)
-        imageView.tintColor = Asset.Colors.lightGray.color
+        imageView.tintColor = Asset.Colors.secondaryVariant.color
         imageView.contentMode = .scaleAspectFit
         deviceButton.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
