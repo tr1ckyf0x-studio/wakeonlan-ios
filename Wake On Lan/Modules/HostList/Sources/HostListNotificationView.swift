@@ -38,12 +38,7 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
     // MARK: - Properties
 
     private let appearance = Appearance(); struct Appearance {
-        let shadowSize: CGFloat = 2
-        let shadowDistance: CGFloat = 1
-        let shadowRadius: CGFloat = 5
-        let shadowOpacity: Float = 0.6
         let cornerRadius: CGFloat = 10
-        let shadowHeight: CGFloat = 20.0
     }
 
     private let style = Style.self
@@ -71,11 +66,6 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        makeShadow()
-    }
-
 }
 
 // MARK: - Private
@@ -98,21 +88,6 @@ private extension HostListNotificationView {
             $0.trailing.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview()
         }
-    }
-
-    func makeShadow() {
-        let xPosition = -(appearance.cornerRadius + appearance.shadowSize * 2)
-        let yPosition = appearance.shadowHeight - (appearance.shadowSize * 0.4) + appearance.shadowDistance
-        let labelWidth = frame.width
-        let width = [labelWidth,
-                     appearance.shadowSize * 2,
-                     appearance.cornerRadius].reduce(.zero, +)
-        let contactRect =
-            CGRect(x: xPosition, y: yPosition, width: width, height: appearance.shadowSize)
-        notificationLabel.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
-        notificationLabel.layer.shadowRadius = appearance.shadowRadius
-        notificationLabel.layer.shadowOpacity = appearance.shadowOpacity
-        notificationLabel.layer.masksToBounds = false
     }
 
 }
