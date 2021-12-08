@@ -20,7 +20,7 @@ public final class WakeOnLanService {
         static let macAddressBytesCount = 6
         static let macAddressRadix = 16
         static let broadcastIPAddress = "255.255.255.255"
-        static let magicPocketDefaultPort = "9"
+        static let magicPocketDefaultPort: UInt16 = 9
     }
 
     public enum Error: LocalizedError {
@@ -56,7 +56,7 @@ public final class WakeOnLanService {
         var target = sockaddr_in()
 
         let ipAddress = host.ipAddress ?? Constants.broadcastIPAddress
-        let port = UInt16(host.port ?? Constants.magicPocketDefaultPort)!
+        let port = host.port.flatMap(UInt16.init) ?? Constants.magicPocketDefaultPort
         let addressFamily = AF_INET
 
         target.sin_family = sa_family_t(addressFamily)
