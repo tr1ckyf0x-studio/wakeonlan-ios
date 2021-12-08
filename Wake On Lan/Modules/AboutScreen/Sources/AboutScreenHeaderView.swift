@@ -78,8 +78,7 @@ final class AboutScreenHeaderView: UIView {
 extension AboutScreenHeaderView {
     func configure(with viewModel: AboutScreenHeaderViewViewModel) {
         appNameLabel.text = viewModel.name
-        let versionText = "\(viewModel.version) \(L10n.AboutScreen.build) \(viewModel.build)"
-        appVersionLabel.text = "\(appearance.appVersion) \(versionText)"
+        appVersionLabel.text = "\(appearance.appVersion) \(viewModel.version)"
     }
 }
 

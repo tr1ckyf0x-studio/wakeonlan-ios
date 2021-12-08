@@ -12,6 +12,4 @@ struct AboutScreenHeaderViewViewModel {
     let name: String
     /// Application version
     let version: String
-    /// Application build number
-    let build: String
 }
