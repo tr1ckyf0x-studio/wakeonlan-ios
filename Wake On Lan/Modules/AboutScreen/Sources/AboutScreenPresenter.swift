@@ -72,8 +72,7 @@ private extension AboutScreenPresenter {
         .init(
             headerViewModel: .init(
                 name: bundleInfo.displayName,
-                version: bundleInfo.version,
-                build: bundleInfo.build
+                version: bundleInfo.version
             ),
             buttonListViewModel: [
                 .init(
