@@ -21,7 +21,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
-        FirebaseAppDelegatePlugin()
+        FirebaseAppDelegatePlugin(),
+        NavigationBarAppearanceAppDelegatePlugin()
     ]
 
     func application(
