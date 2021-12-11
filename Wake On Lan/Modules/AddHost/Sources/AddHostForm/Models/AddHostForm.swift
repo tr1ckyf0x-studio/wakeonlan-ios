@@ -91,6 +91,7 @@ final class AddHostForm: AddHostFormRepresentable {
         }
         item.validator = TextValidator(strategy: AddHostValidationStrategy.title)
         item.needsUppercased = false
+        item.keyboardType = .default
 
         return item
     }()
