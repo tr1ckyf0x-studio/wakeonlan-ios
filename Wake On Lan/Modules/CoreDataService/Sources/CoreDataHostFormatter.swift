@@ -37,7 +37,7 @@ enum CoreDataHostFormatter {
         fileprivate var stringFormat: String {
             switch self {
             case .macAddress:
-                return "%X"
+                return "%02X"
 
             case .ipAddress:
                 return "%U"
