@@ -45,11 +45,7 @@ final class HostListTableViewCell: UITableViewCell {
         let symbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 36, weight: .regular))
         let image = UIImage(sfSymbol: ButtonIcon.trash, withConfiguration: symbolConfiguration)
         let imageView = UIImageView(image: image)
-        imageView.tintColor = WOLResources
-            .Asset
-            .Colors
-            .secondary
-            .color
+        imageView.tintColor = WOLResources.Asset.Colors.secondary.color
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -100,11 +96,7 @@ final class HostListTableViewCell: UITableViewCell {
         let imageConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24, weight: .semibold))
         let image = UIImage(sfSymbol: ButtonIcon.ellipsis, withConfiguration: imageConfiguration)
         let imageView = UIImageView(image: image)
-        imageView.tintColor = WOLResources
-            .Asset
-            .Colors
-            .secondary
-            .color
+        imageView.tintColor = WOLResources.Asset.Colors.secondary.color
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -124,9 +116,9 @@ final class HostListTableViewCell: UITableViewCell {
         setupBaseView()
         setupDeleteView()
         setupImageView()
+        setupInfoButton()
         setupHostTitle()
         setupMacAddressTitle()
-        setupInfoButton()
     }
 
     required init?(coder: NSCoder) {
@@ -201,6 +193,7 @@ private extension HostListTableViewCell {
         hostTitle.snp.makeConstraints {
             $0.leading.equalTo(deviceImageView.snp.trailing).offset(16)
             $0.top.equalToSuperview().offset(32)
+            $0.trailing.equalTo(infoButton.snp.leading).offset(-8)
         }
     }
 
