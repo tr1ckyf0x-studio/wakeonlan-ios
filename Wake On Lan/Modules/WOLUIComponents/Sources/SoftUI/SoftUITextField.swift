@@ -64,6 +64,10 @@ public class SoftUITextField: UITextField {
         }
     }
 
+    private var clearButtonRect: CGRect {
+        super.clearButtonRect(forBounds: bounds)
+    }
+
     // MARK: - Layers
 
     private lazy var backgroundLayer: CALayer = {
@@ -106,12 +110,18 @@ public class SoftUITextField: UITextField {
     }
 
     override public func editingRect(forBounds bounds: CGRect) -> CGRect {
-        bounds.insetBy(dx: appearance.editingRectInset.x, dy: appearance.editingRectInset.y)
+        bounds.inset(
+            by: .init(
+                top: appearance.editingRectInset.y,
+                left: appearance.editingRectInset.x,
+                bottom: appearance.editingRectInset.y,
+                right: appearance.editingRectInset.x + clearButtonRect.size.width
+            )
+        )
     }
 
     override public func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
-        let clearButtonRect = super.clearButtonRect(forBounds: bounds)
-        return clearButtonRect.offsetBy(
+        clearButtonRect.offsetBy(
             dx: appearance.clearButtonRectInset.x,
             dy: appearance.clearButtonRectInset.y
         )

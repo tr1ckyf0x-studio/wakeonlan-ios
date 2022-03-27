@@ -37,10 +37,10 @@ final class TextInputCell: UITableViewCell {
 
     private var textFormItem: TextFormItem?
 
-    private var expanded = false {
+    private var isExpanded = false {
         didSet {
-            if expanded == oldValue { return }
-            switch expanded {
+            if isExpanded == oldValue { return }
+            switch isExpanded {
             case true:
                 failureView.show()
                 failureView.isHidden = false
@@ -124,7 +124,7 @@ final class TextInputCell: UITableViewCell {
             return
         }
         item.value = textValue
-        (item.isValid || textValue.isEmpty) ? (expanded = false) : (expanded = true)
+        (item.isValid || textValue.isEmpty) ? (isExpanded = false) : (isExpanded = true)
         guard item.needsUppercased else { return }
         textField.text = item.formatted?.uppercased()
     }

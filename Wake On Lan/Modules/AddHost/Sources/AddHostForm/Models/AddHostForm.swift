@@ -120,8 +120,9 @@ final class AddHostForm: AddHostFormRepresentable {
         }
         item.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
         item.failureReason = .invalidIPAddress
-        item.keyboardType = .numbersAndPunctuation
+        item.keyboardType = .decimalPad
         item.isMandatory = false
+        item.maxLength = 15
 
         return item
     }()
