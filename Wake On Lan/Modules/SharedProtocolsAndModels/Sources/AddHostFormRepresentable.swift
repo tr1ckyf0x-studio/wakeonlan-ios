@@ -6,8 +6,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SharedProtocolsAndModels
-
 public protocol AddHostFormRepresentable: Validable {
     associatedtype SectionType: AddHostFormSectionRepresentable = Void
 

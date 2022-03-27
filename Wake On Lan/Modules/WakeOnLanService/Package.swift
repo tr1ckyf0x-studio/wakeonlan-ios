@@ -9,7 +9,8 @@ let package = Package(
     products: [
         .library(
             name: "WakeOnLanService",
-            targets: ["WakeOnLanService"])
+            targets: ["WakeOnLanService"]
+        )
     ],
     dependencies: [
         .package(path: "../SharedProtocolsAndModels"),
