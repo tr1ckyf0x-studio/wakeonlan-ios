@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SharedModels
+import SharedProtocolsAndModels
 
 enum ChooseIconSectionItem {
     case icon(_ model: IconModel)

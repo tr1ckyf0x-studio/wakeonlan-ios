@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 import WOLResources
-import SharedModels
+import SharedProtocolsAndModels
 
 public final class DeviceIconCell: UITableViewCell {
 

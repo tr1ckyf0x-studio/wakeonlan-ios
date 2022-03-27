@@ -48,12 +48,10 @@ packages:
     path: Wake On Lan/Modules/CoreDataService
   HostList:
     path: Wake On Lan/Modules/HostList
-  SharedModels:
-    path: Wake On Lan/Modules/SharedModels
   SharedExtensions:
     path: Wake On Lan/Modules/SharedExtensions
-  SharedProtocols:
-    path: Wake On Lan/Modules/SharedProtocols
+  SharedProtocolsAndModels:
+    path: Wake On Lan/Modules/SharedProtocolsAndModels
   SharedRouter:
     path: Wake On Lan/Modules/SharedRouter
   WakeOnLanService:
@@ -85,8 +83,7 @@ targets:
       - package: Resolver
       - package: SnapKit
       - package: SharedExtensions
-      - package: SharedModels
-      - package: SharedProtocols
+      - package: SharedProtocolsAndModels
       - package: SharedRouter
       - package: WOLResources
       - package: WakeOnLanService

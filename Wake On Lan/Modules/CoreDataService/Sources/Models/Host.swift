@@ -7,7 +7,7 @@
 //
 
 import CoreData
-import SharedProtocols
+import SharedProtocolsAndModels
 
 public final class Host: NSManagedObject, HostRepresentable {
     @NSManaged public private(set) var createdAt: Date

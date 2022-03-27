@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SharedProtocols
+import SharedProtocolsAndModels
 import StoreKit
 import UIKit
 import WOLResources

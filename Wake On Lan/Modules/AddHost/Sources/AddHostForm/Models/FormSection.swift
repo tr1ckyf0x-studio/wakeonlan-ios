@@ -6,16 +6,11 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SharedProtocols
+import SharedProtocolsAndModels
 
 enum FormSection {
 
-    case section(
-            content: [Item],
-            header: FormSectionHeader? = nil,
-            footer: FormSectionFooter? = nil,
-            kind: Kind? = nil
-         )
+    case section(content: [Item], header: FormSectionHeader? = nil, footer: FormSectionFooter? = nil, kind: Kind? = nil)
 
     // MARK: - Kind
 

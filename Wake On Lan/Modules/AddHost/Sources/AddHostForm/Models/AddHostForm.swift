@@ -8,8 +8,8 @@
 
 import CoreDataService
 import Foundation
-import SharedModels
-import SharedProtocols
+import SharedProtocolsAndModels
+import SharedProtocolsAndModels
 import WOLResources
 import WOLUIComponents
 
@@ -159,10 +159,7 @@ final class AddHostForm: AddHostFormRepresentable {
         let ipAddressFormItem = FormItem.text(ipAddressItem)
         let portFormItem = FormItem.text(portItem)
 
-        let deviceIconSection = FormSection.section(
-            content: iconSectionItems,
-            kind: .deviceIcon
-        )
+        let deviceIconSection = FormSection.section(content: iconSectionItems, kind: .deviceIcon)
 
         let titleSection = FormSection.section(
             content: [titleFormItem],

@@ -4,12 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "SharedExtensions",
+    name: "SharedProtocolsAndModels",
     platforms: [.iOS(.v13)],
     products: [
         .library(
-            name: "SharedExtensions",
-            targets: ["SharedExtensions"]
+            name: "SharedProtocolsAndModels",
+            targets: ["SharedProtocolsAndModels"]
         )
     ],
     dependencies: [
@@ -17,7 +17,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SharedExtensions",
+            name: "SharedProtocolsAndModels",
             dependencies: [
                 "WOLResources"
             ],

@@ -6,15 +6,21 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SharedModels
+import SharedProtocolsAndModels
 
 public protocol AddHostFormRepresentable: Validable {
     associatedtype SectionType: AddHostFormSectionRepresentable = Void
 
+    /// Represents sections
     var sections: [SectionType] { get }
+    /// Represents main icon header
     var iconModel: IconModel? { get set }
+    /// Represents host's title
     var title: String? { get }
+    /// Represents host's mac address
     var macAddress: String? { get }
+    /// Represents host's ip address
     var ipAddress: String? { get }
+    /// Represents host's ip port
     var port: String? { get }
 }

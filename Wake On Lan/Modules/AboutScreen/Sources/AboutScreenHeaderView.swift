@@ -6,6 +6,7 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
+import SharedProtocolsAndModels
 import SnapKit
 import UIKit
 import WOLResources
@@ -75,7 +76,7 @@ final class AboutScreenHeaderView: UIView {
     }
 }
 
-extension AboutScreenHeaderView {
+extension AboutScreenHeaderView: ViewModelConfigurable {
     func configure(with viewModel: AboutScreenHeaderViewViewModel) {
         appNameLabel.text = viewModel.name
         appVersionLabel.text = "\(appearance.appVersion) \(viewModel.version)"

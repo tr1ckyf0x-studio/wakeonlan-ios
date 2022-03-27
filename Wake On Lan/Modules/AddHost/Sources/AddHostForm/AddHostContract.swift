@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SharedProtocols
+import SharedProtocolsAndModels
 import SharedRouter
 
 protocol AddHostViewOutput: AnyObject {

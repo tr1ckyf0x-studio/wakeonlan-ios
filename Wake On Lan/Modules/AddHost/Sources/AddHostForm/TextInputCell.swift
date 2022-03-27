@@ -48,8 +48,8 @@ final class TextInputCell: UITableViewCell {
 
             case false:
                 failureView.hide()
-                onExpandAction?({ [unowned self] in
-                    self.failureView.isHidden = true
+                onExpandAction?({ [weak self] in
+                    self?.failureView.isHidden = true
                 })
             }
         }

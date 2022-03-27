@@ -3,6 +3,7 @@
 //
 
 import SharedExtensions
+import SharedProtocolsAndModels
 import UIKit
 import WOLResources
 
@@ -78,6 +79,8 @@ public class SoftUIView: UIControl {
 
     private var circleShape = false
 
+    private let feedbackGenerator: GeneratesImpactFeedback
+
     // MARK: - Layers
 
     private lazy var backgroundLayer: CALayer = {
@@ -115,7 +118,11 @@ public class SoftUIView: UIControl {
 
     // MARK: - Init
 
-    override public init(frame: CGRect) {
+    public init(
+        frame: CGRect = .zero,
+        feedbackGenerator: GeneratesImpactFeedback = UIImpactFeedbackGenerator(style: .medium)
+    ) {
+        self.feedbackGenerator = feedbackGenerator
         super.init(frame: frame)
         addSublayers()
         updateSublayersShape()
@@ -161,6 +168,7 @@ public class SoftUIView: UIControl {
         switch type {
         case .pushButton:
             isSelected = true
+            feedbackGenerator.impactOccurred()
 
         case .toggleButton:
             isSelected.toggle()
@@ -237,6 +245,7 @@ private extension SoftUIView {
         layer.shadowRadius = shadowRadius
         layer.shadowOpacity = 1.0
         layer.backgroundColor = UIColor.clear.cgColor
+        layer.shouldRasterize = true
 
         return layer
     }
@@ -250,6 +259,7 @@ private extension SoftUIView {
         layer.shadowOpacity = 1.0
         layer.backgroundColor = UIColor.clear.cgColor
         layer.fillRule = .evenOdd
+        layer.shouldRasterize = true
 
         return layer
     }
