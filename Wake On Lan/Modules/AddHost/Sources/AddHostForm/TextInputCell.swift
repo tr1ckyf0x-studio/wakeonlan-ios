@@ -124,7 +124,7 @@ final class TextInputCell: UITableViewCell {
             return
         }
         item.value = textValue
-        (item.isValid || textValue.isEmpty) ? (isExpanded = false) : (isExpanded = true)
+        isExpanded = !(item.isValid || textValue.isEmpty)
         guard item.needsUppercased else { return }
         textField.text = item.formatted?.uppercased()
     }
