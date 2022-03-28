@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -22,7 +22,7 @@ let package = Package(
         .package(path: "../WOLResources"),
         .package(path: "../WOLUIComponents"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.7.0"),
-        .package(name: "Reachability", url: "https://github.com/ashleymills/Reachability.swift", from: "5.1.0"),
+        .package(url: "https://github.com/ashleymills/Reachability.swift", from: "5.1.0"),
         .package(url: "https://github.com/SnapKit/SnapKit", from: "5.0.0"),
         .package(url: "https://github.com/hmlongco/Resolver", from: "1.4.0")
     ],
@@ -40,7 +40,7 @@ let package = Package(
                 "WakeOnLanService",
                 "WOLResources",
                 "WOLUIComponents",
-                .product(name: "Reachability", package: "Reachability"),
+                .product(name: "Reachability", package: "Reachability.swift"),
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
             path: "Sources"
