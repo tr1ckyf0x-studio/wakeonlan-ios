@@ -19,7 +19,7 @@ attributes:
 packages:
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk
-    from: 8.4.0
+    from: 8.10.0
   Reachability:
     url: https://github.com/ashleymills/Reachability.swift
     from: 5.1.0
@@ -37,7 +37,7 @@ packages:
     from: 4.0.0
   Resolver:
     url: https://github.com/hmlongco/Resolver
-    from: 1.4.3
+    from: 1.5.0
 
   # Local packages
   AboutScreen:
