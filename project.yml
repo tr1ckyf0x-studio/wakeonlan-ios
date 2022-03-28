@@ -109,6 +109,7 @@ targets:
     preBuildScripts:
     - name: "Swiftgen"
       script: |
+              export PATH="$PATH:/opt/homebrew/bin"
               if command -v swiftgen &> /dev/null
               then
                 swiftgen config run --config $SRCROOT/Wake\ on\ LAN/Modules/**/swiftgen.yml
@@ -117,6 +118,7 @@ targets:
               fi
     - name: "Swiftlint"
       script: |
+              export PATH="$PATH:/opt/homebrew/bin"
               if which swiftlint >/dev/null; then
                 swiftlint
               else
