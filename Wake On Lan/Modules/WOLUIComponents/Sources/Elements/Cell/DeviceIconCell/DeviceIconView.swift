@@ -8,7 +8,7 @@
 
 import UIKit
 import WOLResources
-import SharedModels
+import SharedProtocolsAndModels
 
 protocol DeviceIconViewDelegate: AnyObject {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView)

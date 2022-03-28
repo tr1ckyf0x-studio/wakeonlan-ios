@@ -29,17 +29,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        plugins.forEach {
-            _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions)
-        }
-        coreDataService.createHostContainer { [unowned self] in
+        plugins.forEach { _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions) }
+        coreDataService.createHostContainer { [weak self] in
+            guard let self = self else { return }
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let hostListViewController = HostListViewController()
             let hostListConfigurator = HostListConfigurator()
             hostListConfigurator.configure(viewController: hostListViewController)
-            let navigationController = WOLNavigationController(
-                rootViewController: hostListViewController
-            )
+            let navigationController = WOLNavigationController(rootViewController: hostListViewController)
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
         }

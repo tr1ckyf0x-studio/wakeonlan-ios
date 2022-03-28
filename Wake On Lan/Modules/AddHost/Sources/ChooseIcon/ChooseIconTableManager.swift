@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SharedModels
+import SharedProtocolsAndModels
 
 protocol ChooseIconTableManagerDelegate: AnyObject {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)
@@ -57,7 +57,8 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
                 withReuseIdentifier: "\(ChooseIconCell.self)",
                 for: indexPath
             ) as? ChooseIconCell
-            let didTapIconBlock: ChooseIconCell.TapIconBlock = { [unowned self] _ in
+            let didTapIconBlock: ChooseIconCell.TapIconBlock = { [weak self] _ in
+                guard let self = self else { return }
                 self.delegate?.tableManager(self, didTapIcon: model)
             }
 

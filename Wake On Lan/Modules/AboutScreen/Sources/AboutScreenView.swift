@@ -6,6 +6,7 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
+import SharedProtocolsAndModels
 import SnapKit
 import UIKit
 import WOLResources
@@ -15,7 +16,7 @@ protocol AboutScreenViewDelegate: AnyObject {
     func aboutScreenViewDidPressBackButton(_ view: AboutScreenView)
 }
 
-protocol AboutScreenViewRepresentable {
+protocol AboutScreenViewRepresentable: ViewModelConfigurable {
     func configure(with viewModel: AboutScreenViewViewModel)
 }
 

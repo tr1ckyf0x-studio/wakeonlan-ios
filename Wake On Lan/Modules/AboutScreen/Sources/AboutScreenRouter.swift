@@ -7,7 +7,7 @@
 //
 
 import SharedRouter
-import SharedProtocols
+import SharedProtocolsAndModels
 import UIKit
 
 final class AboutScreenRouter: Router {

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SharedProtocols
+import SharedProtocolsAndModels
 import UIKit
 
 final class TextFormItem: Validable, Mandatoryable {

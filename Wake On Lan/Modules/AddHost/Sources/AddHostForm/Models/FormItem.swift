@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import SharedModels
-import SharedProtocols
+import SharedProtocolsAndModels
 
 enum FormItem {
     case text(_ formItem: TextFormItem)

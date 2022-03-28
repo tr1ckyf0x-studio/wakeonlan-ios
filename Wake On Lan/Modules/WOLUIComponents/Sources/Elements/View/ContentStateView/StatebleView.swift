@@ -6,8 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
+import SharedProtocolsAndModels
 import SnapKit
+import UIKit
 
 // MARK: - StateableView
 

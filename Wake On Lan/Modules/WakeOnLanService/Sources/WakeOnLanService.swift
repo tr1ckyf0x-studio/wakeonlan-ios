@@ -8,7 +8,7 @@
 
 import Foundation
 import WOLResources
-import SharedProtocols
+import SharedProtocolsAndModels
 
 public final class WakeOnLanService {
 

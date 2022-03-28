@@ -39,16 +39,6 @@ extension CoreDataServiceProtocol {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
             DDLogDebug("Persistent stores were loaded")
-
-//            #if DEBUG
-//            do {
-//                // Use the container to initialize the development schema.
-//                try persistentContainer.initializeCloudKitSchema(options: [])
-//            } catch {
-//                print(error)
-//            }
-//            #endif
-
             DispatchQueue.main.async { completion() }
         }
     }

@@ -75,7 +75,8 @@ extension AddHostTableManager: UITableViewDataSource {
                 for: indexPath
             ) as? DeviceIconCell
             deviceIconCell?.configure(with: form?.iconModel)
-            deviceIconCell?.didTapChangeIconBlock = { [unowned self] model in
+            deviceIconCell?.didTapChangeIconBlock = { [weak self] model in
+                guard let self = self else { return }
                 self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
             }
             cell = deviceIconCell

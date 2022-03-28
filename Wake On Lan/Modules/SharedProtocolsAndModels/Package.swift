@@ -4,18 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "WOLResources",
-    defaultLocalization: "en",
+    name: "SharedProtocolsAndModels",
     platforms: [.iOS(.v13)],
     products: [
         .library(
-            name: "WOLResources",
-            targets: ["WOLResources"]
+            name: "SharedProtocolsAndModels",
+            targets: ["SharedProtocolsAndModels"]
         )
+    ],
+    dependencies: [
+        .package(path: "../WOLResources")
     ],
     targets: [
         .target(
-            name: "WOLResources",
+            name: "SharedProtocolsAndModels",
+            dependencies: [
+                "WOLResources"
+            ],
             path: "Sources"
         )
     ]

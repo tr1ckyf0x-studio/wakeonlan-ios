@@ -6,8 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SharedModels
-import SharedProtocols
+import SharedProtocolsAndModels
 
 final class AddHostPresenter<Router: AddHostRouterProtocol> {
     weak var view: AddHostViewInput?

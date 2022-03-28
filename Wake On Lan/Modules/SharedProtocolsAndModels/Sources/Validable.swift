@@ -6,8 +6,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-
 public protocol Validable {
     var isValid: Bool { get }
 }

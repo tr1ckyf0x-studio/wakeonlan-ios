@@ -8,8 +8,7 @@
 
 import CoreDataService
 import Foundation
-import SharedModels
-import SharedProtocols
+import SharedProtocolsAndModels
 import WOLResources
 import WOLUIComponents
 
@@ -121,8 +120,9 @@ final class AddHostForm: AddHostFormRepresentable {
         }
         item.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
         item.failureReason = .invalidIPAddress
-        item.keyboardType = .numbersAndPunctuation
+        item.keyboardType = .decimalPad
         item.isMandatory = false
+        item.maxLength = 15
 
         return item
     }()
@@ -159,10 +159,7 @@ final class AddHostForm: AddHostFormRepresentable {
         let ipAddressFormItem = FormItem.text(ipAddressItem)
         let portFormItem = FormItem.text(portItem)
 
-        let deviceIconSection = FormSection.section(
-            content: iconSectionItems,
-            kind: .deviceIcon
-        )
+        let deviceIconSection = FormSection.section(content: iconSectionItems, kind: .deviceIcon)
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
