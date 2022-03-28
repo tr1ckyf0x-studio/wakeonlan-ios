@@ -6,8 +6,7 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-import SharedProtocols
+import SharedProtocolsAndModels
 import StoreKit
 import UIKit
 import WOLResources

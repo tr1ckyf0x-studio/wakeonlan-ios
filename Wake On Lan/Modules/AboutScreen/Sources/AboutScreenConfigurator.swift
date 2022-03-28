@@ -6,8 +6,6 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-
 public final class AboutScreenConfigurator {
 
     // MARK: - Init

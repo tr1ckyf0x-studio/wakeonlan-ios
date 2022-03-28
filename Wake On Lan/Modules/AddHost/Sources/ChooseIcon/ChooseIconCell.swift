@@ -6,7 +6,7 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SharedModels
+import SharedProtocolsAndModels
 import UIKit
 import WOLResources
 import WOLUIComponents
@@ -22,7 +22,6 @@ final class ChooseIconCell: UICollectionViewCell {
     private lazy var deviceButton: SoftUIView = {
         let button = SoftUIView()
         button.addTarget(self, action: #selector(didTapDeviceButton(_:)), for: .touchUpInside)
-
         return button
     }()
 

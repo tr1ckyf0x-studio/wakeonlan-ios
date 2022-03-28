@@ -6,6 +6,7 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
+import SharedProtocolsAndModels
 import SnapKit
 import UIKit
 import WOLResources
@@ -68,7 +69,7 @@ final class AboutScreenMenuButtonView: UIView {
 
 // MARK: - Internal methods
 
-extension AboutScreenMenuButtonView {
+extension AboutScreenMenuButtonView: ViewModelConfigurable {
     func configure(with model: AboutScreenMenuButtonViewViewModel) {
         action = model.action
         buttonTitleLabel.text = model.title

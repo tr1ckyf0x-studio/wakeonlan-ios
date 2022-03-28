@@ -10,15 +10,12 @@ import UIKit
 import WOLResources
 
 protocol NotificationViewStyle {
-
     static var text: String { get }
     static var backgroundColor: UIColor { get }
     static var textColor: UIColor { get }
-
 }
 
 enum NotificationViewType {
-
     struct Default: NotificationViewStyle {
         static let text = L10n.HostList.packetSent
         static let backgroundColor = Asset.Colors.secondary.color
@@ -28,9 +25,10 @@ enum NotificationViewType {
     struct Failure: NotificationViewStyle {
         static let text = L10n.HostList.checkWifiConnection
         static let backgroundColor = Asset.Colors.warning.color
-        static let textColor = Asset.Colors.secondaryVariant.color.resolvedColor(with: .init(userInterfaceStyle: .dark))
+        static let textColor = Asset.Colors.secondaryVariant.color.resolvedColor(
+            with: .init(userInterfaceStyle: .dark)
+        )
     }
-
 }
 
 final class HostListNotificationView<Style: NotificationViewStyle>: UIView {

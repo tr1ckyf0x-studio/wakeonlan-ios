@@ -21,6 +21,7 @@ final class ChooseIconView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ChooseIconCell.self, forCellWithReuseIdentifier: "\(ChooseIconCell.self)")
         collectionView.alwaysBounceVertical = true
+        collectionView.delaysContentTouches = false
 
         return collectionView
     }()

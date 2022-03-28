@@ -6,7 +6,6 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import StoreKit
 
 public protocol RequestsReview {

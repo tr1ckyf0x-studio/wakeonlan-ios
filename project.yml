@@ -19,7 +19,7 @@ attributes:
 packages:
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk
-    from: 8.4.0
+    from: 8.10.0
   Reachability:
     url: https://github.com/ashleymills/Reachability.swift
     from: 5.1.0
@@ -37,7 +37,7 @@ packages:
     from: 4.0.0
   Resolver:
     url: https://github.com/hmlongco/Resolver
-    from: 1.4.3
+    from: 1.5.0
 
   # Local packages
   AboutScreen:
@@ -48,12 +48,10 @@ packages:
     path: Wake On Lan/Modules/CoreDataService
   HostList:
     path: Wake On Lan/Modules/HostList
-  SharedModels:
-    path: Wake On Lan/Modules/SharedModels
   SharedExtensions:
     path: Wake On Lan/Modules/SharedExtensions
-  SharedProtocols:
-    path: Wake On Lan/Modules/SharedProtocols
+  SharedProtocolsAndModels:
+    path: Wake On Lan/Modules/SharedProtocolsAndModels
   SharedRouter:
     path: Wake On Lan/Modules/SharedRouter
   WakeOnLanService:
@@ -85,8 +83,7 @@ targets:
       - package: Resolver
       - package: SnapKit
       - package: SharedExtensions
-      - package: SharedModels
-      - package: SharedProtocols
+      - package: SharedProtocolsAndModels
       - package: SharedRouter
       - package: WOLResources
       - package: WakeOnLanService
@@ -112,6 +109,7 @@ targets:
     preBuildScripts:
     - name: "Swiftgen"
       script: |
+              export PATH="$PATH:/opt/homebrew/bin"
               if command -v swiftgen &> /dev/null
               then
                 swiftgen config run --config $SRCROOT/Wake\ on\ LAN/Modules/**/swiftgen.yml
@@ -120,6 +118,7 @@ targets:
               fi
     - name: "Swiftlint"
       script: |
+              export PATH="$PATH:/opt/homebrew/bin"
               if which swiftlint >/dev/null; then
                 swiftlint
               else

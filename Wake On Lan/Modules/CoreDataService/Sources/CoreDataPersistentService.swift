@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Foundation
 import CocoaLumberjackSwift
 
 // MARK: - PersistentContainer
