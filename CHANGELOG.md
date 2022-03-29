@@ -8,6 +8,14 @@
 
 ### Updated
 
+## 1.0.6
+
+### Fixed
+
+- Fixed keyboard for IP address @Dm94st
+
+[Commits](https://github.com/tr1ckyf0x/wakeonlan-ios/compare/v1.0.5...1.0.6)
+
 ## 1.0.5
 
 ### Added
