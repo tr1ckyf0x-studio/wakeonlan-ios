@@ -38,8 +38,6 @@ protocol HostListCacheTrackerDelegate: AnyObject {
 // swiftlint:disable line_length
 final class HostListCacheTracker <Object, Delegate: HostListCacheTrackerDelegate>: NSObject, HostListCacheTrackerProtocol, NSFetchedResultsControllerDelegate where Delegate.Object == Object {
 
-    typealias Completion = (_ controller: NSFetchedResultsController<Object>) -> Void
-
     // MARK: - Transaction
 
     enum Transaction<Object> {
