@@ -9,34 +9,36 @@
 import Foundation
 import Quick
 import Nimble
-@testable import Wake_on_LAN
+import SharedProtocolsAndModels
+import WOLResources
+@testable import AddHost
 
 class AddHostPresenterSpec: QuickSpec {
 
     // swiftlint:disable function_body_length
     override func spec() {
-        var presenter: AddHostPresenter!
-        var interactorMock: AddHostInteractorMock!
-        var viewController: AddHostViewControllerMock!
-        var router: AddHostRouterMock!
+        var sut: AddHostPresenter<AddHostRouterProtocolMock>!
+        var interactorMock: AddHostInteractorInputMock!
+        var viewControllerMock: AddHostViewInputMock!
+        var routerMock: AddHostRouterProtocolMock!
         var tableManager: AddHostTableManager!
 
         beforeEach {
-            presenter = AddHostPresenter()
-            interactorMock = AddHostInteractorMock()
-            viewController = AddHostViewControllerMock()
-            router = AddHostRouterMock()
-            tableManager = presenter.tableManager
+            sut = AddHostPresenter()
+            interactorMock = AddHostInteractorInputMock()
+            viewControllerMock = AddHostViewInputMock()
+            routerMock = AddHostRouterProtocolMock()
+            tableManager = sut.tableManager
 
-            presenter.view = viewController
-            presenter.interactor = interactorMock
-            presenter.router = router
+            sut.view = viewControllerMock
+            sut.interactor = interactorMock
+            sut.router = routerMock
         }
 
         describe("viewDidLoad") {
             it("should reload table") {
-                presenter.viewDidLoad(viewController)
-                expect(viewController.didCallReloadTable).to(beTrue())
+                sut.viewDidLoad(viewControllerMock)
+                expect(viewControllerMock.reloadTableCalled).to(beTrue())
             }
         }
 
@@ -63,51 +65,51 @@ class AddHostPresenterSpec: QuickSpec {
 
             context("form is not valid") {
                 it("should not save or update form") {
-                    presenter.viewDidPressSaveButton(viewController)
-                    expect(interactorMock.didCallSaveForm).to(beFalse())
-                    expect(interactorMock.didCallUpdateForm).to(beFalse())
+                    sut.viewDidPressSaveButton(viewControllerMock)
+                    expect(interactorMock.saveFormCalled).to(beFalse())
+                    expect(interactorMock.updateFormCalled).to(beFalse())
                 }
             }
         }
 
         describe("viewDidPressBackButton(_:)") {
             it("should call router?.popCurrentController(animated:)") {
-                presenter.viewDidPressBackButton(viewController)
-                expect(router.didCallPopCurrentController).to(beTrue())
+                sut.viewDidPressBackButton(viewControllerMock)
+                expect(routerMock.popCurrentControllerAnimatedCalled).to(beTrue())
             }
         }
 
         describe("interactor(_:, didSaveForm:)") {
             it("should call router?.popCurrentController(animated:)") {
-                presenter.interactor(interactorMock, didSaveForm: presenter.addHostForm)
-                expect(router.didCallPopCurrentController).to(beTrue())
+                sut.interactor(interactorMock, didSaveForm: sut.addHostForm)
+                expect(routerMock.popCurrentControllerAnimatedCalled).to(beTrue())
             }
         }
 
         describe("interactor(_:, didUpdateForm:)") {
             it("should call router?.popCurrentController(animated:)") {
-                presenter.interactor(interactorMock, didUpdateForm: presenter.addHostForm)
-                expect(router.didCallPopCurrentController).to(beTrue())
+                sut.interactor(interactorMock, didUpdateForm: sut.addHostForm)
+                expect(routerMock.popCurrentControllerAnimatedCalled).to(beTrue())
             }
         }
 
         describe("tableManagerDidTapDeviceIconCell(_:, _:)") {
             it("should call router?.routeToChooseIcon()") {
-                presenter.tableManagerDidTapDeviceIconCell(tableManager, .init())
-                expect(router.didCallRouteToChooseIcon).to(beTrue())
+                sut.tableManagerDidTapDeviceIconCell(tableManager, .init())
+                expect(routerMock.routeToChooseIconCalled).to(beTrue())
             }
         }
 
         describe("chooseIconModuleDidSelectIcon(_:)") {
             it("should set iconModel to addHostForm") {
-                let iconModel = IconModel(pictureName: "testPic")
-                presenter.chooseIconModuleDidSelectIcon(iconModel)
-                expect(presenter.addHostForm.iconModel).to(equal(iconModel))
+                let iconModel = IconModel()
+                sut.chooseIconModuleDidSelectIcon(iconModel)
+                expect(sut.addHostForm.iconModel).to(equal(iconModel))
             }
 
             it("should call view?.reloadTable()") {
-                presenter.chooseIconModuleDidSelectIcon(.init())
-                expect(viewController.didCallReloadTable).to(beTrue())
+                sut.chooseIconModuleDidSelectIcon(.init())
+                expect(viewControllerMock.reloadTableWithCalled).to(beTrue())
             }
         }
 

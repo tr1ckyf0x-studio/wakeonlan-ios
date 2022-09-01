@@ -6,3 +6,4 @@ eval touch $GENERATED_DIR/Strings+Generated.swift
 eval touch $GENERATED_DIR/XCAssets+Generated.swift
 
 swiftgen config run --config Wake\ on\ LAN/Modules/**/swiftgen.yml
+sourcery -v --config Wake\ on\ LAN/Modules/**/sourcery.yml

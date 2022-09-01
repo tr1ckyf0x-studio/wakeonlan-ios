@@ -18,21 +18,25 @@ protocol AddHostViewOutput: AnyObject {
     func viewDidPressBackButton(_ view: AddHostViewInput)
 }
 
+// sourcery: AutoMockable
 protocol AddHostViewInput: AnyObject {
     func reloadTable()
     func reloadTable(with section: FormSection)
 }
 
+// sourcery: AutoMockable
 protocol AddHostInteractorInput: AnyObject {
     func saveForm(_ form: AddHostForm)
     func updateForm(_ form: AddHostForm)
 }
 
+// sourcery: AutoMockable
 protocol AddHostInteractorOutput: AnyObject {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm)
     func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm)
 }
 
+// sourcery: AutoMockable
 protocol AddHostRouterProtocol: AnyObject, Router where ViewControllerType == AddHostViewController {
     func routeToChooseIcon()
 }

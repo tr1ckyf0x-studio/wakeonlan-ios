@@ -27,6 +27,12 @@ let package = Package(
             resources: [
                 .process("Resources/HostsDataModel.xcdatamodeld")
             ]
+        ),
+        .testTarget(
+            name: "CoreDataServiceTests",
+            dependencies: [
+                "CoreDataService"
+            ]
         )
     ]
 )
