@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../SharedProtocolsAndModels"),
-        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.7.0")
+        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.7.4"))
     ],
     targets: [
         .target(

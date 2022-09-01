@@ -21,10 +21,10 @@ let package = Package(
         .package(path: "../WakeOnLanService"),
         .package(path: "../WOLResources"),
         .package(path: "../WOLUIComponents"),
-        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", from: "3.7.0"),
-        .package(url: "https://github.com/ashleymills/Reachability.swift", from: "5.1.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.0.0"),
-        .package(url: "https://github.com/hmlongco/Resolver", from: "1.4.0")
+        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.7.4")),
+        .package(url: "https://github.com/ashleymills/Reachability.swift", .upToNextMajor(from: "5.1.0")),
+        .package(url: "https://github.com/SnapKit/SnapKit", .upToNextMajor(from: "5.6.0")),
+        .package(url: "https://github.com/hmlongco/Resolver", .upToNextMajor(from: "1.5.0"))
     ],
     targets: [
         .target(
