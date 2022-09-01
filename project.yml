@@ -19,25 +19,25 @@ attributes:
 packages:
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk
-    from: 8.10.0
+    minorVersion: 9.5.0
   Reachability:
     url: https://github.com/ashleymills/Reachability.swift
-    from: 5.1.0
+    minorVersion: 5.1.0
   SnapKit:
     url: https://github.com/SnapKit/SnapKit
-    from: 5.0.1
+    minorVersion: 5.6.0
   CocoaLumberjackSwift:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
-    from: 3.7.2
+    minorVersion: 3.7.4
   Nimble:
     url: https://github.com/Quick/Nimble
-    from: 9.2.0
+    minorVersion: 10.0.0
   Quick:
     url: https://github.com/Quick/Quick
-    from: 4.0.0
+    minorVersion: 5.0.1
   Resolver:
     url: https://github.com/hmlongco/Resolver
-    from: 1.5.0
+    minorVersion: 1.5.0
 
   # Local packages
   AboutScreen:

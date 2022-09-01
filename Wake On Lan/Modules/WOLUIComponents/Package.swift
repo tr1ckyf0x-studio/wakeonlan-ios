@@ -16,7 +16,7 @@ let package = Package(
         .package(path: "../SharedExtensions"),
         .package(path: "../SharedProtocolsAndModels"),
         .package(path: "../WOLResources"),
-        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.0.0")
+        .package(url: "https://github.com/SnapKit/SnapKit", .upToNextMajor(from: "5.6.0"))
     ],
     targets: [
         .target(
