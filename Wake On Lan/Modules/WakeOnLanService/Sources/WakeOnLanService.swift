@@ -63,7 +63,7 @@ public final class WakeOnLanService {
         target.sin_addr.s_addr = inet_addr(ipAddress)
 
         let isLittleEndian = Int(OSHostByteOrder()) == OSLittleEndian
-        target.sin_port = isLittleEndian ? _OSSwapInt16(port): port
+        target.sin_port = isLittleEndian ? _OSSwapInt16(port) : port
 
         udpSocket = socket(addressFamily, SOCK_DGRAM, IPPROTO_UDP)
         guard udpSocket >= 0 else {
