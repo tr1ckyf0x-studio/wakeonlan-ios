@@ -1,0 +1,3 @@
+[submodule "swift-templates"]
+	path = swift-templates
+	url = git@github.com:tr1ckyf0x/swift-templates.git
