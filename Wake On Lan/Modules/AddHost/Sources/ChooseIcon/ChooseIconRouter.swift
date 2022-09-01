@@ -6,11 +6,17 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-final class ChooseIconRouter: ChooseIconRouterProtocol {
-    var viewController: ChooseIconViewInput?
+import UIKit
 
-    init(viewController: ChooseIconViewInput) {
+final class ChooseIconRouter: ChooseIconRouterProtocol {
+    weak var viewController: UIViewController?
+
+    init(viewController: UIViewController) {
         self.viewController = viewController
+    }
+
+    func dismiss(animated: Bool) {
+        viewController?.dismiss(animated: animated)
     }
 
 }

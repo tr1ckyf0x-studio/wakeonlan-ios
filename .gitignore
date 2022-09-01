@@ -4,6 +4,8 @@
 ### SwiftGen ###
 **/Generated
 
+*.generated.swift
+
 
 # Created by https://www.gitignore.io/api/swift,appcode
 

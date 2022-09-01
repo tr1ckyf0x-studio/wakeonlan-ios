@@ -6,11 +6,12 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import SharedProtocolsAndModels
 import WOLUIComponents
 
-protocol ChooseIconViewInput: UIViewController {
+// sourcery: AutoMockable
+protocol ChooseIconViewInput: AnyObject {
     var presenter: ChooseIconViewOutput! { get set }
 
     func reloadCollectionViewLayout()
@@ -26,18 +27,14 @@ protocol ChooseIconViewOutput {
     func viewWillLayoutSubviews(_ view: ChooseIconViewInput)
 }
 
-extension ChooseIconViewOutput {
-    func viewDidLoad(_ view: ChooseIconViewInput) { }
-
-    func viewWillLayoutSubviews(_ view: ChooseIconViewInput) { }
-}
-
+// sourcery: AutoMockable
 protocol ChooseIconRouterProtocol: AnyObject {
-    var viewController: ChooseIconViewInput? { get }
+    func dismiss(animated: Bool)
 }
 
 // MARK: - Module delegate
 
+// sourcery: AutoMockable
 protocol ChooseIconModuleOutput: AnyObject {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel)
 }

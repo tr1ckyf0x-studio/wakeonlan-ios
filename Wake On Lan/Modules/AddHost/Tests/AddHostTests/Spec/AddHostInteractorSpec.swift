@@ -9,20 +9,21 @@
 import Foundation
 import Quick
 import Nimble
-@testable import Wake_on_LAN
+@testable import AddHost
 
+// TODO: Is not testable until Core Data stack is mocked
 class AddHostInteractorSpec: QuickSpec {
 
     override func spec() {
-        var presenter: AddHostPresenterMock!
-        var interactor: AddHostInteractor!
+//        var sut: AddHostInteractor!
+//        var presenter: AddHostInteractorOutputMock!
 
-        beforeEach {
-            presenter = AddHostPresenterMock()
-            interactor = AddHostInteractor()
-
-            interactor.presenter = presenter
-        }
+//        beforeEach {
+//            presenter = AddHostInteractorOutputMock()
+//            sut = AddHostInteractor()
+//
+//            sut.presenter = presenter
+//        }
 
         describe("saveForm(_:)") {
             it("should call presenter?.interactor(_:, didSaveForm:)") {
