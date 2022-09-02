@@ -30,8 +30,16 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         plugins.forEach { _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions) }
-        coreDataService.createHostContainer { [weak self] in
-            guard let self = self else { return }
+
+        Task {
+            let coreDataMigrationController = CoreDataMigrationController(coreDataService: coreDataService)
+
+            try await coreDataMigrationController
+                .migration(CoreDataAppToSharedGroupMigration())
+                .performMigrations()
+
+            await coreDataService.createHostContainer()
+
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let hostListViewController = HostListViewController()
             let hostListConfigurator = HostListConfigurator()
@@ -40,7 +48,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = navigationController
             self.window?.makeKeyAndVisible()
         }
+
         return true
     }
-
 }

@@ -75,6 +75,7 @@ targets:
           - "**/*.secret"
           - "Modules/**/"
         optional: true
+      - IntentSharedSources
     dependencies:
       - package: AboutScreen
       - package: AddHost
@@ -92,6 +93,7 @@ targets:
       - package: WOLResources
       - package: WakeOnLanService
       - package: WOLUIComponents
+      - target: Intent
     scheme:
       testTargets:
         - package: AddHost/AddHostTests
@@ -140,3 +142,27 @@ targets:
         inputFiles:
           - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
           - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
+  Intent:
+    platform: iOS
+    type: app-extension
+    sources:
+      - Intent
+      - IntentSharedSources
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: 1
+        DISPLAY_NAME: "Awake Intent"
+        INFOPLIST_FILE: "Intent/Info.plist"
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.intent
+        CODE_SIGN_ENTITLEMENTS: "Intent/Intent.entitlements"
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: "Apple Development"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
+        Release:
+          CODE_SIGN_IDENTITY: "Apple Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AppStore"
+    dependencies:
+      - sdk: Intents.framework
+      - package: WakeOnLanService
+      - package: CoreDataService

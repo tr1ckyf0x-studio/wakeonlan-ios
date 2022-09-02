@@ -14,7 +14,9 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../SharedProtocolsAndModels"),
-        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.7.4"))
+        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.7.4")),
+        .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "5.0.1")),
+        .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "10.0.0"))
     ],
     targets: [
         .target(
@@ -31,7 +33,9 @@ let package = Package(
         .testTarget(
             name: "CoreDataServiceTests",
             dependencies: [
-                "CoreDataService"
+                "CoreDataService",
+                "Quick",
+                "Nimble"
             ]
         )
     ]

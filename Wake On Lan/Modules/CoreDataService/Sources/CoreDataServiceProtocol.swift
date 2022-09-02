@@ -10,6 +10,12 @@ import Foundation
 import CocoaLumberjackSwift
 import CoreData
 
+protocol CoreDataServiceInternalProtocol: AnyObject {
+    var managedObjectModel: NSManagedObjectModel { get }
+
+    var hasLoadedStores: Bool { get set }
+}
+
 public protocol CoreDataServiceProtocol {
     typealias SaveCompletionHandler = () -> Void
 
@@ -18,6 +24,8 @@ public protocol CoreDataServiceProtocol {
     var mainContext: NSManagedObjectContext { get }
 
     func createHostContainer(completion: @escaping () -> Void)
+
+    func createHostContainer() async
 
     func createChildConcurrentContext() -> NSManagedObjectContext
 
@@ -33,13 +41,27 @@ extension CoreDataServiceProtocol {
     }
 
     public func createHostContainer(completion: @escaping () -> Void) {
+        let internalPointer = self as? CoreDataServiceInternalProtocol
+        if let internalPointer = internalPointer, internalPointer.hasLoadedStores {
+            completion()
+            return
+        }
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 DDLogError("Persistent stores were not loaded due to error: \(error)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
             DDLogDebug("Persistent stores were loaded")
-            DispatchQueue.main.async { completion() }
+            internalPointer?.hasLoadedStores = true
+            completion()
+        }
+    }
+
+    public func createHostContainer() async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            createHostContainer {
+                continuation.resume()
+            }
         }
     }
 
