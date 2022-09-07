@@ -8,7 +8,9 @@ Awake
 1. [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 2. [SwiftGen](https://github.com/SwiftGen/SwiftGen)
 3. [SwiftLint](https://github.com/realm/SwiftLint)
-4. [git-secret](https://git-secret.io) *(optionally, only if you have an access to secrets)*
+4. [Sourcery](https://github.com/krzysztofzablocki/Sourcery)
+5. [Genesis](https://github.com/yonaskolb/Genesis) *(optionally, to generate modules from templates)*
+6. [git-secret](https://git-secret.io) *(optionally, only if you have an access to secrets)*
 
 ## Build instructions
 * #### Reveal secrets *(only for maintainers)*
