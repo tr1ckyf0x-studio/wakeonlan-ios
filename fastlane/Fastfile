@@ -20,7 +20,7 @@ platform :ios do
   lane :beta do
     build_app(
       scheme: "Wake on LAN",
-      include_bitcode: true,
+      include_bitcode: false,
       export_options: {
         provisioningProfiles: { 
           "com.tr1ckyf0x.wake-on-lan" => "Wake On Lan AppStore"
