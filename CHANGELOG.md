@@ -8,6 +8,25 @@
 
 ### Updated
 
+## Next Version
+
+### Added
+
+- Added swift-templates submodule
+
+### Fixed
+
+- Fixed tests
+- Disabled Bitcode
+
+### Updated
+
+- Updated dependencies
+
+### Removed
+
+- Removed Generamba templates
+
 ## 1.0.6
 
 ### Fixed
