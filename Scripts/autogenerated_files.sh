@@ -9,6 +9,7 @@ swiftgen config run --config Wake\ on\ LAN/Modules/**/swiftgen.yml
 
 SOURCERY_MODULES=(
 	"AddHost"
+	"CoreDataService"
 	)
 
 MODULES_FOLDER="./Wake On Lan/Modules"
