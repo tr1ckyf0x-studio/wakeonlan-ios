@@ -19,11 +19,7 @@ extension IntentHandler {
 
     private static var coreDataService: CoreDataServiceProtocol = {
         let coreDataService = CoreDataService<PersistentContainer.SQLite>()
-        let semaphore = DispatchSemaphore(value: 0)
-        coreDataService.createHostContainer {
-            semaphore.signal()
-        }
-        semaphore.wait()
+        coreDataService.createHostContainer { }
         return coreDataService
     }()
 
