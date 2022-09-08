@@ -48,9 +48,7 @@ let package = Package(
         .testTarget(
             name: "HostListTests",
             dependencies: [
-                "HostList",
-                "Quick",
-                "Nimble"
+                "HostList"
             ]
         )
     ]

@@ -5,9 +5,8 @@ configurations:
     templates:
     - ../../../swift-templates/Sourcery/AutoMockable.stencil
     output:
-      Tests/Mock
+      Tests/HostListTests/Mock
     args:
       autoMockableTestableImports:
         - HostList
       autoMockableImports:
-        - SharedProtocolsAndModels
