@@ -114,6 +114,7 @@ targets:
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AppStore"
     preBuildScripts:
     - name: "Swiftgen"
+      basedOnDependencyAnalysis: false
       script: |
               export PATH="$PATH:/opt/homebrew/bin"
               if command -v swiftgen &> /dev/null
@@ -123,6 +124,7 @@ targets:
                 echo "warning: SwiftGen is not installed. Run 'brew install swiftgen' to install it."
               fi
     - name: "Swiftlint"
+      basedOnDependencyAnalysis: false
       script: |
               export PATH="$PATH:/opt/homebrew/bin"
               if which swiftlint >/dev/null; then
@@ -132,6 +134,7 @@ targets:
               fi
     postBuildScripts:
       - name: "Crashlytics"
+        basedOnDependencyAnalysis: false
         script: |
                 ${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run
         inputFiles:
