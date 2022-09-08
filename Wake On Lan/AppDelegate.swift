@@ -13,6 +13,7 @@ import UIKit
 import WOLResources
 import WOLUIComponents
 
+@MainActor
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -32,9 +33,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         plugins.forEach { _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions) }
 
         Task {
-            let coreDataMigrationController = CoreDataMigrationController()
+            let coreDataMigrationQueue = CoreDataMigrationQueue()
 
-            try await coreDataMigrationController
+            try await coreDataMigrationQueue
                 .migration(CoreDataAppToSharedGroupMigration(coreDataService: coreDataService))
                 .performMigrations()
 

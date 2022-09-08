@@ -1,6 +1,6 @@
 import Foundation
 
-public final class CoreDataMigrationController {
+public final class CoreDataMigrationQueue {
     private var migrations: [CoreDataMigration] = []
 
     public init() { }
