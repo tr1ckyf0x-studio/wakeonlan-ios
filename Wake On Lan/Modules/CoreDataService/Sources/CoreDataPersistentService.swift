@@ -45,7 +45,7 @@ public protocol PersistentContainerType {
 
 // MARK: - CoreDataService
 
-public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol, CoreDataServiceInternalProtocol {
+public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
 
     private(set) lazy var managedObjectModel: NSManagedObjectModel = {
         let bundle = Bundle.module
@@ -70,6 +70,10 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
 
         return container
     }()
+
+    public private(set) lazy var persistentStoreCoordinator = NSPersistentStoreCoordinator(
+        managedObjectModel: managedObjectModel
+    )
 
     // MARK: - Init
 

@@ -32,10 +32,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         plugins.forEach { _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions) }
 
         Task {
-            let coreDataMigrationController = CoreDataMigrationController(coreDataService: coreDataService)
+            let coreDataMigrationController = CoreDataMigrationController()
 
             try await coreDataMigrationController
-                .migration(CoreDataAppToSharedGroupMigration())
+                .migration(CoreDataAppToSharedGroupMigration(coreDataService: coreDataService))
                 .performMigrations()
 
             await coreDataService.createHostContainer()

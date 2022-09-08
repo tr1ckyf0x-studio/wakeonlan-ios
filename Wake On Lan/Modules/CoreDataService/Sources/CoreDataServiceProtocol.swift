@@ -10,14 +10,12 @@ import Foundation
 import CocoaLumberjackSwift
 import CoreData
 
-protocol CoreDataServiceInternalProtocol: AnyObject {
-    var managedObjectModel: NSManagedObjectModel { get }
-}
-
 public protocol CoreDataServiceProtocol {
     typealias SaveCompletionHandler = () -> Void
 
     var persistentContainer: NSPersistentCloudKitContainer { get }
+
+    var persistentStoreCoordinator: NSPersistentStoreCoordinator { get }
 
     var mainContext: NSManagedObjectContext { get }
 

@@ -1,30 +1,29 @@
 import CoreData
 
-public final class CoreDataAppToSharedGroupMigration: CoreDataMigration, CoreDataMigrationInternal {
+public final class CoreDataAppToSharedGroupMigration: CoreDataMigration {
 
-    var coreDataService: (CoreDataServiceProtocol & CoreDataServiceInternalProtocol)?
-
+    private let coreDataService: CoreDataServiceProtocol
     private let fileManager: FileManagerProtocol
 
     init(
+        coreDataService: CoreDataServiceProtocol,
         fileManagerProtocol: FileManagerProtocol
     ) {
+        self.coreDataService = coreDataService
         self.fileManager = fileManagerProtocol
     }
 
     public convenience init(
+        coreDataService: CoreDataServiceProtocol,
         fileManager: FileManager = .default
     ) {
         self.init(
+            coreDataService: coreDataService,
             fileManagerProtocol: fileManager
         )
     }
 
     public func execute() async throws {
-        guard let coreDataService = coreDataService else {
-            fatalError("coreDataService is null")
-        }
-
         guard let oldDatabaseURL = try oldDatabaseURL() else {
             // Migration not required
             return
@@ -34,11 +33,7 @@ public final class CoreDataAppToSharedGroupMigration: CoreDataMigration, CoreDat
             throw Error.sharedGroupDirectoryIsUnavailable
         }
 
-        let persistentStoreCoordinator = NSPersistentStoreCoordinator(
-            managedObjectModel: coreDataService.managedObjectModel
-        )
-
-        try persistentStoreCoordinator.replacePersistentStore(
+        try coreDataService.persistentStoreCoordinator.replacePersistentStore(
             at: targetDatabaseURL,
             withPersistentStoreFrom: oldDatabaseURL,
             ofType: NSSQLiteStoreType
