@@ -10,47 +10,15 @@ import Foundation
 import WOLResources
 import SharedProtocolsAndModels
 
+public protocol WakeOnLanServiceProtocol {
+    func sendMagicPacket(to host: HostRepresentable) throws
+}
+
 public final class WakeOnLanService {
-
-    private enum Constants {
-        static let magicPocketHeaderLength = 6
-        static let magicPocketHeaderByte: UInt8 = 0xFF
-        static let magicPocketBodyLength = 16
-        static let macAddressDigitSeparator = ":"
-        static let macAddressBytesCount = 6
-        static let macAddressRadix = 16
-        static let broadcastIPAddress = "255.255.255.255"
-        static let magicPocketDefaultPort: UInt16 = 9
-    }
-
-    public enum Error: LocalizedError {
-        case wrongMacAddressLength
-        case socketSetup(reason: String)
-        case send(reason: String)
-
-        public var errorDescription: String? {
-            switch self {
-            case .wrongMacAddressLength:
-                return L10n.WakeOnLan.wrongMacAddressLength("\(Constants.macAddressBytesCount)")
-
-            case .socketSetup, .send:
-                return L10n.WakeOnLan.wakeOnLanUnexpectedError
-            }
-        }
-
-        public var failureReason: String? {
-            switch self {
-            case let .socketSetup(reason), let .send(reason):
-                return reason
-
-            default:
-                return nil
-            }
-        }
-    }
-
     public init() { }
+}
 
+extension WakeOnLanService: WakeOnLanServiceProtocol {
     public func sendMagicPacket(to host: HostRepresentable) throws {
         var udpSocket: Int32
         var target = sockaddr_in()
@@ -87,22 +55,25 @@ public final class WakeOnLanService {
         var targetCast = unsafeBitCast(target, to: sockaddr.self)
 
         guard sendto(
-                udpSocket,
-                &packet,
-                packet.count,
-                0,
-                &targetCast,
-                sockaddrLen
+            udpSocket,
+            &packet,
+            packet.count,
+            0,
+            &targetCast,
+            sockaddrLen
         ) == packet.count else {
             let error = String(utf8String: strerror(errno)) ?? ""
             throw Self.Error.send(reason: error)
         }
     }
+}
 
+// MARK: - Private methods
+extension WakeOnLanService {
     private func createMagicPacket(for macAddress: String?) throws -> [UInt8] {
         guard let macAddress = macAddress else { throw Self.Error.wrongMacAddressLength }
 
-        let header = [UInt8](
+        let header = Array(
             repeating: Constants.magicPocketHeaderByte,
             count: Constants.magicPocketHeaderLength
         )
@@ -124,5 +95,48 @@ public final class WakeOnLanService {
         let magicPacketBytes = header + body
 
         return magicPacketBytes
+    }
+}
+
+// MARK: - Error
+extension WakeOnLanService {
+    public enum Error: LocalizedError {
+        case wrongMacAddressLength
+        case socketSetup(reason: String)
+        case send(reason: String)
+
+        public var errorDescription: String? {
+            switch self {
+            case .wrongMacAddressLength:
+                return L10n.WakeOnLan.wrongMacAddressLength("\(Constants.macAddressBytesCount)")
+
+            case .socketSetup, .send:
+                return L10n.WakeOnLan.wakeOnLanUnexpectedError
+            }
+        }
+
+        public var failureReason: String? {
+            switch self {
+            case let .socketSetup(reason), let .send(reason):
+                return reason
+
+            default:
+                return nil
+            }
+        }
+    }
+}
+
+// MARK: - Constants
+extension WakeOnLanService {
+    private enum Constants {
+        static let magicPocketHeaderLength = 6
+        static let magicPocketHeaderByte: UInt8 = 0xFF
+        static let magicPocketBodyLength = 16
+        static let macAddressDigitSeparator = ":"
+        static let macAddressBytesCount = 6
+        static let macAddressRadix = 16
+        static let broadcastIPAddress = "255.255.255.255"
+        static let magicPocketDefaultPort: UInt16 = 9
     }
 }
