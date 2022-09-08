@@ -3,9 +3,7 @@ import WakeOnLanService
 import CoreDataService
 
 final class IntentHandler: INExtension {
-
     override func handler(for intent: INIntent) -> Any {
-
         guard intent is WOLIntent else {
             fatalError("Unhandled Intent error: \(intent)")
         }
