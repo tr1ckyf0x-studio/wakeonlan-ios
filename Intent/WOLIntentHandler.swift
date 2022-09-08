@@ -16,7 +16,6 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
     }
 
     func resolveHostname(for intent: WOLIntent) async -> INStringResolutionResult {
-        await coreDataService.createHostContainer()
         guard let hostname = intent.hostname else {
             return INStringResolutionResult.needsValue()
         }
@@ -34,7 +33,6 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
     }
 
     func handle(intent: WOLIntent) async -> WOLIntentResponse {
-        await coreDataService.createHostContainer()
         guard let hostname = intent.hostname else {
             return WOLIntentResponse(code: .failure, userActivity: nil)
         }

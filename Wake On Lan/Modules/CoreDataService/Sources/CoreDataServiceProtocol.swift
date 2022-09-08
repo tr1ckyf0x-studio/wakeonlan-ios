@@ -12,8 +12,6 @@ import CoreData
 
 protocol CoreDataServiceInternalProtocol: AnyObject {
     var managedObjectModel: NSManagedObjectModel { get }
-
-    var hasLoadedStores: Bool { get set }
 }
 
 public protocol CoreDataServiceProtocol {
@@ -41,18 +39,12 @@ extension CoreDataServiceProtocol {
     }
 
     public func createHostContainer(completion: @escaping () -> Void) {
-        let internalPointer = self as? CoreDataServiceInternalProtocol
-        if let internalPointer = internalPointer, internalPointer.hasLoadedStores {
-            completion()
-            return
-        }
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 DDLogError("Persistent stores were not loaded due to error: \(error)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
             DDLogDebug("Persistent stores were loaded")
-            internalPointer?.hasLoadedStores = true
             completion()
         }
     }

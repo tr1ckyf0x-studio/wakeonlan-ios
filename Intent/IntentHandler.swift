@@ -4,16 +4,31 @@ import CoreDataService
 
 final class IntentHandler: INExtension {
 
-    private lazy var coreDataService: CoreDataServiceProtocol = CoreDataService<PersistentContainer.SQLite>()
-
     override func handler(for intent: INIntent) -> Any {
+
         guard intent is WOLIntent else {
             fatalError("Unhandled Intent error: \(intent)")
         }
 
-        return WOLIntentHandler(
-            wakeOnLanService: WakeOnLanService(),
-            coreDataService: coreDataService
-        )
+        return Self.wolIntentHandler
     }
+}
+
+extension IntentHandler {
+    private static var wakeOnLanService: WakeOnLanServiceProtocol = WakeOnLanService()
+
+    private static var coreDataService: CoreDataServiceProtocol = {
+        let coreDataService = CoreDataService<PersistentContainer.SQLite>()
+        let semaphore = DispatchSemaphore(value: 0)
+        coreDataService.createHostContainer {
+            semaphore.signal()
+        }
+        semaphore.wait()
+        return coreDataService
+    }()
+
+    private static var wolIntentHandler: WOLIntentHandling = WOLIntentHandler(
+        wakeOnLanService: wakeOnLanService,
+        coreDataService: coreDataService
+    )
 }

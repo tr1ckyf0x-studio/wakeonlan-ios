@@ -47,8 +47,6 @@ public protocol PersistentContainerType {
 
 public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol, CoreDataServiceInternalProtocol {
 
-    var hasLoadedStores = false
-
     private(set) lazy var managedObjectModel: NSManagedObjectModel = {
         let bundle = Bundle.module
         let modelURL = bundle.url(
