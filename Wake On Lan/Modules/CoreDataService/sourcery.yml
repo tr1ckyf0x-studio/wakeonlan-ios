@@ -1,0 +1,11 @@
+configurations:
+  - sources:
+    - Sources
+    templates:
+    - ../../../swift-templates/Sourcery/AutoMockable.stencil
+    output:
+      Tests/CoreDataServiceTests/Mock
+    args:
+      autoMockableTestableImports:
+        - CoreDataService
+      autoMockableImports:

@@ -30,7 +30,7 @@ public extension Managed where Self: NSManagedObject {
 public extension Managed where Self: NSManagedObject {
     static var entityName: String {
         guard let name = entity().name else {
-            fatalError("Name for entity \(self) does not assigned!")
+            fatalError("Name for entity \(self) is not assigned!")
         }
         return name
     }
