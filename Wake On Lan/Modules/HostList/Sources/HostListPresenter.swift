@@ -17,7 +17,7 @@ final class HostListPresenter {
     weak var view: HostListViewInput?
     var router: HostListRouterProtocol?
     var interactor: HostListInteractorInput?
-    var tableManager: HostListTableManager = .init()
+    var tableManager: HostListTableManagerProtocol?
 
 }
 
@@ -44,6 +44,10 @@ extension HostListPresenter: HostListViewOutput {
 extension HostListPresenter: HostListInteractorOutput {
 
     func interactor(_ interactor: HostListInteractorInput, didChangeContent content: [Content]) {
+        guard let tableManager = tableManager else {
+            DDLogError("HostListTableManager can not be nil")
+            return
+        }
         tableManager.update(with: content)
         content.forEach { view?.updateTable(with: $0) }
         if tableManager.itemsCount > .zero {
@@ -56,6 +60,10 @@ extension HostListPresenter: HostListInteractorOutput {
     func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host]) {
         let sections: [HostListSectionModel] =
             [hosts.map { HostListSectionItem.host($0) }].map { .mainSection(content: $0) }
+        guard let tableManager = tableManager else {
+            DDLogError("HostListTableManager can not be nil")
+            return
+        }
         tableManager.dataStore = HostListDataStore(sections: sections)
         view?.reloadTable()
         if hosts.isEmpty { view?.contentView.showState(.empty) }

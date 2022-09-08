@@ -97,6 +97,7 @@ targets:
     scheme:
       testTargets:
         - package: AddHost/AddHostTests
+        - package: HostList/HostListTests
         - package: CoreDataService/CoreDataServiceTests
 
     settings:

@@ -19,7 +19,7 @@ protocol HostListTableManagerDelegate: AnyObject {
 
 }
 
-final class HostListTableManager: NSObject {
+final class HostListTableManager: NSObject, HostListTableManagerProtocol {
 
     // MARK: - Properties
 

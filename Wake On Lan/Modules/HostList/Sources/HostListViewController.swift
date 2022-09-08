@@ -12,6 +12,8 @@ import WOLResources
 
 public final class HostListViewController: UIViewController {
 
+    typealias TableDataSource = UITableViewDataSource & UITableViewDelegate
+
     // MARK: - Properties
 
     var presenter: HostListViewOutput?
@@ -30,7 +32,6 @@ public final class HostListViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
         edgesForExtendedLayout = []
         presenter?.viewDidLoad(self)
     }
@@ -38,6 +39,11 @@ public final class HostListViewController: UIViewController {
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+    }
+
+    func setupTableView(_ dataSource: TableDataSource?) {
+        hostListView.tableView.delegate = dataSource
+        hostListView.tableView.dataSource = dataSource
     }
 
     // MARK: - Private
@@ -53,12 +59,6 @@ public final class HostListViewController: UIViewController {
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true
     }
-
-    private func setupTableView() {
-        hostListView.tableView.delegate = presenter?.tableManager
-        hostListView.tableView.dataSource = presenter?.tableManager
-    }
-
 }
 
 // MARK: - HostListViewInput

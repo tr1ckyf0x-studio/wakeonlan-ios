@@ -1,0 +1,13 @@
+configurations:
+  - sources:
+    - Sources
+    - ../SharedRouter/Sources
+    templates:
+    - ../../../swift-templates/Sourcery/AutoMockable.stencil
+    output:
+      Tests/Mock
+    args:
+      autoMockableTestableImports:
+        - HostList
+      autoMockableImports:
+        - SharedProtocolsAndModels

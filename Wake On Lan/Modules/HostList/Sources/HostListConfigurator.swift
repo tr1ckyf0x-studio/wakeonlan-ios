@@ -27,6 +27,7 @@ public final class HostListConfigurator {
         viewController.presenter = presenter
         presenter.view = viewController
 
+        viewController.setupTableView(tableManager)
         presenter.router = router
         router.viewController = viewController
     }

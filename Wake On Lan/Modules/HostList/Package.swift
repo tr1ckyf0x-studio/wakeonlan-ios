@@ -44,6 +44,14 @@ let package = Package(
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
             path: "Sources"
+        ),
+        .testTarget(
+            name: "HostListTests",
+            dependencies: [
+                "HostList",
+                "Quick",
+                "Nimble"
+            ]
         )
     ]
 )
