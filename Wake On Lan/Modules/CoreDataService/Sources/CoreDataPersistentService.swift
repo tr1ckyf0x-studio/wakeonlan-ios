@@ -8,6 +8,7 @@
 
 import CoreData
 import CocoaLumberjackSwift
+import WOLResources
 
 // MARK: - PersistentContainer
 
@@ -20,7 +21,7 @@ public enum PersistentContainer {
             }
             let description = NSPersistentStoreDescription(url: persistentContainerURL)
             description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
-                containerIdentifier: CoreDataConstants.iCloudContainerIdentifier
+                containerIdentifier: BundleConstants.iCloudContainerIdentifier
             )
             return [description]
         }()
