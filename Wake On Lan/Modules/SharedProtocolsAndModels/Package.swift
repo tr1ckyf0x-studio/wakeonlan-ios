@@ -10,6 +10,10 @@ let package = Package(
         .library(
             name: "SharedProtocolsAndModels",
             targets: ["SharedProtocolsAndModels"]
+        ),
+        .library(
+            name: "SharedProtocolsAndModelsMocks",
+            targets: ["SharedProtocolsAndModelsMocks"]
         )
     ],
     dependencies: [
@@ -20,8 +24,13 @@ let package = Package(
             name: "SharedProtocolsAndModels",
             dependencies: [
                 "WOLResources"
-            ],
-            path: "Sources"
+            ]
+        ),
+        .target(
+            name: "SharedProtocolsAndModelsMocks",
+            dependencies: [
+                "SharedProtocolsAndModels"
+            ]
         )
     ]
 )
