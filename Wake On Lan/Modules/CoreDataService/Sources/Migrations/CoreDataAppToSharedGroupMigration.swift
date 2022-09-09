@@ -6,22 +6,12 @@ public final class CoreDataAppToSharedGroupMigration: CoreDataMigration {
     private let coreDataService: CoreDataServiceProtocol
     private let fileManager: FileManagerProtocol
 
-    init(
+    public init(
         coreDataService: CoreDataServiceProtocol,
-        fileManagerProtocol: FileManagerProtocol
+        fileManager: FileManagerProtocol
     ) {
         self.coreDataService = coreDataService
-        self.fileManager = fileManagerProtocol
-    }
-
-    public convenience init(
-        coreDataService: CoreDataServiceProtocol,
-        fileManager: FileManager = .default
-    ) {
-        self.init(
-            coreDataService: coreDataService,
-            fileManagerProtocol: fileManager
-        )
+        self.fileManager = fileManager
     }
 
     public func execute() async throws {

@@ -36,7 +36,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             let coreDataMigrationQueue = CoreDataMigrationQueue()
 
             try await coreDataMigrationQueue
-                .migration(CoreDataAppToSharedGroupMigration(coreDataService: coreDataService))
+                .migration(
+                    CoreDataAppToSharedGroupMigration(
+                        coreDataService: coreDataService,
+                        fileManager: FileManager.default
+                    )
+                )
                 .performMigrations()
 
             await coreDataService.createHostContainer()
