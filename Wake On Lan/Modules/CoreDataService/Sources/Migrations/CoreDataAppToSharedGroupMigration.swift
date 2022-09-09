@@ -49,7 +49,7 @@ extension CoreDataAppToSharedGroupMigration {
         fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).last
     }
 
-    private func files(containing substring: String, at directoryURL: URL) throws -> [URL] {
+    private func fetchFiles(containing substring: String, at directoryURL: URL) throws -> [URL] {
         let path = directoryURL.path
         let filesList = try fileManager.contentsOfDirectory(atPath: path).filter { filename in
             filename.contains(substring)
@@ -60,7 +60,7 @@ extension CoreDataAppToSharedGroupMigration {
         return urls
     }
 
-    private func oldDatabaseFileURLs() throws-> [URL] {
+    private func fetchOldDatabaseFileURLs() throws-> [URL] {
         guard let applicationSupportDirectoryURL = applicationSupportDirectoryURL else {
             throw Error.applicationSupportDirectoryURLNotFound
         }
@@ -70,7 +70,7 @@ extension CoreDataAppToSharedGroupMigration {
         )
     }
 
-    private func oldDatabaseURL() throws -> URL? {
+    private func fetchOldDatabaseURL() throws -> URL? {
         try oldDatabaseFileURLs().first(where: { (url: URL) -> Bool in
             url.pathComponents.contains(CoreDataConstants.persistentContainerFilename)
         })
