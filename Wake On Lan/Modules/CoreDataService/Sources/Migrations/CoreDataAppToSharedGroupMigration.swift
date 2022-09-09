@@ -24,8 +24,9 @@ public final class CoreDataAppToSharedGroupMigration: CoreDataMigration {
     }
 
     public func execute() async throws {
-        guard let oldDatabaseURL = try oldDatabaseURL() else {
+        guard let oldDatabaseURL = try fetchOldDatabaseURL() else {
             // Migration not required
+            // TODO: Add log
             return
         }
 
@@ -51,33 +52,33 @@ extension CoreDataAppToSharedGroupMigration {
 
     private func fetchFiles(containing substring: String, at directoryURL: URL) throws -> [URL] {
         let path = directoryURL.path
-        let filesList = try fileManager.contentsOfDirectory(atPath: path).filter { filename in
+        let filesList = try fileManager.contentsOfDirectory(atPath: path).filter { (filename: String) -> Bool in
             filename.contains(substring)
         }
-        let urls = filesList.map { filename in
+        let urls = filesList.map { (filename: String) -> URL in
             directoryURL.appendingPathComponent(filename)
         }
         return urls
     }
 
-    private func fetchOldDatabaseFileURLs() throws-> [URL] {
+    private func fetchOldDatabaseFileURLs() throws -> [URL] {
         guard let applicationSupportDirectoryURL = applicationSupportDirectoryURL else {
             throw Error.applicationSupportDirectoryURLNotFound
         }
-        return try files(
+        return try fetchFiles(
             containing: CoreDataConstants.persistentContainerName,
             at: applicationSupportDirectoryURL
         )
     }
 
     private func fetchOldDatabaseURL() throws -> URL? {
-        try oldDatabaseFileURLs().first(where: { (url: URL) -> Bool in
+        try fetchOldDatabaseFileURLs().first(where: { (url: URL) -> Bool in
             url.pathComponents.contains(CoreDataConstants.persistentContainerFilename)
         })
     }
 
     private func removeOldDatabaseFiles() throws {
-        let oldDatabaseFiles = try oldDatabaseFileURLs()
+        let oldDatabaseFiles = try fetchOldDatabaseFileURLs()
         for oldDatabaseFile in oldDatabaseFiles {
             let fileCoordinator = NSFileCoordinator(filePresenter: nil)
             var deletionError: Swift.Error?
@@ -93,7 +94,7 @@ extension CoreDataAppToSharedGroupMigration {
                     }
                 }
             )
-            if let deletionError = deletionError {
+            if let deletionError {
                 throw deletionError
             }
         }
