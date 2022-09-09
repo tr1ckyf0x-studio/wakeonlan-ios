@@ -1,4 +1,5 @@
 import CoreData
+import SharedProtocolsAndModels
 
 public final class CoreDataAppToSharedGroupMigration: CoreDataMigration {
 
