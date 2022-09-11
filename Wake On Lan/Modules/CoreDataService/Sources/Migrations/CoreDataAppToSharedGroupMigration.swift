@@ -31,7 +31,7 @@ public final class CoreDataAppToSharedGroupMigration: CoreDataMigration {
             ofType: NSSQLiteStoreType
         )
 
-        try removeOldDatabaseFiles()
+        try await removeOldDatabaseFiles()
     }
 }
 
@@ -68,26 +68,34 @@ extension CoreDataAppToSharedGroupMigration {
         })
     }
 
-    private func removeOldDatabaseFiles() throws {
+    private func removeOldDatabaseFiles() async throws {
         let oldDatabaseFiles = try fetchOldDatabaseFileURLs()
-        for oldDatabaseFile in oldDatabaseFiles {
-            let fileCoordinator = NSFileCoordinator(filePresenter: nil)
-            var deletionError: Swift.Error?
-            fileCoordinator.coordinate(
-                writingItemAt: oldDatabaseFile,
-                options: .forDeleting,
-                error: nil,
-                byAccessor: { (url: URL) in
-                    do {
-                        try fileManager.removeItem(at: url)
-                    } catch {
-                        deletionError = error
-                    }
+        await withThrowingTaskGroup(of: Void.self) { group in
+            oldDatabaseFiles.forEach { (oldDatabaseFile: URL) in
+                group.addTask(priority: .utility) { [self] in
+                    try removeFile(at: oldDatabaseFile)
                 }
-            )
-            if let deletionError {
-                throw deletionError
             }
+        }
+    }
+
+    private func removeFile(at url: URL) throws {
+        let fileCoordinator = NSFileCoordinator(filePresenter: nil)
+        var error: NSError?
+        // TODO: Handle error
+        fileCoordinator.coordinate(
+            writingItemAt: url,
+            options: .forDeleting,
+            error: &error,
+            byAccessor: { (url: URL) in
+                // If the item is unavailable for removal,
+                // then it must not to be available for locking by fileCoordinator
+                // Error is expected to be handled by fileCoordinator
+                try? fileManager.removeItem(at: url)
+            }
+        )
+        if let error {
+            throw error
         }
     }
 }
