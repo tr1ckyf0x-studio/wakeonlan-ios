@@ -13,15 +13,15 @@ final class IntentHandler: INExtension {
 }
 
 extension IntentHandler {
-    private static var wakeOnLanService: WakeOnLanServiceProtocol = WakeOnLanService()
+    private static let wakeOnLanService: WakeOnLanServiceProtocol = WakeOnLanService()
 
-    private static var coreDataService: CoreDataServiceProtocol = {
+    private static let coreDataService: CoreDataServiceProtocol = {
         let coreDataService = CoreDataService<PersistentContainer.SQLite>()
         coreDataService.createHostContainer()
         return coreDataService
     }()
 
-    private static var wolIntentHandler: WOLIntentHandling = WOLIntentHandler(
+    private static let wolIntentHandler: WOLIntentHandling = WOLIntentHandler(
         wakeOnLanService: wakeOnLanService,
         coreDataService: coreDataService
     )
