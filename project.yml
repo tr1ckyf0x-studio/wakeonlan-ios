@@ -27,24 +27,27 @@ attributes:
   ORGANIZATIONNAME: "Владислав Лисянский"
 
 packages:
-  Firebase:
-    url: https://github.com/firebase/firebase-ios-sdk
-    minorVersion: 9.5.0
-  Reachability:
-    url: https://github.com/ashleymills/Reachability.swift
-    minorVersion: 5.1.0
-  SnapKit:
-    url: https://github.com/SnapKit/SnapKit
-    minorVersion: 5.6.0
   CocoaLumberjackSwift:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
     minorVersion: 3.7.4
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk
+    minorVersion: 9.5.0
   Nimble:
     url: https://github.com/Quick/Nimble
     minorVersion: 10.0.0
   Quick:
     url: https://github.com/Quick/Quick
     minorVersion: 5.0.1
+  Reachability:
+    url: https://github.com/ashleymills/Reachability.swift
+    minorVersion: 5.1.0
+  RouteComposer:
+    url: https://github.com/ekazaev/route-composer
+    minorVersion: 2.8.3
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit
+    minorVersion: 5.6.0
 
   # Local packages
   AboutScreen:
