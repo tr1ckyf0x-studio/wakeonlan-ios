@@ -14,6 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../SharedProtocolsAndModels"),
+        .package(path: "../WOLResources"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.7.4"))
     ],
     targets: [
@@ -21,6 +22,7 @@ let package = Package(
             name: "CoreDataService",
             dependencies: [
                 "SharedProtocolsAndModels",
+                "WOLResources",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
             path: "Sources",

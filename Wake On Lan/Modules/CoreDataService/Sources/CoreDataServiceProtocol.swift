@@ -15,9 +15,12 @@ public protocol CoreDataServiceProtocol {
 
     var persistentContainer: NSPersistentCloudKitContainer { get }
 
+    var persistentStoreCoordinator: NSPersistentStoreCoordinator { get }
+
     var mainContext: NSManagedObjectContext { get }
 
-    func createHostContainer(completion: @escaping () -> Void)
+    /// Method has completion handler inside, but it is sync until shouldAddStoreAsynchronously equals true
+    func createHostContainer()
 
     func createChildConcurrentContext() -> NSManagedObjectContext
 
@@ -32,14 +35,13 @@ extension CoreDataServiceProtocol {
         return context
     }
 
-    public func createHostContainer(completion: @escaping () -> Void) {
+    public func createHostContainer() {
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 DDLogError("Persistent stores were not loaded due to error: \(error)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
             DDLogDebug("Persistent stores were loaded")
-            DispatchQueue.main.async { completion() }
         }
     }
 

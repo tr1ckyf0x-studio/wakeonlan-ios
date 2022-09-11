@@ -8,13 +8,23 @@
 
 import CoreData
 import CocoaLumberjackSwift
+import WOLResources
 
 // MARK: - PersistentContainer
 
 public enum PersistentContainer {
     public struct SQLite: PersistentContainerType {
         public static let store = NSSQLiteStoreType
-        public static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = nil
+        public static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
+            guard let persistentContainerURL = CoreDataConstants.persistentContainerURL else {
+                fatalError("Persistent container URL is unavailable")
+            }
+            let description = NSPersistentStoreDescription(url: persistentContainerURL)
+            description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
+                containerIdentifier: BundleConstants.iCloudContainerIdentifier
+            )
+            return [description]
+        }()
     }
 
     public struct InMemory: PersistentContainerType {
@@ -41,8 +51,8 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
     private lazy var managedObjectModel: NSManagedObjectModel = {
         let bundle = Bundle.module
         let modelURL = bundle.url(
-            forResource: Constants.persistentContainerName,
-            withExtension: Constants.persistentContainerExtension
+            forResource: CoreDataConstants.persistentContainerName,
+            withExtension: CoreDataConstants.persistentContainerExtension
         )
         let model = modelURL.flatMap { NSManagedObjectModel(contentsOf: $0) }
         guard let unwrapped = model else { fatalError("\(self) : Cannot load Core Data model") }
@@ -50,9 +60,9 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
         return unwrapped
     }()
 
-    public lazy var persistentContainer: NSPersistentCloudKitContainer = {
+    public private(set) lazy var persistentContainer: NSPersistentCloudKitContainer = {
         let container = NSPersistentCloudKitContainer(
-            name: Constants.persistentContainerName,
+            name: CoreDataConstants.persistentContainerName,
             managedObjectModel: managedObjectModel
         )
         if let persistentStoreDescriptions = T.self.persistentStoreDescriptions {
@@ -62,15 +72,12 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
         return container
     }()
 
+    public private(set) lazy var persistentStoreCoordinator = NSPersistentStoreCoordinator(
+        managedObjectModel: managedObjectModel
+    )
+
     // MARK: - Init
 
     public init() { }
 
-}
-
-// MARK: - Private
-
-private enum Constants {
-    static let persistentContainerName = "HostsDataModel"
-    static let persistentContainerExtension = "momd"
 }
