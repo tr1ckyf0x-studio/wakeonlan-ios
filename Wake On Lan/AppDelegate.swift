@@ -40,7 +40,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
             try await mainBundleToGroupMigration.execute()
 
-            await coreDataService.createHostContainer()
+            coreDataService.createHostContainer()
 
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let hostListViewController = HostListViewController()

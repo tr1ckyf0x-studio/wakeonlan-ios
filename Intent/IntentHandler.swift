@@ -17,7 +17,7 @@ extension IntentHandler {
 
     private static var coreDataService: CoreDataServiceProtocol = {
         let coreDataService = CoreDataService<PersistentContainer.SQLite>()
-        coreDataService.createHostContainer { }
+        coreDataService.createHostContainer()
         return coreDataService
     }()
 
