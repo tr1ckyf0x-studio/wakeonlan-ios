@@ -82,7 +82,6 @@ extension CoreDataAppToSharedGroupMigration {
     private func removeFile(at url: URL) throws {
         let fileCoordinator = NSFileCoordinator(filePresenter: nil)
         var error: NSError?
-        // TODO: Handle error
         fileCoordinator.coordinate(
             writingItemAt: url,
             options: .forDeleting,
