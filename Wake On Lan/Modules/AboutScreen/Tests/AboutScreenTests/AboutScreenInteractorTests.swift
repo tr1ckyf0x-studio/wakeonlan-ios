@@ -31,6 +31,6 @@ final class AboutScreenInteractorTests: XCTestCase {
         bundleInfoProviderMock.fetchBundleInfoReturnValue = bundleInfo
         sut.fetchBundleInfo()
         XCTAssertEqual(presenterMock.interactorDidFetchBundleInfoCallsCount, 1, "presenter must be called once")
-        XCTAssertEqual(presenterMock.interactorDidFetchBundleInfoReceivedArguments?.bundleInfo.name, bundleInfo.name, "interactor must call presenter with bundle info received from bundleInfoProvider")
+        XCTAssertEqual(presenterMock.interactorDidFetchBundleInfoReceivedArguments?.bundleInfo, bundleInfo, "interactor must call presenter with bundle info received from bundleInfoProvider")
     }
 }

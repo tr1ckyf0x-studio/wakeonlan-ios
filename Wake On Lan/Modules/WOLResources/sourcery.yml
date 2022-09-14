@@ -8,3 +8,12 @@ configurations:
     args:
       autoMockableImports:
         - WOLResources
+  - sources:
+    - Sources/WOLResources
+    templates:
+    - ../../../swift-templates/Sourcery/AutoEquatable.stencil
+    output:
+      Sources/WOLResourcesMock
+    args:
+      autoMockableImports:
+        - WOLResources
