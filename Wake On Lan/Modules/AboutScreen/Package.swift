@@ -30,8 +30,7 @@ let package = Package(
                 "SnapKit",
                 "WOLResources",
                 "WOLUIComponents"
-            ],
-            path: "Sources"
+            ]
         )
     ]
 )
