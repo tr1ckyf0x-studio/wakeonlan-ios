@@ -1,0 +1,12 @@
+configurations:
+  - sources:
+    - Sources/AboutScreen
+    templates:
+    - ../../../swift-templates/Sourcery/AutoMockable.stencil
+    output:
+      Tests/AboutScreenTests/Mock
+    args:
+      autoMockableTestableImports:
+        - AboutScreen
+      autoMockableImports:
+        - WOLResources
