@@ -1,10 +1,16 @@
 import XCTest
 
 @testable import AboutScreen
+import WOLResourcesMock
 
 final class AboutScreenInteractorTests: XCTestCase {
+
+    var sut: AboutScreenInteractor!
+    var bundleInfoProviderMock: ProvidesBundleInfoMock!
+
     override func setUp() {
         super.setUp()
-        let sut = AboutScreenInteractor(bundleInfoProvider: <#T##ProvidesBundleInfo#>)
+        bundleInfoProviderMock = ProvidesBundleInfoMock()
+        sut = AboutScreenInteractor(bundleInfoProvider: bundleInfoProviderMock)
     }
 }

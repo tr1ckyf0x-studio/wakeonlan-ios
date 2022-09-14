@@ -28,14 +28,21 @@ let package = Package(
                 "SharedProtocolsAndModels",
                 "SharedRouter",
                 "SnapKit",
-                "WOLResources",
-                "WOLUIComponents"
+                "WOLUIComponents",
+                .product(
+                    name: "WOLResources",
+                    package: "WOLResources"
+                )
             ]
         ),
         .testTarget(
             name: "AboutScreenTests",
             dependencies: [
-                "AboutScreen"
+                "AboutScreen",
+                .product(
+                    name: "WOLResourcesMock",
+                    package: "WOLResources"
+                )
             ]
         )
     ]
