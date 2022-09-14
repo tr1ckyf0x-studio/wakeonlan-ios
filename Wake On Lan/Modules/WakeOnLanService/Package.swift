@@ -10,6 +10,10 @@ let package = Package(
         .library(
             name: "WakeOnLanService",
             targets: ["WakeOnLanService"]
+        ),
+        .library(
+            name: "WakeOnLanServiceMock",
+            targets: ["WakeOnLanServiceMock"]
         )
     ],
     dependencies: [
@@ -22,8 +26,14 @@ let package = Package(
             dependencies: [
                 "SharedProtocolsAndModels",
                 "WOLResources"
-            ],
-            path: "Sources"
+            ]
+        ),
+        .target(
+            name: "WakeOnLanServiceMock",
+            dependencies: [
+                "WakeOnLanService",
+                "SharedProtocolsAndModels"
+            ]
         )
     ]
 )
