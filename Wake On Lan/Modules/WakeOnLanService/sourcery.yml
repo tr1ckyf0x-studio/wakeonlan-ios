@@ -1,0 +1,12 @@
+configurations:
+  - sources:
+    - Sources/WakeOnLanService
+    templates:
+    - ../../../swift-templates/Sourcery/AutoMockable.stencil
+    output:
+      Sources/WakeOnLanServiceMock
+    args:
+      autoMockableTestableImports:
+        - WakeOnLanService
+      autoMockableImports:
+        - SharedProtocolsAndModels
