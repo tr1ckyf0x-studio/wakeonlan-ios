@@ -15,8 +15,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WOLResources",
-            path: "Sources"
+            name: "WOLResources"
         )
     ]
 )
