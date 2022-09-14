@@ -8,3 +8,4 @@ configurations:
     args:
       autoMockableImports:
         - SharedProtocolsAndModels
+        - WakeOnLanService
