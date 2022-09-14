@@ -11,6 +11,7 @@ SOURCERY_MODULES=(
 	"AddHost"
 	"CoreDataService"
 	"SharedProtocolsAndModels"
+    "WakeOnLanService"
 	)
 
 MODULES_FOLDER="./Wake On Lan/Modules"
