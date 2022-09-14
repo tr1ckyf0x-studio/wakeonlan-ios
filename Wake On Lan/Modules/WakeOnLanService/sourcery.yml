@@ -6,7 +6,5 @@ configurations:
     output:
       Sources/WakeOnLanServiceMock
     args:
-      autoMockableTestableImports:
-        - WakeOnLanService
       autoMockableImports:
         - SharedProtocolsAndModels
