@@ -31,6 +31,12 @@ let package = Package(
                 "WOLResources",
                 "WOLUIComponents"
             ]
+        ),
+        .testTarget(
+            name: "AboutScreenTests",
+            dependencies: [
+                "AboutScreen"
+            ]
         )
     ]
 )
