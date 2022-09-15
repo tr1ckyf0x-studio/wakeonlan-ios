@@ -13,13 +13,13 @@ protocol AboutScreenViewOutput: AnyObject {
 
     func viewDidPressBackButton(_ view: AboutScreenViewInput)
 }
-
+// sourcery: AutoMockable
 protocol AboutScreenViewInput: AnyObject {
     func configure(with viewModel: AboutScreenViewViewModel)
 
     func displayShareApp(with appURL: String)
 }
-
+// sourcery: AutoMockable
 protocol AboutScreenInteractorInput: AnyObject {
     func fetchBundleInfo()
 }
