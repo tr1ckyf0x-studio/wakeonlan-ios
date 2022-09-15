@@ -19,18 +19,27 @@ final class AboutScreenInteractorTests: XCTestCase {
     }
 
     func testFetchBundleInfo() {
-        let bundleInfo = BundleInfo(
-            displayName: "",
-            identifier: "",
-            name: "",
-            version: "",
-            build: "",
-            appFonts: nil
-        )
-
+        // given
+        let bundleInfo = TestData.bundleInfo
         bundleInfoProviderMock.fetchBundleInfoReturnValue = bundleInfo
+        // when
         sut.fetchBundleInfo()
+        // then
         XCTAssertEqual(presenterMock.interactorDidFetchBundleInfoCallsCount, 1, "presenter must be called once")
+        // swiftlint:disable line_length
         XCTAssertEqual(presenterMock.interactorDidFetchBundleInfoReceivedArguments?.bundleInfo, bundleInfo, "interactor must call presenter with bundle info received from bundleInfoProvider")
+    }
+}
+
+private extension AboutScreenInteractorTests {
+    enum TestData {
+        static let bundleInfo = BundleInfo(
+                displayName: "",
+                identifier: "",
+                name: "",
+                version: "",
+                build: "",
+                appFonts: nil
+        )
     }
 }
