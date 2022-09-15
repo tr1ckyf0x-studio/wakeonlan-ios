@@ -9,6 +9,7 @@ SOURCERY_MODULES=(
 	"AddHost"
 	"CoreDataService"
 	"SharedProtocolsAndModels"
+    "AboutScreen"
     "WakeOnLanService"
 	)
 
