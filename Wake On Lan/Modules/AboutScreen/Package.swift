@@ -26,12 +26,15 @@ let package = Package(
             dependencies: [
                 "SharedExtensions",
                 "SharedProtocolsAndModels",
-                "SharedRouter",
                 "SnapKit",
                 "WOLUIComponents",
                 .product(
                     name: "WOLResources",
                     package: "WOLResources"
+                ),
+                .product(
+                    name: "SharedRouter",
+                    package: "SharedRouter"
                 )
             ]
         ),

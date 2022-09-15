@@ -34,10 +34,13 @@ let package = Package(
                 "SnapKit",
                 "SharedExtensions",
                 "SharedProtocolsAndModels",
-                "SharedRouter",
                 "WOLResources",
                 "WOLUIComponents",
-                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
+                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
+                .product(
+                    name: "SharedRouter",
+                    package: "SharedRouter"
+                )
             ],
             path: "Sources"
         ),
