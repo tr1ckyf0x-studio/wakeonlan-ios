@@ -26,9 +26,7 @@ final class AboutScreenInteractor {
 
 extension AboutScreenInteractor: AboutScreenInteractorInput {
     func fetchBundleInfo() {
-        bundleInfoProvider.fetchBundleInfo { [weak self] info in
-            guard let self = self else { return }
-            self.presenter?.interactor(self, didFetchBundleInfo: info)
-        }
+        let bundleInfo = bundleInfoProvider.fetchBundleInfo()
+        presenter?.interactor(self, didFetchBundleInfo: bundleInfo)
     }
 }

@@ -24,6 +24,7 @@ protocol AboutScreenInteractorInput: AnyObject {
     func fetchBundleInfo()
 }
 
+// sourcery: AutoMockable
 protocol AboutScreenInteractorOutput: AnyObject {
-    func interactor(_: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo)
+    func interactor(_ interactor: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo)
 }

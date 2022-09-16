@@ -11,12 +11,19 @@ let package = Package(
         .library(
             name: "WOLResources",
             targets: ["WOLResources"]
+        ),
+        .library(
+            name: "WOLResourcesMock",
+            targets: ["WOLResourcesMock"]
         )
     ],
     targets: [
         .target(
-            name: "WOLResources",
-            path: "Sources"
+            name: "WOLResources"
+        ),
+        .target(
+            name: "WOLResourcesMock",
+            dependencies: ["WOLResources"]
         )
     ]
 )

@@ -8,8 +8,9 @@
 
 import Foundation
 
+// sourcery: AutoMockable
 public protocol ProvidesBundleInfo {
-    func fetchBundleInfo(completion: (BundleInfo) -> Void)
+    func fetchBundleInfo() -> BundleInfo
 }
 
 public final class BundleInfoProvider {
@@ -30,7 +31,7 @@ public final class BundleInfoProvider {
 
 extension BundleInfoProvider: ProvidesBundleInfo {
 
-    public func fetchBundleInfo(completion: (BundleInfo) -> Void) {
+    public func fetchBundleInfo() -> BundleInfo {
         guard
             let path = Bundle.main.path(
                 forResource: Configuration.resource.name,
@@ -40,7 +41,7 @@ extension BundleInfoProvider: ProvidesBundleInfo {
             let bundleInfo = try? PropertyListDecoder().decode(BundleInfo.self, from: plist) else {
             fatalError("\(self) : Can't get bundle info!")
         }
-        completion(bundleInfo)
+        return bundleInfo
     }
 
 }

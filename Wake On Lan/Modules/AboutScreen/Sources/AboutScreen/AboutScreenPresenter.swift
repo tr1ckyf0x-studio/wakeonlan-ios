@@ -59,7 +59,7 @@ extension AboutScreenPresenter: AboutScreenViewOutput {
 // MARK: - AboutScreenInteractorOutput
 
 extension AboutScreenPresenter: AboutScreenInteractorOutput {
-    func interactor(_: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo) {
+    func interactor(_ interactor: AboutScreenInteractorInput, didFetchBundleInfo bundleInfo: BundleInfo) {
         view?.configure(with: makeViewModel(from: bundleInfo))
     }
 }
