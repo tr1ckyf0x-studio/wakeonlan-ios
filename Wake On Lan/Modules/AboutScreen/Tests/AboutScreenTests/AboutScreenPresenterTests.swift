@@ -9,13 +9,13 @@ import SharedRouterMock
 final class AboutScreenPresenterTests: XCTest {
     var sut: AboutScreenPresenter!
     var interactorMock: AboutScreenInteractorInputMock!
-    var viewController: AboutScreenViewInputMock!
+    var viewMock: AboutScreenViewInputMock!
     // var routerMock: RouterMock!
 
     override func setUp() {
         super.setUp()
         interactorMock = AboutScreenInteractorInputMock()
-        viewController = AboutScreenViewInputMock()
+        viewMock = AboutScreenViewInputMock()
         // routerMock = RouterMock()
         sut = AboutScreenPresenter()
         sut.interactor = interactorMock
@@ -24,7 +24,7 @@ final class AboutScreenPresenterTests: XCTest {
 
     func testViewDidLoad() {
         // when
-        sut.viewDidLoad(viewController)
+        sut.viewDidLoad(viewMock)
         // then
         XCTAssertEqual(interactorMock.fetchBundleInfoCallsCount, 1, "Interactor must be called once")
     }
@@ -35,7 +35,7 @@ final class AboutScreenPresenterTests: XCTest {
         // when
         sut.interactor(interactorMock, didFetchBundleInfo: bundleInfo)
         // then
-        XCTAssertEqual(viewController.configureWithCallsCount, 1, "ViewController must be called once")
+        XCTAssertEqual(viewMock.configureWithCallsCount, 1, "ViewController must be called once")
         // Can not test viewConfigureWith receivedViewModel, as the view model is created with presenter's privateMethod
     }
 }

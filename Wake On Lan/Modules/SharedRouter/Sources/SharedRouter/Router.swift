@@ -8,7 +8,6 @@
 
 import UIKit
 
-// sourcery: AutoMockable
 public protocol Router {
     associatedtype ViewControllerType: UIViewController
 
