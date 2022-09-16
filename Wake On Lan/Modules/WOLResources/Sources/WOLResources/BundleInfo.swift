@@ -8,6 +8,7 @@
 
 import Foundation
 
+// sourcery: AutoEquatable
 public struct BundleInfo {
     public let displayName: String
     public let identifier: String

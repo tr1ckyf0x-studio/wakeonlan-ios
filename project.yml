@@ -98,6 +98,7 @@ targets:
       testTargets:
         - package: AddHost/AddHostTests
         - package: CoreDataService/CoreDataServiceTests
+        - package: AboutScreen/AboutScreenTests
 
     settings:
       base:
