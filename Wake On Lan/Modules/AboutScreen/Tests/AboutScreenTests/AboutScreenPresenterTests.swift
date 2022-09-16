@@ -27,4 +27,27 @@ final class AboutScreenPresenterTests: XCTest {
         // then
         XCTAssertEqual(interactorMock.fetchBundleInfoCallsCount, 1, "Interactor must be called once")
     }
+
+    func testIntercatorDidFetchBundleInfo() {
+        // given
+        let bundleInfo = TestData.bundleInfo
+        // when
+        sut.interactor(interactorMock, didFetchBundleInfo: bundleInfo)
+        // then
+        XCTAssertEqual(viewController.configureWithCallsCount, 1, "ViewController must be called once")
+        // Can not test viewConfigureWith receivedViewModel, as the view model is created with presenter's privateMethod
+    }
+}
+
+private extension AboutScreenPresenterTests {
+    enum TestData {
+        static let bundleInfo = BundleInfo(
+            displayName: "",
+            identifier: "",
+            name: "",
+            version: "",
+            build: "",
+            appFonts: nil
+        )
+    }
 }
