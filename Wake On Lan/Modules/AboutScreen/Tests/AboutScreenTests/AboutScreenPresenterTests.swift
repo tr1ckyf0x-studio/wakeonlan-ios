@@ -26,11 +26,16 @@ final class AboutScreenPresenterTests: XCTest {
     func testIntercatorDidFetchBundleInfo() {
         // given
         let bundleInfo = TestData.bundleInfo
+        let viewModel = TestData.viewModel
         // when
         sut.interactor(interactorMock, didFetchBundleInfo: bundleInfo)
         // then
         XCTAssertEqual(viewMock.configureWithCallsCount, 1, "ViewController must be called once")
-        // Can not test viewConfigureWith receivedViewModel, as the view model is created with presenter's privateMethod
+        XCTAssertEqual(viewMock.configureWithReceivedViewModel?.buttonListViewModel.count,
+                       viewModel.buttonListViewModel.count,
+                       "the number of button items must equal 2"
+        )
+        XCTAssertEqual(viewMock.configureWithReceivedViewModel?.headerViewModel, viewModel.headerViewModel)
     }
 }
 
@@ -43,6 +48,21 @@ private extension AboutScreenPresenterTests {
             version: "",
             build: "",
             appFonts: nil
+        )
+        static let viewModel = AboutScreenViewViewModel(
+            headerViewModel: .init(name: bundleInfo.name, version: bundleInfo.version),
+            buttonListViewModel: [
+                AboutScreenMenuButtonViewViewModel(
+                    title: "",
+                    symbol: ButtonIcon.share,
+                    action: nil
+                ),
+                AboutScreenMenuButtonViewViewModel(
+                    title: "",
+                    symbol: ButtonIcon.tag,
+                    action: nil
+                )
+            ]
         )
     }
 }
