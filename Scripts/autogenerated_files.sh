@@ -10,6 +10,7 @@ SOURCERY_MODULES=(
 	"CoreDataService"
 	"SharedProtocolsAndModels"
     "AboutScreen"
+    "WOLResources"
     "WakeOnLanService"
 	)
 
