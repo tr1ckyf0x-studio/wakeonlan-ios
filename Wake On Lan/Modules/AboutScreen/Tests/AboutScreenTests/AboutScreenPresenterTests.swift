@@ -19,7 +19,6 @@ final class AboutScreenPresenterTests: XCTest {
         // routerMock = RouterMock()
         sut = AboutScreenPresenter()
         sut.interactor = interactorMock
-        sut.interactor = interactorMock
         // sut.router = routerMock
     }
 
