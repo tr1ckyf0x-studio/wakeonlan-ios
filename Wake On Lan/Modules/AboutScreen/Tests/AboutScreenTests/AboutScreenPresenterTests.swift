@@ -2,24 +2,18 @@ import XCTest
 
 @testable import AboutScreen
 @testable import WOLResources
-import SharedRouterMock
-
-// TODO: either fix router mock or remove all references to router from this test
 
 final class AboutScreenPresenterTests: XCTest {
     var sut: AboutScreenPresenter!
     var interactorMock: AboutScreenInteractorInputMock!
     var viewMock: AboutScreenViewInputMock!
-    // var routerMock: RouterMock!
 
     override func setUp() {
         super.setUp()
         interactorMock = AboutScreenInteractorInputMock()
         viewMock = AboutScreenViewInputMock()
-        // routerMock = RouterMock()
         sut = AboutScreenPresenter()
         sut.interactor = interactorMock
-        // sut.router = routerMock
     }
 
     func testViewDidLoad() {

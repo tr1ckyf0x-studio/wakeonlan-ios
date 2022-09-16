@@ -45,10 +45,6 @@ let package = Package(
                 .product(
                     name: "WOLResourcesMock",
                     package: "WOLResources"
-                ),
-                .productItem(
-                    name: "SharedRouterMock",
-                    package: "SharedRouter"
                 )
             ]
         )
