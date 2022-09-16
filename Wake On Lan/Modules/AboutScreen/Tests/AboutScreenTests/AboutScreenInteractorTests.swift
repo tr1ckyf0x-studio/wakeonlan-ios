@@ -41,12 +41,12 @@ final class AboutScreenInteractorTests: XCTestCase {
 private extension AboutScreenInteractorTests {
     enum TestData {
         static let bundleInfo = BundleInfo(
-                displayName: "",
-                identifier: "",
-                name: "",
-                version: "",
-                build: "",
-                appFonts: nil
+            displayName: "",
+            identifier: "",
+            name: "",
+            version: "",
+            build: "",
+            appFonts: nil
         )
     }
 }
