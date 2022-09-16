@@ -21,6 +21,10 @@ let package = Package(
             dependencies: [
                 "WOLResources"
             ]
+        ),
+        .testTarget(
+            name: "SharedExtensionsTests",
+            dependencies: ["SharedExtensions"]
         )
     ]
 )
