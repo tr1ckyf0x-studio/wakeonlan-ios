@@ -4,6 +4,8 @@ import XCTest
 @testable import WOLResources
 import SharedRouterMock
 
+// TODO: either fix router mock or remove all references to router from this test
+
 final class AboutScreenPresenterTests: XCTest {
     var sut: AboutScreenPresenter!
     var interactorMock: AboutScreenInteractorInputMock!
