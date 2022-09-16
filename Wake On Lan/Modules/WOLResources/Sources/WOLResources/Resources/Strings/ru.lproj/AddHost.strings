@@ -1,11 +1,3 @@
-/* 
-  AddHost.strings
-  Wake on LAN
-
-  Created by Владислав Лисянский on 23.05.2020.
-  Copyright © 2020 Владислав Лисянский. All rights reserved.
-*/
-
 "title" = "Название";
 "ip address" = "IP адрес";
 "mac address" = "MAC адрес";
