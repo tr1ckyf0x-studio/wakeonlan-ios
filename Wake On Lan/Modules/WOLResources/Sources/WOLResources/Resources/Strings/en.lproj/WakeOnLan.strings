@@ -8,5 +8,5 @@
 
 "wrong mac address length" = "MAC Address length MUST be equal to %@";
 "wake on lan unexpected error" = "Unexpected error occured";
-"empty view message" = "There is no anything here.\nPress the plus button in the top right corner.";
+"empty view message" = "There is nothing here.\nPress the plus button in the top right corner.";
 "change icon" = "Tap to change icon";
