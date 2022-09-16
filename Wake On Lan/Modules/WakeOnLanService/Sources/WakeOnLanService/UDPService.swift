@@ -29,6 +29,7 @@ extension UDPService: UDPServiceProtocol {
         }
 
         let intLen = socklen_t(MemoryLayout<Int>.stride)
+        // TODO: Check broadcast parameter
         var broadcast = 1
         guard setsockopt(udpSocket, SOL_SOCKET, SO_BROADCAST, &broadcast, intLen) == 0 else {
             let error = String(utf8String: strerror(errno)) ?? ""
