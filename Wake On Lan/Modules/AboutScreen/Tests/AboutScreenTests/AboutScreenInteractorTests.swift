@@ -25,9 +25,16 @@ final class AboutScreenInteractorTests: XCTestCase {
         // when
         sut.fetchBundleInfo()
         // then
-        XCTAssertEqual(presenterMock.interactorDidFetchBundleInfoCallsCount, 1, "presenter must be called once")
-        // swiftlint:disable line_length
-        XCTAssertEqual(presenterMock.interactorDidFetchBundleInfoReceivedArguments?.bundleInfo, bundleInfo, "interactor must call presenter with bundle info received from bundleInfoProvider")
+        XCTAssertEqual(
+            presenterMock.interactorDidFetchBundleInfoCallsCount,
+            1,
+            "presenter must be called once"
+        )
+        XCTAssertEqual(
+            presenterMock.interactorDidFetchBundleInfoReceivedArguments?.bundleInfo,
+            bundleInfo,
+            "interactor must call presenter with bundle info received from bundleInfoProvider"
+        )
     }
 }
 
