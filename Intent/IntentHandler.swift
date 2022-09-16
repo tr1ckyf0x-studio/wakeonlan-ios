@@ -13,7 +13,10 @@ final class IntentHandler: INExtension {
 }
 
 extension IntentHandler {
-    private static let wakeOnLanService: WakeOnLanServiceProtocol = WakeOnLanService()
+    private static let wakeOnLanService: WakeOnLanServiceProtocol = WakeOnLanService(
+        magicPacketBuilder: MagicPacketBuilder(),
+        udpService: UDPService()
+    )
 
     private static let coreDataService: CoreDataServiceProtocol = {
         let coreDataService = CoreDataService<PersistentContainer.SQLite>()
