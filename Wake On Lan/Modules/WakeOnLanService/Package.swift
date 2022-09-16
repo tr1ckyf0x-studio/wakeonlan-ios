@@ -17,15 +17,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../SharedProtocolsAndModels"),
-        .package(path: "../WOLResources")
+        .package(path: "../SharedProtocolsAndModels")
     ],
     targets: [
         .target(
             name: "WakeOnLanService",
             dependencies: [
-                "SharedProtocolsAndModels",
-                "WOLResources"
+                "SharedProtocolsAndModels"
             ]
         ),
         .target(
@@ -34,6 +32,10 @@ let package = Package(
                 "WakeOnLanService",
                 "SharedProtocolsAndModels"
             ]
+        ),
+        .testTarget(
+            name: "WakeOnLanServiceTests",
+            dependencies: ["WakeOnLanService"]
         )
     ]
 )

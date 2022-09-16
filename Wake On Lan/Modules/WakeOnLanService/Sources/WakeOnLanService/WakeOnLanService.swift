@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import WOLResources
 import SharedProtocolsAndModels
 
 // sourcery: AutoMockable
@@ -51,7 +50,7 @@ extension WakeOnLanService: WakeOnLanServiceProtocol {
             throw Self.Error.socketSetup(reason: error)
         }
 
-        var packet = try createMagicPacket(for: host.macAddress)
+        var packet = try MagicPacketBuilder.build(for: host.macAddress)
         let sockaddrLen = socklen_t(MemoryLayout<sockaddr>.stride)
         var targetCast = unsafeBitCast(target, to: sockaddr.self)
 
@@ -69,50 +68,16 @@ extension WakeOnLanService: WakeOnLanServiceProtocol {
     }
 }
 
-// MARK: - Private methods
-extension WakeOnLanService {
-    private func createMagicPacket(for macAddress: String?) throws -> [UInt8] {
-        guard let macAddress = macAddress else { throw Self.Error.wrongMacAddressLength }
-
-        let header = Array(
-            repeating: Constants.magicPocketHeaderByte,
-            count: Constants.magicPocketHeaderLength
-        )
-        let macComponents = macAddress
-            .components(separatedBy: Constants.macAddressDigitSeparator)
-            .compactMap { digit -> UInt8? in
-                UInt8(digit, radix: Constants.macAddressRadix)
-            }
-
-        guard macComponents.count == Constants.macAddressBytesCount else {
-            throw Self.Error.wrongMacAddressLength
-        }
-
-        let body = Array(
-            repeating: macComponents,
-            count: Constants.magicPocketBodyLength
-        ).flatMap { $0 }
-
-        let magicPacketBytes = header + body
-
-        return magicPacketBytes
-    }
-}
-
 // MARK: - Error
 extension WakeOnLanService {
     public enum Error: LocalizedError {
-        case wrongMacAddressLength
         case socketSetup(reason: String)
         case send(reason: String)
 
         public var errorDescription: String? {
             switch self {
-            case .wrongMacAddressLength:
-                return L10n.WakeOnLan.wrongMacAddressLength("\(Constants.macAddressBytesCount)")
-
             case .socketSetup, .send:
-                return L10n.WakeOnLan.wakeOnLanUnexpectedError
+                return "Unexpected error occured"
             }
         }
 
@@ -120,9 +85,6 @@ extension WakeOnLanService {
             switch self {
             case let .socketSetup(reason), let .send(reason):
                 return reason
-
-            default:
-                return nil
             }
         }
     }
@@ -131,12 +93,6 @@ extension WakeOnLanService {
 // MARK: - Constants
 extension WakeOnLanService {
     private enum Constants {
-        static let magicPocketHeaderLength = 6
-        static let magicPocketHeaderByte: UInt8 = 0xFF
-        static let magicPocketBodyLength = 16
-        static let macAddressDigitSeparator = ":"
-        static let macAddressBytesCount = 6
-        static let macAddressRadix = 16
         static let broadcastIPAddress = "255.255.255.255"
         static let magicPocketDefaultPort: UInt16 = 9
     }

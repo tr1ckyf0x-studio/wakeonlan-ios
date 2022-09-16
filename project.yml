@@ -99,6 +99,7 @@ targets:
         - package: AddHost/AddHostTests
         - package: CoreDataService/CoreDataServiceTests
         - package: AboutScreen/AboutScreenTests
+        - package: WakeOnLanService/WakeOnLanServiceTests
 
     settings:
       base:
