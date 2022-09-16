@@ -12,8 +12,9 @@ final class MagicPacketBuilderTests: XCTestCase {
     }
 
     func testBuild() throws {
+        // when
         let magicPacket = try magicPacketBuilder.build(for: TestData.testableMacAddress)
-
+        // then
         XCTAssertEqual(
             magicPacket,
             TestData.expectedMagicPacket
