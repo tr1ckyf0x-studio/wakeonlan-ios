@@ -35,7 +35,11 @@ let package = Package(
         ),
         .testTarget(
             name: "WakeOnLanServiceTests",
-            dependencies: ["WakeOnLanService"]
+            dependencies: [
+                "WakeOnLanService",
+                "WakeOnLanServiceMock",
+                "SharedProtocolsAndModels"
+            ]
         )
     ]
 )

@@ -1,22 +1,13 @@
 import Foundation
 
-enum MagicPacketBuilder {
-    /**
-     Builds magic packet for specified macAddress.
-     
-     - Parameter macAddress: MAC address the magic packet building for.
-                             Must consist of 6 bytes in hex format, separated by colons.
-     - Throws: `MagicPacketBuilder.Error.wrongMacAddressFormat` if `macAddress` has wrong format.
-     - Returns: Byte array of the magic packet
+public final class MagicPacketBuilder {
+    public init() { }
+}
 
-     - Note: Magic packet consists of header - 6 times repeated 0xFF
-     and body - 16 times repeated MAC address
-     in the following order:
-
-     `[header][body]`
-     */
-    static func build(for macAddress: String?) throws -> [UInt8] {
-        guard let macAddress = macAddress else { throw Self.Error.wrongMacAddressFormat }
+// MARK: - BuildsMagicPacket
+extension MagicPacketBuilder: BuildsMagicPacket {
+    public func build(for macAddress: String?) throws -> [UInt8] {
+        guard let macAddress = macAddress else { throw MagicPacketError.wrongMacAddressFormat }
 
         let header = Array(
             repeating: Constants.magicPacketHeaderByte,
@@ -29,7 +20,7 @@ enum MagicPacketBuilder {
             }
 
         guard macComponents.count == Constants.macAddressBytesCount else {
-            throw Self.Error.wrongMacAddressFormat
+            throw MagicPacketError.wrongMacAddressFormat
         }
 
         let body = Array(
@@ -40,20 +31,6 @@ enum MagicPacketBuilder {
         let magicPacketBytes = header + body
 
         return magicPacketBytes
-    }
-}
-
-// MARK: - Error
-extension MagicPacketBuilder {
-    enum Error: LocalizedError {
-        case wrongMacAddressFormat
-
-        var errorDescription: String? {
-            switch self {
-            case .wrongMacAddressFormat:
-                return "MAC address must consist of 6 bytes in hex format, separated by colons."
-            }
-        }
     }
 }
 
