@@ -34,7 +34,7 @@ final class AboutScreenPresenterTests: XCTestCase {
         XCTAssertEqual(viewMock.configureWithCallsCount, 1, "ViewController must be called once")
         XCTAssertEqual(viewMock.configureWithReceivedViewModel?.buttonListViewModel.count,
                        viewModel.buttonListViewModel.count,
-                       "the number of button items must equal 2"
+                       "the number of button items must equal 3"
         )
         XCTAssertEqual(viewMock.configureWithReceivedViewModel?.headerViewModel, viewModel.headerViewModel)
     }
@@ -61,6 +61,11 @@ private extension AboutScreenPresenterTests {
                 AboutScreenMenuButtonViewViewModel(
                     title: "",
                     symbol: ButtonIcon.tag,
+                    action: nil
+                ),
+                AboutScreenMenuButtonViewViewModel(
+                    title: "",
+                    symbol: ButtonIcon.star,
                     action: nil
                 )
             ]
