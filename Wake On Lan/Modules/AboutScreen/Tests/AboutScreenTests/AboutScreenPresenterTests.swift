@@ -31,12 +31,21 @@ final class AboutScreenPresenterTests: XCTestCase {
         // when
         sut.interactor(interactorMock, didFetchBundleInfo: bundleInfo)
         // then
-        XCTAssertEqual(viewMock.configureWithCallsCount, 1, "ViewController must be called once")
-        XCTAssertEqual(viewMock.configureWithReceivedViewModel?.buttonListViewModel.count,
-                       viewModel.buttonListViewModel.count,
-                       "the number of button items must equal 3"
+        XCTAssertEqual(
+            viewMock.configureWithCallsCount,
+            1,
+            "ViewController must be called once"
         )
-        XCTAssertEqual(viewMock.configureWithReceivedViewModel?.headerViewModel, viewModel.headerViewModel)
+        XCTAssertEqual(
+            viewMock.configureWithReceivedViewModel?.buttonListViewModel.count,
+            viewModel.buttonListViewModel.count,
+            "the number of button items must equal 3"
+        )
+        XCTAssertEqual(
+            viewMock.configureWithReceivedViewModel?.headerViewModel,
+            viewModel.headerViewModel,
+            "Presenter must call ViewController with viewModel made from bundleInfo "
+        )
     }
 }
 
