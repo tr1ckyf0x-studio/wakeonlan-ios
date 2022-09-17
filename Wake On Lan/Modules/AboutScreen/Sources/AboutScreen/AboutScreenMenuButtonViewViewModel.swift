@@ -8,7 +8,7 @@
 
 import WOLResources
 
-public struct AboutScreenMenuButtonViewViewModel {
+struct AboutScreenMenuButtonViewViewModel {
     /// Represents displayed title
     let title: String
     /// Represents icon

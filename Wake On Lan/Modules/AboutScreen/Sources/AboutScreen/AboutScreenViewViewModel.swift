@@ -6,7 +6,6 @@
 //
 struct AboutScreenViewViewModel {
     /// Represents header view
-    /// sourcery: AutoEquatable
     let headerViewModel: AboutScreenHeaderViewViewModel
     /// Represents list of buttons
     let buttonListViewModel: [AboutScreenMenuButtonViewViewModel]
