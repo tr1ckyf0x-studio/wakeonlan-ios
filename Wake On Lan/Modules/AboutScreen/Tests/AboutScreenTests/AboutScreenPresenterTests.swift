@@ -3,7 +3,7 @@ import XCTest
 @testable import AboutScreen
 @testable import WOLResources
 
-final class AboutScreenPresenterTests: XCTest {
+final class AboutScreenPresenterTests: XCTestCase {
     var sut: AboutScreenPresenter!
     var interactorMock: AboutScreenInteractorInputMock!
     var viewMock: AboutScreenViewInputMock!
@@ -14,6 +14,7 @@ final class AboutScreenPresenterTests: XCTest {
         viewMock = AboutScreenViewInputMock()
         sut = AboutScreenPresenter()
         sut.interactor = interactorMock
+        sut.view = viewMock
     }
 
     func testViewDidLoad() {
