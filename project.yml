@@ -1,5 +1,11 @@
 name: "Wake on LAN"
 
+configs:
+  AppStore Debug: debug
+  AppStore Release: release
+  AdHoc Debug: debug
+  AdHoc Release: release
+
 settings:
   base:
     DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
@@ -100,6 +106,9 @@ targets:
         - package: CoreDataService/CoreDataServiceTests
         - package: AboutScreen/AboutScreenTests
         - package: WakeOnLanService/WakeOnLanServiceTests
+      configVariants:
+        - AppStore
+        - AdHoc
 
     settings:
       base:
@@ -110,12 +119,18 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
         CODE_SIGN_ENTITLEMENTS: "Wake on LAN/Wake on LAN.entitlements"
       configs:
-        Debug:
+        AppStore Debug:
           CODE_SIGN_IDENTITY: "Apple Development"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
-        Release:
+        AppStore Release:
           CODE_SIGN_IDENTITY: "Apple Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AppStore"
+        AdHoc Debug:
+          CODE_SIGN_IDENTITY: "Apple Development"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
+        AdHoc Release:
+          CODE_SIGN_IDENTITY: "Apple Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AdHoc"
     preBuildScripts:
     - name: "Swiftgen"
       basedOnDependencyAnalysis: false
@@ -158,13 +173,23 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.intent
         CODE_SIGN_ENTITLEMENTS: "Intent/Intent.entitlements"
       configs:
-        Debug:
+        AppStore Debug:
           CODE_SIGN_IDENTITY: "Apple Development"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
-        Release:
+        AppStore Release:
           CODE_SIGN_IDENTITY: "Apple Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AppStore"
+        AdHoc Debug:
+          CODE_SIGN_IDENTITY: "Apple Development"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
+        AdHoc Release:
+          CODE_SIGN_IDENTITY: "Apple Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AdHoc"
     dependencies:
       - sdk: Intents.framework
       - package: WakeOnLanService
       - package: CoreDataService
+    scheme:
+      configVariants:
+        - AppStore
+        - AdHoc
