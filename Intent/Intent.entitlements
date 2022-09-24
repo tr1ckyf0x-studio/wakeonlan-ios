@@ -16,5 +16,7 @@
 	<array>
 		<string>group.com.tr1ckyf0x.wake-on-lan.shared</string>
 	</array>
+	<key>com.apple.developer.networking.multicast</key>
+	<true/>
 </dict>
 </plist>
