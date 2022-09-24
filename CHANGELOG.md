@@ -8,6 +8,27 @@
 
 ### Updated
 
+## 1.1.3
+
+### Added
+
+- Added AboutScreen tests (#34)
+- Added WakeOnLanServiceMock target (#33)
+
+### Fixed
+
+- Fixed multicast networking (#39)
+- Fixed MainScreen message (#35)
+
+### Updated
+
+- Updated swift-templates
+- Refactored WOLService. Added tests (#36)
+
+### Removed
+
+- Removed strings file headers
+
 ## 1.1.2
 
 ### Added
