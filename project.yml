@@ -45,9 +45,6 @@ packages:
   Quick:
     url: https://github.com/Quick/Quick
     minorVersion: 5.0.1
-  Resolver:
-    url: https://github.com/hmlongco/Resolver
-    minorVersion: 1.5.0
 
   # Local packages
   AboutScreen:
@@ -91,7 +88,6 @@ targets:
         product: FirebaseCrashlytics
       - package: HostList
       - package: Reachability
-      - package: Resolver
       - package: SnapKit
       - package: SharedExtensions
       - package: SharedProtocolsAndModels

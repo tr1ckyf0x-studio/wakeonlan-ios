@@ -33,6 +33,18 @@ extension WakeOnLanService: WakeOnLanServiceProtocol {
     }
 }
 
+// MARK: - ProvidesWeakSharedInstanceTrait
+extension WakeOnLanService: ProvidesWeakSharedInstanceTrait {
+    public static weak var weakSharedInstance: WakeOnLanService?
+
+    public static func provideDefaultInstance() -> WakeOnLanService {
+        WakeOnLanService(
+            magicPacketBuilder: MagicPacketBuilder(),
+            udpService: UDPService()
+        )
+    }
+}
+
 // MARK: - Constants
 extension WakeOnLanService {
     private enum Constants {

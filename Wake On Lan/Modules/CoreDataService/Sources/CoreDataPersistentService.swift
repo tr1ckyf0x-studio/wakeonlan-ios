@@ -8,6 +8,7 @@
 
 import CocoaLumberjackSwift
 import CoreData
+import SharedProtocolsAndModels
 import WOLResources
 
 // MARK: - PersistentContainer
@@ -46,7 +47,7 @@ public protocol PersistentContainerType {
 
 // MARK: - CoreDataService
 
-public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtocol {
+public final class CoreDataService: CoreDataServiceProtocol {
 
     private lazy var managedObjectModel: NSManagedObjectModel = {
         let bundle = Bundle.module
@@ -65,7 +66,7 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
             name: CoreDataConstants.persistentContainerName,
             managedObjectModel: managedObjectModel
         )
-        if let persistentStoreDescriptions = T.self.persistentStoreDescriptions {
+        if let persistentStoreDescriptions = persistentContainerType.persistentStoreDescriptions {
             container.persistentStoreDescriptions = persistentStoreDescriptions
         }
 
@@ -76,8 +77,23 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
         managedObjectModel: managedObjectModel
     )
 
+    private let persistentContainerType: PersistentContainerType.Type
+
     // MARK: - Init
 
-    public init() { }
+    public init(persistentContainerType: PersistentContainerType.Type) {
+        self.persistentContainerType = persistentContainerType
+    }
 
+}
+
+// MARK: - ProvidesWeakSharedInstanceTrait
+extension CoreDataService: ProvidesWeakSharedInstanceTrait {
+    public static weak var weakSharedInstance: CoreDataService?
+
+    public static func provideDefaultInstance() -> CoreDataService {
+        let instance = CoreDataService(persistentContainerType: PersistentContainer.SQLite.self)
+        instance.createHostContainer()
+        return instance
+    }
 }
