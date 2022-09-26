@@ -22,6 +22,11 @@ public final class HostListViewController: UIViewController {
         return view
     }()
 
+    private lazy var tableManager: any SnapshotTableManager<String, HostListSectionItem> = HostListTableManager(
+        tableView: hostListView.tableView,
+        hostCellDelegate: self
+    )
+
     // MARK: - Lifecycle
 
     override public func loadView() {
@@ -30,7 +35,6 @@ public final class HostListViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
         edgesForExtendedLayout = []
         presenter?.viewDidLoad(self)
     }
@@ -54,40 +58,18 @@ public final class HostListViewController: UIViewController {
         navigationBar.prefersLargeTitles = true
     }
 
-    private func setupTableView() {
-        hostListView.tableView.delegate = presenter?.tableManager
-        hostListView.tableView.dataSource = presenter?.tableManager
-    }
-
 }
 
 // MARK: - HostListViewInput
 
 extension HostListViewController: HostListViewInput {
 
-    var contentView: StateableView { hostListView }
-
-    func reloadTable() {
-        hostListView.tableView.reloadData()
+    func showState(_ state: ViewState) {
+        hostListView.showState(state)
     }
 
-    func updateTable(with update: Content) {
-        let tableView = hostListView.tableView
-        tableView.performBatchUpdates({
-            switch update {
-            case let .insert(indexPath, _):
-                tableView.insertRows(at: [indexPath], with: .automatic)
-
-            case let .update(indexPath, _):
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-
-            case let .move(indexPath, newIndexPath):
-                tableView.moveRow(at: indexPath, to: newIndexPath)
-
-            case let .delete(indexPath):
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
-        })
+    func updateContentSnapshot(_ contentSnapshot: ContentSnapshot) {
+        tableManager.apply(snapshot: contentSnapshot)
     }
 
 }
@@ -102,6 +84,27 @@ extension HostListViewController: HostListViewDelegate {
 
     func hostListViewDidPressAboutButton(_ view: HostListView) {
         presenter?.viewDidPressAboutButton(self)
+    }
+
+}
+
+// MARK: - HostListTableViewCellDelegate
+
+extension HostListViewController: HostListTableViewCellDelegate {
+
+    func hostListCellDidTap(_ cell: HostListTableViewCell) {
+        guard let indexPath = hostListView.tableView.indexPath(for: cell) else { return }
+        presenter?.viewDidPressHostCell(self, for: indexPath)
+    }
+
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell) {
+        guard let indexPath = hostListView.tableView.indexPath(for: cell) else { return }
+        presenter?.viewDidPressDeleteButton(self, for: indexPath)
+    }
+
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell) {
+        guard let indexPath = hostListView.tableView.indexPath(for: cell) else { return }
+        presenter?.viewDidPressInfoButton(self, for: indexPath)
     }
 
 }
