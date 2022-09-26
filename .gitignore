@@ -196,7 +196,6 @@ Temporary Items
 # End of https://www.gitignore.io/api/swift,appcode
 .gitsecret/keys/random_seed
 !*.secret
-Wake On Lan/GoogleService-Info.plist
 DevelopmentKeys/Dev key password.txt
 fastlane/AuthKey_65K8M54759.p8
 DevelopmentKeys/development.cer
