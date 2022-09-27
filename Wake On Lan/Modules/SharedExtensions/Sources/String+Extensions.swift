@@ -30,7 +30,7 @@ public extension String {
         return result
     }
 
-    func randomString(length: Int) -> String {
+   static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String(
             (0..<length).compactMap {_ in

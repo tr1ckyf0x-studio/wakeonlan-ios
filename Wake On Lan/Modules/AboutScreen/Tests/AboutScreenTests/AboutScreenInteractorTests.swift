@@ -1,5 +1,5 @@
 import XCTest
-
+import SharedExtensions
 @testable import AboutScreen
 @testable import WOLResources
 import WOLResourcesMock
@@ -20,7 +20,7 @@ final class AboutScreenInteractorTests: XCTestCase {
 
     func testFetchBundleInfo() {
         // given
-        let bundleInfo = TestData.bundleInfo
+        let bundleInfo = BundleInfo.shared
         bundleInfoProviderMock.fetchBundleInfoReturnValue = bundleInfo
         // when
         sut.fetchBundleInfo()
@@ -34,19 +34,6 @@ final class AboutScreenInteractorTests: XCTestCase {
             presenterMock.interactorDidFetchBundleInfoReceivedArguments?.bundleInfo,
             bundleInfo,
             "interactor must call presenter with bundle info received from bundleInfoProvider"
-        )
-    }
-}
-
-private extension AboutScreenInteractorTests {
-    enum TestData {
-        static let bundleInfo = BundleInfo(
-            displayName: "",
-            identifier: "",
-            name: "",
-            version: "",
-            build: "",
-            appFonts: nil
         )
     }
 }
