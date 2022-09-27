@@ -1,5 +1,5 @@
 import Foundation
-import SharedExtensions
+@testable import WOLResources
 
 extension BundleInfo {
     static let testData = BundleInfo(
