@@ -51,7 +51,7 @@ final class AboutScreenPresenterTests: XCTestCase {
 
 private extension AboutScreenPresenterTests {
     enum TestData {
-        static let bundleInfo = BundleInfo.shared
+        static let bundleInfo = BundleInfo.testData
         static let viewModel = AboutScreenViewViewModel(
             headerViewModel: .init(name: bundleInfo.displayName, version: bundleInfo.version),
             buttonListViewModel: [

@@ -20,7 +20,7 @@ final class AboutScreenInteractorTests: XCTestCase {
 
     func testFetchBundleInfo() {
         // given
-        let bundleInfo = BundleInfo.shared
+        let bundleInfo = BundleInfo.testData
         bundleInfoProviderMock.fetchBundleInfoReturnValue = bundleInfo
         // when
         sut.fetchBundleInfo()

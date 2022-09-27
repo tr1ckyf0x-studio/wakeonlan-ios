@@ -2,15 +2,7 @@ import Foundation
 @testable import WOLResources
 
 extension BundleInfo {
-    public static let shared = BundleInfo(
-        displayName: testData.displayName,
-        identifier: testData.identifier,
-        name: testData.name,
-        version: testData.version,
-        build: testData.build,
-        appFonts: nil
-    )
-   private static let testData =
+   public static let testData =
         BundleInfo(
         displayName: String.randomString(length: 10),
         identifier: String.randomString(length: 10),
