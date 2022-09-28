@@ -49,7 +49,7 @@ public class SoftUITextField: UITextField {
     lazy var shadowOffset = appearance.shadowOffset {
         didSet {
             darkInnerShadowLayer.shadowOffset = shadowOffset
-            lightInnerShadowLayer.shadowOffset = shadowOffset.inverse
+            lightInnerShadowLayer.shadowOffset = shadowOffset.inversed
         }
     }
 
@@ -84,7 +84,7 @@ public class SoftUITextField: UITextField {
     }()
 
     private lazy var lightInnerShadowLayer: CAShapeLayer = {
-        makeInnerShadowLayer(shadowColor: lightShadowColor, shadowOffset: shadowOffset.inverse)
+        makeInnerShadowLayer(shadowColor: lightShadowColor, shadowOffset: shadowOffset.inversed)
     }()
 
     // MARK: - Init
