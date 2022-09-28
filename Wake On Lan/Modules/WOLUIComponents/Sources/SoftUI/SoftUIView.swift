@@ -58,9 +58,9 @@ public class SoftUIView: UIControl {
     lazy var shadowOffset = appearance.shadowOffset {
         didSet {
             darkOuterShadowLayer.shadowOffset = shadowOffset
-            lightOuterShadowLayer.shadowOffset = shadowOffset.inverse
+            lightOuterShadowLayer.shadowOffset = shadowOffset.inversed
             darkInnerShadowLayer.shadowOffset = shadowOffset
-            lightInnerShadowLayer.shadowOffset = shadowOffset.inverse
+            lightInnerShadowLayer.shadowOffset = shadowOffset.inversed
         }
     }
 
@@ -97,7 +97,7 @@ public class SoftUIView: UIControl {
     }()
 
     private lazy var lightOuterShadowLayer: CAShapeLayer = {
-        makeOuterShadowLayer(shadowColor: lightShadowColor, shadowOffset: shadowOffset.inverse)
+        makeOuterShadowLayer(shadowColor: lightShadowColor, shadowOffset: shadowOffset.inversed)
     }()
 
     private lazy var darkInnerShadowLayer: CAShapeLayer = {
@@ -107,7 +107,7 @@ public class SoftUIView: UIControl {
     }()
 
     private lazy var lightInnerShadowLayer: CAShapeLayer = {
-        let layer = makeInnerShadowLayer(shadowColor: lightShadowColor, shadowOffset: shadowOffset.inverse)
+        let layer = makeInnerShadowLayer(shadowColor: lightShadowColor, shadowOffset: shadowOffset.inversed)
         layer.isHidden = true
         return layer
     }()
