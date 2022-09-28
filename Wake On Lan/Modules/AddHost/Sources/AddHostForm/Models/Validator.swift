@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-protocol Validator {
+protocol Validator<Value> {
     associatedtype Value
 
-    func validate(value: Value) -> Bool
+    func isValid(value: Value) -> Bool
 }
