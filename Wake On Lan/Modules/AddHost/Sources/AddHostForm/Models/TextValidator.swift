@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TextValidator: Validator {
+struct TextValidator {
 
     typealias Value = String
     typealias Pattern = String
@@ -18,8 +18,11 @@ struct TextValidator: Validator {
     init<Strategy: RegExPatternRepresentable>(strategy: Strategy) {
         self.pattern = strategy.regExPattern
     }
+}
 
-    func validate(value: Value) -> Bool {
+// MARK: - Validator
+extension TextValidator: Validator {
+    func isValid(value: Value) -> Bool {
         value.matches(pattern)
     }
 }
