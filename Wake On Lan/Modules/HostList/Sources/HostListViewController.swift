@@ -48,7 +48,7 @@ public final class HostListViewController: UIViewController {
                                               hostListView.barButtonSpacer,
                                               hostListView.aboutButton]
         navigationItem.largeTitleDisplayMode = .always
-        guard let navigationController = navigationController else { return }
+        guard let navigationController else { return }
         navigationController.view.backgroundColor = Asset.Colors.primary.color
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true

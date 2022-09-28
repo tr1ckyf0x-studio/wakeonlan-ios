@@ -19,7 +19,7 @@ final class AddHostTableManager: NSObject {
     var form: AddHostForm?
 
     var sections: [FormSection] {
-        guard let form = form else { return [] }
+        guard let form else { return [] }
         return form.sections
     }
 
@@ -76,7 +76,7 @@ extension AddHostTableManager: UITableViewDataSource {
             ) as? DeviceIconCell
             deviceIconCell?.configure(with: form?.iconModel)
             deviceIconCell?.didTapChangeIconBlock = { [weak self] model in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
             }
             cell = deviceIconCell

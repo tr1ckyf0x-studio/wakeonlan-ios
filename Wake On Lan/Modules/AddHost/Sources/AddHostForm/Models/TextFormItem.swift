@@ -37,7 +37,7 @@ final class TextFormItem: Validable, Mandatoryable {
         let needsDefaultValue = [value == nil, value == .empty].contains { $0 == true }
         let defaultReplacedValue = needsDefaultValue ? defaultValue : value
         guard
-            let validator = validator,
+            let validator,
             let value = defaultReplacedValue
         else {
             return !isMandatory

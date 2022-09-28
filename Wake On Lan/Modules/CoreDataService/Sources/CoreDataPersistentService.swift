@@ -55,9 +55,9 @@ public class CoreDataService<T: PersistentContainerType>: CoreDataServiceProtoco
             withExtension: CoreDataConstants.persistentContainerExtension
         )
         let model = modelURL.flatMap { NSManagedObjectModel(contentsOf: $0) }
-        guard let unwrapped = model else { fatalError("\(self) : Cannot load Core Data model") }
+        guard let model else { fatalError("\(self) : Cannot load Core Data model") }
 
-        return unwrapped
+        return model
     }()
 
     public private(set) lazy var persistentContainer: NSPersistentCloudKitContainer = {

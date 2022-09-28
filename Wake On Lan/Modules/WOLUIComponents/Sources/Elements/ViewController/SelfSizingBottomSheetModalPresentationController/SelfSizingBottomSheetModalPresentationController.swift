@@ -83,7 +83,7 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
 // MARK: - Private methods
 extension SelfSizingBottomSheetModalPresentationController {
     private func addCustomViews() {
-        guard let containerView = containerView else {
+        guard let containerView else {
             assertionFailure("Can't set up custom views without a container view. Transition must not be started yet.")
             return
         }

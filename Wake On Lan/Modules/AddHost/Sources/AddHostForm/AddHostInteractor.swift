@@ -20,7 +20,7 @@ final class AddHostInteractor: AddHostInteractorInput {
         let context = coreDataService.createChildConcurrentContext()
         Host.insert(into: context, form: form)
         coreDataService.saveContext(context) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.presenter?.interactor(self, didSaveForm: form)
             DDLogDebug("Host saved")
         }
@@ -35,7 +35,7 @@ final class AddHostInteractor: AddHostInteractorInput {
             }
             Host.update(object: host, into: context, with: form)
             self?.coreDataService.saveContext(context) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.presenter?.interactor(self, didUpdateForm: form)
                 DDLogDebug("Host updated")
             }

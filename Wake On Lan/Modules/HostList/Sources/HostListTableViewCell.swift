@@ -270,7 +270,7 @@ private extension HostListTableViewCell {
             )
         }
 
-        guard let model = self.model else { return }
+        guard let model else { return }
         delegate?.hostListCellDidTap(self, model: model)
 
         UINotificationFeedbackGenerator().notificationOccurred(.success)
