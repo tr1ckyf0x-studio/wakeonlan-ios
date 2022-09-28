@@ -53,7 +53,7 @@ extension CoreDataAppToSharedGroupMigration {
     }
 
     private func fetchOldDatabaseFileURLs() throws -> [URL] {
-        guard let applicationSupportDirectoryURL = applicationSupportDirectoryURL else {
+        guard let applicationSupportDirectoryURL else {
             throw Error.applicationSupportDirectoryURLNotFound
         }
         return try fetchFiles(

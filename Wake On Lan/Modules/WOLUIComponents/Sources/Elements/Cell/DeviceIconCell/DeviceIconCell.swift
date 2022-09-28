@@ -53,7 +53,7 @@ public final class DeviceIconCell: UITableViewCell {
     // MARK: - Public
 
     public func configure(with model: IconModel?) {
-        guard let model = model else { return }
+        guard let model else { return }
         self.model = model
         baseView.configure(with: model)
     }
@@ -87,7 +87,7 @@ private extension DeviceIconCell {
 
 extension DeviceIconCell: DeviceIconViewDelegate {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView) {
-        guard let model = self.model else { return }
+        guard let model else { return }
         didTapChangeIconBlock?(model)
     }
 }

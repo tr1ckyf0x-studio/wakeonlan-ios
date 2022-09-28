@@ -58,7 +58,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
     private(set) var host: Host? {
         didSet {
-            guard let host = host else { return }
+            guard let host else { return }
             let sfSymbol = SFSymbolFactory.build(from: host.iconName)
             iconModel = sfSymbol.map { IconModel(sfSymbol: $0) }
             titleItem.value = host.title
@@ -77,9 +77,8 @@ final class AddHostForm: AddHostFormRepresentable {
     // MARK: - Section items
 
     private lazy var iconSectionItems: [FormItem] = {
-        guard let model = iconModel else { return [] }
-
-        return [FormItem.icon(model)]
+        guard let iconModel else { return [] }
+        return [FormItem.icon(iconModel)]
     }()
 
     private lazy var titleItem: TextFormItem = {

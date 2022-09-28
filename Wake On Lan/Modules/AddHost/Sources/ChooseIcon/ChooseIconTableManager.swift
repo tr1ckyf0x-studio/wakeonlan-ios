@@ -58,7 +58,7 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
                 for: indexPath
             ) as? ChooseIconCell
             let didTapIconBlock: ChooseIconCell.TapIconBlock = { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.delegate?.tableManager(self, didTapIcon: model)
             }
 
@@ -68,11 +68,11 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
             }
         }
 
-        guard let unwrappedCell = cell else {
+        guard let cell else {
             fatalError("\(self): Unknown cell identifier")
         }
 
-        return unwrappedCell
+        return cell
     }
 
 }
