@@ -4,6 +4,7 @@
 //
 //  Created by Dmitry on 08.08.2021.
 //
+
 // sourcery: AutoEquatable
 struct AboutScreenHeaderViewViewModel {
     /// Application name
