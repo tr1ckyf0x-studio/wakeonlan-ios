@@ -43,6 +43,10 @@ let package = Package(
             dependencies: [
                 "AboutScreen",
                 .product(
+                    name: "BundleInfoTestData",
+                    package: "SharedExtensions"
+                ),
+                .product(
                     name: "WOLResourcesMock",
                     package: "WOLResources"
                 )

@@ -1,9 +1,10 @@
 import XCTest
 import SharedExtensions
 import WOLResourcesMock
+import WOLResources
+import BundleInfoTestData
 
 @testable import AboutScreen
-@testable import WOLResources
 
 final class AboutScreenInteractorTests: XCTestCase {
 

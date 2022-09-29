@@ -1,7 +1,8 @@
 import XCTest
+import BundleInfoTestData
+import WOLResources
 
 @testable import AboutScreen
-@testable import WOLResources
 
 final class AboutScreenPresenterTests: XCTestCase {
     var sut: AboutScreenPresenter!

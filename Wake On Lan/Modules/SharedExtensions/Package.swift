@@ -10,7 +10,10 @@ let package = Package(
         .library(
             name: "SharedExtensions",
             targets: ["SharedExtensions"]
-        )
+        ),
+        .library(
+            name: "BundleInfoTestData",
+            targets: ["BundleInfoTestData"])
     ],
     dependencies: [
         .package(path: "../WOLResources")
@@ -20,8 +23,13 @@ let package = Package(
             name: "SharedExtensions",
             dependencies: [
                 "WOLResources"
-            ],
-            path: "Sources"
+            ]
+        ),
+        .target(
+            name: "BundleInfoTestData",
+            dependencies: [
+                "WOLResources"
+            ]
         )
     ]
 )
