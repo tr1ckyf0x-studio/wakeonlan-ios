@@ -44,7 +44,7 @@ let package = Package(
                 "AboutScreen",
                 .product(
                     name: "BundleInfoTestData",
-                    package: "SharedExtensions"
+                    package: "WOLResources"
                 ),
                 .product(
                     name: "WOLResourcesMock",
