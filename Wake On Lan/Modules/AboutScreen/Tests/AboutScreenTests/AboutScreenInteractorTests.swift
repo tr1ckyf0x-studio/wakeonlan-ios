@@ -1,5 +1,4 @@
 import XCTest
-import SharedExtensions
 import WOLResourcesMock
 import WOLResources
 import BundleInfoTestData
