@@ -20,8 +20,7 @@ let package = Package(
             name: "SharedExtensions",
             dependencies: [
                 "WOLResources"
-            ],
-            path: "Sources"
+            ]
         )
     ]
 )

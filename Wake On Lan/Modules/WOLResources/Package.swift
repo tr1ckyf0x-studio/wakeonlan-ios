@@ -15,7 +15,10 @@ let package = Package(
         .library(
             name: "WOLResourcesMock",
             targets: ["WOLResourcesMock"]
-        )
+        ),
+        .library(
+            name: "BundleInfoTestData",
+            targets: ["BundleInfoTestData"])
     ],
     targets: [
         .target(
@@ -24,6 +27,12 @@ let package = Package(
         .target(
             name: "WOLResourcesMock",
             dependencies: ["WOLResources"]
+        ),
+        .target(
+            name: "BundleInfoTestData",
+            dependencies: [
+                "WOLResources"
+            ]
         )
     ]
 )

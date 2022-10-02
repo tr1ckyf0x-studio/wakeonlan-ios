@@ -10,13 +10,21 @@ let package = Package(
         .library(
             name: "SharedRouter",
             targets: ["SharedRouter"]
+        ),
+        .library(
+            name: "SharedRouterMock",
+            targets: ["SharedRouterMock"]
         )
     ],
-    dependencies: [ ],
+    dependencies: [],
     targets: [
         .target(
             name: "SharedRouter",
-            path: "Sources"
+            dependencies: []
+        ),
+        .target(
+            name: "SharedRouterMock",
+            dependencies: ["SharedRouter"]
         )
     ]
 )
