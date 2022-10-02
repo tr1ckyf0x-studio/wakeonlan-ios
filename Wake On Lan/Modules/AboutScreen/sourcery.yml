@@ -10,3 +10,13 @@ configurations:
         - AboutScreen
       autoMockableImports:
         - WOLResources
+  - sources:
+    - Sources/AboutScreen
+    templates:
+    - ../../../swift-templates/Sourcery/AutoEquatable.stencil
+    output:
+      Tests/AboutScreenTests/Mock
+    args:
+      autoMockableTestableImports:
+        - AboutScreen
+

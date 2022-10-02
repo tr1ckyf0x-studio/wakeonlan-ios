@@ -26,12 +26,15 @@ let package = Package(
             dependencies: [
                 "SharedExtensions",
                 "SharedProtocolsAndModels",
-                "SharedRouter",
                 "SnapKit",
                 "WOLUIComponents",
                 .product(
                     name: "WOLResources",
                     package: "WOLResources"
+                ),
+                .product(
+                    name: "SharedRouter",
+                    package: "SharedRouter"
                 )
             ]
         ),
@@ -39,6 +42,10 @@ let package = Package(
             name: "AboutScreenTests",
             dependencies: [
                 "AboutScreen",
+                .product(
+                    name: "BundleInfoTestData",
+                    package: "WOLResources"
+                ),
                 .product(
                     name: "WOLResourcesMock",
                     package: "WOLResources"

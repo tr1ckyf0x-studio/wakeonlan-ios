@@ -12,6 +12,7 @@ SOURCERY_MODULES=(
     "AboutScreen"
     "WOLResources"
     "WakeOnLanService"
+    "SharedRouter"
 	)
 
 MODULES_FOLDER="./Wake On Lan/Modules"
