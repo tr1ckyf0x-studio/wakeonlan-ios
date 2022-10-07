@@ -6,9 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import CocoaLumberjackSwift
 import CoreDataService
+import Foundation
 
 final class HostListPresenter {
 

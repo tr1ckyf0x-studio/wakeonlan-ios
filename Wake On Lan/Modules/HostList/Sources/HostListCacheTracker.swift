@@ -6,9 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-import CoreData
 import CocoaLumberjackSwift
+import CoreData
+import Foundation
 
 protocol HostListCacheTrackerProtocol {
 

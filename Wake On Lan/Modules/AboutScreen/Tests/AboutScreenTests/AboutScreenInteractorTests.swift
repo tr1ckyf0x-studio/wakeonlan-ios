@@ -1,7 +1,7 @@
-import XCTest
-import WOLResourcesMock
-import WOLResources
 import BundleInfoTestData
+import WOLResources
+import WOLResourcesMock
+import XCTest
 
 @testable import AboutScreen
 

@@ -72,7 +72,8 @@ opt_in_rules:
 - unused_import 
 - vertical_parameter_alignment_on_call 
 - vertical_whitespace_between_cases 
-- xct_specific_matcher 
+- xct_specific_matcher
+- sorted_imports
  
 excluded: # paths to ignore during linting. Takes precedence over included. 
 - Carthage 

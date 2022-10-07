@@ -6,10 +6,10 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
-import WOLUIComponents
-import WOLResources
 import SharedExtensions
+import UIKit
+import WOLResources
+import WOLUIComponents
 
 // TODO: Implement custom header/footer views
 final class AddHostTableManager: NSObject {

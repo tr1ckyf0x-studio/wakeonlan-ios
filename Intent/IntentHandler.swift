@@ -1,6 +1,6 @@
+import CoreDataService
 import Intents
 import WakeOnLanService
-import CoreDataService
 
 final class IntentHandler: INExtension {
     override func handler(for intent: INIntent) -> Any {

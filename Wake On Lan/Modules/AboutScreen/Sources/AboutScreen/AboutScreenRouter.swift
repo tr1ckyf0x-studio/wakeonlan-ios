@@ -6,8 +6,8 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
-import SharedRouter
 import SharedProtocolsAndModels
+import SharedRouter
 import UIKit
 
 final class AboutScreenRouter: Router {

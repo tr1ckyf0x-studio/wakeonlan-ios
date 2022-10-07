@@ -6,9 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import CocoaLumberjackSwift
 import CoreData
+import Foundation
 
 public protocol CoreDataServiceProtocol {
     typealias SaveCompletionHandler = () -> Void

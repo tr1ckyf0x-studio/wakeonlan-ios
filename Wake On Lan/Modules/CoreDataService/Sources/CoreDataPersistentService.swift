@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import CoreData
 import CocoaLumberjackSwift
+import CoreData
 import WOLResources
 
 // MARK: - PersistentContainer

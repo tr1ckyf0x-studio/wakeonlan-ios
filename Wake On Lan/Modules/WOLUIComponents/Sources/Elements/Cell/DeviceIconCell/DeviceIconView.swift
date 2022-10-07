@@ -6,9 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import SharedProtocolsAndModels
 import UIKit
 import WOLResources
-import SharedProtocolsAndModels
 
 protocol DeviceIconViewDelegate: AnyObject {
     func deviceIconViewDidTapChangeIcon(_ view: DeviceIconView)

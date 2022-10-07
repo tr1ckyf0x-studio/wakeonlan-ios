@@ -6,11 +6,11 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SnapKit
 import SharedExtensions
+import SnapKit
 import UIKit
-import WOLUIComponents
 import WOLResources
+import WOLUIComponents
 
 protocol AddHostViewDelegate: AnyObject {
     func addHostViewDidPressSaveButton(_ view: AddHostView)

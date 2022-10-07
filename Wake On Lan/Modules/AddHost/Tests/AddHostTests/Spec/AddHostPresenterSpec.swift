@@ -6,12 +6,12 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+@testable import AddHost
 import Foundation
-import Quick
 import Nimble
+import Quick
 import SharedProtocolsAndModels
 import WOLResources
-@testable import AddHost
 
 class AddHostPresenterSpec: QuickSpec {
 
