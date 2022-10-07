@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import Firebase
+import UIKit
 
 final class FirebaseAppDelegatePlugin: NSObject, UIApplicationDelegate {
     func application(

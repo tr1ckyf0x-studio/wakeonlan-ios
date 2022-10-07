@@ -6,10 +6,10 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import AddHost
+import Foundation
+import Nimble
+import Quick
 
 // TODO: Is not testable until Core Data stack is mocked
 class AddHostInteractorSpec: QuickSpec {

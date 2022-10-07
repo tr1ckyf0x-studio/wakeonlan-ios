@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import CoreDataService
+import Foundation
 
 public final class AddHostConfigurator {
 

@@ -1,6 +1,6 @@
-import XCTest
 import BundleInfoTestData
 import WOLResources
+import XCTest
 
 @testable import AboutScreen
 

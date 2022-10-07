@@ -1,8 +1,8 @@
 import XCTest
 
+import SharedProtocolsAndModels
 @testable import WakeOnLanService
 import WakeOnLanServiceMock
-import SharedProtocolsAndModels
 
 final class WakeOnLanServiceTests: XCTestCase {
 

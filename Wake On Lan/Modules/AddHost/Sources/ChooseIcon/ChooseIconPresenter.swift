@@ -7,8 +7,8 @@
 //
 
 import SharedProtocolsAndModels
-import WOLUIComponents
 import WOLResources
+import WOLUIComponents
 
 final class ChooseIconPresenter {
     weak var view: ChooseIconViewInput!

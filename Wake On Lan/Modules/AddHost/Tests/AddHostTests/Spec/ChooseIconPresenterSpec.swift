@@ -6,11 +6,11 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
-import SharedProtocolsAndModels
 @testable import AddHost
+import Foundation
+import Nimble
+import Quick
+import SharedProtocolsAndModels
 
 class ChooseIconPresenterSpec: QuickSpec {
 

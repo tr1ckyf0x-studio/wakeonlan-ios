@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import SharedProtocolsAndModels
+import UIKit
 
 protocol ChooseIconTableManagerDelegate: AnyObject {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)

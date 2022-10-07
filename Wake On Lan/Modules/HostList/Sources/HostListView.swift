@@ -6,10 +6,10 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import SnapKit
-import WOLUIComponents
+import UIKit
 import WOLResources
+import WOLUIComponents
 
 protocol HostListViewDelegate: AnyObject {
     func hostListViewDidPressAddButton(_ view: HostListView)

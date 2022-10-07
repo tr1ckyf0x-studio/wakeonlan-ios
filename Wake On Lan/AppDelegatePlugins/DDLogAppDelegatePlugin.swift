@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import CocoaLumberjackSwift
+import UIKit
 
 final class DDLogAppDelegatePlugin: NSObject, UIApplicationDelegate {
     func application(

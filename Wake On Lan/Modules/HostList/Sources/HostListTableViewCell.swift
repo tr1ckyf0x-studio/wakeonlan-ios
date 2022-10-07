@@ -6,11 +6,11 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import CoreDataService
 import CocoaLumberjackSwift
+import CoreDataService
 import Reachability
-import WOLUIComponents
 import WOLResources
+import WOLUIComponents
 
 // MARK: - HostListTableViewCell
 

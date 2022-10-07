@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 import WOLResources
 
 public final class EmptyView: UIView {

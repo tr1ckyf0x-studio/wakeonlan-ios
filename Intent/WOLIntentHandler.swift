@@ -1,6 +1,6 @@
+import CoreDataService
 import Intents
 import WakeOnLanService
-import CoreDataService
 
 final class WOLIntentHandler: NSObject, WOLIntentHandling {
 

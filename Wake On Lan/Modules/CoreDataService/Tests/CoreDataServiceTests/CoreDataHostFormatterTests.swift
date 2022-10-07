@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import XCTest
 @testable import CoreDataService
+import XCTest
 
 class HostCoreDataFormatterTests: XCTestCase {
 
