@@ -9,5 +9,6 @@ extension BundleInfo {
         name: UUID().uuidString,
         version: UUID().uuidString,
         build: UUID().uuidString,
-        appFonts: nil)
+        appFonts: nil
+    )
 }
