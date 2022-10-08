@@ -7,34 +7,35 @@
 //
 
 import CoreDataService
+import UIKit
 import WOLUIComponents
 
-typealias Content = HostListCacheTracker<Host, HostListInteractor>.Transaction<Host>
+typealias ContentSnapshot = NSDiffableDataSourceSnapshot<String, HostListSectionItem>
 
 protocol HostListViewOutput: AnyObject {
-    var tableManager: HostListTableManager { get }
-
     func viewDidLoad(_ view: HostListViewInput)
     func viewDidPressAddButton(_ view: HostListViewInput)
     func viewDidPressAboutButton(_ view: HostListViewInput)
+
+    func viewDidPressInfoButton(_ view: HostListViewInput, for indexPath: IndexPath)
+    func viewDidPressDeleteButton(_ view: HostListViewInput, for indexPath: IndexPath)
+    func viewDidPressHostCell(_ view: HostListViewInput, for indexPath: IndexPath)
 }
 
 protocol HostListViewInput: AnyObject {
-    var contentView: StateableView { get }
-
-    func reloadTable()
-    func updateTable(with update: Content)
+    func showState(_ state: ViewState)
+    func updateContentSnapshot(_ contentSnapshot: ContentSnapshot)
 }
 
 protocol HostListInteractorInput: AnyObject {
-    func fetchHosts()
+    func startCacheTracker()
     func wakeHost(_ host: Host)
     func deleteHost(_ host: Host)
+    func host(at indexPath: IndexPath) -> Host
 }
 
 protocol HostListInteractorOutput: AnyObject {
-    func interactor(_ interactor: HostListInteractorInput, didChangeContent content: [Content])
-    func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host])
+    func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: ContentSnapshot)
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error)
 }
 
