@@ -9,16 +9,22 @@
 import CocoaLumberjackSwift
 import CoreDataService
 import Foundation
-import Resolver
 import WakeOnLanService
 
 final class HostListInteractor: HostListInteractorInput {
 
-    @Injected private var coreDataService: CoreDataServiceProtocol
-
-    @Injected private var wakeOnLanService: WakeOnLanService
-
     weak var presenter: HostListInteractorOutput?
+
+    private let coreDataService: CoreDataServiceProtocol
+    private let wakeOnLanService: WakeOnLanService
+
+    init(
+        coreDataService: CoreDataServiceProtocol,
+        wakeOnLanService: WakeOnLanService
+    ) {
+        self.coreDataService = coreDataService
+        self.wakeOnLanService = wakeOnLanService
+    }
 
     private lazy var cacheTracker: HostListCacheTracker<Host, HostListInteractor> = {
         DDLogVerbose("HostListCacheTracker initialized")
