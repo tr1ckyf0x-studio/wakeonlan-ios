@@ -20,6 +20,8 @@ disabled_rules:
 - todo
 - nimble_operator
 - type_name
+- closure_parameter_position
+- generic_type_name
 
 opt_in_rules: 
 - array_init 

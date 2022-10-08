@@ -13,10 +13,20 @@ import WakeOnLanService
 
 final class HostListInteractor: HostListInteractorInput {
 
-    weak var presenter: HostListInteractorOutput?
-
     private let coreDataService: CoreDataServiceProtocol
     private let wakeOnLanService: WakeOnLanService
+
+    weak var presenter: HostListInteractorOutput?
+
+    private lazy var cacheTracker: any CacheTracker<Host> = {
+        DDLogVerbose("HostListCacheTracker initialized")
+        return HostListCacheTracker<Host, String, HostListSectionItem>(
+            with: Host.sortedFetchRequest,
+            context: coreDataService.mainContext,
+            mapper: HostListSnapshotMapper(),
+            delegate: self
+        )
+    }()
 
     init(
         coreDataService: CoreDataServiceProtocol,
@@ -26,18 +36,8 @@ final class HostListInteractor: HostListInteractorInput {
         self.wakeOnLanService = wakeOnLanService
     }
 
-    private lazy var cacheTracker: HostListCacheTracker<Host, HostListInteractor> = {
-        DDLogVerbose("HostListCacheTracker initialized")
-        return HostListCacheTracker(
-            with: Host.sortedFetchRequest,
-            context: coreDataService.mainContext,
-            delegate: self
-        )
-    }()
-
-    func fetchHosts() {
-        guard let hosts = cacheTracker.fetchedObjects else { return }
-        presenter?.interactor(self, didFetchHosts: hosts)
+    func startCacheTracker() {
+        cacheTracker.start()
     }
 
     func deleteHost(_ host: Host) {
@@ -59,20 +59,25 @@ final class HostListInteractor: HostListInteractorInput {
         }
     }
 
+    func host(at indexPath: IndexPath) -> Host {
+        cacheTracker.objectAtIndexPath(indexPath)
+    }
+
 }
 
 // MARK: - HostListCacheTrackerDelegate
 
-extension HostListInteractor: HostListCacheTrackerDelegate {
+extension HostListInteractor: CacheTrackerDelegate {
 
-    typealias Object = Host
+    typealias SnapshotSectionIdentifier = String
+
+    typealias SnapshotItemIdentifier = HostListSectionItem
 
     func cacheTracker(
-        _ tracker: CacheTracker,
-        didChangeContent content: [Content]
+        _ tracker: any CacheTracker,
+        didChangeContentSnapshot contentSnapshot: ContentSnapshot
     ) {
-        DDLogDebug("CacheTracker changed content")
-        presenter?.interactor(self, didChangeContent: content)
+        presenter?.interactor(self, didChangeContentSnapshot: contentSnapshot)
     }
 
 }
