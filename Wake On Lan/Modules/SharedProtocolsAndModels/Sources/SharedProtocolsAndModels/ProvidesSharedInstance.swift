@@ -2,15 +2,15 @@ import Foundation
 
 public protocol ProvidesSharedInstance: AnyObject {
     static var shared: Self { get }
+}
+
+public protocol ProvidesWeakSharedInstanceTrait: ProvidesSharedInstance {
     static var weakSharedInstance: Self? { get set }
 
     init()
 }
 
-public protocol ProvidesWeakSharedInstanceTrait: ProvidesSharedInstance {
-}
-
-extension ProvidesSharedInstance where Self: ProvidesWeakSharedInstanceTrait {
+extension ProvidesWeakSharedInstanceTrait {
     public static var shared: Self {
         if let weakSharedInstance {
             return weakSharedInstance
