@@ -102,6 +102,7 @@ targets:
         - package: CoreDataService/CoreDataServiceTests
         - package: AboutScreen/AboutScreenTests
         - package: WakeOnLanService/WakeOnLanServiceTests
+        - package: SharedExtensions/SharedExtensionsTests
       configVariants:
         - AppStore
         - AdHoc

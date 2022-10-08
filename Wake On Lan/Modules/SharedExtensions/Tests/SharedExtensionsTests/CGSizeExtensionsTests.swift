@@ -10,7 +10,7 @@ final class CGSizeExtensionsTests: XCTestCase {
     }
 }
 
-extension CGSizeExtensionsTests {
+private extension CGSizeExtensionsTests {
     enum TestData {
         static let sizePositiveWidth = CGSize(
             width: 5,
