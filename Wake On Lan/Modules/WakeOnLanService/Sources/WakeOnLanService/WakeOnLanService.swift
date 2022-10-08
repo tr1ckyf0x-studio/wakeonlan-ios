@@ -37,8 +37,8 @@ extension WakeOnLanService: WakeOnLanServiceProtocol {
 extension WakeOnLanService: ProvidesWeakSharedInstanceTrait {
     public static weak var weakSharedInstance: WakeOnLanService?
 
-    public static func provideDefaultInstance() -> WakeOnLanService {
-        WakeOnLanService(
+    public convenience init() {
+        self.init(
             magicPacketBuilder: MagicPacketBuilder(),
             udpService: UDPService()
         )

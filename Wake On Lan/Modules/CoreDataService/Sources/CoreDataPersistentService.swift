@@ -91,9 +91,8 @@ public final class CoreDataService: CoreDataServiceProtocol {
 extension CoreDataService: ProvidesWeakSharedInstanceTrait {
     public static weak var weakSharedInstance: CoreDataService?
 
-    public static func provideDefaultInstance() -> CoreDataService {
-        let instance = CoreDataService(persistentContainerType: PersistentContainer.SQLite.self)
-        instance.createHostContainer()
-        return instance
+    public convenience init() {
+        self.init(persistentContainerType: PersistentContainer.SQLite.self)
+        createHostContainer()
     }
 }

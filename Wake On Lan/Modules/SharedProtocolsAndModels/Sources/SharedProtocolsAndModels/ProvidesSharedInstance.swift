@@ -2,12 +2,12 @@ import Foundation
 
 public protocol ProvidesSharedInstance: AnyObject {
     static var shared: Self { get }
+    static var weakSharedInstance: Self? { get set }
+
+    init()
 }
 
 public protocol ProvidesWeakSharedInstanceTrait: ProvidesSharedInstance {
-    static var weakSharedInstance: Self? { get set }
-
-    static func provideDefaultInstance() -> Self
 }
 
 extension ProvidesSharedInstance where Self: ProvidesWeakSharedInstanceTrait {
@@ -15,7 +15,7 @@ extension ProvidesSharedInstance where Self: ProvidesWeakSharedInstanceTrait {
         if let weakSharedInstance {
             return weakSharedInstance
         }
-        let instance = provideDefaultInstance()
+        let instance = Self()
         weakSharedInstance = instance
         return instance
     }
