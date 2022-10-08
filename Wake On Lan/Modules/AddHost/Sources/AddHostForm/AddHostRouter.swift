@@ -10,7 +10,7 @@ import UIKit
 import WOLUIComponents
 
 final class AddHostRouter: AddHostRouterProtocol {
-    var viewController: AddHostViewController?
+    weak var viewController: AddHostViewController?
 
     func routeToChooseIcon() {
         let chooseIconViewController = ChooseIconViewController()
