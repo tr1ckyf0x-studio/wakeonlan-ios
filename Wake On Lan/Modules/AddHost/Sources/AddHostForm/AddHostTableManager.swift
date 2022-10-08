@@ -48,23 +48,23 @@ extension AddHostTableManager: UITableViewDataSource {
             textFormItem.indexPath = indexPath
             textInputCell?.configure(with: model)
             // Scroll table view to next responder
-            textInputCell?.onNextResponderAction = { indexPath in
+            textInputCell?.onNextResponderAction = { [weak tableView] indexPath in
                 guard
-                    let nextIndexPath = tableView.nextIndexPath(for: indexPath)
+                    let nextIndexPath = tableView?.nextIndexPath(for: indexPath)
                 else {
                     return
                 }
-                tableView.scrollToRow(at: nextIndexPath, at: .top, animated: true)
+                tableView?.scrollToRow(at: nextIndexPath, at: .top, animated: true)
             }
             // NOTE: We need to hide failure label in
             // completion block for smoothy animation working
-            textInputCell?.onExpandAction = { completion in
+            textInputCell?.onExpandAction = { [weak tableView] completion in
                 CATransaction.begin()
                 CATransaction.setCompletionBlock({
                     completion?()
                 })
-                tableView.beginUpdates()
-                tableView.endUpdates()
+                tableView?.beginUpdates()
+                tableView?.endUpdates()
                 CATransaction.commit()
             }
             cell = textInputCell
