@@ -6,7 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import CoreDataService
 import Foundation
+import WakeOnLanService
 
 public final class HostListConfigurator {
 
@@ -14,7 +16,10 @@ public final class HostListConfigurator {
 
     public func configure(viewController: HostListViewController) {
         let presenter = HostListPresenter()
-        let interactor = HostListInteractor()
+        let interactor = HostListInteractor(
+            coreDataService: CoreDataService.shared,
+            wakeOnLanService: WakeOnLanService.shared
+        )
         let router = HostListRouter()
         let tableManager = HostListTableManager()
 

@@ -15,7 +15,7 @@ public final class AddHostConfigurator {
 
     public func configure(viewController: AddHostViewController, with host: Host? = nil ) {
         let presenter = AddHostPresenter<AddHostRouter>(addHostForm: AddHostForm(host: host))
-        let interactor = AddHostInteractor()
+        let interactor = AddHostInteractor(coreDataService: CoreDataService.shared)
         let router = AddHostRouter()
 
         router.viewController = viewController

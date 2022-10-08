@@ -8,7 +8,6 @@
 
 import CoreDataService
 import HostList
-import Resolver
 import UIKit
 import WOLResources
 import WOLUIComponents
@@ -18,7 +17,7 @@ import WOLUIComponents
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
-    @Injected private var coreDataService: CoreDataServiceProtocol
+    private let coreDataService: CoreDataServiceProtocol = CoreDataService.shared
 
     var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
@@ -39,8 +38,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             )
 
             try await mainBundleToGroupMigration.execute()
-
-            coreDataService.createHostContainer()
 
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let hostListViewController = HostListViewController()

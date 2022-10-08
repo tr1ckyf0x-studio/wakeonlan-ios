@@ -8,13 +8,16 @@
 
 import CocoaLumberjackSwift
 import CoreDataService
-import Resolver
 
 final class AddHostInteractor: AddHostInteractorInput {
 
     weak var presenter: AddHostInteractorOutput?
 
-    @Injected var coreDataService: CoreDataServiceProtocol
+    private let coreDataService: CoreDataServiceProtocol
+
+    init(coreDataService: CoreDataServiceProtocol) {
+        self.coreDataService = coreDataService
+    }
 
     func saveForm(_ form: AddHostForm) {
         let context = coreDataService.createChildConcurrentContext()
