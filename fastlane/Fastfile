@@ -19,7 +19,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     build_app(
-      scheme: "Wake on LAN",
+      scheme: "Wake on LAN AppStore",
       include_bitcode: false,
       export_options: {
         provisioningProfiles: { 
