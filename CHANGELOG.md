@@ -8,6 +8,34 @@
 
 ### Updated
 
+### Removed
+
+## 1.1.4
+
+### Added
+
+- Added about screen presenter tests (#37)
+
+### Fixed
+
+- Fixed CGSize.inversed name
+- Fixed crashes
+- Fixed memory leaks
+
+### Updated
+
+- Refactored Validator
+- Replaced guard let statements with Swift 5.7 sugar
+- Updated Gemfile.lock, Fastfile
+- Sorted import statements
+- Refactored HostList (#42)
+- BundleInfoSeeds - moved bracket (#43)
+
+### Removed
+
+- Removed Resolver (#40)
+- Removed unused code, fixed codestyle
+
 ## 1.1.3
 
 ### Added
