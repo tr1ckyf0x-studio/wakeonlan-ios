@@ -6,12 +6,14 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import CoreDataService
+
 protocol HostListTableViewCellDelegate: AnyObject {
 
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell)
+    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host)
 
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell)
+    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host)
 
-    func hostListCellDidTap(_ cell: HostListTableViewCell)
+    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host)
 
 }
