@@ -23,7 +23,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Properties
 
-    private var viewModel: HostListCellViewModel?
+    private var model: Host?
 
     private weak var delegate: HostListTableViewCellDelegate?
 
@@ -127,13 +127,13 @@ final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Public
 
-    func configure(with viewModel: HostListCellViewModel, delegate: HostListTableViewCellDelegate?) {
-        let sfSymbol = SFSymbolFactory.build(from: viewModel.iconName)
+    func configure(with model: Host, delegate: HostListTableViewCellDelegate?) {
+        let sfSymbol = SFSymbolFactory.build(from: model.iconName)
         let image = sfSymbol.flatMap { UIImage(sfSymbol: $0) }
-        hostTitle.text = viewModel.title
+        hostTitle.text = model.title
         deviceImageView.image = image
-        macAddressTitle.text = viewModel.macAddress
-        self.viewModel = viewModel
+        macAddressTitle.text = model.macAddress
+        self.model = model
         self.delegate = delegate
     }
 
@@ -219,11 +219,13 @@ private extension HostListTableViewCell {
     // MARK: - Action
 
     @objc func didTapInfoButton() {
-        delegate?.hostListCellDidTapInfo(self)
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTapInfo(self, model: model)
     }
 
     @objc func didTapDeleteButton() {
-        delegate?.hostListCellDidTapDelete(self)
+        guard let model = self.model else { return }
+        delegate?.hostListCellDidTapDelete(self, model: model)
     }
 
     @objc func displayNotification() {
@@ -268,7 +270,8 @@ private extension HostListTableViewCell {
             )
         }
 
-        delegate?.hostListCellDidTap(self)
+        guard let model else { return }
+        delegate?.hostListCellDidTap(self, model: model)
 
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         displayNotificationAnimated()
