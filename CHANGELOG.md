@@ -10,6 +10,12 @@
 
 ### Removed
 
+## 1.1.5
+
+### Hotfix
+
+- Revert "Refactored HostList (#42)"
+
 ## 1.1.4
 
 ### Added
