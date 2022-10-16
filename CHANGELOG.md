@@ -10,6 +10,12 @@
 
 ### Removed
 
+## 1.1.6
+
+### Hotfix
+
+- Revert "Refactored Validator"
+
 ## 1.1.5
 
 ### Hotfix
