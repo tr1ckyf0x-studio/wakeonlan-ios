@@ -24,7 +24,7 @@ final class TextFormItem: Validable, Mandatoryable {
     var indexPath: IndexPath?
     var onValueChanged: ((String?) -> Void)?
 
-    var validator: (any Validator<String>)?
+    var validator: TextValidator?
     var formatter: TextFormatter?
 
     var maxLength: Int?
@@ -43,7 +43,7 @@ final class TextFormItem: Validable, Mandatoryable {
             return !isMandatory
         }
 
-        return validator.isValid(value: value)
+        return validator.validate(value: value)
     }
 
 }
