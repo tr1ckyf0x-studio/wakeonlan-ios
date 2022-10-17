@@ -58,6 +58,8 @@ packages:
     path: Wake On Lan/Modules/CoreDataService
   HostList:
     path: Wake On Lan/Modules/HostList
+  PostLaunch:
+    path: Wake On Lan/Modules/PostLaunch
   SharedExtensions:
     path: Wake On Lan/Modules/SharedExtensions
   SharedProtocolsAndModels:
@@ -90,7 +92,9 @@ targets:
       - package: Firebase
         product: FirebaseCrashlytics
       - package: HostList
+      - package: PostLaunch
       - package: Reachability
+      - package: RouteComposer
       - package: SnapKit
       - package: SharedExtensions
       - package: SharedProtocolsAndModels

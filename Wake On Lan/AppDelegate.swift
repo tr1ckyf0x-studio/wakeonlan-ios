@@ -30,23 +30,18 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         plugins.forEach { _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions) }
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = WOLNavigationController(rootViewController: {
+            let factory = PostLaunchFactory(router: WOLRouter())
+            guard
+                let viewController = try? factory.build(with: nil)
+            else {
+                fatalError("Root view controller wasn't built")
+            }
 
-        Task {
-            let mainBundleToGroupMigration = CoreDataAppToSharedGroupMigration(
-                coreDataService: coreDataService,
-                fileManager: FileManager.default
-            )
-
-            try await mainBundleToGroupMigration.execute()
-
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let hostListViewController = HostListViewController()
-            let hostListConfigurator = HostListConfigurator()
-            hostListConfigurator.configure(viewController: hostListViewController)
-            let navigationController = WOLNavigationController(rootViewController: hostListViewController)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
-        }
+            return viewController
+        }())
+        window?.makeKeyAndVisible()
 
         return true
     }

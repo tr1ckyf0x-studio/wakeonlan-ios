@@ -6,7 +6,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import SharedProtocolsAndModels
 import SharedRouter
 
@@ -34,9 +33,4 @@ protocol AddHostInteractorInput: AnyObject {
 protocol AddHostInteractorOutput: AnyObject {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm)
     func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm)
-}
-
-// sourcery: AutoMockable
-protocol AddHostRouterProtocol: AnyObject, Router where ViewControllerType == AddHostViewController {
-    func routeToChooseIcon()
 }

@@ -7,17 +7,20 @@
 //
 
 import SharedProtocolsAndModels
+import SharedRouter
 
-final class AddHostPresenter<Router: AddHostRouterProtocol> {
+final class AddHostPresenter: Navigates {
+
+    // MARK: - Properties
+
     weak var view: AddHostViewInput?
-
     var interactor: AddHostInteractorInput?
-
-    var router: Router?
+    var router: AddHostRoutes?
 
     private(set) var tableManager = AddHostTableManager()
-
     private(set) var addHostForm: AddHostForm
+
+    // MARK: - Init
 
     init(addHostForm: AddHostForm = AddHostForm()) {
         self.addHostForm = addHostForm
@@ -49,7 +52,7 @@ extension AddHostPresenter: AddHostViewOutput {
     }
 
     func viewDidPressBackButton(_ view: AddHostViewInput) {
-        router?.popCurrentController(animated: true)
+        navigate(to: router?.backOrDismiss(animated: true))
     }
 
 }
@@ -58,11 +61,11 @@ extension AddHostPresenter: AddHostViewOutput {
 
 extension AddHostPresenter: AddHostInteractorOutput {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm) {
-        router?.popCurrentController(animated: true)
+        navigate(to: router?.backOrDismiss(animated: true))
     }
 
     func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm) {
-        router?.popCurrentController(animated: true)
+        navigate(to: router?.backOrDismiss(animated: true))
     }
 }
 
@@ -70,7 +73,7 @@ extension AddHostPresenter: AddHostInteractorOutput {
 
 extension AddHostPresenter: AddHostTableManagerDelegate {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel) {
-        router?.routeToChooseIcon()
+        navigate(to: router?.openChooseIcon(moduleDelegate: nil, transitioningDelegate: nil))
     }
 }
 

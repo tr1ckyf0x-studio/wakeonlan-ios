@@ -6,12 +6,13 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
+import SharedRouter
 import SharedProtocolsAndModels
 import StoreKit
 import UIKit
 import WOLResources
 
-final class AboutScreenPresenter {
+final class AboutScreenPresenter: Navigates {
 
     // MARK: - Configuration
 
@@ -25,11 +26,9 @@ final class AboutScreenPresenter {
     weak var view: AboutScreenViewInput?
 
     var interactor: AboutScreenInteractorInput?
-
-    var router: AboutScreenRouter?
+    var router: AboutScreenRoutes?
 
     private let reviewRequester: RequestsReview.Type
-
     private let urlOpener: OpensURL
 
     // MARK: - Init
@@ -52,7 +51,7 @@ extension AboutScreenPresenter: AboutScreenViewOutput {
     }
 
     func viewDidPressBackButton(_ view: AboutScreenViewInput) {
-        router?.popCurrentController(animated: true)
+        navigate(to: router?.backOrDismiss(animated: true))
     }
 }
 

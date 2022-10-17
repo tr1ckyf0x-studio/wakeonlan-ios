@@ -35,6 +35,6 @@ protocol ChooseIconRouterProtocol: AnyObject {
 // MARK: - Module delegate
 
 // sourcery: AutoMockable
-protocol ChooseIconModuleOutput: AnyObject {
+public protocol ChooseIconModuleOutput: AnyObject {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel)
 }

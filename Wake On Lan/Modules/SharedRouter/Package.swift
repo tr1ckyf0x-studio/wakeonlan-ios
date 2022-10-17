@@ -16,15 +16,16 @@ let package = Package(
             targets: ["SharedRouterMock"]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/ekazaev/route-composer", .upToNextMajor(from: "2.8.3"))
+    ],
     targets: [
         .target(
             name: "SharedRouter",
-            dependencies: []
-        ),
-        .target(
-            name: "SharedRouterMock",
-            dependencies: ["SharedRouter"]
+            dependencies: [
+                .product(name: "RouteComposer", package: "route-composer")
+            ],
+            path: "Sources"
         )
     ]
 )

@@ -93,7 +93,7 @@ extension CoreDataAppToSharedGroupMigration {
                 try? fileManager.removeItem(at: url)
             }
         )
-        if let error {
+        if let error = error {
             throw error
         }
     }
