@@ -73,7 +73,7 @@ extension AddHostPresenter: AddHostInteractorOutput {
 
 extension AddHostPresenter: AddHostTableManagerDelegate {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel) {
-        navigate(to: router?.openChooseIcon(moduleDelegate: nil, transitioningDelegate: nil))
+        navigate(to: router?.openChooseIcon(with: self))
     }
 }
 

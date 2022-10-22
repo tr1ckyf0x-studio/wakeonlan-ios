@@ -49,18 +49,6 @@ public protocol PersistentContainerType {
 
 public final class CoreDataService: CoreDataServiceProtocol {
 
-    private lazy var managedObjectModel: NSManagedObjectModel = {
-        let bundle = Bundle.module
-        let modelURL = bundle.url(
-            forResource: CoreDataConstants.persistentContainerName,
-            withExtension: CoreDataConstants.persistentContainerExtension
-        )
-        let model = modelURL.flatMap { NSManagedObjectModel(contentsOf: $0) }
-        guard let model else { fatalError("\(self) : Cannot load Core Data model") }
-
-        return model
-    }()
-
     public private(set) lazy var persistentContainer: NSPersistentCloudKitContainer = {
         let container = NSPersistentCloudKitContainer(
             name: CoreDataConstants.persistentContainerName,
@@ -77,6 +65,18 @@ public final class CoreDataService: CoreDataServiceProtocol {
         managedObjectModel: managedObjectModel
     )
 
+    private lazy var managedObjectModel: NSManagedObjectModel = {
+        let bundle = Bundle.module
+        let modelURL = bundle.url(
+            forResource: CoreDataConstants.persistentContainerName,
+            withExtension: CoreDataConstants.persistentContainerExtension
+        )
+        let model = modelURL.flatMap { NSManagedObjectModel(contentsOf: $0) }
+        guard let model else { fatalError("\(self) : Cannot load Core Data model") }
+
+        return model
+    }()
+
     private let persistentContainerType: PersistentContainerType.Type
 
     // MARK: - Init
@@ -88,6 +88,7 @@ public final class CoreDataService: CoreDataServiceProtocol {
 }
 
 // MARK: - ProvidesWeakSharedInstanceTrait
+
 extension CoreDataService: ProvidesWeakSharedInstanceTrait {
     public static weak var weakSharedInstance: CoreDataService?
 

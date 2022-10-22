@@ -13,8 +13,6 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../AboutScreen"), // TODO: Replace with protocol dependency
-        .package(path: "../AddHost"), // TODO: Replace with protocol dependency
         .package(path: "../CoreDataService"),
         .package(path: "../SharedExtensions"),
         .package(path: "../SharedProtocolsAndModels"),
@@ -29,8 +27,6 @@ let package = Package(
         .target(
             name: "HostList",
             dependencies: [
-                "AddHost",
-                "AboutScreen",
                 "CoreDataService",
                 "SnapKit",
                 "SharedExtensions",

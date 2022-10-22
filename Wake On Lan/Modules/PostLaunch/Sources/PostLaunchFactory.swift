@@ -32,15 +32,14 @@ extension PostLaunchFactory: Factory {
         let viewController = PostLaunchViewController()
         let presenter = PostLaunchPresenter()
 
-        let coreDataService = CoreDataService<PersistentContainer.SQLite>()
         let coreDataMigration = CoreDataAppToSharedGroupMigration(
-            coreDataService: coreDataService,
+            coreDataService: CoreDataService.shared,
             fileManager: FileManager.default
         )
 
         let interactor = PostLaunchInteractor(
             coreDataMigration: coreDataMigration,
-            coreDataService: coreDataService
+            coreDataService: CoreDataService.shared
         )
 
         viewController.presenter = presenter

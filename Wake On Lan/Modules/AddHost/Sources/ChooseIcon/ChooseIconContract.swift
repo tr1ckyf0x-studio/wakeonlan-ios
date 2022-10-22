@@ -27,11 +27,6 @@ protocol ChooseIconViewOutput {
     func viewWillLayoutSubviews(_ view: ChooseIconViewInput)
 }
 
-// sourcery: AutoMockable
-protocol ChooseIconRouterProtocol: AnyObject {
-    func dismiss(animated: Bool)
-}
-
 // MARK: - Module delegate
 
 // sourcery: AutoMockable

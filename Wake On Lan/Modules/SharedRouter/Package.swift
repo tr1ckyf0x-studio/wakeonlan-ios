@@ -10,10 +10,6 @@ let package = Package(
         .library(
             name: "SharedRouter",
             targets: ["SharedRouter"]
-        ),
-        .library(
-            name: "SharedRouterMock",
-            targets: ["SharedRouterMock"]
         )
     ],
     dependencies: [

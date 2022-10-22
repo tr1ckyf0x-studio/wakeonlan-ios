@@ -12,11 +12,11 @@ import SharedRouter
 public final class AboutScreenFactory {
     public typealias Context = Void?
 
-    private let router: AboutScreenRoutes?
+    private let router: AboutScreenRoutes
 
     // MARK: - Init
 
-    public init(router: AboutScreenRoutes?) {
+    public init(router: AboutScreenRoutes) {
         self.router = router
     }
 }

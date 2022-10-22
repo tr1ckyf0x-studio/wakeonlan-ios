@@ -32,7 +32,6 @@ extension PostLaunchInteractor: PostLaunchInteractorInput {
         Task {
             do {
                 try await coreDataMigration.execute()
-                coreDataService.createHostContainer()
                 await presenter?.interactorDidFinishMigrationSuccess(self)
             } catch {
                 await presenter?.interactorDidFinishMigrationFailure(self)

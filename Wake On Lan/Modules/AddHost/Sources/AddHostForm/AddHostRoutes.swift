@@ -10,25 +10,10 @@ import UIKit
 import WOLUIComponents
 import SharedRouter
 
-//final class AddHostRoutes: AddHostRouterProtocol {
-//    var viewController: AddHostViewController?
-//    func routeToChooseIcon() {
-//        let chooseIconViewController = ChooseIconViewController()
-//        let configurator = ChooseIconConfigurator()
-//        configurator.configure(viewController: chooseIconViewController, moduleDelegate: viewController?.presenter)
-//        chooseIconViewController.modalPresentationStyle = .custom
-//        let transitioningDelegate = SelfSizingBottomSheetModalTransitionDelegate()
-//        chooseIconViewController.transitioningDelegate = transitioningDelegate
-//        viewController?.present(chooseIconViewController, animated: true)
-//    }
-//}
-
 public protocol AddHostRoutes {
     typealias TransitioningDelegate = UIViewControllerTransitioningDelegate
-
     /// Navigates to the `Choose Icon` screen
-    func openChooseIcon(moduleDelegate: ChooseIconModuleOutput?, transitioningDelegate: TransitioningDelegate?) -> Route
-
+    func openChooseIcon(with context: ChooseIconFactory.Context) -> Route
     /// Navigates to back
     func backOrDismiss(animated: Bool) -> Route
 }

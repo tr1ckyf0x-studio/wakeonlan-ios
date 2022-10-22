@@ -7,7 +7,7 @@ public final class MagicPacketBuilder {
 // MARK: - BuildsMagicPacket
 extension MagicPacketBuilder: BuildsMagicPacket {
     public func build(for macAddress: String?) throws -> [UInt8] {
-        guard let macAddress else { throw MagicPacketError.wrongMacAddressFormat }
+        guard let macAddress = macAddress else { throw MagicPacketError.wrongMacAddressFormat }
 
         let header = Array(
             repeating: Constants.magicPacketHeaderByte,

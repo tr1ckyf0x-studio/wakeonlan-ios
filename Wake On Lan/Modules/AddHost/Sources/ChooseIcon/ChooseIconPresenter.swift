@@ -7,13 +7,14 @@
 //
 
 import SharedProtocolsAndModels
+import SharedRouter
 import WOLResources
 import WOLUIComponents
 
-final class ChooseIconPresenter {
+final class ChooseIconPresenter: Navigates {
     weak var view: ChooseIconViewInput!
     weak var moduleDelegate: ChooseIconModuleOutput?
-    var router: ChooseIconRouterProtocol!
+    var router: ChooseIconRoutes!
 
     private(set) lazy var tableManager = ChooseIconTableManager(with: sections)
 
@@ -45,9 +46,8 @@ extension ChooseIconPresenter: ChooseIconViewOutput {
 // MARK: - ChooseIconTableManagerDelegate
 
 extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
-
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
         moduleDelegate?.chooseIconModuleDidSelectIcon(icon)
-        router.dismiss(animated: true)
+        navigate(to: router.backOrDismiss(animated: true)) 
     }
 }

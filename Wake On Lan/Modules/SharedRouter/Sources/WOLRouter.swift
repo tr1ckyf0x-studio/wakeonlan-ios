@@ -12,7 +12,9 @@ public struct WOLRouter {
 
     // MARK: - Properties
 
+    /// Default router object that must be responsibe for navigation
     public let defaultRouter: Router
+    /// Default stack iterator object that must be responsibe for navigation
     public let defaultStackIterator: StackIterator
 
     // MARK: - Init

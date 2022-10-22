@@ -32,7 +32,7 @@ public final class Host: NSManagedObject, HostRepresentable {
 
     public private(set) var ipAddress: String? {
         get {
-            guard let ipAddressData else { return nil }
+            guard let ipAddressData = ipAddressData else { return nil }
             return CoreDataHostFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
         }
         set {

@@ -14,13 +14,18 @@ import RouteComposer
 import SharedRouter
 import SharedProtocolsAndModels
 import UIKit
+import WOLUIComponents
+
+/// General registry of the routes
+///
+/// - NOTE: New routes should be added in alphabetical order
 
 // MARK: - PostLaunchRoutes
 
 extension WOLRouter: PostLaunchRoutes { }
 
 extension WOLRouter {
-    /// Navigates to `HostList` screen
+    /// Navigates to `HostList` screen.
     public func hostList() -> Route {
         Route {
             try? defaultRouter.navigate(
@@ -38,7 +43,7 @@ extension WOLRouter {
 extension WOLRouter: HostListRoutes { }
 
 extension WOLRouter {
-    /// Navigates to `AddHost` screen
+    /// Navigates to `AddHost` screen.
     public func openAddHost(with host: Host?) -> Route {
         Route {
             try? defaultRouter.navigate(
@@ -50,7 +55,7 @@ extension WOLRouter {
         }
     }
 
-    /// Navigates to `About` screen
+    /// Navigates to `About` screen.
     public func openAbout() -> Route {
         Route {
             try? defaultRouter.navigate(
@@ -67,17 +72,24 @@ extension WOLRouter {
 
 extension WOLRouter: AboutScreenRoutes { }
 
+// MARK: - ChooseIconRoutes
+
+extension WOLRouter: ChooseIconRoutes { }
+
 // MARK: - AddHostRoutes
 
 extension WOLRouter: AddHostRoutes {
-    public func openChooseIcon(moduleDelegate: ChooseIconModuleOutput?, transitioningDelegate: TransitioningDelegate?) -> Route {
+    typealias ChooseIconFinder = ClassFinder<ChooseIconFactory.ViewController, ChooseIconFactory.Context>
+
+    /// Navigates to `ChooseIcon` screen.
+    public func openChooseIcon(with context: ChooseIconFactory.Context) -> SharedRouter.Route {
         Route {
-            try? defaultRouter.navigate(
-                to: defaultStepRoutePushAction(factory: AddHostFactory(router: self)),
-                with: nil,
-                animated: true,
-                completion: $0
-            )
+            let delegate = SelfSizingBottomSheetModalTransitionDelegate()
+            let step = StepAssembly(finder: ChooseIconFinder(), factory: ChooseIconFactory(router: self))
+                .using(GeneralAction.presentModally(presentationStyle: .custom, transitioningDelegate: delegate))
+                .from(GeneralStep.current())
+                .assemble()
+            try? defaultRouter.navigate(to: step, with: context, animated: true, completion: $0)
         }
     }
 }
