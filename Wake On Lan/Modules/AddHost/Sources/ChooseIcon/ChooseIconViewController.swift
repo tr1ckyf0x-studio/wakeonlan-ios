@@ -9,7 +9,7 @@
 import UIKit
 import WOLResources
 
-final class ChooseIconViewController: UIViewController {
+public final class ChooseIconViewController: UIViewController {
 
     private let appearance = Appearance(); struct Appearance {
         let cancelButtonFontSize: CGFloat = 20.0
@@ -49,7 +49,7 @@ final class ChooseIconViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         chooseIconView.collectionView.delegate = presenter.tableManager
         chooseIconView.collectionView.dataSource = presenter.tableManager
@@ -60,7 +60,7 @@ final class ChooseIconViewController: UIViewController {
         presenter.viewDidLoad(self)
     }
 
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         presenter.viewWillLayoutSubviews(self)
     }

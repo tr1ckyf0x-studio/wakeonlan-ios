@@ -6,19 +6,33 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import RouteComposer
 import UIKit
+import WOLUIComponents
 
-final class ChooseIconConfigurator {
+public struct ChooseIconFactory: Factory {
+    public typealias ViewController = ChooseIconViewController
 
-    func configure(viewController: ChooseIconViewController, moduleDelegate: ChooseIconModuleOutput?) {
-        let presenter = ChooseIconPresenter()
-        presenter.moduleDelegate = moduleDelegate
-        let router = ChooseIconRouter(viewController: viewController)
+    public typealias Context = ChooseIconModuleOutput
 
-        presenter.router = router
-        presenter.view = viewController
+    // MARK: - Properties
 
-        viewController.presenter = presenter
+    private let router: ChooseIconRoutes
+
+    // MARK: - Init
+
+    public init(router: ChooseIconRoutes) {
+        self.router = router
     }
 
+    public func build(with context: Context) throws -> ChooseIconViewController {
+        let presenter = ChooseIconPresenter()
+        presenter.moduleDelegate = context
+        let viewController = ChooseIconViewController()
+        presenter.router = router
+        presenter.view = viewController
+        viewController.presenter = presenter
+
+        return viewController
+    }
 }

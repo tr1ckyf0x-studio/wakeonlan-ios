@@ -9,13 +9,14 @@
 import CocoaLumberjackSwift
 import CoreDataService
 import Foundation
+import SharedRouter
 
-final class HostListPresenter {
+final class HostListPresenter: Navigates {
 
     // MARK: - Properties
 
     weak var view: HostListViewInput?
-    var router: HostListRouterProtocol?
+    var router: HostListRoutes?
     var interactor: HostListInteractorInput?
     var tableManager: HostListTableManager = .init()
 
@@ -31,11 +32,11 @@ extension HostListPresenter: HostListViewOutput {
     }
 
     func viewDidPressAddButton(_ view: HostListViewInput) {
-        router?.routeToAddHost(with: nil)
+        navigate(to: router?.openAddHost(with: nil))
     }
 
     func viewDidPressAboutButton(_ view: HostListViewInput) {
-        router?.routeToAbout()
+        navigate(to: router?.openAbout())
     }
 }
 
@@ -54,8 +55,9 @@ extension HostListPresenter: HostListInteractorOutput {
     }
 
     func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host]) {
-        let sections: [HostListSectionModel] =
-            [hosts.map { HostListSectionItem.host($0) }].map { .mainSection(content: $0) }
+        let sections: [HostListSectionModel] = [
+            hosts.map { HostListSectionItem.host($0) }
+        ].map { .mainSection(content: $0) }
         tableManager.dataStore = HostListDataStore(sections: sections)
         view?.reloadTable()
         if hosts.isEmpty { view?.contentView.showState(.empty) }
@@ -78,7 +80,7 @@ extension HostListPresenter: HostListTableManagerDelegate {
     }
 
     func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host) {
-        router?.routeToAddHost(with: host)
+        navigate(to: router?.openAddHost(with: host))
     }
 
     func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host) {

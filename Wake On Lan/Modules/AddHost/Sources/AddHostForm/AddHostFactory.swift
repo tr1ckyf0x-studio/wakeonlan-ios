@@ -1,0 +1,46 @@
+//
+//  AddHostConfigurator.swift
+//  Wake On Lan
+//
+//  Created by Владислав Лисянский on 27.04.2020.
+//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//
+
+import CoreDataService
+import Foundation
+import RouteComposer
+
+public final class AddHostFactory {
+    public typealias ViewController = AddHostViewController
+
+    public typealias Context = Host?
+
+    // MARK: - Properties
+
+    private let router: AddHostRoutes
+
+    // MARK: - Init
+
+    public init(router: AddHostRoutes) {
+        self.router = router
+    }
+}
+
+extension AddHostFactory: Factory {
+    public func build(with context: Context) throws -> AddHostViewController {
+        let viewController = AddHostViewController()
+
+        let presenter = AddHostPresenter(addHostForm: AddHostForm(host: context))
+        presenter.router = router
+
+        let coreDataService = CoreDataService.shared
+        let interactor = AddHostInteractor(coreDataService: coreDataService)
+        interactor.presenter = presenter
+        presenter.interactor = interactor
+
+        viewController.presenter = presenter
+        presenter.view = viewController
+
+        return viewController
+    }
+}

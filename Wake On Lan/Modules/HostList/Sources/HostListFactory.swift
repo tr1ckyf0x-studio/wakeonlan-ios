@@ -1,5 +1,5 @@
 //
-//  HostListConfigurator.swift
+//  HostListFactory.swift
 //  Wake On Lan
 //
 //  Created by Владислав Лисянский on 27.04.2020.
@@ -8,19 +8,34 @@
 
 import CoreDataService
 import Foundation
+import RouteComposer
+import SharedRouter
 import WakeOnLanService
 
-public final class HostListConfigurator {
+public struct HostListFactory {
+    public typealias Context = Void?
 
-    public init() { }
+    // MARK: - Properties
 
-    public func configure(viewController: HostListViewController) {
+    private let router: HostListRoutes
+
+    // MARK: - Init
+
+    public init(router: HostListRoutes) {
+        self.router = router
+    }
+}
+
+// MARK: - Factory
+
+extension HostListFactory: Factory {
+    public func build(with context: Context) throws -> HostListViewController {
+        let viewController = HostListViewController()
         let presenter = HostListPresenter()
         let interactor = HostListInteractor(
             coreDataService: CoreDataService.shared,
             wakeOnLanService: WakeOnLanService.shared
         )
-        let router = HostListRouter()
         let tableManager = HostListTableManager()
 
         presenter.tableManager = tableManager
@@ -33,7 +48,7 @@ public final class HostListConfigurator {
         presenter.view = viewController
 
         presenter.router = router
-        router.viewController = viewController
-    }
 
+        return viewController
+    }
 }
