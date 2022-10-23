@@ -10,6 +10,4 @@ import SharedRouter
 public protocol PostLaunchRoutes {
     /// Navigates to the list of hosts
     func hostList() -> Route
-    /// Navigates to back
-    func back(animated: Bool) -> Route
 }

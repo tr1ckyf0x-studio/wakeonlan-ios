@@ -9,7 +9,7 @@
 import SharedRouter
 import UIKit
 
-public final class AboutScreenViewController: UIViewController, Navigates {
+public final class AboutScreenViewController: UIViewController {
 
     // MARK: - Properties
 
