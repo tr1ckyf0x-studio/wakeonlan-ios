@@ -9,6 +9,6 @@
 import SharedRouter
 
 public protocol AboutScreenRoutes {
-    /// Navigates to back
+    /// Navigates back
     func backOrDismiss(animated: Bool) -> Route
 }
