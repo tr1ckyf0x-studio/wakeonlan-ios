@@ -32,7 +32,7 @@ packages:
     minorVersion: 3.7.4
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk
-    minorVersion: 9.5.0
+    minorVersion: 10.0.0
   Nimble:
     url: https://github.com/Quick/Nimble
     minorVersion: 10.0.0
