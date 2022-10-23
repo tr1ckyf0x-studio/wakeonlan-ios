@@ -16,11 +16,11 @@ public final class PostLaunchViewController: UIViewController, PostLaunchViewInp
 
     // MARK: - Lifecycle
 
-    public override func loadView() {
+    override public func loadView() {
         view = postLaunchView
     }
 
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad(self)
     }

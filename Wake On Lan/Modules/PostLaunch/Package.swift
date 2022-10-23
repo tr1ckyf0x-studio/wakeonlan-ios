@@ -36,6 +36,6 @@ let package = Package(
                 "WOLUIComponents"
             ],
             path: "Sources"
-        )    
+        )
     ]
 )

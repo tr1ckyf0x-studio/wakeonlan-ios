@@ -5,8 +5,8 @@
 //  Created by Dmitry Stavitsky on 17.09.2022.
 //
 
-import Foundation
 import CoreDataService
+import Foundation
 
 final class PostLaunchInteractor {
 

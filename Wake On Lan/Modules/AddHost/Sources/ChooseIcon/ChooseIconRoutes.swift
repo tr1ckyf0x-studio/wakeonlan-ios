@@ -6,8 +6,8 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import UIKit
 import SharedRouter
+import UIKit
 
 public protocol ChooseIconRoutes {
     /// Navigates to back

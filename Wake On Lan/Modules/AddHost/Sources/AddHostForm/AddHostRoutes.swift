@@ -6,9 +6,9 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
+import SharedRouter
 import UIKit
 import WOLUIComponents
-import SharedRouter
 
 public protocol AddHostRoutes {
     typealias TransitioningDelegate = UIViewControllerTransitioningDelegate

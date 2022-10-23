@@ -49,7 +49,7 @@ public final class ChooseIconViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         chooseIconView.collectionView.delegate = presenter.tableManager
         chooseIconView.collectionView.dataSource = presenter.tableManager
@@ -60,7 +60,7 @@ public final class ChooseIconViewController: UIViewController {
         presenter.viewDidLoad(self)
     }
 
-    public override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         presenter.viewWillLayoutSubviews(self)
     }

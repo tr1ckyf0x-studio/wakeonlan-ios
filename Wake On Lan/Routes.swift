@@ -11,8 +11,8 @@ import CoreDataService
 import HostList
 import PostLaunch
 import RouteComposer
-import SharedRouter
 import SharedProtocolsAndModels
+import SharedRouter
 import UIKit
 import WOLUIComponents
 

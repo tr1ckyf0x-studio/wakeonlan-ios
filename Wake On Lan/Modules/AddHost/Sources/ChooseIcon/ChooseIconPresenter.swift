@@ -48,6 +48,6 @@ extension ChooseIconPresenter: ChooseIconViewOutput {
 extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
         moduleDelegate?.chooseIconModuleDidSelectIcon(icon)
-        navigate(to: router.backOrDismiss(animated: true)) 
+        navigate(to: router.backOrDismiss(animated: true))
     }
 }

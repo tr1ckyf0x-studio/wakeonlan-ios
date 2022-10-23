@@ -49,7 +49,7 @@ extension WOLRouter {
 public struct AnyNavigationControllerAction<ViewController: ContainerViewController>: ContainerAction {
     // MARK: - Properties
 
-    private let _perform: (UIViewController, ViewController, Bool, @escaping (RoutingResult) -> Void) -> ()
+    private let _perform: (UIViewController, ViewController, Bool, @escaping (RoutingResult) -> Void) -> Void
 
     // MARK: - Init
 
@@ -75,7 +75,7 @@ public struct AnyAction<ViewController: UIViewController>: Action {
 
     // MARK: - Properties
 
-    private let _perform: (UIViewController, ViewController, Bool, @escaping (RoutingResult) -> Void) -> ()
+    private let _perform: (UIViewController, ViewController, Bool, @escaping (RoutingResult) -> Void) -> Void
 
     // MARK: - Init
 
