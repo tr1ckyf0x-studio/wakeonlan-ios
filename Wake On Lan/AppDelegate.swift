@@ -6,25 +6,17 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import CoreDataService
-import HostList
-import PostLaunch
-import SharedRouter
 import UIKit
-import WOLResources
-import WOLUIComponents
 
-@MainActor
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
-    private let coreDataService: CoreDataServiceProtocol = CoreDataService.shared
-
-    var plugins: [UIApplicationDelegate] = [
+    private lazy var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
         FirebaseAppDelegatePlugin(),
-        NavigationBarAppearanceAppDelegatePlugin()
+        NavigationBarAppearanceAppDelegatePlugin(),
+        WindowConfigurationAppDelegatePlugin(configureWindow: { [weak self] in self?.window = $0 })
     ]
 
     func application(
@@ -32,19 +24,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         plugins.forEach { _ = $0.application?(application, didFinishLaunchingWithOptions: launchOptions) }
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = WOLNavigationController(rootViewController: {
-            let factory = PostLaunchFactory(router: WOLRouter())
-            guard
-                let viewController = try? factory.build(with: nil)
-            else {
-                fatalError("Root view controller wasn't built")
-            }
-
-            return viewController
-        }())
-        window?.makeKeyAndVisible()
-
         return true
     }
 }
