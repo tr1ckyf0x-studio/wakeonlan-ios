@@ -37,8 +37,3 @@ protocol HostListInteractorOutput: AnyObject {
     func interactor(_ interactor: HostListInteractorInput, didFetchHosts hosts: [Host])
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error)
 }
-
-protocol HostListRouterProtocol: AnyObject {
-    func routeToAddHost(with host: Host?)
-    func routeToAbout()
-}

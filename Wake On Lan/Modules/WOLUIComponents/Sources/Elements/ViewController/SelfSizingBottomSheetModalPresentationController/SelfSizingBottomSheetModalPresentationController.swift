@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelfSizingBottomSheetModalPresentationController: UIPresentationController {
+final class SelfSizingBottomSheetModalPresentationController: UIPresentationController {
 
     private let appearance = Appearance(); struct Appearance {
         let blurEffectstyle: UIBlurEffect.Style = .dark
@@ -81,6 +81,7 @@ class SelfSizingBottomSheetModalPresentationController: UIPresentationController
 }
 
 // MARK: - Private methods
+
 extension SelfSizingBottomSheetModalPresentationController {
     private func addCustomViews() {
         guard let containerView else {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SelfSizingBottomSheetModalTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
+public final class SelfSizingBottomSheetModalTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
 
     public func animationController(
         forDismissed dismissed: UIViewController

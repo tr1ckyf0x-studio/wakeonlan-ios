@@ -100,6 +100,7 @@ extension CoreDataAppToSharedGroupMigration {
 }
 
 // MARK: - Error
+
 extension CoreDataAppToSharedGroupMigration {
     private enum Error: LocalizedError {
         case applicationSupportDirectoryURLNotFound
