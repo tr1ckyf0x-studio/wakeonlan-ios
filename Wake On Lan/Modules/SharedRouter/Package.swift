@@ -20,8 +20,7 @@ let package = Package(
             name: "SharedRouter",
             dependencies: [
                 .product(name: "RouteComposer", package: "route-composer")
-            ],
-            path: "Sources"
+            ]
         )
     ]
 )
