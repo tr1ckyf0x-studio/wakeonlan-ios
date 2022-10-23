@@ -19,6 +19,7 @@ let package = Package(
         .package(path: "../WakeOnLanService"),
         .package(path: "../WOLResources"),
         .package(path: "../WOLUIComponents"),
+        .package(path: "../SharedRouter"),
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.7.4")),
         .package(url: "https://github.com/ashleymills/Reachability.swift", .upToNextMajor(from: "5.1.0")),
         .package(url: "https://github.com/SnapKit/SnapKit", .upToNextMajor(from: "5.6.0"))
@@ -34,6 +35,7 @@ let package = Package(
                 "WakeOnLanService",
                 "WOLResources",
                 "WOLUIComponents",
+                "SharedRouter",
                 .product(name: "Reachability", package: "Reachability.swift"),
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
