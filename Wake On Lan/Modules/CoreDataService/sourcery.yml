@@ -1,6 +1,6 @@
 configurations:
   - sources:
-    - Sources
+    - Sources/CoreDataService
     templates:
     - ../../../swift-templates/Sourcery/AutoMockable.stencil
     output:

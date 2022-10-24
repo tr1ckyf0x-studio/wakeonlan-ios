@@ -25,7 +25,6 @@ let package = Package(
                 "WOLResources",
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
             ],
-            path: "Sources",
             resources: [
                 .process("Resources/HostsDataModel.xcdatamodeld")
             ]

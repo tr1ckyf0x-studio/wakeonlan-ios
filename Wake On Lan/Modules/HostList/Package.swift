@@ -38,8 +38,7 @@ let package = Package(
                 "SharedRouter",
                 .product(name: "Reachability", package: "Reachability.swift"),
                 .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
-            ],
-            path: "Sources"
+            ]
         )
     ]
 )
