@@ -26,8 +26,7 @@ let package = Package(
                 "SharedExtensions",
                 "SnapKit",
                 "WOLResources"
-            ],
-            path: "Sources"
+            ]
         )
     ]
 )

@@ -34,8 +34,7 @@ let package = Package(
                 "WakeOnLanService",
                 "WOLResources",
                 "WOLUIComponents"
-            ],
-            path: "Sources"
+            ]
         )
     ]
 )
