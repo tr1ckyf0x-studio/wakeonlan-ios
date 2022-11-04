@@ -36,10 +36,6 @@ extension HostListFactory: Factory {
             coreDataService: CoreDataService.shared,
             wakeOnLanService: WakeOnLanService.shared
         )
-        let tableManager = HostListTableManager()
-
-        presenter.tableManager = tableManager
-        tableManager.delegate = presenter
 
         presenter.interactor = interactor
         interactor.presenter = presenter
