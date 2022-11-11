@@ -26,7 +26,7 @@ extension PostLaunchPresenter: PostLaunchViewOutput {
 
 extension PostLaunchPresenter: PostLaunchInteractorOutput {
     func interactorDidFinishMigrationFailure(_ interactor: PostLaunchInteractorInput) {
-
+        // TODO: - Add error handling
     }
 
     func interactorDidFinishMigrationSuccess(_ interactor: PostLaunchInteractorInput) {

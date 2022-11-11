@@ -19,6 +19,8 @@ final class PostLaunchView: UIView {
 
     // MARK: - Properties
 
+    /// - NOTE: - It is awful solution as image does not change according to the current color scheme.
+    // TODO: Fix it in the next release/commit/PR
     private lazy var logoImageView: UIImageView = {
         $0.image = appearance.logoImage
         return $0
