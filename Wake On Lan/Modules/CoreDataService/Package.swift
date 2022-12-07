@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(path: "../SharedProtocolsAndModels"),
         .package(path: "../WOLResources"),
-        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.7.4"))
+        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.8.0"))
     ],
     targets: [
         .target(
