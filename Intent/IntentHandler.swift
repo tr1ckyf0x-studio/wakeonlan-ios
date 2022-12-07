@@ -18,11 +18,7 @@ extension IntentHandler {
         udpService: UDPService()
     )
 
-    private static let coreDataService: CoreDataServiceProtocol = {
-        let coreDataService = CoreDataService.shared
-        coreDataService.createHostContainer()
-        return coreDataService
-    }()
+    private static let coreDataService: CoreDataServiceProtocol = CoreDataService.shared
 
     private static let wolIntentHandler: WOLIntentHandling = WOLIntentHandler(
         wakeOnLanService: wakeOnLanService,
