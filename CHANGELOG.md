@@ -10,6 +10,28 @@
 
 ### Removed
 
+## 1.1.9
+
+### Added
+
+- Route composer integration (#45)
+
+### Fixed
+
+- Fixed packages structure
+- Fixed Siri shortcuts
+
+### Updated
+
+- Moved window configuration to appdelegate plugin
+- Updated dependencies
+- Routes has been reorganized (#48)
+- Updated Gemfile.lock
+
+### Removed
+
+- Removed README.md from packages
+
 ## 1.1.6
 
 ### Hotfix
