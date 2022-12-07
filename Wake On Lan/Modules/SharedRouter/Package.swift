@@ -13,7 +13,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/ekazaev/route-composer", .upToNextMajor(from: "2.8.3"))
+        .package(url: "https://github.com/ekazaev/route-composer", .upToNextMajor(from: "2.10.1"))
     ],
     targets: [
         .target(
