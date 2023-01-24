@@ -2,6 +2,8 @@ Awake
 ===
 ![Code size](https://img.shields.io/github/languages/code-size/tr1ckyf0x/wakeonlan-ios) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/tr1ckyf0x/wakeonlan-ios) ![GitHub contributors](https://img.shields.io/github/contributors/tr1ckyf0x/wakeonlan-ios)
 
+[![App Store](https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1638748800)](https://apps.apple.com/us/app/awake-wake-on-lan/id1575138731?itsct=apps_box_badge&amp;itscg=30200)
+
 ## Required tools
 :mega:
 **All tools are supposed to be installed system-wide.**
