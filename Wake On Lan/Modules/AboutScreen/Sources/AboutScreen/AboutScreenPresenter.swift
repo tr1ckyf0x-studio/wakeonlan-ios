@@ -19,6 +19,7 @@ final class AboutScreenPresenter: Navigates {
     enum Configuration {
         static let appStoreURL = "https://itunes.apple.com/us/app/awake-wake-on-lan/id1575138731"
         static let gitHubURL = "https://github.com/tr1ckyf0x/wakeonlan-ios"
+        static let donateURL = "https://github.com/tr1ckyf0x/wakeonlan-ios#donate"
     }
 
     // MARK: - Properties
@@ -93,6 +94,14 @@ private extension AboutScreenPresenter {
                     symbol: ButtonIcon.share,
                     action: { [weak self] in
                         self?.view?.displayShareApp(with: Configuration.appStoreURL)
+                    }
+                ),
+                .init(
+                    title: L10n.AboutScreen.donate,
+                    symbol: ButtonIcon.bitcoin,
+                    action: { [weak self] in
+                        guard let url = URL(string: Configuration.donateURL) else { return }
+                        self?.urlOpener.open(url: url)
                     }
                 )
             ]
