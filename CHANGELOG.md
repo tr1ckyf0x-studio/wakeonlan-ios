@@ -10,6 +10,14 @@
 
 ### Removed
 
+## 1.1.10
+
+### Added
+
+- Added donate to About screen
+
+- Added AppStore Link to README.md
+
 ## 1.1.9
 
 ### Added
