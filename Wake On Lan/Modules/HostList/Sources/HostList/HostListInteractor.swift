@@ -15,14 +15,14 @@ final class HostListInteractor: HostListInteractorInput {
 
     private let coreDataService: CoreDataServiceProtocol
     private let wakeOnLanService: WakeOnLanService
-    private let cacheTracker: any CacheTracker<Host>
+    private let cacheTracker: TracksHostListCache
 
     weak var presenter: HostListInteractorOutput?
 
     init(
         coreDataService: CoreDataServiceProtocol,
         wakeOnLanService: WakeOnLanService,
-        cacheTracker: any CacheTracker<Host>
+        cacheTracker: TracksHostListCache
     ) {
         self.coreDataService = coreDataService
         self.wakeOnLanService = wakeOnLanService
@@ -53,21 +53,17 @@ final class HostListInteractor: HostListInteractorInput {
     }
 
     func host(at indexPath: IndexPath) -> Host {
-        cacheTracker.objectAtIndexPath(indexPath)
+        cacheTracker.hostAtIndexPath(indexPath)
     }
 
 }
 
 // MARK: - HostListCacheTrackerDelegate
 
-extension HostListInteractor: CacheTrackerDelegate {
-
-    typealias SnapshotSectionIdentifier = String
-
-    typealias SnapshotItemIdentifier = HostListSectionItem
+extension HostListInteractor: HostListCacheTrackerDelegate {
 
     func cacheTracker(
-        _ tracker: any CacheTracker,
+        _ tracker: TracksHostListCache,
         didChangeContentSnapshot contentSnapshot: ContentSnapshot
     ) {
         presenter?.interactor(self, didChangeContentSnapshot: contentSnapshot)

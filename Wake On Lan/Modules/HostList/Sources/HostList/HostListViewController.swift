@@ -22,7 +22,7 @@ public final class HostListViewController: UIViewController {
         return view
     }()
 
-    private lazy var tableManager: any SnapshotTableManager<String, HostListSectionItem> = HostListTableManager(
+    private lazy var tableManager: ManagesHostListTable = HostListTableManager(
         tableView: hostListView.tableView,
         hostCellDelegate: self
     )

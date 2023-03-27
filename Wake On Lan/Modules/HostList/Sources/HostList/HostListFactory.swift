@@ -34,7 +34,7 @@ extension HostListFactory: Factory {
         let viewController = HostListViewController()
         let presenter = HostListPresenter()
         let coreDataService = CoreDataService.shared
-        let cacheTracker = HostListCacheTracker<Host, String, HostListSectionItem>(
+        let cacheTracker = HostListCacheTracker(
             with: Host.sortedFetchRequest,
             context: coreDataService.mainContext,
             mapper: HostListSnapshotMapper()

@@ -7,16 +7,15 @@
 
 import UIKit
 
-protocol SnapshotTableManager<SnapshotSectionIdentifier, SnapshotItemIdentifier> {
-    associatedtype SnapshotSectionIdentifier: Hashable
-    associatedtype SnapshotItemIdentifier: Hashable
+protocol ManagesHostListTable {
+    typealias Snapshot = NSDiffableDataSourceSnapshot<String, HostListSectionItem>
 
-    func apply(snapshot: NSDiffableDataSourceSnapshot<SnapshotSectionIdentifier, SnapshotItemIdentifier>)
+    func apply(snapshot: Snapshot)
 }
 
 final class HostListTableManager {
 
-    typealias DataSource = UITableViewDiffableDataSource<SnapshotSectionIdentifier, SnapshotItemIdentifier>
+    typealias DataSource = UITableViewDiffableDataSource<String, HostListSectionItem>
 
     private let tableView: UITableView
 
@@ -51,11 +50,9 @@ final class HostListTableManager {
 }
 
 // MARK: - SnapshotTableManager
-extension HostListTableManager: SnapshotTableManager {
-    typealias SnapshotSectionIdentifier = String
-    typealias SnapshotItemIdentifier = HostListSectionItem
+extension HostListTableManager: ManagesHostListTable {
 
-    func apply(snapshot: NSDiffableDataSourceSnapshot<SnapshotSectionIdentifier, SnapshotItemIdentifier>) {
+    func apply(snapshot: Snapshot) {
         dataSource.apply(snapshot)
     }
 }

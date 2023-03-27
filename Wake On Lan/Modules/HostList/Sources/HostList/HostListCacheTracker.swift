@@ -8,29 +8,27 @@
 
 import CocoaLumberjackSwift
 import CoreData
+import CoreDataService
 import UIKit
 
-final class HostListCacheTracker<
-    Object: NSFetchRequestResult,
-    SnapshotSectionIdentifier: Hashable,
-    SnapshotItemIdentifier: Hashable
->: NSObject,
-   CacheTracker,
-   NSFetchedResultsControllerDelegate {
+final class HostListCacheTracker:
+    NSObject,
+    TracksHostListCache,
+    NSFetchedResultsControllerDelegate {
 
     // MARK: - Properties
 
-    typealias Delegate = any CacheTrackerDelegate<SnapshotSectionIdentifier, SnapshotItemIdentifier>
-    typealias SnapshotMapper = any MapsSnapshot<SnapshotSectionIdentifier, SnapshotItemIdentifier>
+    typealias Delegate = HostListCacheTrackerDelegate
+    typealias SnapshotMapper = MapsSnapshotToHostListItem
 
-    private var controller: NSFetchedResultsController<Object>
+    private var controller: NSFetchedResultsController<Host>
     private let mapper: SnapshotMapper
     weak var delegate: Delegate?
 
     // MARK: - Init
 
     init(
-        with fetchRequest: NSFetchRequest<Object>,
+        with fetchRequest: NSFetchRequest<Host>,
         context: NSManagedObjectContext,
         mapper: SnapshotMapper
     ) {
@@ -55,7 +53,7 @@ final class HostListCacheTracker<
         }
     }
 
-    func objectAtIndexPath(_ indexPath: IndexPath) -> Object {
+    func hostAtIndexPath(_ indexPath: IndexPath) -> Host {
         controller.object(at: indexPath)
     }
 

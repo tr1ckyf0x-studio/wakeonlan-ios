@@ -2,11 +2,9 @@ import CoreData
 import CoreDataService
 import UIKit
 
-protocol MapsSnapshot<SectionIdentifierType, ItemIdentifierType> {
-    associatedtype SectionIdentifierType: Hashable
-    associatedtype ItemIdentifierType: Hashable
+protocol MapsSnapshotToHostListItem {
 
-    typealias Snapshot = NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<String, HostListSectionItem>
 
     func map(
         snapshotReference: NSDiffableDataSourceSnapshotReference,
@@ -14,9 +12,7 @@ protocol MapsSnapshot<SectionIdentifierType, ItemIdentifierType> {
     ) -> Snapshot
 }
 
-struct HostListSnapshotMapper: MapsSnapshot {
-    typealias SectionIdentifierType = String
-    typealias ItemIdentifierType = HostListSectionItem
+struct HostListSnapshotMapper: MapsSnapshotToHostListItem {
 
     func map(
         snapshotReference: NSDiffableDataSourceSnapshotReference,
