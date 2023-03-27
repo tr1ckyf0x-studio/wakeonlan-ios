@@ -25,15 +25,14 @@ final class HostListCacheTracker<
 
     private var controller: NSFetchedResultsController<Object>
     private let mapper: SnapshotMapper
-    private weak var delegate: Delegate?
+    weak var delegate: Delegate?
 
     // MARK: - Init
 
     init(
         with fetchRequest: NSFetchRequest<Object>,
         context: NSManagedObjectContext,
-        mapper: SnapshotMapper,
-        delegate: Delegate
+        mapper: SnapshotMapper
     ) {
         controller = .init(
             fetchRequest: fetchRequest,
@@ -43,7 +42,6 @@ final class HostListCacheTracker<
         )
         self.mapper = mapper
         super.init()
-        self.delegate = delegate
         self.controller.delegate = self
     }
 

@@ -29,13 +29,23 @@ public struct HostListFactory {
 // MARK: - Factory
 
 extension HostListFactory: Factory {
+
     public func build(with context: Context) throws -> HostListViewController {
         let viewController = HostListViewController()
         let presenter = HostListPresenter()
-        let interactor = HostListInteractor(
-            coreDataService: CoreDataService.shared,
-            wakeOnLanService: WakeOnLanService.shared
+        let coreDataService = CoreDataService.shared
+        let cacheTracker = HostListCacheTracker<Host, String, HostListSectionItem>(
+            with: Host.sortedFetchRequest,
+            context: coreDataService.mainContext,
+            mapper: HostListSnapshotMapper()
         )
+        let interactor = HostListInteractor(
+            coreDataService: coreDataService,
+            wakeOnLanService: WakeOnLanService.shared,
+            cacheTracker: cacheTracker
+        )
+
+        cacheTracker.delegate = interactor
 
         presenter.interactor = interactor
         interactor.presenter = presenter

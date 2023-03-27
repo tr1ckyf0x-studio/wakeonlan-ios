@@ -15,25 +15,18 @@ final class HostListInteractor: HostListInteractorInput {
 
     private let coreDataService: CoreDataServiceProtocol
     private let wakeOnLanService: WakeOnLanService
+    private let cacheTracker: any CacheTracker<Host>
 
     weak var presenter: HostListInteractorOutput?
 
-    private lazy var cacheTracker: any CacheTracker<Host> = {
-        DDLogVerbose("HostListCacheTracker initialized")
-        return HostListCacheTracker<Host, String, HostListSectionItem>(
-            with: Host.sortedFetchRequest,
-            context: coreDataService.mainContext,
-            mapper: HostListSnapshotMapper(),
-            delegate: self
-        )
-    }()
-
     init(
         coreDataService: CoreDataServiceProtocol,
-        wakeOnLanService: WakeOnLanService
+        wakeOnLanService: WakeOnLanService,
+        cacheTracker: any CacheTracker<Host>
     ) {
         self.coreDataService = coreDataService
         self.wakeOnLanService = wakeOnLanService
+        self.cacheTracker = cacheTracker
     }
 
     func startCacheTracker() {
