@@ -71,11 +71,13 @@ opt_in_rules:
 - toggle_bool 
 - unneeded_parentheses_in_closure_argument 
 - untyped_error_in_catch 
-- unused_import 
 - vertical_parameter_alignment_on_call 
 - vertical_whitespace_between_cases 
 - xct_specific_matcher
 - sorted_imports
+
+analyzer_rules:
+  - unused_import 
  
 excluded: # paths to ignore during linting. Takes precedence over included. 
 - Carthage 
