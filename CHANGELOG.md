@@ -10,6 +10,16 @@
 
 ### Removed
 
+## 1.2.0
+
+### Added
+
+- Ukrainian localization (#52)
+
+### Updated
+
+- Reorganization of routes (#51)
+
 ## 1.1.10
 
 ### Added
