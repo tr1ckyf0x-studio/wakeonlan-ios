@@ -10,6 +10,20 @@
 
 ### Removed
 
+## 1.2.1
+
+### Updated
+
+- Updated dependencies
+
+- Refactored HostList (#46)
+
+- Updated bundle
+
+### Removed
+
+- Removed ru launchscreen
+
 ## 1.2.0
 
 ### Added
