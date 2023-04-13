@@ -13,31 +13,24 @@ import WakeOnLanService
 
 final class HostListInteractor: HostListInteractorInput {
 
-    weak var presenter: HostListInteractorOutput?
-
     private let coreDataService: CoreDataServiceProtocol
     private let wakeOnLanService: WakeOnLanService
+    private let cacheTracker: TracksHostListCache
+
+    weak var presenter: HostListInteractorOutput?
 
     init(
         coreDataService: CoreDataServiceProtocol,
-        wakeOnLanService: WakeOnLanService
+        wakeOnLanService: WakeOnLanService,
+        cacheTracker: TracksHostListCache
     ) {
         self.coreDataService = coreDataService
         self.wakeOnLanService = wakeOnLanService
+        self.cacheTracker = cacheTracker
     }
 
-    private lazy var cacheTracker: HostListCacheTracker<Host, HostListInteractor> = {
-        DDLogVerbose("HostListCacheTracker initialized")
-        return HostListCacheTracker(
-            with: Host.sortedFetchRequest,
-            context: coreDataService.mainContext,
-            delegate: self
-        )
-    }()
-
-    func fetchHosts() {
-        guard let hosts = cacheTracker.fetchedObjects else { return }
-        presenter?.interactor(self, didFetchHosts: hosts)
+    func startCacheTracker() {
+        cacheTracker.start()
     }
 
     func deleteHost(_ host: Host) {
@@ -59,20 +52,21 @@ final class HostListInteractor: HostListInteractorInput {
         }
     }
 
+    func host(at indexPath: IndexPath) -> Host {
+        cacheTracker.hostAtIndexPath(indexPath)
+    }
+
 }
 
 // MARK: - HostListCacheTrackerDelegate
 
 extension HostListInteractor: HostListCacheTrackerDelegate {
 
-    typealias Object = Host
-
     func cacheTracker(
-        _ tracker: CacheTracker,
-        didChangeContent content: [Content]
+        _ tracker: TracksHostListCache,
+        didChangeContentSnapshot contentSnapshot: ContentSnapshot
     ) {
-        DDLogDebug("CacheTracker changed content")
-        presenter?.interactor(self, didChangeContent: content)
+        presenter?.interactor(self, didChangeContentSnapshot: contentSnapshot)
     }
 
 }

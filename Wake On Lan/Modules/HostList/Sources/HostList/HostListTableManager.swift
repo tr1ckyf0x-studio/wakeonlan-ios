@@ -1,115 +1,58 @@
 //
 //  HostListTableManager.swift
-//  Wake on LAN
+//  
 //
-//  Created by Владислав Лисянский on 21.05.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Created by Vladislav Lisianskii on 07.10.2022.
 //
 
-import CoreDataService
 import UIKit
 
-protocol HostListTableManagerDelegate: AnyObject {
+protocol ManagesHostListTable {
+    typealias Snapshot = NSDiffableDataSourceSnapshot<String, HostListSectionItem>
 
-    func tableManagerDidTapInfoButton(_ tableManager: HostListTableManager, host: Host)
-
-    func tableManagerDidTapDeleteButton(_ tableManager: HostListTableManager, host: Host)
-
-    func tableManagerDidTapHostCell(_ tableManager: HostListTableManager, host: Host)
-
+    func apply(snapshot: Snapshot)
 }
 
-final class HostListTableManager: NSObject {
+final class HostListTableManager {
 
-    // MARK: - Properties
+    typealias DataSource = UITableViewDiffableDataSource<String, HostListSectionItem>
 
-    private var sections: [HostListSectionModel] { dataStore.sections }
+    private let tableView: UITableView
 
-    var itemsCount: Int { sections.reduce(.zero, { $0 + $1.items.count }) }
+    private weak var hostCellDelegate: HostListTableViewCellDelegate?
 
-    var dataStore = HostListDataStore()
+    private lazy var dataSource = DataSource(
+        tableView: tableView,
+        cellProvider: configureCellClosure
+    )
 
-    weak var delegate: HostListTableManagerDelegate?
-
-    func update(with content: [Content]) {
-        content.forEach {
-            switch $0 {
-            case let .insert(indexPath, object):
-                dataStore.insertObject(object, at: indexPath.row, in: indexPath.section)
-
-            case let .update(indexPath, object):
-                dataStore.updateObject(object, at: indexPath.row, in: indexPath.section)
-
-            case let .move(oldIndexPath, newIndexPath):
-                dataStore.moveObject(from: oldIndexPath.row, to: newIndexPath.row, in: oldIndexPath.section)
-
-            case let .delete(indexPath):
-                dataStore.removeObject(at: indexPath.row, in: indexPath.section)
-            }
-        }
+    init(tableView: UITableView, hostCellDelegate: HostListTableViewCellDelegate?) {
+        self.tableView = tableView
+        self.hostCellDelegate = hostCellDelegate
     }
 
-}
-
-// MARK: - UITableViewDataSource
-
-extension HostListTableManager: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        sections.count
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].items.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    private lazy var configureCellClosure = { [weak self] (
+        tableView: UITableView,
+        indexPath: IndexPath,
+        model: HostListSectionItem
+    ) -> UITableViewCell? in
         var cell: UITableViewCell?
-        let model = sections[indexPath.section].items[indexPath.row]
-        if case let .host(host) = model {
+        if case let .host(viewModel) = model {
             let hostCell = tableView.dequeueReusableCell(
                 withIdentifier: "\(HostListTableViewCell.self)",
                 for: indexPath
             ) as? HostListTableViewCell
-            hostCell?.configure(with: host, delegate: self)
+            hostCell?.configure(with: viewModel, delegate: self?.hostCellDelegate)
             cell = hostCell
         }
-
-        guard let unwrappedCell = cell else { fatalError("Unknown cell identifier") }
-
-        return unwrappedCell
+        return cell
     }
-
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - SnapshotTableManager
+extension HostListTableManager: ManagesHostListTable {
 
-extension HostListTableManager: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sections[section].header
+    func apply(snapshot: Snapshot) {
+        dataSource.apply(snapshot)
     }
-
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        sections[section].footer
-    }
-
-}
-
-// MARK: - HostListTableViewCellDelegate
-
-extension HostListTableManager: HostListTableViewCellDelegate {
-
-    func hostListCellDidTap(_ cell: HostListTableViewCell, model: Host) {
-        delegate?.tableManagerDidTapHostCell(self, host: model)
-    }
-
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell, model: Host) {
-        delegate?.tableManagerDidTapDeleteButton(self, host: model)
-    }
-
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell, model: Host) {
-        delegate?.tableManagerDidTapInfoButton(self, host: model)
-    }
-
 }
