@@ -72,6 +72,10 @@ packages:
     path: Wake On Lan/Modules/WOLResources
   WOLUIComponents:
     path: Wake On Lan/Modules/WOLUIComponents
+  DonateScreen:
+    path: Wake On Lan/Modules/DonateScreen
+  IAPManager:
+    path: Wake On Lan/Modules/IAPManager
 
 targets:
   Wake on LAN:
@@ -102,6 +106,7 @@ targets:
       - package: WOLResources
       - package: WakeOnLanService
       - package: WOLUIComponents
+      - package: DonateScreen
       - target: Intent
     scheme:
       testTargets:
@@ -135,16 +140,6 @@ targets:
           CODE_SIGN_IDENTITY: "Apple Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AdHoc"
     preBuildScripts:
-    - name: "Swiftgen"
-      basedOnDependencyAnalysis: false
-      script: |
-              export PATH="$PATH:/opt/homebrew/bin"
-              if command -v swiftgen &> /dev/null
-              then
-                swiftgen config run --config $SRCROOT/Wake\ on\ LAN/Modules/**/swiftgen.yml
-              else
-                echo "warning: SwiftGen is not installed. Run 'brew install swiftgen' to install it."
-              fi
     - name: "Swiftlint"
       basedOnDependencyAnalysis: false
       script: |

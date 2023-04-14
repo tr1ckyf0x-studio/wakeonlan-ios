@@ -42,6 +42,7 @@ public enum ButtonIcon: String, SFSymbolRepresentable, RawStringInitable {
     case share = "square.and.arrow.up"
     case tag
     case bitcoin = "bitcoinsign.circle.fill"
+    case dollar = "dollarsign.circle.fill"
 }
 
 // MARK: - HostIcon

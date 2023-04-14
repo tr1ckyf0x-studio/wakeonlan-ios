@@ -5,6 +5,7 @@
 ### Added
 
 - Added hostname suggestions for Siri intent
+- Added In-App donations
 
 ### Fixed
 

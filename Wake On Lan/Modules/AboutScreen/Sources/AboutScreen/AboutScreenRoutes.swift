@@ -11,4 +11,7 @@ import SharedRouter
 public protocol AboutScreenRoutes {
     /// Navigates back
     func backOrDismiss(animated: Bool) -> Route
+
+    /// Navigates to `Donate` screen
+    func openDonate() -> Route
 }

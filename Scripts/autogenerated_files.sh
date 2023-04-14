@@ -1,23 +1,20 @@
 #!/bin/sh
 
-GENERATED_DIR="./Wake\ On\ Lan/Modules/WOLResources/Sources/WOLResources/Generated"
-eval mkdir -p $GENERATED_DIR
+# Make new lines the only separator
+# Fixes spaces in paths
+IFS=$'\n'
 
-swiftgen config run --config Wake\ on\ LAN/Modules/**/swiftgen.yml
+SCRIPT_DIR=$(dirname $(readlink -f $0))
+PROJECT_ROOT=$(dirname $SCRIPT_DIR)
 
-SOURCERY_MODULES=(
-	"AddHost"
-	"CoreDataService"
-	"SharedProtocolsAndModels"
-    "AboutScreen"
-    "WOLResources"
-    "WakeOnLanService"
-    "SharedRouter"
-	)
+for file in $(find $PROJECT_ROOT -name 'preGen.sh'); do
+	sh $file
+done
 
-MODULES_FOLDER="./Wake On Lan/Modules"
+for file in $(find $PROJECT_ROOT -name 'swiftgen.yml'); do
+	swiftgen config run --config $file
+done
 
-for MODULE in "${SOURCERY_MODULES[@]}"; do
-	MODULE_DIR="${MODULES_FOLDER}/${MODULE}"
-	sourcery -v --config "${MODULE_DIR}/sourcery.yml"
+for file in $(find $PROJECT_ROOT -name 'sourcery.yml'); do
+	sourcery --config $file
 done
