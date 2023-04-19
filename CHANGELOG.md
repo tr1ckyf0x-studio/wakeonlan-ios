@@ -4,6 +4,8 @@
 
 ### Added
 
+- Added hostname suggestions for Siri intent
+
 ### Fixed
 
 ### Updated

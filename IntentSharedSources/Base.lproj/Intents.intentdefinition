@@ -9,11 +9,11 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>u9KkBT</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>21G83</string>
+	<string>22E261</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>14A309</string>
+	<string>14E222b</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>14.0</string>
+	<string>14.3</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -92,6 +92,10 @@
 						<dict>
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Host name</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>pDzkWR</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Configuration</string>
 						</dict>
@@ -136,7 +140,11 @@
 							<string>DisambiguationSelection</string>
 						</dict>
 					</array>
+					<key>INIntentParameterSupportsDynamicEnumeration</key>
+					<true/>
 					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterSupportsSearch</key>
 					<true/>
 					<key>INIntentParameterTag</key>
 					<integer>1</integer>
