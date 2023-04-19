@@ -20,9 +20,7 @@
 ### Updated
 
 - Updated dependencies
-
 - Refactored HostList (#46)
-
 - Updated bundle
 
 ### Removed
@@ -44,7 +42,6 @@
 ### Added
 
 - Added donate to About screen
-
 - Added AppStore Link to README.md
 
 ## 1.1.9
