@@ -11,6 +11,7 @@
 ### Updated
 
 - Updated dependencies
+- Updated bundle
 
 ### Removed
 
