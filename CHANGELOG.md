@@ -10,6 +10,8 @@
 
 ### Updated
 
+- Updated dependencies
+
 ### Removed
 
 ## 1.2.1
