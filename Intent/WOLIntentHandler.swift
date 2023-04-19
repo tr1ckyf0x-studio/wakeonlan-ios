@@ -46,6 +46,22 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
             return WOLIntentResponse(code: .failure, userActivity: nil)
         }
     }
+
+    @available(iOSApplicationExtension 14.0, *)
+    func provideHostnameOptionsCollection(
+        for intent: WOLIntent,
+        searchTerm: String?
+    ) async throws -> INObjectCollection<NSString> {
+        var availableHostnames = try fetchHosts().map(\.title)
+
+        if let searchTerm, !searchTerm.isEmpty {
+            availableHostnames = availableHostnames.filter { (hostname: String) -> Bool in
+                hostname.contains(searchTerm)
+            }
+        }
+
+        return INObjectCollection(items: availableHostnames as [NSString])
+    }
 }
 
 // MARK: - Private methods
