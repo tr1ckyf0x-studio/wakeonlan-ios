@@ -22,7 +22,7 @@ let package = Package(
         .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack", .upToNextMajor(from: "3.8.0")),
         .package(url: "https://github.com/SnapKit/SnapKit", .upToNextMajor(from: "5.6.0")),
         .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "6.1.0")),
-        .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "11.2.2"))
+        .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "12.0.0"))
     ],
     targets: [
         .target(
