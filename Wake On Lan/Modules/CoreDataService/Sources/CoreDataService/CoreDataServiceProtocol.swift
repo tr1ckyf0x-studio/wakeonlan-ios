@@ -36,11 +36,19 @@ extension CoreDataServiceProtocol {
     }
 
     public func createHostContainer() {
+//        let description = persistentContainer.persistentStoreDescriptions.first
+//        description?.shouldMigrateStoreAutomatically = false
+//        description?.shouldInferMappingModelAutomatically = true
+
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 DDLogError("Persistent stores were not loaded due to error: \(error)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+
+            // swiftlint:disable:next force_try
+            try! persistentContainer.initializeCloudKitSchema(options: [])
+
             DDLogDebug("Persistent stores were loaded")
         }
     }
