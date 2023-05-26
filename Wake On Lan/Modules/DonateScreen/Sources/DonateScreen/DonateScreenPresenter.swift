@@ -39,7 +39,7 @@ extension DonateScreenPresenter: DonateScreenInteractorOutput {
                 title: product.title,
                 price: product.price,
                 onClick: { [weak self] in
-                    self?.interactor?.purchase(product: product)
+                    self?.interactor?.makePurchase(product: product)
                 }
             )
             return DonateScreenTableSectionItem.purchase(viewModel)

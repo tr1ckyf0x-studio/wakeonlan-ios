@@ -22,7 +22,7 @@ protocol DonateScreenInteractorInput {
     var canMakePayments: Bool { get }
 
     func fetchPurchases()
-    func purchase(product: Product)
+    func makePurchase(product: Product)
 }
 
 protocol DonateScreenInteractorOutput: AnyObject {

@@ -41,7 +41,7 @@ extension DonateScreenInteractor: DonateScreenInteractorInput {
         }
     }
 
-    func purchase(product: Product) {
+    func makePurchase(product: Product) {
         presenter?.interactorDidStartPurchasing(self)
         Task {
             do {
