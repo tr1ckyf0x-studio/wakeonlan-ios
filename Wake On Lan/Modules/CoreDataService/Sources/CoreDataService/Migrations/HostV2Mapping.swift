@@ -13,6 +13,8 @@ final class HostV2Mapping: NSEntityMigrationPolicy {
         in mapping: NSEntityMapping,
         manager: NSMigrationManager
     ) throws {
+        try super.createDestinationInstances(forSource: sInstance, in: mapping, manager: manager)
+
         guard sInstance.entity.name == Constants.entityName else { return }
 
         guard let createdAt = sInstance.primitiveValue(forKey: Constants.createdAt) as? Date,
@@ -28,15 +30,23 @@ final class HostV2Mapping: NSEntityMigrationPolicy {
             CoreDataHostFormatter.decompress(data: data, ofType: .ipAddress)
         }
 
-        let host = NSEntityDescription.insertNewObject(
-            forEntityName: Constants.entityName,
-            into: manager.destinationContext
-        )
-        host.setValue(createdAt, forKey: Constants.createdAt)
-        host.setValue(title, forKey: Constants.title)
-        host.setValue(iconName, forKey: Constants.iconName)
-        host.setValue(macAddressData, forKey: Constants.macAddressData)
-        host.setValue(port, forKey: Constants.port)
+        guard let host = manager.destinationInstances(
+            forEntityMappingName: mapping.name,
+            sourceInstances: [sInstance]
+        ).first
+        else { fatalError("must return country") }
+
+        manager.associate(sourceInstance: sInstance, withDestinationInstance: host, for: mapping)
+
+//        let host = NSEntityDescription.insertNewObject(
+//            forEntityName: Constants.entityName,
+//            into: manager.destinationContext
+//        )
+//        host.setValue(createdAt, forKey: Constants.createdAt)
+//        host.setValue(title, forKey: Constants.title)
+//        host.setValue(iconName, forKey: Constants.iconName)
+//        host.setValue(macAddressData, forKey: Constants.macAddressData)
+//        host.setValue(port, forKey: Constants.port)
         host.setValue(ipAddress, forKey: Constants.destination)
     }
 }
