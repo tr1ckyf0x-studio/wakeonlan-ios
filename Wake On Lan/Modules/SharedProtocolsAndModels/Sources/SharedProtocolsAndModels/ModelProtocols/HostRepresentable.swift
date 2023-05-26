@@ -8,8 +8,8 @@
 public protocol HostRepresentable {
     /// Host's mac address
     var macAddress: String? { get }
-    /// Host's ip address
-    var ipAddress: String? { get }
+    /// Host's destination
+    var destination: String? { get }
     /// Host's port
     var port: String? { get }
 }
