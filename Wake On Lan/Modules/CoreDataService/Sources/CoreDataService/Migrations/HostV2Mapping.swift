@@ -48,6 +48,8 @@ final class HostV2Mapping: NSEntityMigrationPolicy {
 //        host.setValue(macAddressData, forKey: Constants.macAddressData)
 //        host.setValue(port, forKey: Constants.port)
         host.setValue(ipAddress, forKey: Constants.destination)
+
+        manager.sourceContext.delete(sInstance)
     }
 }
 
