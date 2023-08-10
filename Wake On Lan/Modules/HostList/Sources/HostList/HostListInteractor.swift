@@ -12,10 +12,18 @@ import Foundation
 import WakeOnLanService
 
 final class HostListInteractor: HostListInteractorInput {
-
     private let coreDataService: CoreDataServiceProtocol
     private let wakeOnLanService: WakeOnLanService
     private let cacheTracker: TracksHostListCache
+
+    private let sortDescriptors = [
+        Host.defaultSortDescriptors,
+        Host.alphabeticAscendingSortDescriptors,
+        Host.alphabeticDescendingSortDescriptors,
+        Host.itemIconNameSortDescriptors
+    ]
+
+    private var selectedSortDescriptorsIndex = 0
 
     weak var presenter: HostListInteractorOutput?
 
@@ -54,6 +62,20 @@ final class HostListInteractor: HostListInteractorInput {
 
     func host(at indexPath: IndexPath) -> Host {
         cacheTracker.hostAtIndexPath(indexPath)
+    }
+
+    func changeHostsOrder() {
+        guard !sortDescriptors.isEmpty else {
+            DDLogError("No sort descriptors found")
+            return
+        }
+
+        if selectedSortDescriptorsIndex == sortDescriptors.count - 1 {
+            selectedSortDescriptorsIndex = 0
+        }
+        selectedSortDescriptorsIndex += 1
+        cacheTracker.updateSortDescriptors(sortDescriptors: sortDescriptors[selectedSortDescriptorsIndex])
+        cacheTracker.start()
     }
 
 }

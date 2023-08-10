@@ -52,6 +52,7 @@ public final class HostListViewController: UIViewController {
                                               hostListView.barButtonSpacer,
                                               hostListView.aboutButton]
         navigationItem.largeTitleDisplayMode = .always
+        navigationItem.leftBarButtonItem = hostListView.sortItemsButton
         guard let navigationController else { return }
         navigationController.view.backgroundColor = Asset.Colors.primary.color
         let navigationBar = navigationController.navigationBar
@@ -77,6 +78,9 @@ extension HostListViewController: HostListViewInput {
 // MARK: - HostListViewDelegate
 
 extension HostListViewController: HostListViewDelegate {
+    func hostListViewDidPressSortButton(_ view: HostListView) {
+        presenter?.viewDidPressSortButton(self)
+    }
 
     func hostListViewDidPressAddButton(_ view: HostListView) {
         presenter?.viewDidPressAddButton(self)

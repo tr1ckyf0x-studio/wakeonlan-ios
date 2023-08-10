@@ -14,6 +14,7 @@ import WOLUIComponents
 protocol HostListViewDelegate: AnyObject {
     func hostListViewDidPressAddButton(_ view: HostListView)
     func hostListViewDidPressAboutButton(_ view: HostListView)
+    func hostListViewDidPressSortButton(_ view: HostListView)
 }
 
 final class HostListView: UIView {
@@ -64,7 +65,7 @@ final class HostListView: UIView {
             let imageView = UIImageView(image: image)
             imageView.tintColor = Asset.Colors.secondary.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
-            button.addTarget(self, action: #selector(didTapAboutButton(_:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(didTapSortButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
                 $0.center.equalToSuperview()
             }
@@ -117,6 +118,33 @@ final class HostListView: UIView {
         return barButton
     }()
 
+    lazy var sortItemsButton: UIBarButtonItem = {
+        let addButton: SoftUIView = {
+            let button = SoftUIView(circleShape: true)
+            let image = UIImage(sfSymbol: ButtonIcon.sort, withConfiguration: .init(weight: .semibold))
+            let imageView = UIImageView(image: image)
+            imageView.tintColor = WOLResources.Asset.Colors.secondary.color
+            button.configure(with: SoftUIViewModel(contentView: imageView))
+            button.addTarget(self, action: #selector(didTapSortButton(_:)), for: .touchUpInside)
+            imageView.snp.makeConstraints {
+                $0.edges.equalToSuperview().inset(6)
+            }
+
+            return button
+        }()
+
+        let barButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: addButton)
+            button.customView?.snp.makeConstraints {
+                $0.size.equalTo(Constants.barButtonDimensions)
+            }
+
+            return button
+        }()
+
+        return barButton
+    }()
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -150,6 +178,9 @@ private extension HostListView {
         delegate?.hostListViewDidPressAboutButton(self)
     }
 
+    @objc func didTapSortButton(_ sender: UIButton) {
+        delegate?.hostListViewDidPressSortButton(self)
+    }
 }
 
 // MARK: - ContentStateView

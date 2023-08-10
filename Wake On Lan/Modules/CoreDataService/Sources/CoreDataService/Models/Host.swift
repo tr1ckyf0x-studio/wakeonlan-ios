@@ -101,4 +101,16 @@ extension Host: Managed {
     public static var defaultSortDescriptors: [NSSortDescriptor] {
         [NSSortDescriptor(key: #keyPath(createdAt), ascending: false)]
     }
+
+    public static var alphabeticAscendingSortDescriptors: [NSSortDescriptor] {
+        [NSSortDescriptor(key: #keyPath(title), ascending: true)]
+    }
+
+    public static var alphabeticDescendingSortDescriptors: [NSSortDescriptor] {
+        [NSSortDescriptor(key: #keyPath(title), ascending: false)]
+    }
+
+    public static var itemIconNameSortDescriptors: [NSSortDescriptor] {
+        [NSSortDescriptor(key: #keyPath(iconName), ascending: false)]
+    }
 }

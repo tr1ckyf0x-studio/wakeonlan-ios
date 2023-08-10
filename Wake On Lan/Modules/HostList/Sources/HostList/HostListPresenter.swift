@@ -24,6 +24,10 @@ final class HostListPresenter: Navigates {
 // MARK: - HostListViewOutput
 
 extension HostListPresenter: HostListViewOutput {
+    func viewDidPressSortButton(_ view: HostListViewInput) {
+        interactor?.changeHostsOrder()
+    }
+
     func viewDidLoad(_ view: HostListViewInput) {
         view.showState(.default)
         interactor?.startCacheTracker()

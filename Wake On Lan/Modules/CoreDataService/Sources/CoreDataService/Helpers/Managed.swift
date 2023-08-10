@@ -25,6 +25,11 @@ public extension Managed where Self: NSManagedObject {
         return request
     }
 
+    static func sortedFetchRequest(with descriptors: [NSSortDescriptor]) -> NSFetchRequest<Self> {
+        let request = NSFetchRequest<Self>(entityName: entityName)
+        request.sortDescriptors = descriptors
+        return request
+    }
 }
 
 public extension Managed where Self: NSManagedObject {

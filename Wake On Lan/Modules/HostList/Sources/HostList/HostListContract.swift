@@ -16,6 +16,7 @@ protocol HostListViewOutput: AnyObject {
     func viewDidLoad(_ view: HostListViewInput)
     func viewDidPressAddButton(_ view: HostListViewInput)
     func viewDidPressAboutButton(_ view: HostListViewInput)
+    func viewDidPressSortButton(_ view: HostListViewInput)
 
     func viewDidPressInfoButton(_ view: HostListViewInput, for indexPath: IndexPath)
     func viewDidPressDeleteButton(_ view: HostListViewInput, for indexPath: IndexPath)
@@ -32,6 +33,7 @@ protocol HostListInteractorInput: AnyObject {
     func wakeHost(_ host: Host)
     func deleteHost(_ host: Host)
     func host(at indexPath: IndexPath) -> Host
+    func changeHostsOrder()
 }
 
 protocol HostListInteractorOutput: AnyObject {
