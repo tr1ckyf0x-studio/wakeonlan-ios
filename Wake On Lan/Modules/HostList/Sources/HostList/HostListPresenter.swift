@@ -64,7 +64,6 @@ extension HostListPresenter: HostListInteractorOutput {
         view?.updateSortButtonState(sortState)
     }
 
-
     func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: ContentSnapshot) {
         view?.updateContentSnapshot(contentSnapshot)
         if contentSnapshot.numberOfItems > .zero {
