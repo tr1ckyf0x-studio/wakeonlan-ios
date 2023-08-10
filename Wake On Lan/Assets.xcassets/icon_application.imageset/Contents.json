@@ -5,12 +5,44 @@
       "scale" : "1x"
     },
     {
-      "filename" : "owl_app_icon_backgroundless_250x250@2x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "owl_light_200x200@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "owl_app_icon_backgroundless_250x250@3x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "owl_dark_200x200@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "owl_light_200x200@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "owl_dark_200x200@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -18,5 +50,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
