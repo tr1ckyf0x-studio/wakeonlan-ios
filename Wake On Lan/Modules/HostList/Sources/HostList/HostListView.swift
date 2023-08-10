@@ -205,16 +205,16 @@ extension HostListView {
         var symbol: ButtonIcon = .checkmark
         switch sortState {
         case .acsendingAlphabetic:
-            symbol = .chevronBackward
+            symbol = .alphabeticSortAscending
 
         case .descendingAlphabetic:
-            symbol = .ellipsis
+            symbol = .alphabeticSortDescending
 
         case .dateAdded:
-            symbol = .plus
+            symbol = .dateSort
 
         case .deviceIconName:
-            symbol = .share
+            symbol = .deviceSort
         }
         let image = UIImage(sfSymbol: symbol, withConfiguration: .init(weight: .semibold))
         sortItemsButton.updateIconImageView(to: image)

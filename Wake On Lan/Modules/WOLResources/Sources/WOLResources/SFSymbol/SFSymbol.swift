@@ -43,6 +43,10 @@ public enum ButtonIcon: String, SFSymbolRepresentable, RawStringInitable {
     case tag
     case bitcoin = "bitcoinsign.circle.fill"
     case sort = "arrow.up.arrow.down"
+    case alphabeticSortAscending = "a.circle.fill"
+    case alphabeticSortDescending = "a.circle"
+    case dateSort = "calendar"
+    case deviceSort = "desktopcomputer"
 }
 
 // MARK: - HostIcon
