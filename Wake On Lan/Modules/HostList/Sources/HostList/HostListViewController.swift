@@ -64,6 +64,10 @@ public final class HostListViewController: UIViewController {
 // MARK: - HostListViewInput
 
 extension HostListViewController: HostListViewInput {
+    func updateSortButtonState(_ state: SortState) {
+        hostListView.updateSortButton(for: state)
+    }
+
 
     func showState(_ state: ViewState) {
         hostListView.showState(state)

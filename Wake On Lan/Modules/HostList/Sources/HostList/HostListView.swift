@@ -198,3 +198,40 @@ extension HostListView: StateableView {
     }
 
 }
+
+// MARK: - Public Methods
+extension HostListView {
+    public func updateSortButton(for sortState: SortState) {
+        var symbol: ButtonIcon = .checkmark
+        switch sortState {
+        case .acsendingAlphabetic:
+            symbol = .chevronBackward
+
+        case .descendingAlphabetic:
+            symbol = .ellipsis
+
+        case .dateAdded:
+            symbol = .plus
+
+        case .deviceIconName:
+            symbol = .share
+        }
+        let image = UIImage(sfSymbol: symbol, withConfiguration: .init(weight: .semibold))
+        sortItemsButton.updateIconImageView(to: image)
+    }
+}
+
+extension UIBarButtonItem {
+    func updateIconImageView(to newImage: UIImage?) {
+        guard let customView = self.customView as? SoftUIView else {
+            return
+        }
+        let imageView = UIImageView(image: newImage)
+        imageView.tintColor = WOLResources.Asset.Colors.secondary.color
+        customView.configure(with: SoftUIViewModel(contentView: imageView))
+
+        imageView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(6)
+        }
+    }
+}

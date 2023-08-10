@@ -76,8 +76,9 @@ final class HostListInteractor: HostListInteractorInput {
         selectedSortDescriptorsIndex += 1
         cacheTracker.updateSortDescriptors(sortDescriptors: sortDescriptors[selectedSortDescriptorsIndex])
         cacheTracker.start()
+        let currentSortState = currentSortState()
+        presenter?.interactor(self, didChangeSortState: currentSortState)
     }
-
 }
 
 // MARK: - HostListCacheTrackerDelegate
@@ -91,4 +92,29 @@ extension HostListInteractor: HostListCacheTrackerDelegate {
         presenter?.interactor(self, didChangeContentSnapshot: contentSnapshot)
     }
 
+}
+
+// MARK: - Private Methods
+extension HostListInteractor {
+    private func currentSortState() -> SortState {
+        let selectedSortDescriptor = sortDescriptors[selectedSortDescriptorsIndex]
+        switch selectedSortDescriptor {
+
+        case Host.defaultSortDescriptors:
+            return .dateAdded
+
+        case Host.alphabeticAscendingSortDescriptors:
+            return .acsendingAlphabetic
+
+        case Host.alphabeticDescendingSortDescriptors:
+            return .descendingAlphabetic
+
+        case Host.itemIconNameSortDescriptors:
+            return .deviceIconName
+
+        default:
+            DDLogError("Unhandled sort descriptor")
+            return .dateAdded
+        }
+    }
 }

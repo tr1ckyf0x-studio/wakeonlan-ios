@@ -26,6 +26,7 @@ protocol HostListViewOutput: AnyObject {
 protocol HostListViewInput: AnyObject {
     func showState(_ state: ViewState)
     func updateContentSnapshot(_ contentSnapshot: ContentSnapshot)
+    func updateSortButtonState(_ state: SortState)
 }
 
 protocol HostListInteractorInput: AnyObject {
@@ -39,4 +40,5 @@ protocol HostListInteractorInput: AnyObject {
 protocol HostListInteractorOutput: AnyObject {
     func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: ContentSnapshot)
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error)
+    func interactor(_ interactor: HostListInteractorInput, didChangeSortState sortState: SortState)
 }

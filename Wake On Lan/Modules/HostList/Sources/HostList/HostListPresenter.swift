@@ -60,6 +60,10 @@ extension HostListPresenter: HostListViewOutput {
 // MARK: - HostListInteractorOutput
 
 extension HostListPresenter: HostListInteractorOutput {
+    func interactor(_ interactor: HostListInteractorInput, didChangeSortState sortState: SortState) {
+        view?.updateSortButtonState(sortState)
+    }
+
 
     func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: ContentSnapshot) {
         view?.updateContentSnapshot(contentSnapshot)
