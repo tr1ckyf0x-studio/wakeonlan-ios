@@ -71,7 +71,7 @@ final class HostListInteractor: HostListInteractorInput {
         }
 
         if selectedSortDescriptorsIndex == sortDescriptors.count - 1 {
-            selectedSortDescriptorsIndex = 0
+            selectedSortDescriptorsIndex = -1
         }
         selectedSortDescriptorsIndex += 1
         cacheTracker.updateSortDescriptors(sortDescriptors: sortDescriptors[selectedSortDescriptorsIndex])
