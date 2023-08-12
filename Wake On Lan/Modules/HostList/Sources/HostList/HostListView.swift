@@ -65,7 +65,7 @@ final class HostListView: UIView {
             let imageView = UIImageView(image: image)
             imageView.tintColor = Asset.Colors.secondary.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
-            button.addTarget(self, action: #selector(didTapSortButton(_:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(didTapAboutButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
                 $0.center.equalToSuperview()
             }
