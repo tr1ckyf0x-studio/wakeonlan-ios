@@ -58,7 +58,11 @@ final class HostListCacheTracker:
     }
 
     func updateSortDescriptors(sortDescriptors: [NSSortDescriptor]) {
-        self.controller.fetchRequest.sortDescriptors = sortDescriptors
+        controller.fetchRequest.sortDescriptors = sortDescriptors
+    }
+
+    func sortDescriptors() -> [NSSortDescriptor]? {
+        controller.fetchRequest.sortDescriptors
     }
 
     // MARK: - NSFetchedResultsControllerDelegate

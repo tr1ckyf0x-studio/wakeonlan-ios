@@ -14,6 +14,7 @@ protocol TracksHostListCache {
     func start()
     func hostAtIndexPath(_ indexPath: IndexPath) -> Host
     func updateSortDescriptors(sortDescriptors: [NSSortDescriptor])
+    func sortDescriptors() -> [NSSortDescriptor]?
 }
 
 protocol HostListCacheTrackerDelegate: AnyObject {

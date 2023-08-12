@@ -76,12 +76,19 @@ final class HostListInteractor: HostListInteractorInput {
         selectedSortDescriptorsIndex += 1
         cacheTracker.updateSortDescriptors(sortDescriptors: sortDescriptors[selectedSortDescriptorsIndex])
         cacheTracker.start()
-        let currentSortState = currentSortState()
+        let sortDescriptors = cacheTracker.sortDescriptors()
+        guard let currentSortState = sortStateFromSortDescriptors(sortDescriptors) else {
+            return
+        }
         presenter?.interactor(self, didChangeSortState: currentSortState)
     }
 
     func getCurrentSortState() {
-        presenter?.interactor(self, didGetCurrentSortState: .dateAdded)
+        let sortDescriptors = cacheTracker.sortDescriptors()
+        guard let state = sortStateFromSortDescriptors(sortDescriptors) else {
+            return
+        }
+        presenter?.interactor(self, didGetCurrentSortState: state)
     }
 
 }
@@ -101,8 +108,10 @@ extension HostListInteractor: HostListCacheTrackerDelegate {
 
 // MARK: - Private Methods
 extension HostListInteractor {
-    private func currentSortState() -> SortState {
-        let selectedSortDescriptor = sortDescriptors[selectedSortDescriptorsIndex]
+    private func sortStateFromSortDescriptors(_ descriptors: [NSSortDescriptor]?) -> SortState? {
+        guard let selectedSortDescriptor = descriptors else {
+            return nil
+        }
         switch selectedSortDescriptor {
 
         case Host.defaultSortDescriptors:
