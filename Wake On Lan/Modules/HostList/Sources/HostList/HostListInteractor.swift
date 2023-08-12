@@ -96,14 +96,12 @@ final class HostListInteractor: HostListInteractorInput {
 // MARK: - HostListCacheTrackerDelegate
 
 extension HostListInteractor: HostListCacheTrackerDelegate {
-
     func cacheTracker(
         _ tracker: TracksHostListCache,
         didChangeContentSnapshot contentSnapshot: ContentSnapshot
     ) {
         presenter?.interactor(self, didChangeContentSnapshot: contentSnapshot)
     }
-
 }
 
 // MARK: - Private Methods
