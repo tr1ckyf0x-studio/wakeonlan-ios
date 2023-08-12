@@ -25,6 +25,15 @@ final class HostListCacheTracker:
     private let mapper: SnapshotMapper
     weak var delegate: Delegate?
 
+    private let availibleSortDescriptors = [
+        Host.defaultSortDescriptors,
+        Host.alphabeticAscendingSortDescriptors,
+        Host.alphabeticDescendingSortDescriptors,
+        Host.itemIconNameSortDescriptors
+    ]
+
+    private var selectedSortDescriptorsIndex = 0
+
     // MARK: - Init
 
     init(
@@ -63,6 +72,26 @@ final class HostListCacheTracker:
 
     func sortDescriptors() -> [NSSortDescriptor]? {
         controller.fetchRequest.sortDescriptors
+    }
+
+    func nextSortDescriptor() {
+        guard !availibleSortDescriptors.isEmpty else {
+            DDLogError("No sort descriptors found")
+            return
+        }
+
+        if selectedSortDescriptorsIndex == availibleSortDescriptors.count - 1 {
+            selectedSortDescriptorsIndex = -1
+        }
+
+        selectedSortDescriptorsIndex += 1
+        updateSortDescriptors(sortDescriptors: availibleSortDescriptors[selectedSortDescriptorsIndex])
+
+        do {
+            try controller.performFetch()
+        } catch { // TODO: Error - handling
+            DDLogError("HostListCacheTracker can not fetch hosts due to error: \(error)")
+        }
     }
 
     // MARK: - NSFetchedResultsControllerDelegate

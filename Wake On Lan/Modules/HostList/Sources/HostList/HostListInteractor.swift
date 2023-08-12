@@ -16,15 +16,6 @@ final class HostListInteractor: HostListInteractorInput {
     private let wakeOnLanService: WakeOnLanService
     private let cacheTracker: TracksHostListCache
 
-    private let sortDescriptors = [
-        Host.defaultSortDescriptors,
-        Host.alphabeticAscendingSortDescriptors,
-        Host.alphabeticDescendingSortDescriptors,
-        Host.itemIconNameSortDescriptors
-    ]
-
-    private var selectedSortDescriptorsIndex = 0
-
     weak var presenter: HostListInteractorOutput?
 
     init(
@@ -65,17 +56,7 @@ final class HostListInteractor: HostListInteractorInput {
     }
 
     func changeHostsOrder() {
-        guard !sortDescriptors.isEmpty else {
-            DDLogError("No sort descriptors found")
-            return
-        }
-
-        if selectedSortDescriptorsIndex == sortDescriptors.count - 1 {
-            selectedSortDescriptorsIndex = -1
-        }
-        selectedSortDescriptorsIndex += 1
-        cacheTracker.updateSortDescriptors(sortDescriptors: sortDescriptors[selectedSortDescriptorsIndex])
-        cacheTracker.start()
+        cacheTracker.nextSortDescriptor()
         let sortDescriptors = cacheTracker.sortDescriptors()
         guard let currentSortState = sortStateFromSortDescriptors(sortDescriptors) else {
             return
