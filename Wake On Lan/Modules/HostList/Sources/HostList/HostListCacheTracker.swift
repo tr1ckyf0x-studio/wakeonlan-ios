@@ -55,11 +55,7 @@ final class HostListCacheTracker:
     // MARK: - CacheTracker
 
     func start() {
-        do {
-            try controller.performFetch()
-        } catch { // TODO: Error - handling
-            DDLogError("HostListCacheTracker can not fetch hosts due to error: \(error)")
-        }
+        performFetch()
     }
 
     func hostAtIndexPath(_ indexPath: IndexPath) -> Host {
@@ -86,12 +82,8 @@ final class HostListCacheTracker:
 
         selectedSortDescriptorsIndex += 1
         updateSortDescriptors(sortDescriptors: availibleSortDescriptors[selectedSortDescriptorsIndex])
+        performFetch()
 
-        do {
-            try controller.performFetch()
-        } catch { // TODO: Error - handling
-            DDLogError("HostListCacheTracker can not fetch hosts due to error: \(error)")
-        }
     }
 
     // MARK: - NSFetchedResultsControllerDelegate
@@ -107,4 +99,15 @@ final class HostListCacheTracker:
         delegate?.cacheTracker(self, didChangeContentSnapshot: snapshot)
     }
 
+}
+
+// MARK: - Private Methods
+extension HostListCacheTracker {
+    func performFetch() {
+        do {
+            try controller.performFetch()
+        } catch { // TODO: Error - handling
+            DDLogError("HostListCacheTracker can not fetch hosts due to error: \(error)")
+        }
+    }
 }
