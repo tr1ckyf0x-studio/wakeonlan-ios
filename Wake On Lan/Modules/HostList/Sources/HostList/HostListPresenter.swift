@@ -31,6 +31,7 @@ extension HostListPresenter: HostListViewOutput {
     func viewDidLoad(_ view: HostListViewInput) {
         view.showState(.default)
         interactor?.startCacheTracker()
+        interactor?.getCurrentSortState()
     }
 
     func viewDidPressAddButton(_ view: HostListViewInput) {
@@ -60,6 +61,10 @@ extension HostListPresenter: HostListViewOutput {
 // MARK: - HostListInteractorOutput
 
 extension HostListPresenter: HostListInteractorOutput {
+    func interactor(_ interactor: HostListInteractorInput, didGetCurrentSortState sortState: SortState) {
+        view?.updateSortButtonState(sortState)
+    }
+
     func interactor(_ interactor: HostListInteractorInput, didChangeSortState sortState: SortState) {
         view?.updateSortButtonState(sortState)
     }

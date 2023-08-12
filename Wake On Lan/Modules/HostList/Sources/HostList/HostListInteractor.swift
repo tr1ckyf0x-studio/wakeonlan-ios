@@ -79,6 +79,11 @@ final class HostListInteractor: HostListInteractorInput {
         let currentSortState = currentSortState()
         presenter?.interactor(self, didChangeSortState: currentSortState)
     }
+
+    func getCurrentSortState() {
+        presenter?.interactor(self, didGetCurrentSortState: .dateAdded)
+    }
+
 }
 
 // MARK: - HostListCacheTrackerDelegate

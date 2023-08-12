@@ -121,7 +121,7 @@ final class HostListView: UIView {
     lazy var sortItemsButton: UIBarButtonItem = {
         let addButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
-            let image = UIImage(sfSymbol: ButtonIcon.sort, withConfiguration: .init(weight: .semibold))
+            let image = UIImage()
             let imageView = UIImageView(image: image)
             imageView.tintColor = WOLResources.Asset.Colors.secondary.color
             button.configure(with: SoftUIViewModel(contentView: imageView))

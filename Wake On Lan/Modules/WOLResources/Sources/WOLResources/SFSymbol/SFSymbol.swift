@@ -42,7 +42,6 @@ public enum ButtonIcon: String, SFSymbolRepresentable, RawStringInitable {
     case share = "square.and.arrow.up"
     case tag
     case bitcoin = "bitcoinsign.circle.fill"
-    case sort = "arrow.up.arrow.down"
     case alphabeticSortAscending = "a.circle.fill"
     case alphabeticSortDescending = "a.circle"
     case dateSort = "calendar"

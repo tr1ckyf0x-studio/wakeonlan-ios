@@ -35,10 +35,12 @@ protocol HostListInteractorInput: AnyObject {
     func deleteHost(_ host: Host)
     func host(at indexPath: IndexPath) -> Host
     func changeHostsOrder()
+    func getCurrentSortState()
 }
 
 protocol HostListInteractorOutput: AnyObject {
     func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: ContentSnapshot)
     func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error)
     func interactor(_ interactor: HostListInteractorInput, didChangeSortState sortState: SortState)
+    func interactor(_ interactor: HostListInteractorInput, didGetCurrentSortState sortState: SortState)
 }
