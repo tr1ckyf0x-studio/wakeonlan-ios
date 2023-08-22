@@ -29,49 +29,16 @@ attributes:
 packages:
   CocoaLumberjackSwift:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack
-    minorVersion: 3.8.0
+    minorVersion: 3.8.1
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk
-    minorVersion: 10.9.0
-  Nimble:
-    url: https://github.com/Quick/Nimble
-    minorVersion: 12.0.0
-  Quick:
-    url: https://github.com/Quick/Quick
-    minorVersion: 6.1.0
-  Reachability:
-    url: https://github.com/ashleymills/Reachability.swift
-    minorVersion: 5.1.0
-  RouteComposer:
-    url: https://github.com/ekazaev/route-composer
-    minorVersion: 2.10.3
-  SnapKit:
-    url: https://github.com/SnapKit/SnapKit
-    minorVersion: 5.6.0
+    minorVersion: 10.14.0
 
   # Local packages
-  AboutScreen:
-    path: Wake On Lan/Modules/AboutScreen
-  AddHost:
-    path: Wake On Lan/Modules/AddHost
-  CoreDataService:
-    path: Wake On Lan/Modules/CoreDataService
-  HostList:
-    path: Wake On Lan/Modules/HostList
-  PostLaunch:
-    path: Wake On Lan/Modules/PostLaunch
-  SharedExtensions:
-    path: Wake On Lan/Modules/SharedExtensions
-  SharedProtocolsAndModels:
-    path: Wake On Lan/Modules/SharedProtocolsAndModels
-  SharedRouter:
-    path: Wake On Lan/Modules/SharedRouter
-  WakeOnLanService:
-    path: Wake On Lan/Modules/WakeOnLanService
-  WOLResources:
-    path: Wake On Lan/Modules/WOLResources
-  WOLUIComponents:
-    path: Wake On Lan/Modules/WOLUIComponents
+  Modules:
+    path: Packages/Modules
+  Frameworks:
+    path: Packages/Frameworks
 
 targets:
   Wake on LAN:
@@ -85,30 +52,26 @@ targets:
         optional: true
       - IntentSharedSources
     dependencies:
-      - package: AboutScreen
-      - package: AddHost
+      - package: Modules
+        product: AboutScreen
+      - package: Modules
+        product: AddHost
+      - package: Modules
+        product: HostList
+      - package: Modules
+        product: PostLaunch
+      - package: Modules
+        product: SharedRouter
       - package: CocoaLumberjackSwift
-      - package: CoreDataService
       - package: Firebase
         product: FirebaseCrashlytics
-      - package: HostList
-      - package: PostLaunch
-      - package: Reachability
-      - package: RouteComposer
-      - package: SnapKit
-      - package: SharedExtensions
-      - package: SharedProtocolsAndModels
-      - package: SharedRouter
-      - package: WOLResources
-      - package: WakeOnLanService
-      - package: WOLUIComponents
       - target: Intent
     scheme:
       testTargets:
-        - package: AddHost/AddHostTests
-        - package: CoreDataService/CoreDataServiceTests
-        - package: AboutScreen/AboutScreenTests
-        - package: WakeOnLanService/WakeOnLanServiceTests
+        - package: Modules/AddHostTests
+        - package: Modules/CoreDataServiceTests
+        - package: Modules/AboutScreenTests
+        - package: Modules/WakeOnLanServiceTests
       configVariants:
         - AppStore
         - AdHoc
@@ -141,7 +104,7 @@ targets:
               export PATH="$PATH:/opt/homebrew/bin"
               if command -v swiftgen &> /dev/null
               then
-                swiftgen config run --config $SRCROOT/Wake\ on\ LAN/Modules/**/swiftgen.yml
+                swiftgen config run --config $SRCROOT/Packages/**/swiftgen.yml
               else
                 echo "warning: SwiftGen is not installed. Run 'brew install swiftgen' to install it."
               fi
@@ -190,8 +153,10 @@ targets:
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AdHoc"
     dependencies:
       - sdk: Intents.framework
-      - package: WakeOnLanService
-      - package: CoreDataService
+      - package: Modules
+        product: WakeOnLanService
+      - package: Modules
+        product: CoreDataService
     scheme:
       configVariants:
         - AppStore

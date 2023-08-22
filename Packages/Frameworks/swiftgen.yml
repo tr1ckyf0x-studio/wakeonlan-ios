@@ -1,0 +1,20 @@
+strings:
+  inputs:
+    - Sources/WOLResources/Resources/Strings/en.lproj
+  outputs:
+    - templateName: structured-swift5
+      output: Sources/WOLResources/Generated/Strings+Generated.swift
+      params:
+        publicAccess: true
+
+xcassets:
+  inputs:
+    - Sources/WOLResources/Resources/Assets.xcassets
+    - Sources/WOLResources/Resources/Colors.xcassets
+  outputs:
+    - templateName: swift5
+      params:
+        forceProvidesNamespaces: true
+      output: Sources/WOLResources/Generated/XCAssets+Generated.swift
+      params:
+        publicAccess: true
