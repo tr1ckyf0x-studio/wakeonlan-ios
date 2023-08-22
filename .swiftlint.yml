@@ -82,20 +82,14 @@ analyzer_rules:
 excluded: # paths to ignore during linting. Takes precedence over included. 
 - Carthage 
 - Pods 
-- Wake On Lan/R.generated.swift
-- "Wake On Lan/Modules/**/Generated/*.swift"
+- "Packages/**/Generated/*.swift"
 - swift-templates
 - "**/*.generated.swift"
 
 # # configurable rules can be customized from this configuration file 
 # # binary rules can set their severity level 
 trailing_semicolon: error 
-# empty_count: error 
-opening_brace: error 
 return_arrow_whitespace: error 
-# statement_position: error 
-# colon: error 
-# comma: error 
  
 # line_length: 140 
  
