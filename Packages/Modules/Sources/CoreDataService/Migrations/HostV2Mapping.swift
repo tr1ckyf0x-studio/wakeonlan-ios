@@ -17,14 +17,14 @@ final class HostV2Mapping: NSEntityMigrationPolicy {
 
         guard sInstance.entity.name == Constants.entityName else { return }
 
-        guard let createdAt = sInstance.primitiveValue(forKey: Constants.createdAt) as? Date,
-              let title = sInstance.primitiveValue(forKey: Constants.title) as? String,
-              let iconName = sInstance.primitiveValue(forKey: Constants.iconName) as? String
-        else { return }
+//        guard let createdAt = sInstance.primitiveValue(forKey: Constants.createdAt) as? Date,
+//              let title = sInstance.primitiveValue(forKey: Constants.title) as? String,
+//              let iconName = sInstance.primitiveValue(forKey: Constants.iconName) as? String
+//        else { return }
 
-        let macAddressData = sInstance.primitiveValue(forKey: Constants.macAddressData) as? Data
+//        let macAddressData = sInstance.primitiveValue(forKey: Constants.macAddressData) as? Data
         let ipAddressData = sInstance.primitiveValue(forKey: Constants.ipAddressData) as? Data
-        let port = sInstance.primitiveValue(forKey: Constants.port) as? String
+//        let port = sInstance.primitiveValue(forKey: Constants.port) as? String
 
         let ipAddress = ipAddressData.map { data in
             CoreDataHostFormatter.decompress(data: data, ofType: .ipAddress)
