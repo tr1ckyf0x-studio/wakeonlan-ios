@@ -18,7 +18,7 @@ enum FormSection {
         case deviceIcon
         case title
         case macAddress
-        case ipAddress
+        case destination
         case port
     }
 

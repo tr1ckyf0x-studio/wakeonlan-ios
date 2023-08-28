@@ -3,6 +3,6 @@ import SharedProtocolsAndModels
 
 struct HostStub: HostRepresentable {
     var macAddress: String?
-    var ipAddress: String?
+    var destination: String?
     var port: String?
 }

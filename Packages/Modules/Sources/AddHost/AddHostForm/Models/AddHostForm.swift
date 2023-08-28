@@ -178,7 +178,7 @@ final class AddHostForm: AddHostFormRepresentable {
             content: [ipAddressFormItem],
             header: .init(header: L10n.AddHost.ipAddress, mandatory: false),
             footer: .init(footer: L10n.AddHost.ipAddressDescription),
-            kind: .ipAddress
+            kind: .destination
         )
 
         let portSection = FormSection.section(

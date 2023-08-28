@@ -44,7 +44,7 @@ final class WakeOnLanServiceTests: XCTestCase {
         XCTAssertEqual(
             udpServiceMock.sendToPortReceivedArguments?.ipAddress,
             TestData.Correct.host.ipAddress,
-            "WakeOnLanService must use ipAddress from passed host"
+            "WakeOnLanService must use destination from passed host"
         )
     }
 
