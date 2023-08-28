@@ -63,7 +63,7 @@ final class AddHostForm: AddHostFormRepresentable {
             iconModel = sfSymbol.map { IconModel(sfSymbol: $0) }
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
-            ipAddressItem.value = host.ipAddress
+            ipAddressItem.value = host.destination
             portItem.value = host.port
         }
     }
@@ -71,7 +71,7 @@ final class AddHostForm: AddHostFormRepresentable {
     var iconModel: IconModel? = .init()
     private(set) var title: String?
     private(set) var macAddress: String?
-    private(set) var ipAddress: String?
+    private(set) var destination: String?
     private(set) var port: String?
 
     // MARK: - Section items
@@ -115,7 +115,7 @@ final class AddHostForm: AddHostFormRepresentable {
         item.placeholder = Placeholder.ipAddress
         item.defaultValue = Placeholder.ipAddress
         item.onValueChanged = { [weak self] value in
-            self?.ipAddress = value
+            self?.destination = value
         }
         item.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
         item.failureReason = .invalidIPAddress
@@ -146,6 +146,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
     public init(host: Host? = nil) {
         makeSections()
+        // swiftlint:disable:next inert_defer
         defer { self.host = host } // Otherwise didSet does not call
     }
 
@@ -177,7 +178,7 @@ final class AddHostForm: AddHostFormRepresentable {
             content: [ipAddressFormItem],
             header: .init(header: L10n.AddHost.ipAddress, mandatory: false),
             footer: .init(footer: L10n.AddHost.ipAddressDescription),
-            kind: .ipAddress
+            kind: .destination
         )
 
         let portSection = FormSection.section(
