@@ -12,12 +12,9 @@ struct HostListCellViewModel: Hashable, Equatable {
     let iconName: String
     let macAddress: String?
 
-    private let uuid = UUID()
-
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
         hasher.combine(iconName)
         hasher.combine(macAddress)
-        hasher.combine(uuid)
     }
 }
