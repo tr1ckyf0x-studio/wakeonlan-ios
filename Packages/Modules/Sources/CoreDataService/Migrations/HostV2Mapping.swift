@@ -36,17 +36,8 @@ final class HostV2Mapping: NSEntityMigrationPolicy {
         ).first
         else { fatalError("must return country") }
 
-        manager.associate(sourceInstance: sInstance, withDestinationInstance: host, for: mapping)
+//        manager.associate(sourceInstance: sInstance, withDestinationInstance: host, for: mapping)
 
-//        let host = NSEntityDescription.insertNewObject(
-//            forEntityName: Constants.entityName,
-//            into: manager.destinationContext
-//        )
-//        host.setValue(createdAt, forKey: Constants.createdAt)
-//        host.setValue(title, forKey: Constants.title)
-//        host.setValue(iconName, forKey: Constants.iconName)
-//        host.setValue(macAddressData, forKey: Constants.macAddressData)
-//        host.setValue(port, forKey: Constants.port)
         host.setValue(ipAddress, forKey: Constants.destination)
 
         manager.sourceContext.delete(sInstance)
