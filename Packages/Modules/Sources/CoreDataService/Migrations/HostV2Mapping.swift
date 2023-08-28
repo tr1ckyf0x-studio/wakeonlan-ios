@@ -9,38 +9,31 @@ import CoreData
 
 final class HostV2Mapping: NSEntityMigrationPolicy {
     override func createDestinationInstances(
-        forSource sInstance: NSManagedObject,
+        forSource sourceInstance: NSManagedObject,
         in mapping: NSEntityMapping,
         manager: NSMigrationManager
     ) throws {
-        try super.createDestinationInstances(forSource: sInstance, in: mapping, manager: manager)
+        guard sourceInstance.entity.name == Constants.entityName else { return }
 
-        guard sInstance.entity.name == Constants.entityName else { return }
+        try super.createDestinationInstances(forSource: sourceInstance, in: mapping, manager: manager)
 
-//        guard let createdAt = sInstance.primitiveValue(forKey: Constants.createdAt) as? Date,
-//              let title = sInstance.primitiveValue(forKey: Constants.title) as? String,
-//              let iconName = sInstance.primitiveValue(forKey: Constants.iconName) as? String
-//        else { return }
+        let ipAddressData = sourceInstance.primitiveValue(forKey: Constants.ipAddressData) as? Data
 
-//        let macAddressData = sInstance.primitiveValue(forKey: Constants.macAddressData) as? Data
-        let ipAddressData = sInstance.primitiveValue(forKey: Constants.ipAddressData) as? Data
-//        let port = sInstance.primitiveValue(forKey: Constants.port) as? String
-
-        let ipAddress = ipAddressData.map { data in
+        let ipAddress = ipAddressData.map { (data: Data) -> String in
             CoreDataHostFormatter.decompress(data: data, ofType: .ipAddress)
         }
 
-        guard let host = manager.destinationInstances(
+        guard let destinationInstance = manager.destinationInstances(
             forEntityMappingName: mapping.name,
-            sourceInstances: [sInstance]
+            sourceInstances: [sourceInstance]
         ).first
-        else { fatalError("must return country") }
+        else {
+            fatalError("Must return host")
+        }
 
-//        manager.associate(sourceInstance: sInstance, withDestinationInstance: host, for: mapping)
+        destinationInstance.setValue(ipAddress, forKey: Constants.destination)
 
-        host.setValue(ipAddress, forKey: Constants.destination)
-
-        manager.sourceContext.delete(sInstance)
+        manager.sourceContext.delete(sourceInstance)
     }
 }
 
@@ -49,12 +42,7 @@ final class HostV2Mapping: NSEntityMigrationPolicy {
 extension HostV2Mapping {
     private enum Constants {
         static let entityName = "Host"
-        static let createdAt = "createdAt"
-        static let title = "title"
-        static let iconName = "iconName"
-        static let macAddressData = "macAddressData"
         static let ipAddressData = "ipAddressData"
-        static let port = "port"
         static let destination = "destination"
     }
 }
