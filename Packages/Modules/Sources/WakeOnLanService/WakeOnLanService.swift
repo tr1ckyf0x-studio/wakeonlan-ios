@@ -25,7 +25,7 @@ public final class WakeOnLanService {
 // MARK: - WakeOnLanServiceProtocol
 extension WakeOnLanService: WakeOnLanServiceProtocol {
     public func sendMagicPacket(to host: HostRepresentable) throws {
-        let ipAddress = host.ipAddress ?? Constants.broadcastIPAddress
+        let ipAddress = host.destination ?? Constants.broadcastIPAddress
         let port = host.port.flatMap(UInt16.init) ?? Constants.magicPocketDefaultPort
 
         let packet = try magicPacketBuilder.build(for: host.macAddress)

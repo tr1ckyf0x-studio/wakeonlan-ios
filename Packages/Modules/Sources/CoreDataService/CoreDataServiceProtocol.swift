@@ -13,7 +13,7 @@ import Foundation
 public protocol CoreDataServiceProtocol {
     typealias SaveCompletionHandler = () -> Void
 
-    var persistentContainer: NSPersistentCloudKitContainer { get }
+    var persistentContainer: NSPersistentContainer { get }
 
     var persistentStoreCoordinator: NSPersistentStoreCoordinator { get }
 
@@ -41,6 +41,7 @@ extension CoreDataServiceProtocol {
                 DDLogError("Persistent stores were not loaded due to error: \(error)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+
             DDLogDebug("Persistent stores were loaded")
         }
     }

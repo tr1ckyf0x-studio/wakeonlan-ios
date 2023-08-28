@@ -17,8 +17,8 @@ public protocol AddHostFormRepresentable: Validable {
     var title: String? { get }
     /// Represents host's mac address
     var macAddress: String? { get }
-    /// Represents host's ip address
-    var ipAddress: String? { get }
+    /// Represents host's destination
+    var destination: String? { get }
     /// Represents host's ip port
     var port: String? { get }
 }

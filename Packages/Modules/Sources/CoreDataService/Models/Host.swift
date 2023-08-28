@@ -14,8 +14,8 @@ public final class Host: NSManagedObject, HostRepresentable {
     @NSManaged public private(set) var title: String
     @NSManaged public private(set) var iconName: String
     @NSManaged public private(set) var port: String?
+    @NSManaged public private(set) var destination: String?
     @NSManaged private var macAddressData: Data?
-    @NSManaged private var ipAddressData: Data?
 
     public private(set) var macAddress: String? {
         get {
@@ -27,17 +27,6 @@ public final class Host: NSManagedObject, HostRepresentable {
             macAddressData = newValue.map { value in
                 CoreDataHostFormatter.compress(string: value, ofType: .macAddress)
             }
-        }
-    }
-
-    public private(set) var ipAddress: String? {
-        get {
-            guard let ipAddressData else { return nil }
-            return CoreDataHostFormatter.decompress(data: ipAddressData, ofType: .ipAddress)
-        }
-        set {
-            guard let ipAddress = newValue else { ipAddressData = nil; return }
-            ipAddressData = CoreDataHostFormatter.compress(string: ipAddress, ofType: .ipAddress)
         }
     }
 
@@ -68,7 +57,7 @@ public extension Host {
         host.iconName = iconName.systemName
         host.title = title
         host.macAddress = macAddress
-        host.ipAddress = form.ipAddress
+        host.destination = form.destination
         host.port = form.port
     }
 
@@ -85,8 +74,8 @@ public extension Host {
         updateObject.title = title
         updateObject.iconName = iconName.systemName
         updateObject.macAddress = macAddress
-        if let ipAddress = form.ipAddress {
-            updateObject.ipAddress = ipAddress
+        if let destination = form.destination {
+            updateObject.destination = destination
         }
         if let port = form.port {
             updateObject.port = port

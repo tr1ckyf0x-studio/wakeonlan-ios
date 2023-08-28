@@ -20,11 +20,7 @@ public enum PersistentContainer {
             guard let persistentContainerURL = CoreDataConstants.persistentContainerURL else {
                 fatalError("Persistent container URL is unavailable")
             }
-            let description = NSPersistentStoreDescription(url: persistentContainerURL)
-            description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
-                containerIdentifier: BundleConstants.iCloudContainerIdentifier
-            )
-            return [description]
+            return [NSPersistentStoreDescription(url: persistentContainerURL)]
         }()
     }
 
@@ -49,8 +45,8 @@ public protocol PersistentContainerType {
 
 public final class CoreDataService: CoreDataServiceProtocol {
 
-    public private(set) lazy var persistentContainer: NSPersistentCloudKitContainer = {
-        let container = NSPersistentCloudKitContainer(
+    public private(set) lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(
             name: CoreDataConstants.persistentContainerName,
             managedObjectModel: managedObjectModel
         )
