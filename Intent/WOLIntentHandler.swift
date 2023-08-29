@@ -40,7 +40,7 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
             guard let host = try fetchHost(with: hostname) else {
                 return WOLIntentResponse(code: .failure, userActivity: nil)
             }
-            try wakeOnLanService.sendMagicPacket(to: host)
+            try await wakeOnLanService.sendMagicPacket(to: host)
             return WOLIntentResponse.success(hostname: hostname)
         } catch {
             return WOLIntentResponse(code: .failure, userActivity: nil)

@@ -43,12 +43,14 @@ final class HostListInteractor: HostListInteractorInput {
     }
 
     func wakeHost(_ host: Host) {
-        do {
-            try wakeOnLanService.sendMagicPacket(to: host)
-            DDLogDebug("Magic packet was sent")
-        } catch {
-            presenter?.interactor(self, didEncounterError: error)
-            DDLogError("Magic packet was not sent due to error: \(error)")
+        Task {
+            do {
+                try await wakeOnLanService.sendMagicPacket(to: host)
+                DDLogDebug("Magic packet was sent")
+            } catch {
+                presenter?.interactor(self, didEncounterError: error)
+                DDLogError("Magic packet was not sent due to error: \(error)")
+            }
         }
     }
 

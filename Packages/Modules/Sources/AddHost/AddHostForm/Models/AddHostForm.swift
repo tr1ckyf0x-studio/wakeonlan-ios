@@ -18,7 +18,6 @@ final class AddHostForm: AddHostFormRepresentable {
 
     enum Error: LocalizedError {
         case invalidMACAddress
-        case invalidIPAddress
         case invalidPort
         case invalidTitle
         case unknown
@@ -27,9 +26,6 @@ final class AddHostForm: AddHostFormRepresentable {
             switch self {
             case .invalidMACAddress:
                 return L10n.AddHostFailure.invalidMACAddress
-
-            case .invalidIPAddress:
-                return L10n.AddHostFailure.invalidIPAddress
 
             case .invalidPort:
                 return L10n.AddHostFailure.invalidPort
@@ -63,7 +59,7 @@ final class AddHostForm: AddHostFormRepresentable {
             iconModel = sfSymbol.map { IconModel(sfSymbol: $0) }
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
-            ipAddressItem.value = host.destination
+            destinationItem.value = host.destination
             portItem.value = host.port
         }
     }
@@ -110,18 +106,15 @@ final class AddHostForm: AddHostFormRepresentable {
         return item
     }()
 
-    private lazy var ipAddressItem: TextFormItem = {
+    private lazy var destinationItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = Placeholder.ipAddress
         item.defaultValue = Placeholder.ipAddress
         item.onValueChanged = { [weak self] value in
             self?.destination = value
         }
-        item.validator = TextValidator(strategy: AddHostValidationStrategy.ipAddress)
-        item.failureReason = .invalidIPAddress
         item.keyboardType = .numbersAndPunctuation
         item.isMandatory = false
-        item.maxLength = 15
 
         return item
     }()
@@ -155,7 +148,7 @@ final class AddHostForm: AddHostFormRepresentable {
     private func makeSections() {
         let titleFormItem = FormItem.text(titleItem)
         let macAddressFormItem = FormItem.text(macAddressItem)
-        let ipAddressFormItem = FormItem.text(ipAddressItem)
+        let destinationFormItem = FormItem.text(destinationItem)
         let portFormItem = FormItem.text(portItem)
 
         let deviceIconSection = FormSection.section(content: iconSectionItems, kind: .deviceIcon)
@@ -174,10 +167,10 @@ final class AddHostForm: AddHostFormRepresentable {
             kind: .macAddress
         )
 
-        let ipAddressSection = FormSection.section(
-            content: [ipAddressFormItem],
-            header: .init(header: L10n.AddHost.ipAddress, mandatory: false),
-            footer: .init(footer: L10n.AddHost.ipAddressDescription),
+        let destinationSection = FormSection.section(
+            content: [destinationFormItem],
+            header: .init(header: L10n.AddHost.host, mandatory: false),
+            footer: .init(footer: L10n.AddHost.hostAddressDescription),
             kind: .destination
         )
 
@@ -192,7 +185,7 @@ final class AddHostForm: AddHostFormRepresentable {
             deviceIconSection,
             titleSection,
             macAddressSection,
-            ipAddressSection,
+            destinationSection,
             portSection
         ]
     }
