@@ -19,8 +19,8 @@ final class PostLaunchView: UIView {
 
     // MARK: - Properties
 
-    // TODO: Fix it in the next release/commit/PR
     /// - NOTE: - It is awful solution as image does not change according to the current color scheme.
+    // TODO: Fix it in the next release/commit/PR
     private lazy var logoImageView: UIImageView = {
         $0.image = appearance.logoImage
         return $0
@@ -30,6 +30,7 @@ final class PostLaunchView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = Asset.Colors.primary.color
         addSubviews()
         addConstraints()
     }

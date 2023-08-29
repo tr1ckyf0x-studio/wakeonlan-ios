@@ -98,10 +98,9 @@ private extension AboutScreenPresenter {
                 ),
                 .init(
                     title: L10n.AboutScreen.donate,
-                    symbol: ButtonIcon.bitcoin,
+                    symbol: ButtonIcon.dollar,
                     action: { [weak self] in
-                        guard let url = URL(string: Configuration.donateURL) else { return }
-                        self?.urlOpener.open(url: url)
+                        self?.navigate(to: self?.router?.openDonate())
                     }
                 )
             ]

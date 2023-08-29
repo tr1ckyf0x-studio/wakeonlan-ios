@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Modules",
+    defaultLocalization: "en",
     platforms: [.iOS(.v13)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -35,6 +36,14 @@ let package = Package(
         .library(
             name: "WakeOnLanServiceMock",
             targets: ["WakeOnLanServiceMock"]
+        ),
+        .library(
+            name: "DonateScreen",
+            targets: ["DonateScreen"]
+        ),
+        .library(
+            name: "IAPManager",
+            targets: ["IAPManager"]
         )
     ],
     dependencies: [
@@ -161,6 +170,30 @@ let package = Package(
             dependencies: [
                 "WakeOnLanService",
                 "WakeOnLanServiceMock",
+                .product(name: "SharedProtocolsAndModels", package: "Frameworks")
+            ]
+        ),
+        .target(
+            name: "DonateScreen",
+            dependencies: [
+                .product(
+                    name: "SharedRouter",
+                    package: "Frameworks"
+                ),
+                .product(
+                    name: "WOLResources",
+                    package: "Frameworks"
+                ),
+                .product(name: "WOLUIComponents", package: "Frameworks"),
+                .product(name: "SharedProtocolsAndModels", package: "Frameworks"),
+                "IAPManager",
+                "SnapKit",
+                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
+            ]
+        ),
+        .target(
+            name: "IAPManager",
+            dependencies: [
                 .product(name: "SharedProtocolsAndModels", package: "Frameworks")
             ]
         )
