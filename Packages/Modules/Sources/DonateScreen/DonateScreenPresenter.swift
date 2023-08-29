@@ -49,16 +49,7 @@ extension DonateScreenPresenter: DonateScreenInteractorOutput {
             footer: L10n.DonateScreen.Footer.warningText
         )
 
-        let sections = [section]
-
-        var snapshot = DonateScreenTableSnapshot()
-        snapshot.appendSections(sections)
-
-        sections.forEach { (section: DonateScreenTableSectionModel) in
-            snapshot.appendItems(section.content, toSection: section)
-        }
-
-        view?.setSnapshot(snapshot)
+        view?.setSections([section])
         view?.showState(.loaded)
     }
 

@@ -19,10 +19,8 @@ public final class DonateScreenViewController: UIViewController {
     }(DonateScreenView())
 
     private lazy var tableManager: ManagesDonateScreenTable = {
-        let tableManager = DonateScreenTableManager(
-            tableView: rootView.tableView,
-            cellProvider: DonateScreenCellProvider()
-        )
+        let tableManager = DonateScreenTableManager()
+        rootView.tableView.dataSource = tableManager
         rootView.tableView.delegate = tableManager
 
         return tableManager
@@ -52,8 +50,10 @@ extension DonateScreenViewController {
 
 // MARK: - DonateScreenViewInput
 extension DonateScreenViewController: DonateScreenViewInput {
-    func setSnapshot(_ snapshot: DonateScreenTableSnapshot) {
-        tableManager.apply(snapshot)
+
+    func setSections(_ sections: [DonateScreenTableSectionModel]) {
+        tableManager.sections = sections
+        rootView.tableView.reloadData()
     }
 
     func showState(_ state: DonateScreenState) {

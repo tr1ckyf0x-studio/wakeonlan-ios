@@ -9,7 +9,7 @@ import Foundation
 import IAPManager
 
 protocol DonateScreenViewInput: AnyObject {
-    func setSnapshot(_ snapshot: DonateScreenTableSnapshot)
+    func setSections(_ sections: [DonateScreenTableSectionModel])
     func showState(_ state: DonateScreenState)
 }
 

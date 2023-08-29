@@ -188,7 +188,8 @@ let package = Package(
                 .product(name: "SharedProtocolsAndModels", package: "Frameworks"),
                 "IAPManager",
                 "SnapKit",
-                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
+                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack"),
+                .product(name: "SharedExtensions", package: "Frameworks")
             ]
         ),
         .target(

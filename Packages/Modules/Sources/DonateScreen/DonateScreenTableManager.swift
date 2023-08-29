@@ -5,43 +5,61 @@
 //  Created by Vladislav Lisianskii on 15.04.2023.
 //
 
+import SharedExtensions
 import SharedProtocolsAndModels
 import UIKit
 
-typealias DonateScreenTableSection = DonateScreenTableSectionModel
-typealias DonateScreenTableItem = DonateScreenTableSectionModel.Item
+protocol ManagesDonateScreenTable {
+    var sections: [DonateScreenTableSectionModel] { get set }
+}
 
-typealias DonateScreenTableSnapshot = NSDiffableDataSourceSnapshot<
-    DonateScreenTableSection,
-    DonateScreenTableItem
->
+final class DonateScreenTableManager: NSObject {
 
-typealias DonateScreenTableDataSource = UITableViewDiffableDataSource<
-    DonateScreenTableSection,
-    DonateScreenTableItem
->
+    // MARK: - Properties
 
-protocol ManagesDonateScreenTable: DonateScreenTableDataSource, UITableViewDelegate { }
+    var sections: [DonateScreenTableSectionModel] = []
+}
 
-final class DonateScreenTableManager: DonateScreenTableDataSource, ManagesDonateScreenTable {
+// MARK: - ManagesDonateScreenTable
 
-    typealias CellProvider = ProvidesTableViewCell<DonateScreenTableItem>
+extension DonateScreenTableManager: ManagesDonateScreenTable {
 
-    // MARK: - Init
+}
 
-    init(
-        tableView: UITableView,
-        cellProvider: any CellProvider
-    ) {
-        super.init(tableView: tableView, cellProvider: cellProvider.makeTableViewCell)
+// MARK: - UITableViewDataSource
+
+extension DonateScreenTableManager: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
     }
 
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        let sectionModel = snapshot().sectionIdentifiers[section]
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        sections[section].content.count
+    }
 
-        switch sectionModel {
-        case let .donateSection(_, header):
-            return header
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = sections[indexPath.section].content[indexPath.item]
+        switch model {
+        case let .purchase(purchaseModel):
+            let donateItemCell = tableView.dequeueReusableCellWithAutoregistration(
+                DonateItemCell.self
+            )
+
+            donateItemCell.configure(model: purchaseModel)
+            return donateItemCell
+        }
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension DonateScreenTableManager: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        let model = sections[section]
+
+        switch model {
+        case let .donateSection(_, footer):
+            return footer
         }
     }
 }
