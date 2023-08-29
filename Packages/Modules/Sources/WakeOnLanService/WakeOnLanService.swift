@@ -11,11 +11,11 @@ import SharedProtocolsAndModels
 
 public final class WakeOnLanService {
     private let magicPacketBuilder: BuildsMagicPacket
-    private let udpService: UDPServiceProtocol
+    private let udpService: UDPService
 
     public init(
         magicPacketBuilder: BuildsMagicPacket,
-        udpService: UDPServiceProtocol
+        udpService: UDPService
     ) {
         self.magicPacketBuilder = magicPacketBuilder
         self.udpService = udpService
@@ -24,12 +24,12 @@ public final class WakeOnLanService {
 
 // MARK: - WakeOnLanServiceProtocol
 extension WakeOnLanService: WakeOnLanServiceProtocol {
-    public func sendMagicPacket(to host: HostRepresentable) throws {
-        let ipAddress = host.destination ?? Constants.broadcastIPAddress
+    public func sendMagicPacket(to host: HostRepresentable) async throws {
+        let destination = host.destination.defaultIfEmpty(Constants.broadcastIPAddress)
         let port = host.port.flatMap(UInt16.init) ?? Constants.magicPocketDefaultPort
 
         let packet = try magicPacketBuilder.build(for: host.macAddress)
-        try udpService.send(packet, to: ipAddress, port: port)
+        try await udpService.send(packet, to: destination, port: port)
     }
 }
 
@@ -40,7 +40,7 @@ extension WakeOnLanService: ProvidesWeakSharedInstanceTrait {
     public convenience init() {
         self.init(
             magicPacketBuilder: MagicPacketBuilder(),
-            udpService: UDPService()
+            udpService: NWUDPService()
         )
     }
 }
@@ -50,5 +50,17 @@ extension WakeOnLanService {
     private enum Constants {
         static let broadcastIPAddress = "255.255.255.255"
         static let magicPocketDefaultPort: UInt16 = 9
+    }
+}
+
+extension Optional where Wrapped == String {
+    fileprivate func defaultIfEmpty(_ value: Wrapped) -> Wrapped {
+        let existingValue = self ?? Wrapped()
+
+        if existingValue.isEmpty {
+            return value
+        }
+
+        return existingValue
     }
 }

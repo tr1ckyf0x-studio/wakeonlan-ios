@@ -8,7 +8,6 @@
 
 enum AddHostFormatterStrategy {
     case macAddress
-    case ipAddress
     case port
 }
 
