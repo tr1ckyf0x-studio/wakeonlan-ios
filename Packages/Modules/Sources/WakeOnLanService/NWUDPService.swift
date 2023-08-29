@@ -24,7 +24,7 @@ extension NWUDPService: UDPService {
 
 extension NWConnection {
     fileprivate func send<Content: DataProtocol>(
-        content: Content?,
+        content: Content,
         contentContext: NWConnection.ContentContext = .defaultMessage,
         isComplete: Bool = true
     ) async throws {

@@ -7,7 +7,7 @@ public protocol UDPService {
 
      - Parameters:
         - packet: Byte array of the packet.
-        - to: Target hostname or IP address.
+        - to: Target host.
         - port: Target port
      - Throws: `UDPError.socketSetup` if socket is unable to setup.
                `UDPError.send` if error occured during packet sending

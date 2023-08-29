@@ -25,7 +25,7 @@ public final class WakeOnLanService {
 // MARK: - WakeOnLanServiceProtocol
 extension WakeOnLanService: WakeOnLanServiceProtocol {
     public func sendMagicPacket(to host: HostRepresentable) async throws {
-        let destination = host.destination ?? Constants.broadcastIPAddress
+        let destination = host.destination.defaultIfEmpty(Constants.broadcastIPAddress)
         let port = host.port.flatMap(UInt16.init) ?? Constants.magicPocketDefaultPort
 
         let packet = try magicPacketBuilder.build(for: host.macAddress)
@@ -50,5 +50,17 @@ extension WakeOnLanService {
     private enum Constants {
         static let broadcastIPAddress = "255.255.255.255"
         static let magicPocketDefaultPort: UInt16 = 9
+    }
+}
+
+extension Optional where Wrapped == String {
+    fileprivate func defaultIfEmpty(_ value: Wrapped) -> Wrapped {
+        let existingValue = self ?? Wrapped()
+
+        if existingValue.isEmpty {
+            return value
+        }
+
+        return existingValue
     }
 }
