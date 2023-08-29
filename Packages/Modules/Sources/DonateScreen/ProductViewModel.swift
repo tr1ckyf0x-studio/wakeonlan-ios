@@ -22,10 +22,8 @@ struct ProductViewModel {
 
 extension ProductViewModel: Equatable {
     static func == (lhs: ProductViewModel, rhs: ProductViewModel) -> Bool {
-        [
-            lhs.title == rhs.title,
-            lhs.price == rhs.price
-        ].allSatisfy { $0 }
+        lhs.title == rhs.title &&
+        lhs.price == rhs.price
     }
 }
 

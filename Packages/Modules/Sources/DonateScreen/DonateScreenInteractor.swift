@@ -36,7 +36,7 @@ extension DonateScreenInteractor: DonateScreenInteractorInput {
                     presenter?.interactor(self, didLoad: products)
                 }
             } catch {
-                DDLogError(error)
+                DDLogError("\(error)")
             }
         }
     }

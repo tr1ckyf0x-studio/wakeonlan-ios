@@ -14,14 +14,4 @@ public struct Product {
 
     /// Product identifier
     public let identifier: String
-
-    internal init(
-        title: String,
-        price: String,
-        identifier: String
-    ) {
-        self.title = title
-        self.price = price
-        self.identifier = identifier
-    }
 }
