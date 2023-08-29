@@ -3,5 +3,5 @@ import SharedProtocolsAndModels
 
 // sourcery: AutoMockable
 public protocol WakeOnLanServiceProtocol {
-    func sendMagicPacket(to host: HostRepresentable) throws
+    func sendMagicPacket(to host: HostRepresentable) async throws
 }
