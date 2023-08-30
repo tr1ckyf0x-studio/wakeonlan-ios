@@ -30,6 +30,7 @@ final class PostLaunchView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = Asset.Colors.primary.color
         addSubviews()
         addConstraints()
     }

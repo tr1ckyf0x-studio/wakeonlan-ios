@@ -7,6 +7,7 @@
 
 import AboutScreen
 import AddHost
+import DonateScreen
 import HostList
 import PostLaunch
 import SharedRouter
@@ -17,5 +18,6 @@ import SharedRouter
 
 extension WOLRouter: AboutScreenRoutes { }
 extension WOLRouter: ChooseIconRoutes { }
+extension WOLRouter: DonateScreenRoutes { }
 extension WOLRouter: HostListRoutes { }
 extension WOLRouter: PostLaunchRoutes { }
