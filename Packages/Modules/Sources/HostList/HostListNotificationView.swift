@@ -23,7 +23,7 @@ enum NotificationViewType {
     }
 
     struct Failure: NotificationViewStyle {
-        static let text = L10n.HostList.checkWifiConnection
+        static let text = L10n.HostList.checkConnection
         static let backgroundColor = Asset.Colors.warning.color
         static let textColor = Asset.Colors.secondaryVariant.color.resolvedColor(
             with: .init(userInterfaceStyle: .dark)
