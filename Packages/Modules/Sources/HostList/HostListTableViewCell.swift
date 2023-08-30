@@ -232,8 +232,8 @@ private extension HostListTableViewCell {
             return
         }
 
-        let isReachableViaWiFi = reachability.connection == .wifi
-        let notificationView = isReachableViaWiFi ? Default() : Failure()
+        let isReachable = reachability.connection != .unavailable
+        let notificationView = isReachable ? Default() : Failure()
 
         baseView.addSubview(notificationView)
         notificationView.snp.makeConstraints {
