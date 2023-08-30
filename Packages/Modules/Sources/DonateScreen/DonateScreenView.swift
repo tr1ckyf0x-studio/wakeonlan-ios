@@ -57,10 +57,6 @@ final class DonateScreenView: UIView {
             frame: .zero,
             style: .grouped
         )
-        tableView.register(
-            DonateItemCell.self,
-            forCellReuseIdentifier: "\(DonateItemCell.self)"
-        )
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
