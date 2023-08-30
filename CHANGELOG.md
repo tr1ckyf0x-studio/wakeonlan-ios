@@ -4,16 +4,30 @@
 
 ### Added
 
-- Added hostname suggestions for Siri intent
-
 ### Fixed
+
+### Updated
+
+### Removed
+
+## 1.3.0
+
+### Added
+
+- Added hostname suggestions for Siri intent
+- Refactored UDP client. Added possibility to send packets by domain name (#60)
+- Added In-App donations (#61)
 
 ### Updated
 
 - Updated dependencies
 - Updated bundle
+- Refactored SPM packages structure
+- CoreData migration (#59)
 
 ### Removed
+
+- Removed WiFi connection requirement (#62)
 
 ## 1.2.1
 
