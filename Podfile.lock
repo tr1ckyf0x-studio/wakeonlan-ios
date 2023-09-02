@@ -1,0 +1,348 @@
+PODS:
+  - AboutScreen (1.0):
+    - AboutScreen/AboutScreen (= 1.0)
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents
+  - AboutScreen/AboutScreen (1.0):
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents
+  - AddHost (1.0):
+    - AddHost/AddHost (= 1.0)
+    - CocoaLumberjack/Swift
+    - CoreDataService
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents
+  - AddHost/AddHost (1.0):
+    - CocoaLumberjack/Swift
+    - CoreDataService
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents
+  - CocoaLumberjack/Core (3.8.1)
+  - CocoaLumberjack/Swift (3.8.1):
+    - CocoaLumberjack/Core
+  - CoreDataService (1.0):
+    - CocoaLumberjack/Swift
+    - CoreDataService/Bundle (= 1.0)
+    - CoreDataService/CoreDataService (= 1.0)
+    - SharedProtocolsAndModels
+    - WOLResources
+  - CoreDataService/Bundle (1.0):
+    - CocoaLumberjack/Swift
+    - SharedProtocolsAndModels
+    - WOLResources
+  - CoreDataService/CoreDataService (1.0):
+    - CocoaLumberjack/Swift
+    - SharedProtocolsAndModels
+    - WOLResources
+  - DonateScreen (1.0):
+    - CocoaLumberjack/Swift
+    - DonateScreen/Bundle (= 1.0)
+    - DonateScreen/DonateScreen (= 1.0)
+    - IAPManager
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents
+  - DonateScreen/Bundle (1.0):
+    - CocoaLumberjack/Swift
+    - IAPManager
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents
+  - DonateScreen/DonateScreen (1.0):
+    - CocoaLumberjack/Swift
+    - IAPManager
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents
+  - FirebaseAnalytics/WithoutAdIdSupport (10.14.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.14.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseCore (10.14.0):
+    - FirebaseCoreInternal (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Logger (~> 7.8)
+  - FirebaseCoreExtension (10.14.0):
+    - FirebaseCore (~> 10.0)
+  - FirebaseCoreInternal (10.14.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseCrashlytics (10.14.0):
+    - FirebaseCore (~> 10.5)
+    - FirebaseInstallations (~> 10.0)
+    - FirebaseSessions (~> 10.5)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/Environment (~> 7.8)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (~> 2.1)
+  - FirebaseInstallations (10.14.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseSessions (10.14.0):
+    - FirebaseCore (~> 10.5)
+    - FirebaseCoreExtension (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.2)
+    - GoogleUtilities/Environment (~> 7.10)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesSwift (~> 2.1)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.14.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleDataTransport (9.2.5):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.11.5):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.11.5):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.11.5):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.11.5):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (7.11.5):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.11.5)"
+  - GoogleUtilities/Reachability (7.11.5):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.11.5):
+    - GoogleUtilities/Logger
+  - HostList (1.0):
+    - CocoaLumberjack/Swift
+    - CoreDataService
+    - HostList/HostList (= 1.0)
+    - ReachabilitySwift
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WakeOnLanService
+    - WOLResources
+    - WOLUIComponents
+  - HostList/HostList (1.0):
+    - CocoaLumberjack/Swift
+    - CoreDataService
+    - ReachabilitySwift
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SharedRouter
+    - SnapKit
+    - WakeOnLanService
+    - WOLResources
+    - WOLUIComponents
+  - IAPManager (1.0):
+    - IAPManager/IAPManager (= 1.0)
+    - SharedProtocolsAndModels
+  - IAPManager/IAPManager (1.0):
+    - SharedProtocolsAndModels
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - PostLaunch (1.0):
+    - AddHost
+    - CoreDataService
+    - PostLaunch/PostLaunch (= 1.0)
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+  - PostLaunch/PostLaunch (1.0):
+    - AddHost
+    - CoreDataService
+    - SharedRouter
+    - SnapKit
+    - WOLResources
+  - PromisesObjC (2.3.1)
+  - PromisesSwift (2.3.1):
+    - PromisesObjC (= 2.3.1)
+  - ReachabilitySwift (5.0.0)
+  - RouteComposer (2.10.4)
+  - SharedExtensions (1.0):
+    - SharedExtensions/SharedExtensions (= 1.0)
+    - WOLResources
+  - SharedExtensions/SharedExtensions (1.0):
+    - WOLResources
+  - SharedProtocolsAndModels (1.0):
+    - SharedProtocolsAndModels/SharedProtocolsAndModels (= 1.0)
+    - WOLResources
+  - SharedProtocolsAndModels/SharedProtocolsAndModels (1.0):
+    - WOLResources
+  - SharedRouter (1.0):
+    - RouteComposer
+    - SharedRouter/SharedRouter (= 1.0)
+  - SharedRouter/SharedRouter (1.0):
+    - RouteComposer
+  - SnapKit (5.6.0)
+  - WakeOnLanService (1.0):
+    - SharedProtocolsAndModels
+    - WakeOnLanService/WakeOnLanService (= 1.0)
+  - WakeOnLanService/WakeOnLanService (1.0):
+    - SharedProtocolsAndModels
+  - WOLResources (1.0):
+    - WOLResources/Bundle (= 1.0)
+    - WOLResources/WOLResources (= 1.0)
+  - WOLResources/Bundle (1.0)
+  - WOLResources/WOLResources (1.0)
+  - WOLUIComponents (1.0):
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SnapKit
+    - WOLResources
+    - WOLUIComponents/WOLUIComponents (= 1.0)
+  - WOLUIComponents/WOLUIComponents (1.0):
+    - SharedExtensions
+    - SharedProtocolsAndModels
+    - SnapKit
+    - WOLResources
+
+DEPENDENCIES:
+  - AboutScreen (from `./Modules/AboutScreen`)
+  - AddHost (from `./Modules/AddHost`)
+  - CocoaLumberjack/Swift (= 3.8.1)
+  - CoreDataService (from `./Modules/CoreDataService`)
+  - DonateScreen (from `./Modules/DonateScreen`)
+  - FirebaseAnalytics/WithoutAdIdSupport (= 10.14.0)
+  - FirebaseCrashlytics (= 10.14.0)
+  - HostList (from `./Modules/HostList`)
+  - IAPManager (from `./Modules/IAPManager`)
+  - PostLaunch (from `./Modules/PostLaunch`)
+  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift.git`, tag `v5.1.0`)
+  - RouteComposer (= 2.10.4)
+  - SharedExtensions (from `./Frameworks/SharedExtensions`)
+  - SharedProtocolsAndModels (from `./Frameworks/SharedProtocolsAndModels`)
+  - SharedRouter (from `./Frameworks/SharedRouter`)
+  - SnapKit (= 5.6.0)
+  - WakeOnLanService (from `./Modules/WakeOnLanService`)
+  - WOLResources (from `./Frameworks/WOLResources`)
+  - WOLUIComponents (from `./Frameworks/WOLUIComponents`)
+
+SPEC REPOS:
+  trunk:
+    - CocoaLumberjack
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreExtension
+    - FirebaseCoreInternal
+    - FirebaseCrashlytics
+    - FirebaseInstallations
+    - FirebaseSessions
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleUtilities
+    - nanopb
+    - PromisesObjC
+    - PromisesSwift
+    - RouteComposer
+    - SnapKit
+
+EXTERNAL SOURCES:
+  AboutScreen:
+    :path: "./Modules/AboutScreen"
+  AddHost:
+    :path: "./Modules/AddHost"
+  CoreDataService:
+    :path: "./Modules/CoreDataService"
+  DonateScreen:
+    :path: "./Modules/DonateScreen"
+  HostList:
+    :path: "./Modules/HostList"
+  IAPManager:
+    :path: "./Modules/IAPManager"
+  PostLaunch:
+    :path: "./Modules/PostLaunch"
+  ReachabilitySwift:
+    :git: https://github.com/ashleymills/Reachability.swift.git
+    :tag: v5.1.0
+  SharedExtensions:
+    :path: "./Frameworks/SharedExtensions"
+  SharedProtocolsAndModels:
+    :path: "./Frameworks/SharedProtocolsAndModels"
+  SharedRouter:
+    :path: "./Frameworks/SharedRouter"
+  WakeOnLanService:
+    :path: "./Modules/WakeOnLanService"
+  WOLResources:
+    :path: "./Frameworks/WOLResources"
+  WOLUIComponents:
+    :path: "./Frameworks/WOLUIComponents"
+
+CHECKOUT OPTIONS:
+  ReachabilitySwift:
+    :git: https://github.com/ashleymills/Reachability.swift.git
+    :tag: v5.1.0
+
+SPEC CHECKSUMS:
+  AboutScreen: 4e7da93a71194214a0f9ad2872b4f574ce9d54ba
+  AddHost: f5e28b649f117e65fec7baaa126c770a9b9c1cc3
+  CocoaLumberjack: 5c7e64cdb877770859bddec4d3d5a0d7c9299df9
+  CoreDataService: b727cb4720658b276841195548286f2877adb011
+  DonateScreen: e9298d7269d92c537e04fb60a42f28ee8a96bdec
+  FirebaseAnalytics: 5c6d58814afa4db82cf7fdbc02b0b0e2fa3d43ff
+  FirebaseCore: 6fc17ac9f03509d51c131298aacb3ee5698b4f02
+  FirebaseCoreExtension: 976638051b1a46b503afce7ec80277f9161f2040
+  FirebaseCoreInternal: d558159ee6cc4b823c2296ecc193de9f6d9a5bb3
+  FirebaseCrashlytics: 0fbfa4efa57e8a09d8bf195393b50c237e3322b5
+  FirebaseInstallations: f672b1eda64e6381c21d424a2f680a943fd83f3b
+  FirebaseSessions: f145e7365d36bec0d724c4574a8750e6f82fa6c8
+  GoogleAppMeasurement: 7fee012a868315d418f365fbc8d394d8e020e749
+  GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
+  GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
+  HostList: 0bfa14148ee573355fb41fda546759f4ec5bddb0
+  IAPManager: ec72c2aece7ffae544c3319e6b3a8e085af6e759
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  PostLaunch: 3a43369356a55f76bbf747fe10213fe04161b6b9
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  RouteComposer: 5ec7fa4e6074bcde2317750e6074675fd0075096
+  SharedExtensions: bb3b4528b7bb1c78fd695e1727e0955934d68e22
+  SharedProtocolsAndModels: 43e8570de8a8756271311e50c6381b11988b0fb6
+  SharedRouter: ceed52ce290461631d936dc578513e4ef585ff26
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  WakeOnLanService: 254aac7143f1c8ba2018ac1b4f8a7dcaf5143e74
+  WOLResources: 7ca70bff286ffea4150f38f1cd2fcb363c620701
+  WOLUIComponents: 0fd46d10d48832b07db62c378d1f5a043ed5441f
+
+PODFILE CHECKSUM: ae70b82b204816569b6f925ef452db200c573ed4
+
+COCOAPODS: 1.12.1

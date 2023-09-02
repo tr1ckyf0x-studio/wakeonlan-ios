@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-xcodegen generate
+xcodegen generate && bundle exec pod install
