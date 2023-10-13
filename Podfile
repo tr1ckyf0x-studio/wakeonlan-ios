@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'ruby-utils/cocoapods/podfile_helper'
+require 'PodHelper/podfile_helper'
 
 # Constants
 

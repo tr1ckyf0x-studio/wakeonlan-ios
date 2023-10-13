@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../ruby-utils/cocoapods/podspec_helper'
+require 'PodHelper/podspec_helper'
 
 # Constants
 
@@ -8,7 +8,7 @@ private_module_name = 'WOLResources'
 
 # PodSpec
 
-PodUtils.defmodule(
+PodHelper.defmodule(
     name: private_module_name,
     summary: 'Resources module',
     dependencies: %w[
