@@ -26,20 +26,6 @@ options:
 attributes:
   ORGANIZATIONNAME: "Владислав Лисянский"
 
-packages:
-  CocoaLumberjackSwift:
-    url: https://github.com/CocoaLumberjack/CocoaLumberjack
-    minorVersion: 3.8.1
-  Firebase:
-    url: https://github.com/firebase/firebase-ios-sdk
-    minorVersion: 10.14.0
-
-  # Local packages
-  Modules:
-    path: Packages/Modules
-  Frameworks:
-    path: Packages/Frameworks
-
 targets:
   Wake on LAN:
     platform: iOS
@@ -52,28 +38,13 @@ targets:
         optional: true
       - IntentSharedSources
     dependencies:
-      - package: Modules
-        product: AboutScreen
-      - package: Modules
-        product: AddHost
-      - package: Modules
-        product: DonateScreen
-      - package: Modules
-        product: HostList
-      - package: Modules
-        product: PostLaunch
-      - package: Modules
-        product: SharedRouter
-      - package: CocoaLumberjackSwift
-      - package: Firebase
-        product: FirebaseCrashlytics
       - target: Intent
     scheme:
-      testTargets:
-        - package: Modules/AddHostTests
-        - package: Modules/CoreDataServiceTests
-        - package: Modules/AboutScreenTests
-        - package: Modules/WakeOnLanServiceTests
+    #   testTargets:
+    #     - package: Modules/AddHostTests
+    #     - package: Modules/CoreDataServiceTests
+    #     - package: Modules/AboutScreenTests
+    #     - package: Modules/WakeOnLanServiceTests
       configVariants:
         - AppStore
         - AdHoc
@@ -113,7 +84,7 @@ targets:
       - name: "Crashlytics"
         basedOnDependencyAnalysis: false
         script: |
-                ${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run
+                ${PODS_ROOT}/FirebaseCrashlytics/run
         inputFiles:
           - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
           - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
@@ -145,10 +116,6 @@ targets:
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AdHoc"
     dependencies:
       - sdk: Intents.framework
-      - package: Modules
-        product: WakeOnLanService
-      - package: Modules
-        product: CoreDataService
     scheme:
       configVariants:
         - AppStore

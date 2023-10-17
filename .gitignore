@@ -193,6 +193,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+vendor/
+.bin/
+Podfile.lock
+
 # End of https://www.gitignore.io/api/swift,appcode
 .gitsecret/keys/random_seed
 !*.secret

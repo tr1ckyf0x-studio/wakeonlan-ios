@@ -22,6 +22,7 @@ disabled_rules:
 - type_name
 - closure_parameter_position
 - generic_type_name
+- blanket_disable_command
 
 opt_in_rules: 
 - array_init 
@@ -82,9 +83,10 @@ analyzer_rules:
 excluded: # paths to ignore during linting. Takes precedence over included. 
 - Carthage 
 - Pods 
-- "Packages/**/Generated/*.swift"
 - swift-templates
 - "**/*.generated.swift"
+- vendor
+- .bin
 
 # # configurable rules can be customized from this configuration file 
 # # binary rules can set their severity level 
