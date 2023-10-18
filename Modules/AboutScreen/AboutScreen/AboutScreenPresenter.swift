@@ -18,8 +18,7 @@ final class AboutScreenPresenter: Navigates {
 
     enum Configuration {
         static let appStoreURL = "https://itunes.apple.com/us/app/awake-wake-on-lan/id1575138731"
-        static let gitHubURL = "https://github.com/tr1ckyf0x/wakeonlan-ios"
-        static let donateURL = "https://github.com/tr1ckyf0x/wakeonlan-ios#donate"
+        static let gitHubURL = "https://github.com/tr1ckyf0x-studio/wakeonlan-ios"
     }
 
     // MARK: - Properties
