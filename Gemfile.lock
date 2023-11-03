@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:tr1ckyf0x-studio/PodHelper.git
-  revision: c629a36f60a6c66d9ca4f5231398f9f3b2d81650
-  tag: 0.1.0
+  revision: d32d21617abd4761b2cfe353887e8323266ebfc7
+  tag: 0.1.1
   specs:
-    PodHelper (0.1.0)
+    PodHelper (0.1.1)
       cocoapods-core
 
 GEM
@@ -29,8 +29,8 @@ GEM
     artifactory (3.0.15)
     atomos (0.1.3)
     aws-eventstream (1.2.0)
-    aws-partitions (1.843.0)
-    aws-sdk-core (3.185.2)
+    aws-partitions (1.845.0)
+    aws-sdk-core (3.186.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)

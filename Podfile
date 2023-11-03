@@ -4,7 +4,7 @@ require 'PodHelper/podfile_helper'
 
 # Constants
 
-DEPLOYMENT_TARGET = 13.0 # TODO: Move to the global constants
+DEPLOYMENT_TARGET = 13.0
 
 use_frameworks! :linkage => :static
 platform :ios, DEPLOYMENT_TARGET.to_s

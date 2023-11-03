@@ -1,0 +1,11 @@
+executables:
+  genesis: "mint run genesis"
+  swiftgen: "mint run swiftgen"
+
+viper:
+  modulesPath: "Modules"
+  templatePath: "swift-templates/Genesis/VIPER/template.yml"
+
+bundle:
+  modulesPath: "Modules"
+  templatePath: "swift-templates/Genesis/Bundle/template.yml"
