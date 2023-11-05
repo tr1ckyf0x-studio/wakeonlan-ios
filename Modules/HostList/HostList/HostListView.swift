@@ -48,7 +48,7 @@ final class HostListView: UIView {
     lazy var emptyView: EmptyView = {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
-            title: L10n.WakeOnLan.emptyViewMessage,
+            title: L10n.emptyViewMessage,
             image: Asset.Assets.owl.image,
             backgroundColor: Asset.Colors.primary.color
         )

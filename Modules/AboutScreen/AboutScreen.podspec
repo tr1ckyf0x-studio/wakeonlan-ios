@@ -21,6 +21,8 @@ PodHelper.defmodule(
     ],
     submodules: %w[
         AboutScreen
+        Bundle
+        Localization
     ],
     need_create_mock_spec: false,
     need_create_test_spec: false

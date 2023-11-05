@@ -24,7 +24,9 @@ PodHelper.defmodule(
         CocoaLumberjack/Swift
     ],
     submodules: %w[
+        Bundle
         HostList
+        Localization
     ],
     need_create_mock_spec: false,
     need_create_test_spec: false

@@ -1,13 +1,3 @@
-strings:
-  inputs:
-    - Resources/ModuleData/Strings/en.lproj
-  outputs:
-    - templateName: structured-swift5
-      output: WOLResources/Generated/Strings+Generated.swift
-      params:
-        publicAccess: true
-        bundle: Bundle.resourcesBundle
-
 xcassets:
   inputs:
     - Resources/ModuleData/Assets.xcassets
@@ -16,7 +6,7 @@ xcassets:
     - templateName: swift5
       params:
         forceProvidesNamespaces: true
-      output: WOLResources/Generated/XCAssets+Generated.swift
+      output: Assets/Assets.swift
       params:
         publicAccess: true
         bundle: Bundle.resourcesBundle

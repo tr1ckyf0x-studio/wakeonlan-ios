@@ -74,14 +74,14 @@ private extension AboutScreenPresenter {
             ),
             buttonListViewModel: [
                 .init(
-                    title: L10n.AboutScreen.rateApp,
+                    title: L10n.rateApp,
                     symbol: ButtonIcon.star,
                     action: { [weak self] in
                         self?.reviewRequester.requestReview()
                     }
                 ),
                 .init(
-                    title: L10n.AboutScreen.github,
+                    title: L10n.github,
                     symbol: ButtonIcon.tag,
                     action: { [weak self] in
                         guard let url = URL(string: Configuration.gitHubURL) else { return }
@@ -89,14 +89,14 @@ private extension AboutScreenPresenter {
                     }
                 ),
                 .init(
-                    title: L10n.AboutScreen.shareApp,
+                    title: L10n.shareApp,
                     symbol: ButtonIcon.share,
                     action: { [weak self] in
                         self?.view?.displayShareApp(with: Configuration.appStoreURL)
                     }
                 ),
                 .init(
-                    title: L10n.AboutScreen.donate,
+                    title: L10n.donate,
                     symbol: ButtonIcon.dollar,
                     action: { [weak self] in
                         self?.navigate(to: self?.router?.openDonate())

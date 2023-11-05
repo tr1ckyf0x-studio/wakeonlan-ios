@@ -14,6 +14,7 @@ PodHelper.defmodule(
     dependencies: %w[
     ],
     submodules: %w[
+        Assets
         Bundle
         WOLResources
     ],
