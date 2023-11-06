@@ -19,33 +19,20 @@ final class AddHostForm: AddHostFormRepresentable {
     enum Error: LocalizedError {
         case invalidMACAddress
         case invalidPort
-        case invalidTitle
         case unknown
 
         var description: String {
             switch self {
             case .invalidMACAddress:
-                return L10n.AddHost.Failure.invalidMACAddress
+                L10n.AddHost.Form.Field.MacAddress.Failure.invalidMACAddress
 
             case .invalidPort:
-                return L10n.AddHost.Failure.invalidPort
-
-            case .invalidTitle:
-                return L10n.AddHost.Failure.invalidTitle
+                L10n.AddHost.Form.Field.Port.Failure.invalidPort
 
             case .unknown:
-                return L10n.AddHost.Failure.unknown
+                L10n.AddHost.Form.Failure.unknown
             }
         }
-    }
-
-    // MARK: - Constants
-
-    private enum Placeholder {
-        static let title = L10n.AddHost.Placeholder.title
-        static let macAddress = L10n.AddHost.Placeholder.macAddress
-        static let ipAddress = L10n.AddHost.Placeholder.ipAddress
-        static let port = L10n.AddHost.Placeholder.port
     }
 
     // MARK: - Properties
@@ -79,7 +66,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
     private lazy var titleItem: TextFormItem = {
         let item = TextFormItem()
-        item.placeholder = Placeholder.title
+        item.placeholder = L10n.AddHost.Form.Field.Name.placeholder
         item.onValueChanged = { [weak self] value in
             self?.title = value
         }
@@ -92,7 +79,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
     private lazy var macAddressItem: TextFormItem = {
         let item = TextFormItem()
-        item.placeholder = Placeholder.macAddress
+        item.placeholder = L10n.AddHost.Form.Field.MacAddress.placeholder
         item.onValueChanged = { [weak self] value in
             self?.macAddress = value
         }
@@ -108,8 +95,8 @@ final class AddHostForm: AddHostFormRepresentable {
 
     private lazy var destinationItem: TextFormItem = {
         let item = TextFormItem()
-        item.placeholder = Placeholder.ipAddress
-        item.defaultValue = Placeholder.ipAddress
+        item.placeholder = L10n.AddHost.Form.Field.Host.placeholder
+        item.defaultValue = item.placeholder
         item.onValueChanged = { [weak self] value in
             self?.destination = value
         }
@@ -121,8 +108,8 @@ final class AddHostForm: AddHostFormRepresentable {
 
     private lazy var portItem: TextFormItem = {
         let item = TextFormItem()
-        item.placeholder = Placeholder.port
-        item.defaultValue = Placeholder.port
+        item.placeholder = L10n.AddHost.Form.Field.Port.placeholder
+        item.defaultValue = item.placeholder
         item.onValueChanged = { [weak self] value in
             self?.port = value
         }
@@ -155,29 +142,29 @@ final class AddHostForm: AddHostFormRepresentable {
 
         let titleSection = FormSection.section(
             content: [titleFormItem],
-            header: .init(header: L10n.title),
-            footer: .init(footer: L10n.titleDescription),
+            header: FormSection.Header(header: L10n.AddHost.Form.Field.Name.title),
+            footer: FormSection.Footer(footer: L10n.AddHost.Form.Field.Name.description),
             kind: .title
         )
 
         let macAddressSection = FormSection.section(
             content: [macAddressFormItem],
-            header: .init(header: L10n.macAddress),
-            footer: .init(footer: L10n.macAddressDescription),
+            header: FormSection.Header(header: L10n.AddHost.Form.Field.MacAddress.title),
+            footer: FormSection.Footer(footer: L10n.AddHost.Form.Field.MacAddress.description),
             kind: .macAddress
         )
 
         let destinationSection = FormSection.section(
             content: [destinationFormItem],
-            header: .init(header: L10n.host, mandatory: false),
-            footer: .init(footer: L10n.hostAddressDescription),
+            header: FormSection.Header(header: L10n.AddHost.Form.Field.Host.title, mandatory: false),
+            footer: FormSection.Footer(footer: L10n.AddHost.Form.Field.Host.description),
             kind: .destination
         )
 
         let portSection = FormSection.section(
             content: [portFormItem],
-            header: .init(header: L10n.port, mandatory: false),
-            footer: .init(footer: L10n.portDescription),
+            header: FormSection.Header(header: L10n.AddHost.Form.Field.Port.title, mandatory: false),
+            footer: FormSection.Footer(footer: L10n.AddHost.Form.Field.Port.description),
             kind: .port
         )
 
@@ -195,11 +182,10 @@ final class AddHostForm: AddHostFormRepresentable {
 // MARK: - FormValidable
 
 extension AddHostForm {
-
     public var isValid: Bool {
-        sections.allSatisfy {
-            $0.items.allSatisfy { $0.isValid }
-        }
+        sections
+            .lazy
+            .flatMap(\.items)
+            .allSatisfy(\.isValid)
     }
-
 }

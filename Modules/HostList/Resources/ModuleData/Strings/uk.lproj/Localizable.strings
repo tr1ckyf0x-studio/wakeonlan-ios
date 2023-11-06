@@ -1,4 +1,4 @@
-"hosts" = "Пристрої";
-"packetSent" = "Пакет надіслано";
-"checkConnection" = "Ви повинні бути підключені до мережі";
-"empty view message" = "Список порожній.\nНатисніть кнопку плюс у верхньому правому куті.";
+"HostList.Screen.Title" = "Пристрої";
+"HostList.Notification.PacketSent" = "Пакет надіслано";
+"HostList.Notification.CheckConnection" = "Ви повинні бути підключені до мережі";
+"HostList.Screen.EmptyViewMessage" = "Список порожній.\nНатисніть кнопку плюс у верхньому правому куті.";

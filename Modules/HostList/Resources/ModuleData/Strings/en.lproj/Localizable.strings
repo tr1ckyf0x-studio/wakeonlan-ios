@@ -1,4 +1,4 @@
-"hosts" = "Hosts";
-"packetSent" = "Packet sent";
-"checkConnection" = "You must be connected to network";
-"empty view message" = "There is nothing here.\nPress the plus button in the top right corner.";
+"HostList.Screen.Title" = "Hosts";
+"HostList.Notification.PacketSent" = "Packet sent";
+"HostList.Notification.CheckConnection" = "You must be connected to network";
+"HostList.Screen.EmptyViewMessage" = "There is nothing here.\nPress the plus button in the top right corner.";

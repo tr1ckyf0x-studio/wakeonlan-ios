@@ -68,7 +68,7 @@ final class DonateScreenView: UIView {
     lazy var paymentsUnavailableView: EmptyView = {
         let paymentsUnavailableView = EmptyView()
         let viewModel = StateableViewModel(
-            title: L10n.DonateScreen.paymentsUnavailableText,
+            title: L10n.DonateScreen.Screen.paymentsUnavailable,
             image: Asset.Assets.owl.image,
             backgroundColor: Asset.Colors.primary.color
         )

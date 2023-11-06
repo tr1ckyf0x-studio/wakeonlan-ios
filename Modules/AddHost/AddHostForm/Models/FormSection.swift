@@ -10,7 +10,7 @@ import SharedProtocolsAndModels
 
 enum FormSection {
 
-    case section(content: [Item], header: FormSectionHeader? = nil, footer: FormSectionFooter? = nil, kind: Kind? = nil)
+    case section(content: [Item], header: Header? = nil, footer: Footer? = nil, kind: Kind? = nil)
 
     // MARK: - Kind
 
@@ -22,9 +22,9 @@ enum FormSection {
         case port
     }
 
-    // MARK: - FormSectionHeader
+    // MARK: - Header
 
-    struct FormSectionHeader: Mandatoryable {
+    struct Header: Mandatoryable {
         let header: String
         let isMandatory: Bool
 
@@ -35,9 +35,9 @@ enum FormSection {
 
     }
 
-    // MARK: - FormSectionFooter
+    // MARK: - Footer
 
-    struct FormSectionFooter: Mandatoryable {
+    struct Footer: Mandatoryable {
         let footer: String
         let isMandatory: Bool
 
@@ -54,9 +54,6 @@ enum FormSection {
 
 extension FormSection: AddHostFormSectionRepresentable {
     typealias Item = FormItem
-    typealias Header = FormSectionHeader
-    typealias Footer = FormSectionFooter
-    typealias KindType = Kind?
 
     var items: [Item] {
         switch self {
@@ -65,14 +62,14 @@ extension FormSection: AddHostFormSectionRepresentable {
         }
     }
 
-    var header: FormSectionHeader? {
+    var header: Header? {
         switch self {
         case let .section(_, header, _, _):
             return header
         }
     }
 
-    var footer: FormSectionFooter? {
+    var footer: Footer? {
         switch self {
         case let .section(_, _, footer, _):
             return footer

@@ -1,30 +1,26 @@
-"title" = "Назва";
-"host" = "Хост";
-"mac address" = "MAC адрес";
-"port" = "Порт";
+"AddHost.Screen.Title" = "Додати хост";
 
-"change icon" = "Натисніть, щоб змінити значок";
+"AddHost.Form.Field.ChangeIcon.Title" = "Натисніть, щоб змінити значок";
+"AddHost.Form.Field.Name.Title" = "Назва";
+"AddHost.Form.Field.MacAddress.Title" = "MAC адрес";
+"AddHost.Form.Field.Host.Title" = "Хост";
+"AddHost.Form.Field.Port.Title" = "Порт";
 
-"host address description" = "IP-адрес або доменне ім'я вашого комп'ютера. Також можна використовувати широкомовну IP-адресу вашої підмережі, наприклад 192.168.0.255, 192.168.1.255 або 10.0.0.255. Якщо не вказано, буде використано 255.255.255.255.";
-"mac address description" = "MAC-адрес вашого комп'ютера. Ви можете знайти його в налаштуваннях мережі Ethernet.";
-"port description" = "Wake-On-Lan порт. 9 зазвичай підтримується картами Ethernet, інакше ви можете спробувати 7 або 0.";
-"title description" = "Ім'я відображатиметься у списку хостів";
+"AddHost.Form.Field.Name.Description" = "Ім'я відображатиметься у списку хостів";
+"AddHost.Form.Field.MacAddress.Description" = "MAC-адрес вашого комп'ютера. Ви можете знайти його в налаштуваннях мережі Ethernet.";
+"AddHost.Form.Field.Host.Description" = "IP-адрес або доменне ім'я вашого комп'ютера. Також можна використовувати широкомовну IP-адресу вашої підмережі, наприклад 192.168.0.255, 192.168.1.255 або 10.0.0.255. Якщо не вказано, буде використано 255.255.255.255.";
+"AddHost.Form.Field.Port.Description" = "Wake-On-Lan порт. 9 зазвичай підтримується картами Ethernet, інакше ви можете спробувати 7 або 0.";
 
-"optional" = "Не обов'язково";
+"AddHost.Form.Field.Name.Placeholder" = "MacBook або NAS";
+"AddHost.Form.Field.MacAddress.Placeholder" = "XX:XX:XX:XX:XX:XX";
+"AddHost.Form.Field.Host.Placeholder" = "255.255.255.255";
+"AddHost.Form.Field.Port.Placeholder" = "9";
 
-// Action sheet
-"cancel" = "Відміна";
-"choose icon" = "Виберіть значок";
+"AddHost.Form.Field.MacAddress.Failure.InvalidMACAddress" = "Некоректний MAC-адрес";
+"AddHost.Form.Field.Port.Failure.InvalidPort" = "Некоректний порт";
+"AddHost.Form.Failure.unknown" = "Невідома помилка";
 
-"add host" = "Додати хост";
+"AddHost.Form.Misc.Optional" = "Не обов'язково";
 
-// Placeholder
-"AddHost.Placeholder.Title" = "MacBook або NAS";
-"AddHost.Placeholder.MacAddress" = "XX:XX:XX:XX:XX:XX";
-"AddHost.Placeholder.IpAddress" = "255.255.255.255";
-"AddHost.Placeholder.Port" = "9";
-
-"AddHost.Failure.invalidMACAddress" = "Некоректний MAC-адрес";
-"AddHost.Failure.invalidPort" = "Некоректний порт";
-"AddHost.Failure.invalidTitle" = "Некоректне ім'я";
-"AddHost.Failure.unknown" = "Невідома помилка";
+"AddHost.Form.ActionSheet.Cancel" = "Відміна";
+"AddHost.Form.ActionSheet.ChooseIcon" = "Виберіть значок";

@@ -1,5 +1,5 @@
-"version" = "Версія";
-"rate app" = "Оцінити";
-"github" = "GitHub";
-"share app" = "Поділитися";
-"Donate" = "Донат";
+"AboutScreen.Item.Version" = "Версія";
+"AboutScreen.Item.RateApp" = "Оцінити";
+"AboutScreen.Item.Github" = "GitHub";
+"AboutScreen.Item.ShareApp" = "Поділитися";
+"AboutScreen.Item.Donate" = "Донат";

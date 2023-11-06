@@ -24,6 +24,7 @@ PodHelper.defmodule(
     submodules: %w[
         Bundle
         DonateScreen
+        Localization
     ],
     need_create_mock_spec: false,
     need_create_test_spec: false

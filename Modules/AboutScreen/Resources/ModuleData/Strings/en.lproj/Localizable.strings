@@ -1,5 +1,5 @@
-"version" = "Version";
-"rate app" = "Rate App";
-"github" = "GitHub";
-"share app" = "Share App";
-"Donate" = "Donate";
+"AboutScreen.Item.Version" = "Version";
+"AboutScreen.Item.RateApp" = "Rate App";
+"AboutScreen.Item.Github" = "GitHub";
+"AboutScreen.Item.ShareApp" = "Share App";
+"AboutScreen.Item.Donate" = "Donate";

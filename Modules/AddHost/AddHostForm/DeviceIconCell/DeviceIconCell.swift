@@ -29,7 +29,7 @@ final class DeviceIconCell: UITableViewCell {
         label.backgroundColor = .clear
         label.textColor = Asset.Colors.secondaryVariant.color
         label.font = .systemFont(ofSize: 12)
-        label.text = L10n.changeIcon
+        label.text = L10n.AddHost.Form.Field.ChangeIcon.title
 
         return label
     }()

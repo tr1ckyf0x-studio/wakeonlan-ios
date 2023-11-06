@@ -11,13 +11,13 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
   internal enum DonateScreen {
-    /// In-App purchases are unavailable on your device.
-    internal static let paymentsUnavailableText = L10n.tr("DonateScreen", "DonateScreen.paymentsUnavailableText", fallback: "In-App purchases are unavailable on your device.")
-    /// Donate
-    internal static let title = L10n.tr("DonateScreen", "DonateScreen.title", fallback: "Donate")
-    internal enum Footer {
+    internal enum Screen {
       /// Donations do not unlock any extra features in the application. The application is provided free of charge and any donations are your gratitude for our work.
-      internal static let warningText = L10n.tr("DonateScreen", "DonateScreen.Footer.warningText", fallback: "Donations do not unlock any extra features in the application. The application is provided free of charge and any donations are your gratitude for our work.")
+      internal static let footer = L10n.tr("DonateScreen", "DonateScreen.Screen.Footer", fallback: "Donations do not unlock any extra features in the application. The application is provided free of charge and any donations are your gratitude for our work.")
+      /// In-App purchases are unavailable on your device.
+      internal static let paymentsUnavailable = L10n.tr("DonateScreen", "DonateScreen.Screen.PaymentsUnavailable", fallback: "In-App purchases are unavailable on your device.")
+      /// Donate
+      internal static let title = L10n.tr("DonateScreen", "DonateScreen.Screen.Title", fallback: "Donate")
     }
   }
 }

@@ -138,7 +138,7 @@ private extension NSMutableAttributedString {
         ]
         let additionalAttributedString =
             NSMutableAttributedString(
-                string: " - " + L10n.optional,
+                string: " - " + L10n.AddHost.Form.Misc.optional,
                 attributes: additionalAttributes
             )
         guard

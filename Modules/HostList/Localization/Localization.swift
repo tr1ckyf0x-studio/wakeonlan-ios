@@ -10,15 +10,21 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
-  /// You must be connected to network
-  internal static let checkConnection = L10n.tr("Localizable", "checkConnection", fallback: "You must be connected to network")
-  /// There is nothing here.
-  /// Press the plus button in the top right corner.
-  internal static let emptyViewMessage = L10n.tr("Localizable", "empty view message", fallback: "There is nothing here.\nPress the plus button in the top right corner.")
-  /// Hosts
-  internal static let hosts = L10n.tr("Localizable", "hosts", fallback: "Hosts")
-  /// Packet sent
-  internal static let packetSent = L10n.tr("Localizable", "packetSent", fallback: "Packet sent")
+  internal enum HostList {
+    internal enum Notification {
+      /// You must be connected to network
+      internal static let checkConnection = L10n.tr("Localizable", "HostList.Notification.CheckConnection", fallback: "You must be connected to network")
+      /// Packet sent
+      internal static let packetSent = L10n.tr("Localizable", "HostList.Notification.PacketSent", fallback: "Packet sent")
+    }
+    internal enum Screen {
+      /// There is nothing here.
+      /// Press the plus button in the top right corner.
+      internal static let emptyViewMessage = L10n.tr("Localizable", "HostList.Screen.EmptyViewMessage", fallback: "There is nothing here.\nPress the plus button in the top right corner.")
+      /// Hosts
+      internal static let title = L10n.tr("Localizable", "HostList.Screen.Title", fallback: "Hosts")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

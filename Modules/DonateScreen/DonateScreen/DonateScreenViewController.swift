@@ -42,7 +42,7 @@ public final class DonateScreenViewController: UIViewController {
 // MARK: - Private
 extension DonateScreenViewController {
     private func setupNavigationBar() {
-        title = L10n.DonateScreen.title
+        title = L10n.DonateScreen.Screen.title
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = rootView.backBarButton
     }

@@ -3,4 +3,4 @@ strings:
     - Resources/ModuleData/Strings/en.lproj
   outputs:
     - templateName: structured-swift5
-      output: DonateScreen/Generated/Strings+Generated.swift
+      output: Localization/Localization.swift

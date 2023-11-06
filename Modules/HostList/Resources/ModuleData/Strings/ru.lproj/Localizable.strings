@@ -1,4 +1,4 @@
-"hosts" = "Устройства";
-"packetSent" = "Пакет отправлен";
-"checkConnection" = "Вы должны быть подключены к сети";
-"empty view message" = "Список пуст.\nНажмите на кнопку плюс в правом верхнем углу.";
+"HostList.Screen.Title" = "Устройства";
+"HostList.Notification.PacketSent" = "Пакет отправлен";
+"HostList.Notification.CheckConnection" = "Вы должны быть подключены к сети";
+"HostList.Screen.EmptyViewMessage" = "Список пуст.\nНажмите на кнопку плюс в правом верхнем углу.";

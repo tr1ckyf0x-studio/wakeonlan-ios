@@ -46,7 +46,7 @@ extension DonateScreenPresenter: DonateScreenInteractorOutput {
         }
         let section = DonateScreenTableSectionModel.donateSection(
             content: productItems,
-            footer: L10n.DonateScreen.Footer.warningText
+            footer: L10n.DonateScreen.Screen.footer
         )
 
         view?.setSections([section])
