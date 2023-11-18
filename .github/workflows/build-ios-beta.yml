@@ -1,0 +1,44 @@
+name: Build iOS Beta
+on:
+  push:
+    branches:
+      - development
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: personal-mac
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: Bootstrap
+        run: |
+          eval "$(rbenv init -)"
+          make bootstrap
+
+      - name: Import Certificates
+        run: |
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          security create-keychain -p ${{ secrets.IOS_RELEASE_SIGN_KEY_PASSWORD }} $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p ${{ secrets.IOS_RELEASE_SIGN_KEY_PASSWORD }} $KEYCHAIN_PATH
+          echo ${{ secrets.IOS_RELEASE_SIGN_KEY }} | base64 --decode | security import /dev/stdin -P ${{ secrets.IOS_RELEASE_SIGN_KEY_PASSWORD }} -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+      - name: Build release
+        env:
+          LANG: en_US.UTF-8
+          KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
+          APPSTORE_AUTH_KEY: ${{ secrets.APPSTORE_AUTH_KEY }}
+        run: |
+          eval "$(rbenv init -)"
+          bundle exec fastlane ios beta
+
+      - name: Clean up keychain and provisioning profile
+        if: ${{ always() }}
+        run: |
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db

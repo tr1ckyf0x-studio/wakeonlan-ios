@@ -18,6 +18,20 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    app_store_connect_api_key(
+      key_id: "65K8M54759",
+      issuer_id: "39222a33-4915-477e-a282-57c970346695",
+      key_content: ENV['APPSTORE_AUTH_KEY'],
+      is_key_content_base64: true,
+      duration: 1200, # optional (maximum 1200)
+      in_house: false # optional but may be required if using match/sigh
+    )
+
+    increment_build_number(
+      build_number: latest_testflight_build_number + 1,
+      xcodeproj: "Wake on LAN.xcodeproj"
+    )
+
     build_app(
       scheme: "Wake on LAN AppStore",
       include_bitcode: false,
@@ -26,14 +40,6 @@ platform :ios do
           "com.tr1ckyf0x.wake-on-lan" => "Wake On Lan AppStore"
         }
       }
-    )
-
-    app_store_connect_api_key(
-      key_id: "65K8M54759",
-      issuer_id: "39222a33-4915-477e-a282-57c970346695",
-      key_filepath: "fastlane/AuthKey_65K8M54759.p8",
-      duration: 1200, # optional (maximum 1200)
-      in_house: false # optional but may be required if using match/sigh
     )
 
     upload_to_testflight(
