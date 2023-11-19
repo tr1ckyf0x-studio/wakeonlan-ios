@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:tr1ckyf0x-studio/PodHelper.git
-  revision: d32d21617abd4761b2cfe353887e8323266ebfc7
-  tag: 0.1.1
+  revision: 2b58e3d5d3b80932705b90761cbd0b4afdcc9c77
+  tag: 0.3.0
   specs:
-    PodHelper (0.1.1)
+    PodHelper (0.3.0)
       cocoapods-core
 
 GEM
@@ -294,4 +294,4 @@ DEPENDENCIES
   fastlane
 
 BUNDLED WITH
-   2.4.21
+   2.3.21

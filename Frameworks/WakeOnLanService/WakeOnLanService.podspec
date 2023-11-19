@@ -10,13 +10,14 @@ private_module_name = 'WakeOnLanService'
 
 PodHelper.defmodule(
     name: private_module_name,
-    summary: 'WakeOnLanService',
+    summary: 'Implementation of the wake on lan protocol',
     dependencies: %w[
         SharedProtocolsAndModels
     ],
     submodules: %w[
-        WakeOnLanService
-    ],
-    need_create_mock_spec: false,
-    need_create_test_spec: false
+        MagicPacketBuilder
+        NWConnectionBuilder
+        UDPService
+        WOLService
+    ]
 )

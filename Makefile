@@ -12,6 +12,9 @@ generate_xcodeproj_file:
 install_pods:
 	bundle exec pod install
 
+install_pods_clean:
+	bundle exec pod install --clean-install
+
 install_pods_repo_update:
 	bundle exec pod install --repo-update
 

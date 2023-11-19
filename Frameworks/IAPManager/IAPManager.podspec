@@ -10,12 +10,13 @@ private_module_name = 'IAPManager'
 
 PodHelper.defmodule(
     name: private_module_name,
-    summary: 'IAPManager',
+    summary: 'Provides set of basic services for making in-app purchases',
     dependencies: %w[
         SharedProtocolsAndModels
     ],
     submodules: %w[
-        IAPManager
+        Core
+        Models
     ],
     need_create_mock_spec: false,
     need_create_test_spec: false
