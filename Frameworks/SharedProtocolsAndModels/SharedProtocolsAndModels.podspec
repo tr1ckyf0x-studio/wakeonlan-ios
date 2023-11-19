@@ -12,7 +12,6 @@ PodHelper.defmodule(
     name: private_module_name,
     summary: 'SharedProtocolsAndModels',
     dependencies: %w[
-        WOLResources
     ],
     submodules: %w[
         SharedProtocolsAndModels

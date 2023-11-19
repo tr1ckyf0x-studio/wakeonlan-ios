@@ -51,7 +51,7 @@ final class AddHostForm: AddHostFormRepresentable {
         }
     }
 
-    var iconModel: IconModel? = .init()
+    var iconModel: IconModel? = IconModel(sfSymbol: HostIcon.desktopcomputer)
     private(set) var title: String?
     private(set) var macAddress: String?
     private(set) var destination: String?

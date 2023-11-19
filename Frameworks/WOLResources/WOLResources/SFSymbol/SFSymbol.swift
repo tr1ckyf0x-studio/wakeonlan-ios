@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedProtocolsAndModels
 
 // MARK: - SFSymbolFactory
 
@@ -17,16 +18,6 @@ public enum SFSymbolFactory {
     public static func build(from rawValue: String) -> SFSymbolRepresentable? {
         hostTypes.lazy.compactMap { $0.init(rawString: rawValue) }.first
     }
-}
-
-// MARK: - SFSymbolRepresentable
-
-public protocol SFSymbolRepresentable {
-    var systemName: String { get }
-}
-
-public extension SFSymbolRepresentable where Self: RawRepresentable, RawValue == String {
-    var systemName: String { rawValue }
 }
 
 // MARK: - ButtonIcon

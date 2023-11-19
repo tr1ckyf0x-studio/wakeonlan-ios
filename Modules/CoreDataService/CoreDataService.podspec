@@ -13,7 +13,6 @@ PodHelper.defmodule(
     summary: 'CoreDataService',
     dependencies: %w[
         SharedProtocolsAndModels
-        WOLResources
         CocoaLumberjack/Swift
     ],
     submodules: %w[

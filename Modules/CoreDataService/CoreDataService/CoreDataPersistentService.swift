@@ -9,7 +9,6 @@
 import CocoaLumberjack
 import CoreData
 import SharedProtocolsAndModels
-import WOLResources
 
 // MARK: - PersistentContainer
 

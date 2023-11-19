@@ -6,8 +6,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import WOLResources
-
 public protocol IconModelRepresentable {
     var sfSymbol: SFSymbolRepresentable { get }
 }
@@ -15,7 +13,7 @@ public protocol IconModelRepresentable {
 public struct IconModel: IconModelRepresentable {
     public let sfSymbol: SFSymbolRepresentable
 
-    public init(sfSymbol: SFSymbolRepresentable = HostIcon.desktopcomputer) {
+    public init(sfSymbol: SFSymbolRepresentable) {
         self.sfSymbol = sfSymbol
     }
 }

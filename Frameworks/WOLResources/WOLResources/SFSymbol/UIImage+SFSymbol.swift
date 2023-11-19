@@ -5,6 +5,7 @@
 //  Created by Vladislav Lisianskii on 31.07.2021.
 //
 
+import SharedProtocolsAndModels
 import UIKit
 
 extension UIImage {
