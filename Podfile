@@ -6,38 +6,33 @@ require 'PodHelper/podfile_helper'
 
 DEPLOYMENT_TARGET = 13.0
 
+# Suppresses warning 'Your project does not explicitly specify the CocoaPods master specs repo'
+install! 'cocoapods', :warn_for_unused_master_specs_repo => false
+
 use_frameworks! :linkage => :static
 platform :ios, DEPLOYMENT_TARGET.to_s
 project 'Wake on LAN.xcodeproj'
 workspace 'Wake on LAN'
 
-def core_data_service
-    feature_module(name: 'CoreDataService', need_create_testspecs: false)
-end
-
-def wol_service
-    feature_module(name: 'WakeOnLanService', need_create_testspecs: false)
-end
-
-# Feature Modules
+# Features
 def features
-    feature_module(name: 'AboutScreen', need_create_testspecs: false)
-    feature_module(name: 'AddHost', need_create_testspecs: false)
-    core_data_service
-    feature_module(name: 'DonateScreen', need_create_testspecs: false)
-    feature_module(name: 'HostList', need_create_testspecs: false)
-    feature_module(name: 'IAPManager', need_create_testspecs: false)
-    feature_module(name: 'PostLaunch', need_create_testspecs: false)
-    wol_service
+    feature_module(name: 'AboutScreen')
+    feature_module(name: 'AddHost')
+    feature_module(name: 'DonateScreen')
+    feature_module(name: 'HostList')
+    feature_module(name: 'PostLaunch')
 end
 
 # Frameworks
 def frameworks
-    framework_module(name: 'SharedExtensions', need_create_testspecs: false)
-    framework_module(name: 'SharedProtocolsAndModels', need_create_testspecs: false)
-    framework_module(name: 'SharedRouter', need_create_testspecs: false)
-    framework_module(name: 'WOLResources', need_create_testspecs: false)
-    framework_module(name: 'WOLUIComponents', need_create_testspecs: false)
+    core_data_service
+    framework_module(name: 'IAPManager')
+    framework_module(name: 'SharedExtensions')
+    framework_module(name: 'SharedProtocolsAndModels')
+    framework_module(name: 'SharedRouter')
+    framework_module(name: 'WOLResources')
+    framework_module(name: 'WOLUIComponents')
+    wol_service
 end
 
 # External dependencies
@@ -50,6 +45,14 @@ def external_frameworks
     external_framework(name: 'SnapKit', version: '5.6.0')
 end
 
+def core_data_service
+    framework_module(name: 'CoreDataService')
+end
+
+def wol_service
+    framework_module(name: 'WakeOnLanService')
+end
+
 # Targets
 target 'Wake on LAN' do
     external_frameworks
@@ -57,7 +60,6 @@ target 'Wake on LAN' do
     frameworks
 end
 
-# Targets
 target 'Intent' do
     core_data_service
     wol_service

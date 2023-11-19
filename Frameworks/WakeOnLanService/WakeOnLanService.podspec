@@ -4,21 +4,20 @@ require 'PodHelper/podspec_helper'
 
 # Constants
 
-private_module_name = 'WOLUIComponents'
+private_module_name = 'WakeOnLanService'
 
 # PodSpec
 
 PodHelper.defmodule(
     name: private_module_name,
-    summary: 'UI Components',
+    summary: 'Implementation of the wake on lan protocol',
     dependencies: %w[
         SharedProtocolsAndModels
-        SharedExtensions
-        SnapKit
-        WOLResources
     ],
     submodules: %w[
-        Elements
-        SoftUI
+        MagicPacketBuilder
+        NWConnectionBuilder
+        UDPService
+        WOLService
     ]
 )

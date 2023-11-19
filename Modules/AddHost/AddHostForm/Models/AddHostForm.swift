@@ -24,13 +24,13 @@ final class AddHostForm: AddHostFormRepresentable {
         var description: String {
             switch self {
             case .invalidMACAddress:
-                L10n.AddHost.Form.Field.MacAddress.Failure.invalidMACAddress
+                return L10n.AddHost.Form.Field.MacAddress.Failure.invalidMACAddress
 
             case .invalidPort:
-                L10n.AddHost.Form.Field.Port.Failure.invalidPort
+                return L10n.AddHost.Form.Field.Port.Failure.invalidPort
 
             case .unknown:
-                L10n.AddHost.Form.Failure.unknown
+                return L10n.AddHost.Form.Failure.unknown
             }
         }
     }

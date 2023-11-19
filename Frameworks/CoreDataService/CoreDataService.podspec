@@ -4,21 +4,23 @@ require 'PodHelper/podspec_helper'
 
 # Constants
 
-private_module_name = 'WOLUIComponents'
+private_module_name = 'CoreDataService'
 
 # PodSpec
 
 PodHelper.defmodule(
     name: private_module_name,
-    summary: 'UI Components',
+    summary: 'Service which provides basic core data functionality',
     dependencies: %w[
+        CocoaLumberjack/Swift
         SharedProtocolsAndModels
-        SharedExtensions
-        SnapKit
         WOLResources
     ],
     submodules: %w[
-        Elements
-        SoftUI
+        Bundle
+        Core
+        Helpers
+        Migrations
+        Models
     ]
 )
