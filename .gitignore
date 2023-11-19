@@ -75,7 +75,6 @@ vendor/
 .gitsecret/keys/random_seed
 !*.secret
 DevelopmentKeys/Dev key password.txt
-fastlane/AuthKey_65K8M54759.p8
 DevelopmentKeys/Wake_On_Lan_Development.mobileprovision
 DevelopmentKeys/Wake_On_Lan_Siri_Intent_Development.mobileprovision
 DevelopmentKeys/Vladislav\ Lisianskii\ Apple\ Development\ 2023.p12
