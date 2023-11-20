@@ -10,7 +10,9 @@ import CoreData
 import SharedProtocolsAndModels
 
 public final class Host: NSManagedObject, HostRepresentable {
-    @NSManaged public private(set) var createdAt: Date
+
+    @NSManaged public private(set) var id: UUID
+    @NSManaged public private(set) var order: Int
     @NSManaged public private(set) var title: String
     @NSManaged public private(set) var iconName: String
     @NSManaged public private(set) var port: String?
@@ -32,12 +34,8 @@ public final class Host: NSManagedObject, HostRepresentable {
 
     override public func awakeFromInsert() {
         super.awakeFromInsert()
-        primitiveCreatedAt = Date()
+        id = UUID()
     }
-
-    // MARK: - Private
-
-    @NSManaged private var primitiveCreatedAt: Date
 
 }
 
@@ -88,6 +86,6 @@ public extension Host {
 
 extension Host: Managed {
     public static var defaultSortDescriptors: [NSSortDescriptor] {
-        [NSSortDescriptor(key: #keyPath(createdAt), ascending: false)]
+        [NSSortDescriptor(key: #keyPath(order), ascending: true)]
     }
 }
