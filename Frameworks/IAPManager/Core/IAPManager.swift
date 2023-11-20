@@ -22,17 +22,19 @@ public protocol ManagesIAP {
 
 public final class IAPManager: NSObject {
 
-    private let paymentQueue: SKPaymentQueue
+    private let paymentManager: ManagesPayments
 
     init(
-        paymentQueue: SKPaymentQueue
+        paymentManager: ManagesPayments
     ) {
-        self.paymentQueue = paymentQueue
+        self.paymentManager = paymentManager
         super.init()
     }
 
     override public convenience init() {
-        self.init(paymentQueue: .default())
+        self.init(
+            paymentManager: PaymentManager(paymentQueue: .default())
+        )
     }
 }
 
@@ -61,7 +63,7 @@ extension IAPManager: ManagesIAP {
         let skProduct = try await ProductsRequest().fetch(productIDs: Set([product.identifier])).first
         guard let skProduct else { return }
 
-        try await Payment(paymentQueue: paymentQueue).enqueue(product: skProduct)
+        try await paymentManager.enqueue(product: skProduct)
     }
 }
 

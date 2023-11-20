@@ -10,12 +10,21 @@ private_module_name = 'SharedProtocolsAndModels'
 
 PodHelper.defmodule(
     name: private_module_name,
-    summary: 'SharedProtocolsAndModels',
+    summary: 'Common models and protocols which can be used across modules',
     dependencies: %w[
     ],
     submodules: %w[
-        SharedProtocolsAndModels
-    ],
-    need_create_mock_spec: false,
-    need_create_test_spec: false
+        AddHost
+        BundleConstants
+        FileManager
+        GeneratesFeedback
+        HostRepresentable
+        Mandatoryable
+        OpensURL
+        ProvidesSharedInstance
+        RequestsReview
+        SFSymbol
+        Validable
+        ViewModelConfigurable
+    ]
 )

@@ -10,13 +10,10 @@ private_module_name = 'SharedExtensions'
 
 PodHelper.defmodule(
     name: private_module_name,
-    summary: 'SharedExtensions',
-    dependencies: %w[
-        WOLResources
-    ],
+    summary: 'Common extensions',
     submodules: %w[
-        SharedExtensions
-    ],
-    need_create_mock_spec: false,
-    need_create_test_spec: false
+        CoreGraphics
+        Foundation
+        UIKit
+    ]
 )

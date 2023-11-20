@@ -10,15 +10,16 @@ private_module_name = 'CoreDataService'
 
 PodHelper.defmodule(
     name: private_module_name,
-    summary: 'CoreDataService',
+    summary: 'Service which provides basic core data functionality',
     dependencies: %w[
-        SharedProtocolsAndModels
         CocoaLumberjack/Swift
+        SharedProtocolsAndModels
     ],
     submodules: %w[
         Bundle
-        CoreDataService
-    ],
-    need_create_mock_spec: false,
-    need_create_test_spec: false
+        Core
+        Helpers
+        Migrations
+        Models
+    ]
 )

@@ -12,21 +12,19 @@ PodHelper.defmodule(
     name: private_module_name,
     summary: 'AddHost',
     dependencies: %w[
+        CocoaLumberjack/Swift
         CoreDataService
-        SnapKit
         SharedExtensions
         SharedProtocolsAndModels
-        WOLResources
-        WOLUIComponents
-        CocoaLumberjack/Swift
         SharedRouter
+        SnapKit
+        WOLResources
+        WOLUIComponents    
     ],
     submodules: %w[
         AddHostForm
         Bundle
         ChooseIcon
         Localization
-    ],
-    need_create_mock_spec: false,
-    need_create_test_spec: false
+    ]
 )

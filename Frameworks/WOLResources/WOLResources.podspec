@@ -18,7 +18,5 @@ PodHelper.defmodule(
         Assets
         Bundle
         WOLResources
-    ],
-    need_create_mock_spec: false,
-    need_create_test_spec: false
+    ]
 )
