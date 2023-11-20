@@ -7,8 +7,6 @@
 
 import Foundation
 
-// MARK: - SFSymbolRepresentable
-
 public protocol SFSymbolRepresentable {
     var systemName: String { get }
 }
