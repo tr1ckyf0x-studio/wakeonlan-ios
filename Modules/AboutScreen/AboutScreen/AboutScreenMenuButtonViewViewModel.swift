@@ -6,7 +6,7 @@
 //  Copyright © 2021 Владислав Лисянский. All rights reserved.
 //
 
-import WOLResources
+import SharedProtocolsAndModels
 
 struct AboutScreenMenuButtonViewViewModel {
     /// Represents displayed title

@@ -1,5 +1,5 @@
 import Foundation
-import WOLResources
+import SharedProtocolsAndModels
 
 enum CoreDataConstants {
     static let persistentContainerName = "HostsDataModel"

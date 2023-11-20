@@ -12,10 +12,10 @@ PodHelper.defmodule(
     name: private_module_name,
     summary: 'Common models and protocols which can be used across modules',
     dependencies: %w[
-        WOLResources
     ],
     submodules: %w[
         AddHost
+        BundleConstants
         FileManager
         GeneratesFeedback
         HostRepresentable
@@ -23,6 +23,7 @@ PodHelper.defmodule(
         OpensURL
         ProvidesSharedInstance
         RequestsReview
+        SFSymbol
         Validable
         ViewModelConfigurable
     ]

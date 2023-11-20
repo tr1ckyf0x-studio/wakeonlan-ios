@@ -12,6 +12,7 @@ PodHelper.defmodule(
     name: private_module_name,
     summary: 'Resources module',
     dependencies: %w[
+        SharedProtocolsAndModels
     ],
     submodules: %w[
         Assets

@@ -14,7 +14,6 @@ PodHelper.defmodule(
     dependencies: %w[
         CocoaLumberjack/Swift
         SharedProtocolsAndModels
-        WOLResources
     ],
     submodules: %w[
         Bundle
