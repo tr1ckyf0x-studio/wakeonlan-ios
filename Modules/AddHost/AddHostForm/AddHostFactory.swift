@@ -34,7 +34,10 @@ extension AddHostFactory: Factory {
         presenter.router = router
 
         let coreDataService = CoreDataService.shared
-        let interactor = AddHostInteractor(coreDataService: coreDataService)
+        let interactor = AddHostInteractor(
+            coreDataService: coreDataService,
+            hostCrudWorker: HostCRUDWorker(coreDataService: coreDataService)
+        )
         interactor.presenter = presenter
         presenter.interactor = interactor
 

@@ -42,7 +42,8 @@ extension HostListFactory: Factory {
         let interactor = HostListInteractor(
             coreDataService: coreDataService,
             wakeOnLanService: WakeOnLanService.shared,
-            cacheTracker: cacheTracker
+            cacheTracker: cacheTracker,
+            hostCrudWorker: HostCRUDWorker(coreDataService: coreDataService)
         )
 
         cacheTracker.delegate = interactor

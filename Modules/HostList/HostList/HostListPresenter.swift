@@ -51,13 +51,21 @@ extension HostListPresenter: HostListViewOutput {
         guard let host = interactor?.host(at: indexPath) else { return }
         interactor?.wakeHost(host)
     }
+
+    func view(
+        _ view: HostListViewInput,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        interactor?.moveRow(at: sourceIndexPath, to: destinationIndexPath)
+    }
 }
 
 // MARK: - HostListInteractorOutput
 
 extension HostListPresenter: HostListInteractorOutput {
 
-    func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: ContentSnapshot) {
+    func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: HostListSnapshot) {
         view?.updateContentSnapshot(contentSnapshot)
         if contentSnapshot.numberOfItems > .zero {
             view?.showState(.default)

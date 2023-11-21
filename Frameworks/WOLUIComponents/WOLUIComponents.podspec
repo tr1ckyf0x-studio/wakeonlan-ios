@@ -19,6 +19,7 @@ PodHelper.defmodule(
     ],
     submodules: %w[
         Elements
+        Protocols
         SoftUI
     ]
 )

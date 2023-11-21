@@ -11,10 +11,24 @@ import CoreData
 import CoreDataService
 import UIKit
 
-final class HostListCacheTracker:
-    NSObject,
-    TracksHostListCache,
-    NSFetchedResultsControllerDelegate {
+protocol TracksHostListCache {
+    var fetchedObjects: [Host]? { get }
+    var context: NSManagedObjectContext { get }
+
+    func start()
+    func hostAtIndexPath(_ indexPath: IndexPath) -> Host
+}
+
+protocol HostListCacheTrackerDelegate: AnyObject {
+    func cacheTracker(
+        _ tracker: TracksHostListCache,
+        didChangeContentSnapshot contentSnapshot: HostListSnapshot
+    )
+}
+
+final class HostListCacheTracker: NSObject,
+                                  TracksHostListCache,
+                                  NSFetchedResultsControllerDelegate {
 
     // MARK: - Properties
 
@@ -44,6 +58,14 @@ final class HostListCacheTracker:
     }
 
     // MARK: - CacheTracker
+
+    var fetchedObjects: [Host]? {
+        controller.fetchedObjects
+    }
+
+    var context: NSManagedObjectContext {
+        controller.managedObjectContext
+    }
 
     func start() {
         do {

@@ -14,15 +14,21 @@ final class AddHostInteractor: AddHostInteractorInput {
     weak var presenter: AddHostInteractorOutput?
 
     private let coreDataService: CoreDataServiceProtocol
+    private let hostCrudWorker: PerformsHostCRUD
 
-    init(coreDataService: CoreDataServiceProtocol) {
+    init(
+        coreDataService: CoreDataServiceProtocol,
+        hostCrudWorker: PerformsHostCRUD
+    ) {
         self.coreDataService = coreDataService
+        self.hostCrudWorker = hostCrudWorker
     }
 
     func saveForm(_ form: AddHostForm) {
-        let context = coreDataService.createChildConcurrentContext()
-        Host.insert(into: context, form: form)
-        coreDataService.saveContext(context) { [weak self] in
+        hostCrudWorker.create(
+            from: form,
+            in: coreDataService.createChildConcurrentContext()
+        ) { [weak self] _ in
             guard let self else { return }
             self.presenter?.interactor(self, didSaveForm: form)
             DDLogDebug("Host saved")
@@ -30,18 +36,18 @@ final class AddHostInteractor: AddHostInteractorInput {
     }
 
     func updateForm(_ form: AddHostForm) {
-        let context = coreDataService.createChildConcurrentContext()
-        context.perform { [weak self] in
-            guard let host = form.host else {
-                DDLogWarn("Host does not exist in form")
-                return
-            }
-            Host.update(object: host, into: context, with: form)
-            self?.coreDataService.saveContext(context) { [weak self] in
-                guard let self else { return }
-                self.presenter?.interactor(self, didUpdateForm: form)
-                DDLogDebug("Host updated")
-            }
+        guard let host = form.host else {
+            DDLogWarn("Host does not exist in form")
+            return
+        }
+        hostCrudWorker.update(
+            host: host,
+            in: coreDataService.createChildConcurrentContext(),
+            with: form
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.presenter?.interactor(self, didUpdateForm: form)
+            DDLogDebug("Host updated")
         }
     }
 

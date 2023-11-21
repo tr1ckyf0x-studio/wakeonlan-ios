@@ -244,7 +244,7 @@ private extension HostListTableViewCell {
         }
 
         let animationDuration = 0.2
-        let hideNotificationAnimated = { () -> Void in
+        let hideNotificationAnimated = {
             UIView.animate(
                 withDuration: animationDuration,
                 animations: { notificationView.alpha = 0.0 },
@@ -254,7 +254,7 @@ private extension HostListTableViewCell {
             )
         }
 
-        let displayNotificationAnimated = { () -> Void in
+        let displayNotificationAnimated = {
             UIView.animate(
                 withDuration: animationDuration,
                 animations: { notificationView.alpha = 1.0 },
