@@ -13,7 +13,6 @@ import SharedProtocolsAndModels
 public final class Host: NSManagedObject, HostRepresentable {
 
     @NSManaged public internal(set) var order: Int
-    @NSManaged public internal(set) var id: UUID
     @NSManaged public internal(set) var title: String
     @NSManaged public internal(set) var iconName: String
     @NSManaged public internal(set) var port: String?
@@ -31,11 +30,6 @@ public final class Host: NSManagedObject, HostRepresentable {
                 CoreDataHostFormatter.compress(string: value, ofType: .macAddress)
             }
         }
-    }
-
-    override public func awakeFromInsert() {
-        super.awakeFromInsert()
-        id = UUID()
     }
 
 }

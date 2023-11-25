@@ -3,7 +3,6 @@
     <entity name="Host" representedClassName="CoreDataService.Host" syncable="YES">
         <attribute name="destination" optional="YES" attributeType="String"/>
         <attribute name="iconName" attributeType="String"/>
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="macAddressData" optional="YES" attributeType="Binary"/>
         <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="port" optional="YES" attributeType="String"/>

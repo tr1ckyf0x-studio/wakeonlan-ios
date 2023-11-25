@@ -37,8 +37,6 @@ final class HostV3Mapping: NSEntityMigrationPolicy {
             fatalError("Must return host")
         }
 
-        destinationInstance.setValue(UUID(), forKey: Constants.id)
-
         let createdAt = sourceInstance.value(forKey: Constants.createdAt) as? Date
 
         let index = createdAt.flatMap { (date: Date) -> Int? in
@@ -57,7 +55,6 @@ final class HostV3Mapping: NSEntityMigrationPolicy {
 
 extension HostV3Mapping {
     private enum Constants {
-        static let id = "id"
         static let createdAt = "createdAt"
         static let order = "order"
     }
