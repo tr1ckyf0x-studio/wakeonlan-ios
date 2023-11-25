@@ -32,7 +32,7 @@ public protocol PerformsHostCRUD {
         host: Host,
         in context: NSManagedObjectContext,
         with form: T,
-        completion: ((Result<Void, Error>) -> Void)?
+        completion: ((Result<Void, Swift.Error>) -> Void)?
     )
 }
 
@@ -127,6 +127,7 @@ public struct HostCRUDWorker: PerformsHostCRUD {
         completion: ((Result<Void, Swift.Error>) -> Void)?
     ) {
 
+        // swiftlint:disable:next closure_body_length
         context.perform {
             guard
                 let macAddress = form.macAddress,
