@@ -9,7 +9,6 @@
 import CocoaLumberjack
 import CoreData
 import CoreDataService
-import UIKit
 
 protocol TracksHostListCache {
     var fetchedObjects: [Host]? { get }
@@ -20,24 +19,19 @@ protocol TracksHostListCache {
 }
 
 protocol HostListCacheTrackerDelegate: AnyObject {
-    func cacheTracker(
-        _ tracker: TracksHostListCache,
-        didChangeContentSnapshot contentSnapshot: HostListSnapshot
-    )
+    func cacheTracker(_ tracker: TracksHostListCache, didChangeContentSnapshot contentSnapshot: HostListSnapshot)
 }
 
-final class HostListCacheTracker: NSObject,
-                                  TracksHostListCache,
-                                  NSFetchedResultsControllerDelegate {
-
-    // MARK: - Properties
-
+final class HostListCacheTracker: NSObject, TracksHostListCache, NSFetchedResultsControllerDelegate {
     typealias Delegate = HostListCacheTrackerDelegate
     typealias SnapshotMapper = MapsSnapshotToHostListItem
 
+    // MARK: - Properties
+
+    weak var delegate: Delegate?
+
     private var controller: NSFetchedResultsController<Host>
     private let mapper: SnapshotMapper
-    weak var delegate: Delegate?
 
     // MARK: - Init
 
@@ -85,11 +79,7 @@ final class HostListCacheTracker: NSObject,
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChangeContentWith snapshotReference: NSDiffableDataSourceSnapshotReference
     ) {
-        let snapshot = mapper.map(
-            snapshotReference: snapshotReference,
-            context: controller.managedObjectContext
-        )
+        let snapshot = mapper.map(snapshotReference: snapshotReference, context: controller.managedObjectContext)
         delegate?.cacheTracker(self, didChangeContentSnapshot: snapshot)
     }
-
 }

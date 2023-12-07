@@ -6,8 +6,7 @@
 //
 
 import SharedExtensions
-import UIKit
-import WOLUIComponents
+import SharedProtocolsAndModels
 
 struct HostListCellProvider: ProvidesTableViewCell {
 

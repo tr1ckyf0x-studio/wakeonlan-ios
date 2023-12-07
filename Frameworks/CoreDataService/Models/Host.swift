@@ -11,7 +11,6 @@ import CoreData
 import SharedProtocolsAndModels
 
 public final class Host: NSManagedObject, HostRepresentable {
-
     @NSManaged public internal(set) var order: Int
     @NSManaged public internal(set) var title: String
     @NSManaged public internal(set) var iconName: String
@@ -31,7 +30,6 @@ public final class Host: NSManagedObject, HostRepresentable {
             }
         }
     }
-
 }
 
 // MARK: - Managed
@@ -39,5 +37,21 @@ public final class Host: NSManagedObject, HostRepresentable {
 extension Host: Managed {
     public static var defaultSortDescriptors: [NSSortDescriptor] {
         [NSSortDescriptor(key: #keyPath(order), ascending: true)]
+    }
+}
+
+// MARK: - UpdatesManagedObject
+
+extension Host: UpdatesManagedObject {
+    public typealias Model = any AddHostFormRepresentable
+    public typealias ManagedObject = Host
+
+    public func update(from model: Model, in context: NSManagedObjectContext) {
+        guard let object = context.object(with: self.objectID) as? Self else { return }
+        object.title = model.title
+        object.iconName = model.iconModel.sfSymbol.systemName
+        object.macAddress = model.macAddress
+        object.destination = model.destination
+        object.port = model.port
     }
 }

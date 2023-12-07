@@ -6,7 +6,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import SharedProtocolsAndModels
 
 enum FormItem {
@@ -26,7 +25,6 @@ extension FormItem: Validable {
             return true
         }
     }
-
 }
 
 // MARK: - Mandatoryable

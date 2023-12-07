@@ -8,27 +8,34 @@
 
 import CocoaLumberjack
 import CoreDataService
+import SharedProtocolsAndModels
 
 final class AddHostInteractor: AddHostInteractorInput {
+
+    typealias CRUDPerformer = any PerformsCRUDOperation<AddHostFormRepresentable, Host>
+
+    // MARK: - Properties
 
     weak var presenter: AddHostInteractorOutput?
 
     private let coreDataService: CoreDataServiceProtocol
-    private let hostCrudWorker: PerformsHostCRUD
+    private let hostCrudWorker: CRUDPerformer
+
+    // MARK: - Init
 
     init(
         coreDataService: CoreDataServiceProtocol,
-        hostCrudWorker: PerformsHostCRUD
+        hostCrudWorker: CRUDPerformer
     ) {
         self.coreDataService = coreDataService
         self.hostCrudWorker = hostCrudWorker
     }
 
+    // MARK: - AddHostInteractorInput
+
     func saveForm(_ form: AddHostForm) {
-        hostCrudWorker.create(
-            from: form,
-            in: coreDataService.createChildConcurrentContext()
-        ) { [weak self] _ in
+        let context = coreDataService.createChildConcurrentContext()
+        hostCrudWorker.create(from: form, in: context) { [weak self] _ in
             guard let self else { return }
             self.presenter?.interactor(self, didSaveForm: form)
             DDLogDebug("Host saved")
@@ -36,19 +43,17 @@ final class AddHostInteractor: AddHostInteractorInput {
     }
 
     func updateForm(_ form: AddHostForm) {
-        guard let host = form.host else {
+        guard
+            let host = form.host
+        else {
             DDLogWarn("Host does not exist in form")
             return
         }
-        hostCrudWorker.update(
-            host: host,
-            in: coreDataService.createChildConcurrentContext(),
-            with: form
-        ) { [weak self] _ in
+        let context = coreDataService.createChildConcurrentContext()
+        hostCrudWorker.update(object: host, in: context, with: form) { [weak self] _ in
             guard let self else { return }
             self.presenter?.interactor(self, didUpdateForm: form)
             DDLogDebug("Host updated")
         }
     }
-
 }

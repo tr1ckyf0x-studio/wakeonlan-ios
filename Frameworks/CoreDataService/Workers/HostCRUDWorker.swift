@@ -1,176 +1,74 @@
 //
 //  HostCRUDWorker.swift
-//  CoreDataService
+//  Wake on LAN
 //
-//  Created by Vladislav Lisianskii on 21.11.2023.
+//  Created by Dmitry Stavitsky on 07.12.2023.
+//  Copyright © 2023 Владислав Лисянский. All rights reserved.
 //
 
 import CocoaLumberjack
 import CoreData
 import SharedProtocolsAndModels
 
-public protocol PerformsHostCRUD {
-    func move(
-        from sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath,
-        in fetchedObjects: [Host],
-        context: NSManagedObjectContext
-    )
+public struct HostCRUDWorker {
+    public typealias ManagedObject = Host
+    public typealias Model = any AddHostFormRepresentable
 
-    func delete(
-        host: Host,
-        context: NSManagedObjectContext
-    )
-
-    func create<T: AddHostFormRepresentable>(
-        from form: T,
-        in context: NSManagedObjectContext,
-        completion: ((Result<Void, Swift.Error>) -> Void)?
-    )
-
-    func update<T: AddHostFormRepresentable>(
-        host: Host,
-        in context: NSManagedObjectContext,
-        with form: T,
-        completion: ((Result<Void, Swift.Error>) -> Void)?
-    )
-}
-
-public struct HostCRUDWorker: PerformsHostCRUD {
+    // MARK: - Properties
 
     private let coreDataService: CoreDataServiceProtocol
 
-    public init(coreDataService: CoreDataServiceProtocol) {
+    // MARK: - Init
+
+    public init(coreDataService: CoreDataServiceProtocol = CoreDataService.shared) {
         self.coreDataService = coreDataService
     }
+}
 
-    public func move(
-        from sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath,
-        in fetchedObjects: [Host],
-        context: NSManagedObjectContext
-    ) {
-        guard
-            sourceIndexPath != destinationIndexPath
-        else {
-            return
-        }
+// MARK: - PerformsCRUDOperation
 
-        var fetchedObjects = fetchedObjects
-
-        let host = fetchedObjects.remove(at: sourceIndexPath.item)
-        fetchedObjects.insert(host, at: destinationIndexPath.item)
-        context.performAndWait {
-            fetchedObjects.enumerated().forEach { (index: Int, host: Host) in
-                host.order = index
-            }
-        }
-        coreDataService.saveContext(context)
-    }
-
-    public func delete(
-        host: Host,
-        context: NSManagedObjectContext
-    ) {
-        context.perform {
-            context.delete(host)
-            coreDataService.saveContext(context)
-            DDLogDebug("Host deleted")
-        }
-    }
-
-    public func create<T: AddHostFormRepresentable>(
-        from form: T,
+extension HostCRUDWorker: PerformsCRUDOperation {
+    public func create(
+        from model: Model,
         in context: NSManagedObjectContext,
-        completion: ((Result<Void, Swift.Error>) -> Void)?
+        completion: CompletionHandler?
     ) {
-        guard
-            let macAddress = form.macAddress,
-            let title = form.title,
-            let iconName = form.iconModel?.sfSymbol
-        else {
-            DispatchQueue.main.async {
-                completion?(.failure(Error.formIsNotValid))
-            }
-            return
-        }
-
         context.performAndWait {
             do {
                 let hosts = try context.fetch(Host.sortedFetchRequest)
-                hosts.forEach { (host: Host) in
-                    host.order += 1
+                hosts.forEach {
+                    $0.order += 1
                 }
             } catch {
                 DDLogError("Failed to fetch hosts due to error: \(error)")
             }
         }
-
         let host: Host = context.insertObject()
-        host.iconName = iconName.systemName
-        host.title = title
-        host.macAddress = macAddress
-        host.destination = form.destination
-        host.port = form.port
-
+        host.update(from: model, in: context)
         coreDataService.saveContext(context) {
-            DispatchQueue.main.async {
+            completion?(.success(Void()))
+        }
+    }
+
+    public func update(
+        object: Host,
+        in context: NSManagedObjectContext,
+        with model: Model,
+        completion: CompletionHandler?
+    ) {
+        context.perform { [weak coreDataService] in
+            object.update(from: model, in: context)
+            coreDataService?.saveContext(context) {
                 completion?(.success(Void()))
             }
         }
     }
 
-    public func update<T: AddHostFormRepresentable>(
-        host: Host,
-        in context: NSManagedObjectContext,
-        with form: T,
-        completion: ((Result<Void, Swift.Error>) -> Void)?
-    ) {
-
-        // swiftlint:disable:next closure_body_length
+    public func delete(object: ManagedObject, in context: NSManagedObjectContext) {
         context.perform {
-            guard
-                let macAddress = form.macAddress,
-                let title = form.title,
-                let iconName = form.iconModel?.sfSymbol,
-                let updateObject = context.object(with: host.objectID) as? Host
-            else {
-                DispatchQueue.main.async {
-                    completion?(.failure(Error.hostNotFound))
-                }
-                return
-            }
-
-            updateObject.title = title
-            updateObject.iconName = iconName.systemName
-            updateObject.macAddress = macAddress
-            updateObject.destination = form.destination
-            updateObject.port = form.port
-
-            coreDataService.saveContext(context) {
-                DispatchQueue.main.async {
-                    completion?(.success(Void()))
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Error
-
-extension HostCRUDWorker {
-    enum Error: LocalizedError {
-        case hostNotFound
-        case formIsNotValid
-
-        var errorDescription: String? {
-            switch self {
-            case .hostNotFound:
-                "Host not found."
-
-            case .formIsNotValid:
-                "Form is not valid. Some fields are nil."
-            }
+            context.delete(object)
+            coreDataService.saveContext(context)
+            DDLogDebug("Host deleted")
         }
     }
 }

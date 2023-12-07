@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Foundation
 
 public protocol Managed: NSFetchRequestResult {
     static var entityName: String { get }

@@ -7,7 +7,6 @@
 //
 
 import CoreDataService
-import UIKit
 import WOLUIComponents
 
 typealias HostListSection = String
@@ -40,11 +39,8 @@ protocol HostListInteractorInput: AnyObject {
     func startCacheTracker()
     func wakeHost(_ host: Host)
     func deleteHost(_ host: Host)
-    func host(at indexPath: IndexPath) -> Host
-    func moveRow(
-        at sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath
-    )
+    func fetchHost(at indexPath: IndexPath) -> Host
+    func moveRow(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
 }
 
 protocol HostListInteractorOutput: AnyObject {

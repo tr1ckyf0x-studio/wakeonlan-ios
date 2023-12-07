@@ -23,6 +23,7 @@ public final class WakeOnLanService {
 }
 
 // MARK: - WakeOnLanServiceProtocol
+
 extension WakeOnLanService: WakeOnLanServiceProtocol {
     public func sendMagicPacket(to host: HostRepresentable) async throws {
         let destination = host.destination.defaultIfEmpty(Constants.broadcastIPAddress)
@@ -34,6 +35,7 @@ extension WakeOnLanService: WakeOnLanServiceProtocol {
 }
 
 // MARK: - ProvidesWeakSharedInstanceTrait
+
 extension WakeOnLanService: ProvidesWeakSharedInstanceTrait {
     public static weak var weakSharedInstance: WakeOnLanService?
 
@@ -46,6 +48,7 @@ extension WakeOnLanService: ProvidesWeakSharedInstanceTrait {
 }
 
 // MARK: - Constants
+
 extension WakeOnLanService {
     private enum Constants {
         static let broadcastIPAddress = "255.255.255.255"

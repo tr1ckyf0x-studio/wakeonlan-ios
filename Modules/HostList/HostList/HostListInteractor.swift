@@ -8,37 +8,44 @@
 
 import CocoaLumberjack
 import CoreDataService
-import Foundation
+import SharedProtocolsAndModels
 import WakeOnLanService
 
 final class HostListInteractor: HostListInteractorInput {
 
+    typealias CRUDPerformer = any PerformsCRUDOperation<AddHostFormRepresentable, Host>
+
+    typealias MovePerformer = any PerformsMoveOperation<Host>
+
+    // MARK: - Properties
+
+    weak var presenter: HostListInteractorOutput?
     private let coreDataService: CoreDataServiceProtocol
     private let wakeOnLanService: WakeOnLanService
     private let cacheTracker: TracksHostListCache
-    private let hostCrudWorker: PerformsHostCRUD
+    private let hostCrudWorker: CRUDPerformer
+    private let hostMoveWorker: MovePerformer
 
-    weak var presenter: HostListInteractorOutput?
+    // MARK: - Init
 
     init(
         coreDataService: CoreDataServiceProtocol,
         wakeOnLanService: WakeOnLanService,
         cacheTracker: TracksHostListCache,
-        hostCrudWorker: PerformsHostCRUD
+        hostCrudWorker: CRUDPerformer,
+        hostMoveWorker: MovePerformer
     ) {
         self.coreDataService = coreDataService
         self.wakeOnLanService = wakeOnLanService
         self.cacheTracker = cacheTracker
         self.hostCrudWorker = hostCrudWorker
+        self.hostMoveWorker = hostMoveWorker
     }
+
+    // MARK: - HostListInteractorInput
 
     func startCacheTracker() {
         cacheTracker.start()
-    }
-
-    func deleteHost(_ host: Host) {
-        guard let context = host.managedObjectContext else { return }
-        hostCrudWorker.delete(host: host, context: context)
     }
 
     func wakeHost(_ host: Host) {
@@ -53,16 +60,32 @@ final class HostListInteractor: HostListInteractorInput {
         }
     }
 
-    func host(at indexPath: IndexPath) -> Host {
+    func deleteHost(_ host: Host) {
+        guard
+            let context = host.managedObjectContext
+        else {
+            DDLogDebug("Nothing to delete")
+            return
+        }
+        hostCrudWorker.delete(object: host, in: context)
+    }
+
+    func fetchHost(at indexPath: IndexPath) -> Host {
         cacheTracker.hostAtIndexPath(indexPath)
     }
 
-    func moveRow(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard let hosts = cacheTracker.fetchedObjects else { return }
-        hostCrudWorker.move(
+    func moveRow(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard
+            sourceIndexPath != destinationIndexPath,
+            var hosts = cacheTracker.fetchedObjects
+        else {
+            DDLogDebug("Nothing to move")
+            return
+        }
+        hostMoveWorker.move(
             from: sourceIndexPath,
             to: destinationIndexPath,
-            in: hosts,
+            among: &hosts,
             context: cacheTracker.context
         )
     }
@@ -71,12 +94,10 @@ final class HostListInteractor: HostListInteractorInput {
 // MARK: - HostListCacheTrackerDelegate
 
 extension HostListInteractor: HostListCacheTrackerDelegate {
-
     func cacheTracker(
         _ tracker: TracksHostListCache,
         didChangeContentSnapshot contentSnapshot: HostListSnapshot
     ) {
         presenter?.interactor(self, didChangeContentSnapshot: contentSnapshot)
     }
-
 }

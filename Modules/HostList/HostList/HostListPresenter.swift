@@ -8,17 +8,14 @@
 
 import CocoaLumberjack
 import CoreDataService
-import Foundation
 import SharedRouter
 
 final class HostListPresenter: Navigates {
-
     // MARK: - Properties
 
     weak var view: HostListViewInput?
     var router: HostListRoutes?
     var interactor: HostListInteractorInput?
-
 }
 
 // MARK: - HostListViewOutput
@@ -38,17 +35,17 @@ extension HostListPresenter: HostListViewOutput {
     }
 
     func viewDidPressInfoButton(_ view: HostListViewInput, for indexPath: IndexPath) {
-        guard let host = interactor?.host(at: indexPath) else { return }
+        guard let host = interactor?.fetchHost(at: indexPath) else { return }
         navigate(to: router?.openAddHost(with: host))
     }
 
     func viewDidPressDeleteButton(_ view: HostListViewInput, for indexPath: IndexPath) {
-        guard let host = interactor?.host(at: indexPath) else { return }
+        guard let host = interactor?.fetchHost(at: indexPath) else { return }
         interactor?.deleteHost(host)
     }
 
     func viewDidPressHostCell(_ view: HostListViewInput, for indexPath: IndexPath) {
-        guard let host = interactor?.host(at: indexPath) else { return }
+        guard let host = interactor?.fetchHost(at: indexPath) else { return }
         interactor?.wakeHost(host)
     }
 
@@ -57,14 +54,13 @@ extension HostListPresenter: HostListViewOutput {
         moveRowAt sourceIndexPath: IndexPath,
         to destinationIndexPath: IndexPath
     ) {
-        interactor?.moveRow(at: sourceIndexPath, to: destinationIndexPath)
+        interactor?.moveRow(from: sourceIndexPath, to: destinationIndexPath)
     }
 }
 
 // MARK: - HostListInteractorOutput
 
 extension HostListPresenter: HostListInteractorOutput {
-
     func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: HostListSnapshot) {
         view?.updateContentSnapshot(contentSnapshot)
         if contentSnapshot.numberOfItems > .zero {

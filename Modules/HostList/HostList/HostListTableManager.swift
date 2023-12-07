@@ -5,16 +5,16 @@
 //  Created by Vladislav Lisianskii on 07.10.2022.
 //
 
-import UIKit
+import SharedProtocolsAndModels
 import WOLUIComponents
 
 typealias HostListDataSource = UITableViewDiffableDataSource<HostListSection, HostListItem>
 
-protocol ManagesHostListTable: HostListDataSource,
-                                UITableViewDelegate,
-                                UITableViewDragDelegate,
-                                UITableViewDropDelegate {
-}
+protocol ManagesHostListTable:
+    HostListDataSource,
+    UITableViewDelegate,
+    UITableViewDragDelegate,
+    UITableViewDropDelegate { }
 
 protocol HostListTableManagerDelegate: AnyObject {
     func hostListTableManager(
@@ -39,15 +39,12 @@ final class HostListTableManager: HostListDataSource, ManagesHostListTable {
         moveRowAt sourceIndexPath: IndexPath,
         to destinationIndexPath: IndexPath
     ) {
-        delegate?.hostListTableManager(
-            self,
-            moveRowAt: sourceIndexPath,
-            to: destinationIndexPath
-        )
+        delegate?.hostListTableManager(self, moveRowAt: sourceIndexPath, to: destinationIndexPath)
     }
 }
 
 // MARK: - UITableViewDragDelegate
+
 extension HostListTableManager {
     func tableView(
         _ tableView: UITableView,
@@ -56,10 +53,10 @@ extension HostListTableManager {
     ) -> [UIDragItem] {
         [UIDragItem(itemProvider: NSItemProvider())]
     }
-
 }
 
 // MARK: - UITableViewDropDelegate
+
 extension HostListTableManager {
     func tableView(
         _ tableView: UITableView,

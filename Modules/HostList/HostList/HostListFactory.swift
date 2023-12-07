@@ -29,7 +29,6 @@ public struct HostListFactory {
 // MARK: - Factory
 
 extension HostListFactory: Factory {
-
     public func build(with context: Context) throws -> HostListViewController {
         let viewController = HostListViewController()
         let presenter = HostListPresenter()
@@ -43,7 +42,8 @@ extension HostListFactory: Factory {
             coreDataService: coreDataService,
             wakeOnLanService: WakeOnLanService.shared,
             cacheTracker: cacheTracker,
-            hostCrudWorker: HostCRUDWorker(coreDataService: coreDataService)
+            hostCrudWorker: HostCRUDWorker(),
+            hostMoveWorker: MoveHostWorker()
         )
 
         cacheTracker.delegate = interactor
