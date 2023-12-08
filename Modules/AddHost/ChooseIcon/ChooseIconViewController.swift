@@ -64,13 +64,11 @@ public final class ChooseIconViewController: UIViewController {
         super.viewDidLayoutSubviews()
         presenter.viewWillLayoutSubviews(self)
     }
-
 }
 
 // MARK: - Private
 
 private extension ChooseIconViewController {
-
     func setupCancelButton() {
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints {
@@ -92,13 +90,11 @@ private extension ChooseIconViewController {
     @objc func closeViewController() {
         dismiss(animated: true)
     }
-
 }
 
 // MARK: - ChooseIconViewInput
 
 extension ChooseIconViewController: ChooseIconViewInput {
-
     func reloadCollectionViewLayout() {
         chooseIconCollectionLayout?.containerWidth = chooseIconView.bounds.size.width
     }
@@ -114,5 +110,4 @@ extension ChooseIconViewController: ChooseIconViewInput {
             $0.height.equalTo(height + appearance.chooseIconViewEdgeMargin * 2)
         }
     }
-
 }

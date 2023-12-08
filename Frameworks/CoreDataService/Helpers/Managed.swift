@@ -23,7 +23,6 @@ public extension Managed where Self: NSManagedObject {
         request.sortDescriptors = defaultSortDescriptors
         return request
     }
-
 }
 
 public extension Managed where Self: NSManagedObject {
@@ -33,5 +32,4 @@ public extension Managed where Self: NSManagedObject {
         }
         return name
     }
-
 }

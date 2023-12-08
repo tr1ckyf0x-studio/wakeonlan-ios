@@ -6,17 +6,13 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
 import SharedProtocolsAndModels
 
 public final class WakeOnLanService {
     private let magicPacketBuilder: BuildsMagicPacket
     private let udpService: UDPService
 
-    public init(
-        magicPacketBuilder: BuildsMagicPacket,
-        udpService: UDPService
-    ) {
+    public init(magicPacketBuilder: BuildsMagicPacket, udpService: UDPService) {
         self.magicPacketBuilder = magicPacketBuilder
         self.udpService = udpService
     }
@@ -28,7 +24,6 @@ extension WakeOnLanService: WakeOnLanServiceProtocol {
     public func sendMagicPacket(to host: HostRepresentable) async throws {
         let destination = host.destination.defaultIfEmpty(Constants.broadcastIPAddress)
         let port = host.port.flatMap(UInt16.init) ?? Constants.magicPocketDefaultPort
-
         let packet = try magicPacketBuilder.build(for: host.macAddress)
         try await udpService.send(packet, to: destination, port: port)
     }
@@ -40,10 +35,7 @@ extension WakeOnLanService: ProvidesWeakSharedInstanceTrait {
     public static weak var weakSharedInstance: WakeOnLanService?
 
     public convenience init() {
-        self.init(
-            magicPacketBuilder: MagicPacketBuilder(),
-            udpService: NWUDPService()
-        )
+        self.init(magicPacketBuilder: MagicPacketBuilder(), udpService: NWUDPService())
     }
 }
 

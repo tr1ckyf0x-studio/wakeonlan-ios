@@ -47,7 +47,6 @@ enum FormSection {
         }
 
     }
-
 }
 
 // MARK: - AddHostFormSectionRepresentable

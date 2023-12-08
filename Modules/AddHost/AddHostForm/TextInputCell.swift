@@ -5,7 +5,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SnapKit
 import UIKit
 import WOLResources
 import WOLUIComponents
@@ -132,7 +131,6 @@ final class TextInputCell: UITableViewCell {
     @objc private func didTapDoneButton() {
         self.endEditing(true)
     }
-
 }
 
 // MARK: - UITextFieldDelegate
@@ -169,7 +167,6 @@ extension TextInputCell: UITextFieldDelegate {
 
         return updatedText.count <= maxLength
     }
-
 }
 
 // MARK: - FormConfigurable
@@ -192,7 +189,6 @@ extension TextInputCell: FormConfigurable {
         guard let error = textFormItem.failureReason else { return }
         failureView.configure(with: error)
     }
-
 }
 
 private class AddHostFailureView: UIView {
@@ -238,5 +234,4 @@ private class AddHostFailureView: UIView {
     func hide() {
         failureLabel.removeFromSuperview()
     }
-
 }

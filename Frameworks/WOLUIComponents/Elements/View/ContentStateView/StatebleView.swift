@@ -7,7 +7,6 @@
 //
 
 import SharedProtocolsAndModels
-import SnapKit
 import UIKit
 
 // MARK: - StateableView
@@ -60,7 +59,6 @@ extension StateableView where Self: UIView {
         }
         bringSubviewToFront(stateView)
     }
-
 }
 
 // MARK: - ViewState

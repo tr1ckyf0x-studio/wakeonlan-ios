@@ -6,7 +6,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import SnapKit
 import UIKit
 import WOLResources
 import WOLUIComponents
@@ -148,7 +147,6 @@ final class HostListView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 // MARK: - Private
@@ -182,7 +180,6 @@ private extension HostListView {
     @objc func didTapAboutButton(_ sender: UIButton) {
         delegate?.hostListViewDidPressAboutButton(self)
     }
-
 }
 
 // MARK: - ContentStateView
@@ -198,7 +195,6 @@ extension HostListView: StateableView {
             return emptyView
         }
     }
-
 }
 
 // MARK: - DisplaysHostList

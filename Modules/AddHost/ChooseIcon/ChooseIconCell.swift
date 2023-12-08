@@ -68,5 +68,4 @@ final class ChooseIconCell: UICollectionViewCell {
     @objc private func didTapDeviceButton(_ sender: UIButton) {
         didTapIconBlock?(self)
     }
-
 }

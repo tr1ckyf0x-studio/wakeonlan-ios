@@ -31,5 +31,4 @@ extension AddHostFormatterStrategy: FormatPatternRepresentable {
             return String()
         }
     }
-
 }

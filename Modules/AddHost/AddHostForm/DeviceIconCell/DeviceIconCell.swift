@@ -7,7 +7,6 @@
 //
 
 import SharedProtocolsAndModels
-import SnapKit
 import UIKit
 import WOLResources
 
@@ -57,7 +56,6 @@ final class DeviceIconCell: UITableViewCell {
         self.model = model
         baseView.configure(with: model)
     }
-
 }
 
 // MARK: - Private methods

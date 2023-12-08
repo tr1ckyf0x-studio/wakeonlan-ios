@@ -8,7 +8,6 @@
 
 import Foundation
 
-// sourcery: AutoMockable
 public protocol FileManagerProtocol {
     func urls(for directory: FileManager.SearchPathDirectory, in domainMask: FileManager.SearchPathDomainMask) -> [URL]
     func contentsOfDirectory(atPath path: String) throws -> [String]

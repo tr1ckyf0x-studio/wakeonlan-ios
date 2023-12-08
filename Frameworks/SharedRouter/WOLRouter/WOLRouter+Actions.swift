@@ -22,7 +22,6 @@ public extension WOLRouter {
     ) -> DestinationStep<F.ViewController, F.Context> {
         defaultStepRoute(action: UINavigationController.pushAsRoot(), factory: factory)
     }
-
 }
 
 extension WOLRouter {

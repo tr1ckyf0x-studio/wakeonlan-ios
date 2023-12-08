@@ -42,5 +42,4 @@ public struct SoftUIViewModel: DescribesSoftUIViewModel {
     private enum Configuration {
         static let defaultSelectedTransform: CGAffineTransform = .init(scaleX: 0.9, y: 0.9)
     }
-
 }

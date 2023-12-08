@@ -69,5 +69,4 @@ final class DeviceIconView: UIView {
     @objc private func didTapChangeIcon() {
         delegate?.deviceIconViewDidTapChangeIcon(self)
     }
-
 }

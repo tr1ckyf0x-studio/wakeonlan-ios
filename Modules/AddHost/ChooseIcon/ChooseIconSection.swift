@@ -38,5 +38,4 @@ enum ChooseIconSection {
             return footer
         }
     }
-
 }

@@ -79,7 +79,6 @@ public final class CoreDataService: CoreDataServiceProtocol {
     public init(persistentContainerType: PersistentContainerType.Type) {
         self.persistentContainerType = persistentContainerType
     }
-
 }
 
 // MARK: - ProvidesWeakSharedInstanceTrait

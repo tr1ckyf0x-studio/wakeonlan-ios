@@ -1,6 +1,5 @@
 import Foundation
 
-// sourcery: AutoMockable
 public protocol BuildsMagicPacket {
     /**
      Builds magic packet for specified macAddress.

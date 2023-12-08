@@ -135,7 +135,6 @@ public class SoftUITextField: UITextField {
             updateAppearance()
         }
     }
-
 }
 
 private extension SoftUITextField {
@@ -192,5 +191,4 @@ private extension SoftUITextField {
         darkShadowColor = appearance.darkShadowColor
         lightShadowColor = appearance.lightShadowColor
     }
-
 }

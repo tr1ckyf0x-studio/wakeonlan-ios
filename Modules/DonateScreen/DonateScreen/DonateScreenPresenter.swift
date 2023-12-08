@@ -5,7 +5,6 @@
 //  Created by Vladislav Lisianskii on 14.04.2023.
 //
 
-import Foundation
 import IAPManager
 import SharedRouter
 

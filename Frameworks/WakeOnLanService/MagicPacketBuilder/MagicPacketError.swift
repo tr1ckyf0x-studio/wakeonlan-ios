@@ -5,6 +5,7 @@ public enum MagicPacketError {
 }
 
 // MARK: - LocalizedError
+
 extension MagicPacketError: LocalizedError {
     public var errorDescription: String? {
         switch self {

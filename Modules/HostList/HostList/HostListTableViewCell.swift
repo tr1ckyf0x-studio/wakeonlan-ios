@@ -136,7 +136,6 @@ final class HostListTableViewCell: UITableViewCell {
         self.viewModel = viewModel
         self.delegate = delegate
     }
-
 }
 
 // MARK: - Private
@@ -273,7 +272,6 @@ private extension HostListTableViewCell {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         displayNotificationAnimated()
     }
-
 }
 
 // MARK: - UIScrollViewDelegate
@@ -291,5 +289,4 @@ extension HostListTableViewCell: UIScrollViewDelegate {
             scrollView.isPagingEnabled = true
         }
     }
-
 }

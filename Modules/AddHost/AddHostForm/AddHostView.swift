@@ -7,7 +7,6 @@
 //
 
 import SharedExtensions
-import SnapKit
 import UIKit
 import WOLResources
 import WOLUIComponents
@@ -83,7 +82,6 @@ final class AddHostView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 // MARK: - Private
@@ -128,7 +126,6 @@ private extension AddHostView {
     @objc func keyboardWillHide(notification: NSNotification) {
         tableView.contentInset = .zero
     }
-
 }
 
 private extension UIBarButtonItem {

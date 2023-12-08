@@ -45,7 +45,6 @@ final class AboutScreenPresenter: Navigates {
 // MARK: - AboutScreenViewOutput
 
 extension AboutScreenPresenter: AboutScreenViewOutput {
-
     func viewDidLoad(_ view: AboutScreenViewInput) {
         interactor?.fetchBundleInfo()
     }

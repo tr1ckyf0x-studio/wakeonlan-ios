@@ -52,7 +52,6 @@ public final class HostListViewController: UIViewController {
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true
     }
-
 }
 
 // MARK: - HostListViewInput
@@ -66,7 +65,6 @@ extension HostListViewController: HostListViewInput {
     func updateContentSnapshot(_ contentSnapshot: HostListSnapshot) {
         hostListView.updateContentSnapshot(contentSnapshot)
     }
-
 }
 
 // MARK: - HostListViewDelegate

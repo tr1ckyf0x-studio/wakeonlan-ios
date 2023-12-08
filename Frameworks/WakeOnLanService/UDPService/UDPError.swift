@@ -6,6 +6,7 @@ public enum UDPError {
 }
 
 // MARK: - LocalizedError
+
 extension UDPError: LocalizedError {
     public var errorDescription: String? {
         switch self {

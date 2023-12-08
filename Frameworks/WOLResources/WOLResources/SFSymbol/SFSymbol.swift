@@ -5,7 +5,6 @@
 //  Created by Vladislav Lisianskii on 31.07.2021.
 //
 
-import Foundation
 import SharedProtocolsAndModels
 
 // MARK: - SFSymbolFactory

@@ -9,7 +9,6 @@
 import SharedProtocolsAndModels
 import WOLUIComponents
 
-// sourcery: AutoMockable
 protocol ChooseIconViewInput: AnyObject {
     var presenter: ChooseIconViewOutput! { get set }
 
@@ -28,7 +27,6 @@ protocol ChooseIconViewOutput {
 
 // MARK: - Module delegate
 
-// sourcery: AutoMockable
 public protocol ChooseIconModuleOutput: AnyObject {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel)
 }

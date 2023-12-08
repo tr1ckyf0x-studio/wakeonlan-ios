@@ -1,6 +1,5 @@
 import Foundation
 
-// sourcery: AutoMockable
 public protocol UDPService {
     /**
      Sends UDP packet to specified address

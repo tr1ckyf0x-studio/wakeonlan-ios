@@ -6,7 +6,6 @@
 //
 
 import CocoaLumberjack
-import Foundation
 import IAPManager
 
 final class DonateScreenInteractor {
@@ -21,6 +20,7 @@ final class DonateScreenInteractor {
 }
 
 // MARK: - DonateScreenInteractorInput
+
 extension DonateScreenInteractor: DonateScreenInteractorInput {
     var canMakePayments: Bool {
         iAPManager.canMakePayments
