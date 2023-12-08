@@ -40,6 +40,7 @@ public final class DonateScreenViewController: UIViewController {
 }
 
 // MARK: - Private
+
 extension DonateScreenViewController {
     private func setupNavigationBar() {
         title = L10n.DonateScreen.Screen.title
@@ -49,6 +50,7 @@ extension DonateScreenViewController {
 }
 
 // MARK: - DonateScreenViewInput
+
 extension DonateScreenViewController: DonateScreenViewInput {
 
     func setSections(_ sections: [DonateScreenTableSectionModel]) {
@@ -75,6 +77,7 @@ extension DonateScreenViewController: DonateScreenViewInput {
 }
 
 // MARK: - DonateScreenViewDelegate
+
 extension DonateScreenViewController: DonateScreenViewDelegate {
     func donateScreenViewDidPressBackButton(_ view: DonateScreenView) {
         presenter?.viewDidPressBackButton(self)

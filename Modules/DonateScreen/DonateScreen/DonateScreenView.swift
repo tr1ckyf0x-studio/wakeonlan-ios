@@ -106,6 +106,7 @@ final class DonateScreenView: UIView {
 }
 
 // MARK: - Private
+
 extension DonateScreenView {
     private func addSubviews() {
         addSubview(tableView)

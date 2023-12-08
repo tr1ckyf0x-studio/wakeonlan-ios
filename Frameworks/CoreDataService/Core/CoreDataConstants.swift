@@ -11,6 +11,7 @@ enum CoreDataConstants {
 }
 
 // MARK: - Private methods
+
 extension CoreDataConstants {
     private static var appGroupDirectoryURL: URL? {
         FileManager.default.containerURL(

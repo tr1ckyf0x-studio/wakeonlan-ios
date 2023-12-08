@@ -69,6 +69,7 @@ final class DonateItemCell: UITableViewCell {
 }
 
 // MARK: - Private
+
 extension DonateItemCell {
 
     private func addSubviews() {
