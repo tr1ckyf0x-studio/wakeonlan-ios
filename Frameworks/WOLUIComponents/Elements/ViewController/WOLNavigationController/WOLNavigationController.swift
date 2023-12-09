@@ -19,7 +19,6 @@ public class WOLNavigationController: UINavigationController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 // MARK: - Private
@@ -52,5 +51,4 @@ private extension WOLNavigationController {
         ]
         navigationBar.titleTextAttributes = titleTextAttributes
     }
-
 }

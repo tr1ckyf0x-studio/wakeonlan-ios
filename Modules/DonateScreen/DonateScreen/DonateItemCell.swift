@@ -5,7 +5,6 @@
 //  Created by Vladislav Lisianskii on 15.04.2023.
 //
 
-import SnapKit
 import UIKit
 import WOLResources
 import WOLUIComponents
@@ -70,6 +69,7 @@ final class DonateItemCell: UITableViewCell {
 }
 
 // MARK: - Private
+
 extension DonateItemCell {
 
     private func addSubviews() {

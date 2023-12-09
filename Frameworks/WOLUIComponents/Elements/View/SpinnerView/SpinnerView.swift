@@ -69,6 +69,7 @@ public final class SpinnerView: UIView {
 }
 
 // MARK: - Private
+
 extension SpinnerView {
     private func setupView() {
         addSubview(outerCircle)
@@ -148,6 +149,7 @@ extension SpinnerView {
 }
 
 // MARK: - Constants
+
 extension SpinnerView {
     private enum Constants {
         static let outerCircleWidth: CGFloat = 60

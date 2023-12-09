@@ -5,8 +5,6 @@
 //  Created by Vladislav Lisianskii on 15.04.2023.
 //
 
-import Foundation
-
 enum DonateScreenState {
     case paymentsUnavailable
     case loading

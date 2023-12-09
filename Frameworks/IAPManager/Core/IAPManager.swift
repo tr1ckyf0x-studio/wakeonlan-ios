@@ -39,6 +39,7 @@ public final class IAPManager: NSObject {
 }
 
 // MARK: - ManagesIAP
+
 extension IAPManager: ManagesIAP {
     public var canMakePayments: Bool {
         SKPaymentQueue.canMakePayments()
@@ -68,6 +69,7 @@ extension IAPManager: ManagesIAP {
 }
 
 // MARK: - Private
+
 extension IAPManager {
     private func formattedPrice(for product: SKProduct) -> String? {
         let formatter = NumberFormatter()
@@ -78,6 +80,7 @@ extension IAPManager {
 }
 
 // MARK: - ProvidesWeakSharedInstanceTrait
+
 extension IAPManager: ProvidesWeakSharedInstanceTrait {
     public static weak var weakSharedInstance: IAPManager?
 }

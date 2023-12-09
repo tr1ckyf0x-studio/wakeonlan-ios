@@ -198,7 +198,6 @@ public class SoftUIView: UIControl {
         super.layoutSublayers(of: layer)
         if circleShape { cornerRadius = bounds.height / 2 }
     }
-
 }
 
 // MARK: - ConfigurableSoftUIView
@@ -222,7 +221,6 @@ extension SoftUIView: ConfigurableSoftUIView {
 
         updateContentView()
     }
-
 }
 
 // MARK: - Private
@@ -325,5 +323,4 @@ private extension SoftUIView {
         [darkOuterShadowLayer, lightOuterShadowLayer].forEach { $0.isHidden = isSelected }
         [darkInnerShadowLayer, lightInnerShadowLayer].forEach { $0.isHidden = !isSelected }
     }
-
 }

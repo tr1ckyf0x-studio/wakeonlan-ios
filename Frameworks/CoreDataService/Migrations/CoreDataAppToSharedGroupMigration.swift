@@ -36,6 +36,7 @@ public final class CoreDataAppToSharedGroupMigration: CoreDataMigration {
 }
 
 // MARK: - Private methods
+
 extension CoreDataAppToSharedGroupMigration {
     private var applicationSupportDirectoryURL: URL? {
         fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).last

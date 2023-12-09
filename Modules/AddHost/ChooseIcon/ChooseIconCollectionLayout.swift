@@ -82,7 +82,6 @@ final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
         super.invalidateLayout()
         configureLayoutIfNeeded()
     }
-
 }
 
 // MARK: - ChooseIconCollectionDisplay
@@ -99,5 +98,4 @@ extension ChooseIconCollectionDisplay: Equatable {
             return lcolumns == rcolumns
         }
     }
-
 }

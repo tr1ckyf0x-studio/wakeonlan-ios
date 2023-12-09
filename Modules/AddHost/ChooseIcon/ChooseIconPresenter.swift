@@ -40,7 +40,6 @@ extension ChooseIconPresenter: ChooseIconViewOutput {
         view.reloadCollectionViewLayout()
         view.updateIconViewHeight()
     }
-
 }
 
 // MARK: - ChooseIconTableManagerDelegate

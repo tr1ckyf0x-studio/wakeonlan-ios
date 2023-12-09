@@ -25,7 +25,6 @@ final class AddHostPresenter: Navigates {
     init(addHostForm: AddHostForm = AddHostForm()) {
         self.addHostForm = addHostForm
     }
-
 }
 
 // MARK: - AddHostViewOutput
@@ -54,7 +53,6 @@ extension AddHostPresenter: AddHostViewOutput {
     func viewDidPressBackButton(_ view: AddHostViewInput) {
         navigate(to: router?.backOrDismiss(animated: true))
     }
-
 }
 
 // MARK: - AddHostInteractorOutput

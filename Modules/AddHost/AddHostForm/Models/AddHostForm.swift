@@ -7,7 +7,6 @@
 //
 
 import CoreDataService
-import Foundation
 import SharedProtocolsAndModels
 import WOLResources
 import WOLUIComponents
@@ -24,26 +23,28 @@ final class AddHostForm: AddHostFormRepresentable {
         var description: String {
             switch self {
             case .invalidMACAddress:
-                L10n.AddHost.Form.Field.MacAddress.Failure.invalidMACAddress
+                return L10n.AddHost.Form.Field.MacAddress.Failure.invalidMACAddress
 
             case .invalidPort:
-                L10n.AddHost.Form.Field.Port.Failure.invalidPort
+                return L10n.AddHost.Form.Field.Port.Failure.invalidPort
 
             case .unknown:
-                L10n.AddHost.Form.Failure.unknown
+                return L10n.AddHost.Form.Failure.unknown
             }
         }
     }
 
     // MARK: - Properties
 
+    var iconModel = IconModel(sfSymbol: HostIcon.desktopcomputer)
+
     private(set) var sections = [FormSection]()
 
     private(set) var host: Host? {
         didSet {
             guard let host else { return }
-            let sfSymbol = SFSymbolFactory.build(from: host.iconName)
-            iconModel = sfSymbol.map { IconModel(sfSymbol: $0) }
+            guard let sfSymbol = SFSymbolFactory.build(from: host.iconName) else { return }
+            iconModel = IconModel(sfSymbol: sfSymbol)
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
             destinationItem.value = host.destination
@@ -51,24 +52,20 @@ final class AddHostForm: AddHostFormRepresentable {
         }
     }
 
-    var iconModel: IconModel? = IconModel(sfSymbol: HostIcon.desktopcomputer)
-    private(set) var title: String?
-    private(set) var macAddress: String?
+    private(set) var title: String = .empty
+    private(set) var macAddress: String = .empty
     private(set) var destination: String?
     private(set) var port: String?
 
     // MARK: - Section items
 
-    private lazy var iconSectionItems: [FormItem] = {
-        guard let iconModel else { return [] }
-        return [FormItem.icon(iconModel)]
-    }()
+    private lazy var iconSectionItems = [FormItem.icon(iconModel)]
 
     private lazy var titleItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = L10n.AddHost.Form.Field.Name.placeholder
         item.onValueChanged = { [weak self] value in
-            self?.title = value
+            self?.title = value ?? .empty
         }
         item.validator = TextValidator(strategy: AddHostValidationStrategy.title)
         item.needsUppercased = false
@@ -81,7 +78,7 @@ final class AddHostForm: AddHostFormRepresentable {
         let item = TextFormItem()
         item.placeholder = L10n.AddHost.Form.Field.MacAddress.placeholder
         item.onValueChanged = { [weak self] value in
-            self?.macAddress = value
+            self?.macAddress = value ?? .empty
         }
         item.validator = TextValidator(strategy: AddHostValidationStrategy.macAddress)
         item.formatter = TextFormatter(strategy: AddHostFormatterStrategy.macAddress)
@@ -96,7 +93,7 @@ final class AddHostForm: AddHostFormRepresentable {
     private lazy var destinationItem: TextFormItem = {
         let item = TextFormItem()
         item.placeholder = L10n.AddHost.Form.Field.Host.placeholder
-        item.defaultValue = item.placeholder
+        item.defaultValue = L10n.AddHost.Form.Field.Host.placeholder
         item.onValueChanged = { [weak self] value in
             self?.destination = value
         }
@@ -176,7 +173,6 @@ final class AddHostForm: AddHostFormRepresentable {
             portSection
         ]
     }
-
 }
 
 // MARK: - FormValidable

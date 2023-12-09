@@ -136,7 +136,6 @@ final class HostListTableViewCell: UITableViewCell {
         self.viewModel = viewModel
         self.delegate = delegate
     }
-
 }
 
 // MARK: - Private
@@ -244,7 +243,7 @@ private extension HostListTableViewCell {
         }
 
         let animationDuration = 0.2
-        let hideNotificationAnimated = { () -> Void in
+        let hideNotificationAnimated = {
             UIView.animate(
                 withDuration: animationDuration,
                 animations: { notificationView.alpha = 0.0 },
@@ -254,7 +253,7 @@ private extension HostListTableViewCell {
             )
         }
 
-        let displayNotificationAnimated = { () -> Void in
+        let displayNotificationAnimated = {
             UIView.animate(
                 withDuration: animationDuration,
                 animations: { notificationView.alpha = 1.0 },
@@ -273,7 +272,6 @@ private extension HostListTableViewCell {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         displayNotificationAnimated()
     }
-
 }
 
 // MARK: - UIScrollViewDelegate
@@ -291,5 +289,4 @@ extension HostListTableViewCell: UIScrollViewDelegate {
             scrollView.isPagingEnabled = true
         }
     }
-
 }

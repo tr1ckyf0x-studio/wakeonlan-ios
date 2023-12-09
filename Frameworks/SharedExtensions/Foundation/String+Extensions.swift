@@ -33,5 +33,4 @@ public extension String {
     private enum Configuration {
         static let maskSymbol: Character = "X"
     }
-
 }

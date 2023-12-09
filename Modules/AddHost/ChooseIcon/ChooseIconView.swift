@@ -48,5 +48,4 @@ final class ChooseIconView: UIView {
             $0.bottom.equalToSuperview().inset(appearance.collectionViewBottomOffset)
         }
     }
-
 }

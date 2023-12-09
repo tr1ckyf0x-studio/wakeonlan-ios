@@ -21,7 +21,6 @@ final class ChooseIconTableManager: NSObject {
         self.sections = sections
         super.init()
     }
-
 }
 
 // MARK: - UICollectionViewDelegate
@@ -31,7 +30,6 @@ extension ChooseIconTableManager: UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         sections.count
     }
-
 }
 
 // MARK: - UICollectionViewDataSource
@@ -74,5 +72,4 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
 
         return cell
     }
-
 }

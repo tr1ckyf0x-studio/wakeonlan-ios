@@ -5,7 +5,6 @@
 //  Created by Vladislav Lisianskii on 14.04.2023.
 //
 
-import SnapKit
 import UIKit
 import WOLResources
 import WOLUIComponents
@@ -107,6 +106,7 @@ final class DonateScreenView: UIView {
 }
 
 // MARK: - Private
+
 extension DonateScreenView {
     private func addSubviews() {
         addSubview(tableView)

@@ -35,7 +35,6 @@ public final class AddHostViewController: UIViewController {
         title = L10n.AddHost.Screen.title
         presenter?.viewDidLoad(self)
     }
-
 }
 
 // MARK: - Private

@@ -5,54 +5,70 @@
 //  Created by Vladislav Lisianskii on 07.10.2022.
 //
 
-import UIKit
+import SharedProtocolsAndModels
+import WOLUIComponents
 
-protocol ManagesHostListTable {
-    typealias Snapshot = NSDiffableDataSourceSnapshot<String, HostListSectionItem>
+typealias HostListDataSource = UITableViewDiffableDataSource<HostListSection, HostListItem>
 
-    func apply(snapshot: Snapshot)
-}
+protocol ManagesHostListTable:
+    HostListDataSource,
+    UITableViewDelegate,
+    UITableViewDragDelegate,
+    UITableViewDropDelegate { }
 
-final class HostListTableManager {
-
-    typealias DataSource = UITableViewDiffableDataSource<String, HostListSectionItem>
-
-    private let tableView: UITableView
-
-    private weak var hostCellDelegate: HostListTableViewCellDelegate?
-
-    private lazy var dataSource = DataSource(
-        tableView: tableView,
-        cellProvider: configureCellClosure
+protocol HostListTableManagerDelegate: AnyObject {
+    func hostListTableManager(
+        _ hostListTableManager: ManagesHostListTable,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
     )
+}
 
-    init(tableView: UITableView, hostCellDelegate: HostListTableViewCellDelegate?) {
-        self.tableView = tableView
-        self.hostCellDelegate = hostCellDelegate
+final class HostListTableManager: HostListDataSource, ManagesHostListTable {
+
+    typealias CellProvider = ProvidesTableViewCell<HostListItem>
+
+    weak var delegate: HostListTableManagerDelegate?
+
+    init(tableView: UITableView, cellProvider: any CellProvider = HostListCellProvider()) {
+        super.init(tableView: tableView, cellProvider: cellProvider.makeTableViewCell)
     }
 
-    private lazy var configureCellClosure = { [weak self] (
-        tableView: UITableView,
-        indexPath: IndexPath,
-        model: HostListSectionItem
-    ) -> UITableViewCell? in
-        var cell: UITableViewCell?
-        if case let .host(viewModel) = model {
-            let hostCell = tableView.dequeueReusableCell(
-                withIdentifier: "\(HostListTableViewCell.self)",
-                for: indexPath
-            ) as? HostListTableViewCell
-            hostCell?.configure(with: viewModel, delegate: self?.hostCellDelegate)
-            cell = hostCell
-        }
-        return cell
+    override func tableView(
+        _ tableView: UITableView,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        delegate?.hostListTableManager(self, moveRowAt: sourceIndexPath, to: destinationIndexPath)
     }
 }
 
-// MARK: - SnapshotTableManager
-extension HostListTableManager: ManagesHostListTable {
+// MARK: - UITableViewDragDelegate
 
-    func apply(snapshot: Snapshot) {
-        dataSource.apply(snapshot)
+extension HostListTableManager {
+    func tableView(
+        _ tableView: UITableView,
+        itemsForBeginning session: UIDragSession,
+        at indexPath: IndexPath
+    ) -> [UIDragItem] {
+        [UIDragItem(itemProvider: NSItemProvider())]
     }
+}
+
+// MARK: - UITableViewDropDelegate
+
+extension HostListTableManager {
+    func tableView(
+        _ tableView: UITableView,
+        dropSessionDidUpdate session: UIDropSession,
+        withDestinationIndexPath destinationIndexPath: IndexPath?
+    ) -> UITableViewDropProposal {
+        guard session.localDragSession != nil else {
+            return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+        }
+
+        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
 }

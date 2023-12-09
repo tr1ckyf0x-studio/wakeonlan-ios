@@ -6,8 +6,6 @@
 //  Copyright © 2020 Владислав Лисянский. All rights reserved.
 //
 
-import Foundation
-
 protocol FormConfigurable {
     func configure(with formItem: FormItem)
 }

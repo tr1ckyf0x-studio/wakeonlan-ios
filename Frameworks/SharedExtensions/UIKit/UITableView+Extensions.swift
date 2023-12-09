@@ -54,5 +54,4 @@ public extension UITableView {
 
         return IndexPath(row: previousRow, section: previousSection)
     }
-
 }

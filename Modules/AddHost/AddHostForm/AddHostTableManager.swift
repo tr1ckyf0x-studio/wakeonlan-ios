@@ -22,7 +22,6 @@ final class AddHostTableManager: NSObject {
         guard let form else { return [] }
         return form.sections
     }
-
 }
 
 // MARK: - UITableViewDataSource
@@ -88,13 +87,11 @@ extension AddHostTableManager: UITableViewDataSource {
 
         return unwrappedCell
     }
-
 }
 
 // MARK: - UITableViewDelegate
 
 extension AddHostTableManager: UITableViewDelegate {
-
     func tableView(
         _ tableView: UITableView,
         willDisplayHeaderView view: UIView,
@@ -125,11 +122,9 @@ extension AddHostTableManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         sections[section].footer?.footer
     }
-
 }
 
 private extension NSMutableAttributedString {
-
     /// Appending `Optional` part to existing string
     func appendOptional() {
         let additionalAttributes: [NSAttributedString.Key: Any] = [
@@ -148,5 +143,4 @@ private extension NSMutableAttributedString {
         }
         append(attributedText)
     }
-
 }

@@ -18,5 +18,4 @@ struct TextFormatter: Formatter {
     func format(text: String) -> String {
         text.formatted(by: format, separator)
     }
-
 }

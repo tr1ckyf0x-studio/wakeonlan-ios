@@ -65,6 +65,7 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
 }
 
 // MARK: - Private methods
+
 extension WOLIntentHandler {
     private func fetchHosts() throws -> [Host] {
         let fetchRequest = Host.sortedFetchRequest

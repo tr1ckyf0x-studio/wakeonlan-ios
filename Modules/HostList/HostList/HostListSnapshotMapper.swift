@@ -3,13 +3,10 @@ import CoreDataService
 import UIKit
 
 protocol MapsSnapshotToHostListItem {
-
-    typealias Snapshot = NSDiffableDataSourceSnapshot<String, HostListSectionItem>
-
     func map(
         snapshotReference: NSDiffableDataSourceSnapshotReference,
         context: NSManagedObjectContext
-    ) -> Snapshot
+    ) -> HostListSnapshot
 }
 
 struct HostListSnapshotMapper: MapsSnapshotToHostListItem {
@@ -17,9 +14,9 @@ struct HostListSnapshotMapper: MapsSnapshotToHostListItem {
     func map(
         snapshotReference: NSDiffableDataSourceSnapshotReference,
         context: NSManagedObjectContext
-    ) -> Snapshot {
+    ) -> HostListSnapshot {
         let snapshotReference = snapshotReference as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
-        var snapshot = ContentSnapshot()
+        var snapshot = HostListSnapshot()
 
         snapshot.appendSections(snapshotReference.sectionIdentifiers)
         snapshot.sectionIdentifiers.forEach { (section: String) in

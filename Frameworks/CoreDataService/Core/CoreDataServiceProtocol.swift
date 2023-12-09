@@ -8,9 +8,8 @@
 
 import CocoaLumberjack
 import CoreData
-import Foundation
 
-public protocol CoreDataServiceProtocol {
+public protocol CoreDataServiceProtocol: AnyObject {
     typealias SaveCompletionHandler = () -> Void
 
     var persistentContainer: NSPersistentContainer { get }
@@ -54,7 +53,7 @@ extension CoreDataServiceProtocol {
         return context
     }
 
-    // MARK: - Core Data Savingpublic  support
+    // MARK: - Core Data Saving
 
     public func saveContext(
         _ context: NSManagedObjectContext,
@@ -65,7 +64,7 @@ extension CoreDataServiceProtocol {
             context.performAndWait {
                 guard context.hasChanges else {
                     DDLogDebug("Context does not contain any changes. Save will not be performed")
-                    completionHandler?()
+                    DispatchQueue.main.async { completionHandler?() }
                     return
                 }
                 do {
@@ -75,26 +74,30 @@ extension CoreDataServiceProtocol {
                             self.saveContext(parent, completionHandler: completionHandler)
                         }
                     } else {
-                        completionHandler?()
+                        DispatchQueue.main.async { completionHandler?() }
                     }
                     DDLogDebug("Context was saved")
                 } catch {
                     DDLogError("Context was not saved due to error: \(error)")
-                    // TODO: Maybe there must be throw
-                    // TODO: Error handling
                 }
             }
 
         case .mainQueueConcurrencyType:
             do {
-                guard context.hasChanges else {
+                guard
+                    context.hasChanges
+                else {
                     DDLogDebug("Context does not contain any changes. Save will not be performed")
-                    completionHandler?()
+                    DispatchQueue.main.async {
+                        completionHandler?()
+                    }
                     return
                 }
                 try context.save()
                 DDLogDebug("Main context was saved")
-                completionHandler?()
+                DispatchQueue.main.async {
+                    completionHandler?()
+                }
             } catch {
                 let nsError = error as NSError
                 DDLogError("Main context was not saved due to error: \(error)")

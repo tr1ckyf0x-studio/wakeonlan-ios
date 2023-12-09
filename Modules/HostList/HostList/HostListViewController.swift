@@ -22,11 +22,6 @@ public final class HostListViewController: UIViewController {
         return view
     }()
 
-    private lazy var tableManager: ManagesHostListTable = HostListTableManager(
-        tableView: hostListView.tableView,
-        hostCellDelegate: self
-    )
-
     // MARK: - Lifecycle
 
     override public func loadView() {
@@ -57,7 +52,6 @@ public final class HostListViewController: UIViewController {
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true
     }
-
 }
 
 // MARK: - HostListViewInput
@@ -68,43 +62,43 @@ extension HostListViewController: HostListViewInput {
         hostListView.showState(state)
     }
 
-    func updateContentSnapshot(_ contentSnapshot: ContentSnapshot) {
-        tableManager.apply(snapshot: contentSnapshot)
+    func updateContentSnapshot(_ contentSnapshot: HostListSnapshot) {
+        hostListView.updateContentSnapshot(contentSnapshot)
     }
-
 }
 
 // MARK: - HostListViewDelegate
 
 extension HostListViewController: HostListViewDelegate {
-
-    func hostListViewDidPressAddButton(_ view: HostListView) {
+    func hostListViewDidPressAddButton(_ view: DisplaysHostList) {
         presenter?.viewDidPressAddButton(self)
     }
 
-    func hostListViewDidPressAboutButton(_ view: HostListView) {
+    func hostListViewDidPressAboutButton(_ view: DisplaysHostList) {
         presenter?.viewDidPressAboutButton(self)
     }
 
-}
-
-// MARK: - HostListTableViewCellDelegate
-
-extension HostListViewController: HostListTableViewCellDelegate {
-
-    func hostListCellDidTap(_ cell: HostListTableViewCell) {
-        guard let indexPath = hostListView.tableView.indexPath(for: cell) else { return }
-        presenter?.viewDidPressHostCell(self, for: indexPath)
-    }
-
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell) {
-        guard let indexPath = hostListView.tableView.indexPath(for: cell) else { return }
+    func hostListView(_ view: DisplaysHostList, didTapDeleteAt indexPath: IndexPath) {
         presenter?.viewDidPressDeleteButton(self, for: indexPath)
     }
 
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell) {
-        guard let indexPath = hostListView.tableView.indexPath(for: cell) else { return }
+    func hostListView(_ view: DisplaysHostList, didTapInfoAt indexPath: IndexPath) {
         presenter?.viewDidPressInfoButton(self, for: indexPath)
     }
 
+    func hostListView(_ view: DisplaysHostList, didTapCellAt indexPath: IndexPath) {
+        presenter?.viewDidPressHostCell(self, for: indexPath)
+    }
+
+    func hostListView(
+        _ view: DisplaysHostList,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        presenter?.view(
+            self,
+            moveRowAt: sourceIndexPath,
+            to: destinationIndexPath
+        )
+    }
 }

@@ -6,7 +6,6 @@
 //
 
 import CoreDataService
-import Foundation
 
 final class PostLaunchInteractor {
 

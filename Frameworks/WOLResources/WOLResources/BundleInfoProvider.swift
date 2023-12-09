@@ -8,7 +8,6 @@
 
 import Foundation
 
-// sourcery: AutoMockable
 public protocol ProvidesBundleInfo {
     func fetchBundleInfo() -> BundleInfo
 }
@@ -24,13 +23,11 @@ public final class BundleInfoProvider {
     // MARK: - Init
 
     public init() { }
-
 }
 
 // MARK: - ProvidesBundleInfo
 
 extension BundleInfoProvider: ProvidesBundleInfo {
-
     public func fetchBundleInfo() -> BundleInfo {
         guard
             let path = Bundle.main.path(
@@ -43,5 +40,4 @@ extension BundleInfoProvider: ProvidesBundleInfo {
         }
         return bundleInfo
     }
-
 }

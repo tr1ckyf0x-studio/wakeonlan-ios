@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Foundation
 
 public protocol Managed: NSFetchRequestResult {
     static var entityName: String { get }
@@ -24,7 +23,6 @@ public extension Managed where Self: NSManagedObject {
         request.sortDescriptors = defaultSortDescriptors
         return request
     }
-
 }
 
 public extension Managed where Self: NSManagedObject {
@@ -34,5 +32,4 @@ public extension Managed where Self: NSManagedObject {
         }
         return name
     }
-
 }

@@ -5,7 +5,6 @@
 //  Created by Vladislav Lisianskii on 14.04.2023.
 //
 
-import Foundation
 import IAPManager
 import SharedRouter
 
@@ -16,6 +15,7 @@ final class DonateScreenPresenter: Navigates {
 }
 
 // MARK: - DonateScreenViewOutput
+
 extension DonateScreenPresenter: DonateScreenViewOutput {
     func viewDidLoad(_ view: DonateScreenViewInput) {
         guard interactor?.canMakePayments == true else {
@@ -32,6 +32,7 @@ extension DonateScreenPresenter: DonateScreenViewOutput {
 }
 
 // MARK: - DonateScreenInteractorOutput
+
 extension DonateScreenPresenter: DonateScreenInteractorOutput {
     func interactor(_ interactor: DonateScreenInteractorInput, didLoad products: [Product]) {
         let productItems = products.map { (product: Product) -> DonateScreenTableSectionItem in

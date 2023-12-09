@@ -7,7 +7,6 @@
 //
 
 import SharedProtocolsAndModels
-import SnapKit
 import UIKit
 import WOLResources
 

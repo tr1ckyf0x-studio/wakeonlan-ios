@@ -1,4 +1,3 @@
-import Foundation
 import Network
 
 public final class NWUDPService {
@@ -6,6 +5,7 @@ public final class NWUDPService {
 }
 
 // MARK: - UDPService
+
 extension NWUDPService: UDPService {
     public func send(_ packet: [UInt8], to destination: String, port: UInt16) async throws {
         guard let connection = NWConnectionBuilder.build(with: destination, port: port)

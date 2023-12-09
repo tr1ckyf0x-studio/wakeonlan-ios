@@ -9,21 +9,29 @@
 import CocoaLumberjack
 import CoreData
 import CoreDataService
-import UIKit
 
-final class HostListCacheTracker:
-    NSObject,
-    TracksHostListCache,
-    NSFetchedResultsControllerDelegate {
+protocol TracksHostListCache {
+    var fetchedObjects: [Host]? { get }
+    var context: NSManagedObjectContext { get }
 
-    // MARK: - Properties
+    func start()
+    func hostAtIndexPath(_ indexPath: IndexPath) -> Host
+}
 
+protocol HostListCacheTrackerDelegate: AnyObject {
+    func cacheTracker(_ tracker: TracksHostListCache, didChangeContentSnapshot contentSnapshot: HostListSnapshot)
+}
+
+final class HostListCacheTracker: NSObject, TracksHostListCache, NSFetchedResultsControllerDelegate {
     typealias Delegate = HostListCacheTrackerDelegate
     typealias SnapshotMapper = MapsSnapshotToHostListItem
 
+    // MARK: - Properties
+
+    weak var delegate: Delegate?
+
     private var controller: NSFetchedResultsController<Host>
     private let mapper: SnapshotMapper
-    weak var delegate: Delegate?
 
     // MARK: - Init
 
@@ -45,6 +53,14 @@ final class HostListCacheTracker:
 
     // MARK: - CacheTracker
 
+    var fetchedObjects: [Host]? {
+        controller.fetchedObjects
+    }
+
+    var context: NSManagedObjectContext {
+        controller.managedObjectContext
+    }
+
     func start() {
         do {
             try controller.performFetch()
@@ -63,11 +79,7 @@ final class HostListCacheTracker:
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChangeContentWith snapshotReference: NSDiffableDataSourceSnapshotReference
     ) {
-        let snapshot = mapper.map(
-            snapshotReference: snapshotReference,
-            context: controller.managedObjectContext
-        )
+        let snapshot = mapper.map(snapshotReference: snapshotReference, context: controller.managedObjectContext)
         delegate?.cacheTracker(self, didChangeContentSnapshot: snapshot)
     }
-
 }

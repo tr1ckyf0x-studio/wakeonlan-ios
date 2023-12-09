@@ -21,5 +21,7 @@ PodHelper.defmodule(
         Helpers
         Migrations
         Models
+        Protocols
+        Workers
     ]
 )

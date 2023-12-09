@@ -7,19 +7,19 @@
 //
 
 public protocol AddHostFormRepresentable: Validable {
-    associatedtype SectionType: AddHostFormSectionRepresentable = Void
+    associatedtype SectionType: AddHostFormSectionRepresentable
 
     /// Represents sections
     var sections: [SectionType] { get }
 
     /// Represents main icon header
-    var iconModel: IconModel? { get set }
+    var iconModel: IconModel { get set }
 
     /// Represents host's title
-    var title: String? { get }
+    var title: String { get }
 
     /// Represents host's mac address
-    var macAddress: String? { get }
+    var macAddress: String { get }
 
     /// Represents host's destination
     var destination: String? { get }
