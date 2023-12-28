@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import SharedProtocolsAndModels
 
 public struct MoveHostWorker {
     public typealias CoreDataObject = Host
