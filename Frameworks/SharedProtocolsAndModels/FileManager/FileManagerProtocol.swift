@@ -2,8 +2,8 @@
 //  FormValidable.swift
 //  Wake on LAN
 //
-//  Created by Владислав Лисянский on 17.11.2022.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Created by Vladislav Lisianskii on 17.11.2022.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 import Foundation

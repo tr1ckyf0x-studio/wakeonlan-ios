@@ -3,7 +3,7 @@
 //  WOLUIComponents
 //
 //  Created by Dmitry on 13.12.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 public protocol IconModelRepresentable {

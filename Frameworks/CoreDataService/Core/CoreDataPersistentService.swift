@@ -2,8 +2,8 @@
 //  PersistentCoreDataService.swift
 //  Wake on LAN
 //
-//  Created by Владислав Лисянский on 20.05.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Created by Vladislav Lisianskii on 20.05.2020.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 import CocoaLumberjack

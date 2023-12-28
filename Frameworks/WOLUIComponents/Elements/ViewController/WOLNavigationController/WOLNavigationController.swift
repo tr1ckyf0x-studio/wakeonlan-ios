@@ -3,7 +3,7 @@
 //  WOLUIComponents
 //
 //  Created by Dmitry on 08.03.2021.
-//  Copyright © 2021 Владислав Лисянский. All rights reserved.
+//  Copyright © 2021 Vladislav Lisianskii. All rights reserved.
 //
 
 import UIKit

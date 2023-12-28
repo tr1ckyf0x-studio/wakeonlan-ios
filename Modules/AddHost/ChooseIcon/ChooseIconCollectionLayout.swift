@@ -3,7 +3,7 @@
 //  Wake on LAN
 //
 //  Created by Dmitry Stavitsky on 29.05.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 import UIKit

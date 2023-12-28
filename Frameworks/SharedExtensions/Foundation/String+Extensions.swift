@@ -3,7 +3,7 @@
 //  SharedExtensions
 //
 //  Created by Dmitry on 19.12.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 public extension String {

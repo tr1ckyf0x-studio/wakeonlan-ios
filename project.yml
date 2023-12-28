@@ -23,7 +23,7 @@ options:
     iOS: 13.0
 
 attributes:
-  ORGANIZATIONNAME: "Владислав Лисянский"
+  ORGANIZATIONNAME: "Vladislav Lisianskii"
 
 targets:
   Wake on LAN:

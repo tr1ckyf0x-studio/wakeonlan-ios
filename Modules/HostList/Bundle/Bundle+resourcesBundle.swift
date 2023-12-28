@@ -1,4 +1,4 @@
-//  Created by Vladislav Lisyanskiy on 05.11.2023.
+//  Created by Vladislav Lisianskii on 05.11.2023.
 
 import Foundation
 

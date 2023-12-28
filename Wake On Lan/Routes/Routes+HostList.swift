@@ -3,7 +3,7 @@
 //  Wake on LAN
 //
 //  Created by Dmitry Stavitsky on 11.11.2022.
-//  Copyright © 2022 Владислав Лисянский. All rights reserved.
+//  Copyright © 2022 Vladislav Lisianskii. All rights reserved.
 //
 
 import AboutScreen

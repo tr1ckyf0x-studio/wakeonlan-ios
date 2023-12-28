@@ -2,8 +2,8 @@
 //  TableEmptyView.swift
 //  Wake on LAN
 //
-//  Created by Владислав Лисянский on 12.11.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Created by Vladislav Lisianskii on 12.11.2020.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 import UIKit

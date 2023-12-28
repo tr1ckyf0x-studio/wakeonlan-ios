@@ -2,8 +2,8 @@
 //  AddHostPresenter.swift
 //  Wake On Lan
 //
-//  Created by Владислав Лисянский on 27.04.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Created by Vladislav Lisianskii on 27.04.2020.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 import SharedProtocolsAndModels

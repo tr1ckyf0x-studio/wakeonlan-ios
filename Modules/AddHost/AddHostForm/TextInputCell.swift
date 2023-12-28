@@ -1,8 +1,8 @@
 //  TextInputCell.swift
 //  Wake On Lan
 //
-//  Created by Владислав Лисянский on 01.05.2020.
-//  Copyright © 2020 Владислав Лисянский. All rights reserved.
+//  Created by Vladislav Lisianskii on 01.05.2020.
+//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
 import UIKit

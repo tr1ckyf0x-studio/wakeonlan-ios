@@ -2,7 +2,7 @@
 //  Host+CoreDataClass.swift
 //
 //
-//  Created by Владислав Лисянский on 20.05.2020.
+//  Created by Vladislav Lisianskii on 20.05.2020.
 //
 //
 

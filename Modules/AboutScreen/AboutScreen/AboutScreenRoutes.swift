@@ -3,7 +3,7 @@
 //  AboutScreen
 //
 //  Created by Vladislav Lisianskii on 24.04.2021.
-//  Copyright © 2021 Владислав Лисянский. All rights reserved.
+//  Copyright © 2021 Vladislav Lisianskii. All rights reserved.
 //
 
 import SharedRouter

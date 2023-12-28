@@ -3,7 +3,7 @@
 //  Wake on LAN
 //
 //  Created by Vladislav Lisianskii on 23.10.2022.
-//  Copyright © 2022 Владислав Лисянский. All rights reserved.
+//  Copyright © 2022 Vladislav Lisianskii. All rights reserved.
 //
 
 import PostLaunch
