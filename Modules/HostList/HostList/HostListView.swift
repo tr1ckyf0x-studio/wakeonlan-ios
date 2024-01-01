@@ -244,16 +244,16 @@ extension HostListView: HostListCollectionViewCellDelegate {
 
 // MARK: - HostListTableManagerDelegate
 
-extension HostListView: HostListTableManagerDelegate {
-    func hostListTableManager(
-        _ hostListTableManager: ManagesHostListTable,
-        moveRowAt sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath
-    ) {
-        delegate?.hostListView(
-            self,
-            moveRowAt: sourceIndexPath,
-            to: destinationIndexPath
-        )
-    }
-}
+//extension HostListView: HostListTableManagerDelegate {
+//    func hostListTableManager(
+//        _ hostListTableManager: ManagesHostListTable,
+//        moveRowAt sourceIndexPath: IndexPath,
+//        to destinationIndexPath: IndexPath
+//    ) {
+//        delegate?.hostListView(
+//            self,
+//            moveRowAt: sourceIndexPath,
+//            to: destinationIndexPath
+//        )
+//    }
+//}
