@@ -60,7 +60,7 @@ final class HostListView: UIView {
             collectionViewLayout: collectionLayout
         )
         collectionView.backgroundColor = Asset.Colors.primary.color
-//        tableView.dragInteractionEnabled = true
+        collectionView.dragInteractionEnabled = true
 
         return collectionView
     }()
@@ -70,7 +70,10 @@ final class HostListView: UIView {
             collectionView: collectionView,
             cellProvider: HostListCollectionCellProvider(hostCellDelegate: self)
         )
+        collectionManager.delegate = self
         collectionView.delegate = collectionManager
+        collectionView.dragDelegate = collectionManager
+        collectionView.dropDelegate = collectionManager
         return collectionManager
     }()
 
@@ -243,18 +246,18 @@ extension HostListView: HostListCollectionViewCellDelegate {
     }
 }
 
-// MARK: - HostListTableManagerDelegate
+// MARK: - HostListCollectionManagerDelegate
 
-//extension HostListView: HostListTableManagerDelegate {
-//    func hostListTableManager(
-//        _ hostListTableManager: ManagesHostListTable,
-//        moveRowAt sourceIndexPath: IndexPath,
-//        to destinationIndexPath: IndexPath
-//    ) {
-//        delegate?.hostListView(
-//            self,
-//            moveRowAt: sourceIndexPath,
-//            to: destinationIndexPath
-//        )
-//    }
-//}
+extension HostListView: HostListCollectionManagerDelegate {
+    func hostListCollectionManager(
+        _ hostListCollectionManager: ManagesHostListCollection,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) {
+        delegate?.hostListView(
+            self,
+            moveRowAt: sourceIndexPath,
+            to: destinationIndexPath
+        )
+    }
+}
