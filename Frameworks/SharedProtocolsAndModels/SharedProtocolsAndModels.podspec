@@ -21,6 +21,7 @@ PodHelper.defmodule(
         HostRepresentable
         Mandatoryable
         OpensURL
+        ProvidesCollectionViewCell
         ProvidesTableViewCell
         ProvidesSharedInstance
         RequestsReview

@@ -1,9 +1,8 @@
 //
-//  HostListTableViewCell.swift
-//  Wake on LAN
+//  HostListCollectionViewCell.swift
+//  HostList
 //
-//  Created by Dmitry on 07.07.2020.
-//  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
+//  Created by Vladislav Lisianskii on 01.01.2024.
 //
 
 import CocoaLumberjack
@@ -12,9 +11,9 @@ import Reachability
 import WOLResources
 import WOLUIComponents
 
-// MARK: - HostListTableViewCell
+// MARK: - HostListCollectionViewCell
 
-final class HostListTableViewCell: UITableViewCell {
+final class HostListCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Typealiases
 
@@ -25,7 +24,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     private var viewModel: HostListCellViewModel?
 
-    private weak var delegate: HostListTableViewCellDelegate?
+    private weak var delegate: HostListCollectionViewCellDelegate?
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -34,6 +33,7 @@ final class HostListTableViewCell: UITableViewCell {
         scrollView.alwaysBounceHorizontal = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.clipsToBounds = false
 
         return scrollView
     }()
@@ -108,9 +108,8 @@ final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Init
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = Asset.Colors.primary.color
         setupScrollView()
         setupBaseView()
@@ -127,7 +126,7 @@ final class HostListTableViewCell: UITableViewCell {
 
     // MARK: - Public
 
-    func configure(with viewModel: HostListCellViewModel, delegate: HostListTableViewCellDelegate?) {
+    func configure(with viewModel: HostListCellViewModel, delegate: HostListCollectionViewCellDelegate?) {
         let sfSymbol = SFSymbolFactory.build(from: viewModel.iconName)
         let image = sfSymbol.flatMap { UIImage(sfSymbol: $0) }
         hostTitle.text = viewModel.title
@@ -140,7 +139,7 @@ final class HostListTableViewCell: UITableViewCell {
 
 // MARK: - Private
 
-private extension HostListTableViewCell {
+private extension HostListCollectionViewCell {
 
     func setupScrollView() {
         contentView.addSubview(scrollView)
@@ -155,63 +154,54 @@ private extension HostListTableViewCell {
 
     func setupBaseView() {
         scrollViewContentView.addSubview(baseView)
-        baseView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.top.equalToSuperview().offset(8)
-            $0.bottom.equalToSuperview().offset(-8)
-            $0.width.equalTo(scrollView).offset(-32)
-        }
-        scrollView.snp.makeConstraints { make in
-            make.height.equalTo(baseView).offset(16)
+        baseView.snp.makeConstraints { make in
+            make.leading.verticalEdges.equalToSuperview()
+            make.size.equalTo(scrollView)
         }
     }
 
     func setupDeleteView() {
         scrollViewContentView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
-            make.top.bottom.equalTo(baseView)
+            make.verticalEdges.equalTo(baseView)
             make.leading.equalTo(baseView.snp.trailing).offset(20)
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview()
             make.width.equalTo(deleteButton.snp.height)
         }
     }
 
     func setupImageView() {
         baseView.addSubview(deviceImageView)
-        deviceImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.top.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().inset(16).priority(.low)
-            $0.bottom.equalToSuperview().offset(-16)
-            $0.width.height.equalTo(80)
+        deviceImageView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(80)
         }
     }
 
     func setupHostTitle() {
         baseView.addSubview(hostTitle)
-        hostTitle.snp.makeConstraints {
-            $0.leading.equalTo(deviceImageView.snp.trailing).offset(16)
-            $0.top.equalToSuperview().offset(32)
-            $0.trailing.equalTo(infoButton.snp.leading).offset(-8)
+        hostTitle.snp.makeConstraints { make in
+            make.leading.equalTo(deviceImageView.snp.trailing).offset(16)
+            make.top.equalToSuperview().offset(32)
+            make.trailing.equalTo(infoButton.snp.leading).offset(-8)
         }
     }
 
     func setupMacAddressTitle() {
         baseView.addSubview(macAddressTitle)
-        macAddressTitle.snp.makeConstraints {
-            $0.leading.equalTo(hostTitle.snp.leading)
-            $0.top.equalTo(hostTitle.snp.bottom).offset(8)
+        macAddressTitle.snp.makeConstraints { make in
+            make.leading.equalTo(hostTitle.snp.leading)
+            make.top.equalTo(hostTitle.snp.bottom).offset(8)
         }
     }
 
     func setupInfoButton() {
         baseView.addSubview(infoButton)
-        infoButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.top.equalToSuperview().offset(36)
-            $0.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(36)
-            $0.height.equalTo(infoButton.snp.width)
+        infoButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
+            make.width.height.equalTo(Constants.infoButtonSize)
         }
     }
 
@@ -276,7 +266,7 @@ private extension HostListTableViewCell {
 
 // MARK: - UIScrollViewDelegate
 
-extension HostListTableViewCell: UIScrollViewDelegate {
+extension HostListCollectionViewCell: UIScrollViewDelegate {
 
     // NOTE: Prevents left swiping
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -288,5 +278,15 @@ extension HostListTableViewCell: UIScrollViewDelegate {
         default:
             scrollView.isPagingEnabled = true
         }
+    }
+}
+
+extension HostListCollectionViewCell {
+    enum Constants {
+        static let cellHeight: CGFloat = 128
+        static let horizontalInset: CGFloat = 16
+        static let verticalInset: CGFloat = 16
+
+        fileprivate static let infoButtonSize = 40
     }
 }
