@@ -178,9 +178,10 @@ private extension HostListCollectionViewCell {
         baseView.addSubview(deviceImageView)
         deviceImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
-            $0.top.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+//            $0.top.equalToSuperview().offset(16)
             $0.trailing.lessThanOrEqualToSuperview().inset(16).priority(.low)
-            $0.bottom.equalToSuperview().offset(-16)
+//            $0.bottom.equalToSuperview().offset(-16)
             $0.width.height.equalTo(80)
         }
     }
@@ -206,10 +207,11 @@ private extension HostListCollectionViewCell {
         baseView.addSubview(infoButton)
         infoButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.top.equalToSuperview().offset(36)
+//            $0.top.equalToSuperview().offset(36)
             $0.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(36)
-            $0.height.equalTo(infoButton.snp.width)
+//            $0.bottom.equalToSuperview().inset(36)
+            $0.width.height.equalTo(Constants.infoButtonSize)
+//            $0.height.equalTo(infoButton.snp.width)
         }
     }
 
@@ -286,5 +288,13 @@ extension HostListCollectionViewCell: UIScrollViewDelegate {
         default:
             scrollView.isPagingEnabled = true
         }
+    }
+}
+
+extension HostListCollectionViewCell {
+    enum Constants {
+        static let cellHeight: CGFloat = 128
+//        static let contentHeight: CGFloat = 112
+        fileprivate static let infoButtonSize = 40
     }
 }

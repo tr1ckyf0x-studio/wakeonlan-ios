@@ -40,26 +40,37 @@ final class HostListView: UIView {
 
     weak var delegate: HostListViewDelegate?
 
-    lazy var tableView: UITableView = {
-        let tableView = UITableView(
-            frame: .zero,
-            style: .grouped
-        )
-        tableView.separatorStyle = .none
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.backgroundColor = Asset.Colors.primary.color
-        tableView.dragInteractionEnabled = true
-
-        return tableView
+    private lazy var collectionLayout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+//        layout.minimumInteritemSpacing = appearance.quickBeveragesItemSpacing
+//        layout.sectionInset = UIEdgeInsets(
+//            top: .zero,
+//            left: appearance.quickBeveragesSectionInset,
+//            bottom: .zero,
+//            right: appearance.quickBeveragesSectionInset
+//        )
+        layout.scrollDirection = .vertical
+        return layout
     }()
 
-    private lazy var tableManager: ManagesHostListTable = {
-        let tableManager = HostListTableManager(
-            tableView: tableView,
-            cellProvider: HostListCellProvider(hostCellDelegate: self)
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: collectionLayout
         )
-        tableManager.delegate = self
-        return tableManager
+        collectionView.backgroundColor = Asset.Colors.primary.color
+//        tableView.dragInteractionEnabled = true
+
+        return collectionView
+    }()
+
+    private lazy var collectionManager: ManagesHostListCollection = {
+        let collectionManager = HostListCollectionManager(
+            collectionView: collectionView,
+            cellProvider: HostListCollectionCellProvider(hostCellDelegate: self)
+        )
+        collectionView.delegate = collectionManager
+        return collectionManager
     }()
 
     lazy var emptyView: EmptyView = {
@@ -141,11 +152,17 @@ final class HostListView: UIView {
         addSubviews()
         makeConstraints()
         makeAppearance()
-        setupTableView()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Lifecycle
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateCollectionLayout()
     }
 }
 
@@ -154,11 +171,11 @@ final class HostListView: UIView {
 private extension HostListView {
 
     func addSubviews() {
-        addSubview(tableView)
+        addSubview(collectionView)
     }
 
     func makeConstraints() {
-        tableView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
@@ -167,18 +184,19 @@ private extension HostListView {
         backgroundColor = Asset.Colors.primary.color
     }
 
-    func setupTableView() {
-        tableView.delegate = tableManager
-        tableView.dragDelegate = tableManager
-        tableView.dropDelegate = tableManager
-    }
-
     @objc func didTapAddButton(_ sender: UIButton) {
         delegate?.hostListViewDidPressAddButton(self)
     }
 
     @objc func didTapAboutButton(_ sender: UIButton) {
         delegate?.hostListViewDidPressAboutButton(self)
+    }
+
+    func updateCollectionLayout() {
+        collectionLayout.itemSize = CGSize(
+            width: collectionView.bounds.width,
+            height: HostListCollectionViewCell.Constants.cellHeight
+        )
     }
 }
 
@@ -201,25 +219,25 @@ extension HostListView: StateableView {
 
 extension HostListView: DisplaysHostList {
     func updateContentSnapshot(_ contentSnapshot: HostListSnapshot) {
-        tableManager.apply(contentSnapshot)
+        collectionManager.apply(contentSnapshot)
     }
 }
 
 // MARK: - HostListTableViewCellDelegate
 
-extension HostListView: HostListTableViewCellDelegate {
-    func hostListCellDidTap(_ cell: HostListTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
+extension HostListView: HostListCollectionViewCellDelegate {
+    func hostListCellDidTap(_ cell: HostListCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         delegate?.hostListView(self, didTapCellAt: indexPath)
     }
 
-    func hostListCellDidTapDelete(_ cell: HostListTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
+    func hostListCellDidTapDelete(_ cell: HostListCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         delegate?.hostListView(self, didTapDeleteAt: indexPath)
     }
 
-    func hostListCellDidTapInfo(_ cell: HostListTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
+    func hostListCellDidTapInfo(_ cell: HostListCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         delegate?.hostListView(self, didTapInfoAt: indexPath)
     }
 }
