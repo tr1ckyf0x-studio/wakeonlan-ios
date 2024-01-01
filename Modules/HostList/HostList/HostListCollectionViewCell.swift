@@ -158,9 +158,6 @@ private extension HostListCollectionViewCell {
             make.leading.verticalEdges.equalToSuperview()
             make.size.equalTo(scrollView)
         }
-//        scrollView.snp.makeConstraints { make in
-//            make.height.equalTo(baseView).offset(16)
-//        }
     }
 
     func setupDeleteView() {
@@ -175,42 +172,36 @@ private extension HostListCollectionViewCell {
 
     func setupImageView() {
         baseView.addSubview(deviceImageView)
-        deviceImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.centerY.equalToSuperview()
-//            $0.top.equalToSuperview().offset(16)
-//            $0.trailing.lessThanOrEqualToSuperview().inset(16).priority(.low)
-//            $0.bottom.equalToSuperview().offset(-16)
-            $0.width.height.equalTo(80)
+        deviceImageView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(80)
         }
     }
 
     func setupHostTitle() {
         baseView.addSubview(hostTitle)
-        hostTitle.snp.makeConstraints {
-            $0.leading.equalTo(deviceImageView.snp.trailing).offset(16)
-            $0.top.equalToSuperview().offset(32)
-            $0.trailing.equalTo(infoButton.snp.leading).offset(-8)
+        hostTitle.snp.makeConstraints { make in
+            make.leading.equalTo(deviceImageView.snp.trailing).offset(16)
+            make.top.equalToSuperview().offset(32)
+            make.trailing.equalTo(infoButton.snp.leading).offset(-8)
         }
     }
 
     func setupMacAddressTitle() {
         baseView.addSubview(macAddressTitle)
-        macAddressTitle.snp.makeConstraints {
-            $0.leading.equalTo(hostTitle.snp.leading)
-            $0.top.equalTo(hostTitle.snp.bottom).offset(8)
+        macAddressTitle.snp.makeConstraints { make in
+            make.leading.equalTo(hostTitle.snp.leading)
+            make.top.equalTo(hostTitle.snp.bottom).offset(8)
         }
     }
 
     func setupInfoButton() {
         baseView.addSubview(infoButton)
-        infoButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-//            $0.top.equalToSuperview().offset(36)
-            $0.trailing.equalToSuperview().inset(16)
-//            $0.bottom.equalToSuperview().inset(36)
-            $0.width.height.equalTo(Constants.infoButtonSize)
-//            $0.height.equalTo(infoButton.snp.width)
+        infoButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
+            make.width.height.equalTo(Constants.infoButtonSize)
         }
     }
 
@@ -293,10 +284,9 @@ extension HostListCollectionViewCell: UIScrollViewDelegate {
 extension HostListCollectionViewCell {
     enum Constants {
         static let cellHeight: CGFloat = 128
-//        static let contentHeight: CGFloat = 112
-        fileprivate static let infoButtonSize = 40
-
         static let horizontalInset: CGFloat = 16
         static let verticalInset: CGFloat = 16
+
+        fileprivate static let infoButtonSize = 40
     }
 }

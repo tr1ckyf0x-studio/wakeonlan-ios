@@ -23,7 +23,10 @@ struct HostListCollectionCellProvider: ProvidesCollectionViewCell {
     ) -> UICollectionViewCell? {
         switch item {
         case let .host(viewModel):
-            let cell = collectionView.dequeueReusableCellWithAutoregistration(HostListCollectionViewCell.self, indexPath: indexPath)
+            let cell = collectionView.dequeueReusableCellWithAutoregistration(
+                HostListCollectionViewCell.self,
+                indexPath: indexPath
+            )
             cell.configure(with: viewModel, delegate: hostCellDelegate)
             return cell
         }

@@ -72,8 +72,6 @@ final class HostListView: UIView {
         )
         collectionManager.delegate = self
         collectionView.delegate = collectionManager
-//        collectionView.dragDelegate = collectionManager
-//        collectionView.dropDelegate = collectionManager
         return collectionManager
     }()
 

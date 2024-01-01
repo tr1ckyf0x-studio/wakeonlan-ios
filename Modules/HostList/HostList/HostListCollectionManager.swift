@@ -23,6 +23,8 @@ protocol HostListCollectionManagerDelegate: AnyObject {
 
 final class HostListCollectionManager: HostListCollectionDataSource, ManagesHostListCollection {
 
+    // MARK: - Properties
+
     typealias CellProvider = ProvidesCollectionViewCell<HostListItem>
 
     weak var delegate: HostListCollectionManagerDelegate?
@@ -34,11 +36,15 @@ final class HostListCollectionManager: HostListCollectionDataSource, ManagesHost
 
     private weak var collectionView: UICollectionView?
 
+    // MARK: - Init
+
     init(collectionView: UICollectionView, cellProvider: any CellProvider) {
         super.init(collectionView: collectionView, cellProvider: cellProvider.makeCollectionViewCell)
         self.collectionView = collectionView
         collectionView.addGestureRecognizer(longPressGesture)
     }
+
+    // MARK: - DataSource
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -57,7 +63,9 @@ extension HostListCollectionManager {
         switch gesture.state {
 
         case .began:
-            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+            guard let selectedIndexPath = collectionView.indexPathForItem(
+                at: gesture.location(in: collectionView)
+            ) else {
                 break
             }
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
