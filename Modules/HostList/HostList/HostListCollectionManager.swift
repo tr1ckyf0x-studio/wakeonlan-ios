@@ -11,9 +11,7 @@ typealias HostListCollectionDataSource = UICollectionViewDiffableDataSource<Host
 
 protocol ManagesHostListCollection:
     HostListCollectionDataSource,
-    UICollectionViewDelegate,
-    UICollectionViewDragDelegate,
-    UICollectionViewDropDelegate { }
+    UICollectionViewDelegate { }
 
 protocol HostListCollectionManagerDelegate: AnyObject {
     func hostListCollectionManager(
@@ -29,8 +27,17 @@ final class HostListCollectionManager: HostListCollectionDataSource, ManagesHost
 
     weak var delegate: HostListCollectionManagerDelegate?
 
+    private lazy var longPressGesture = UILongPressGestureRecognizer(
+        target: self,
+        action: #selector(handleLongGesture(gesture:))
+    )
+
+    private weak var collectionView: UICollectionView?
+
     init(collectionView: UICollectionView, cellProvider: any CellProvider) {
         super.init(collectionView: collectionView, cellProvider: cellProvider.makeCollectionViewCell)
+        self.collectionView = collectionView
+        collectionView.addGestureRecognizer(longPressGesture)
     }
 
     override func collectionView(
@@ -42,32 +49,27 @@ final class HostListCollectionManager: HostListCollectionDataSource, ManagesHost
     }
 }
 
-// MARK: - UICollectionViewDragDelegate
+// MARK: - Private
 
 extension HostListCollectionManager {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        itemsForBeginning session: UIDragSession,
-        at indexPath: IndexPath
-    ) -> [UIDragItem] {
-        [UIDragItem(itemProvider: NSItemProvider())]
-    }
-}
+    @objc private func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        guard let collectionView else { return }
+        switch gesture.state {
 
-// MARK: - UICollectionViewDropDelegate
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
 
-extension HostListCollectionManager {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        dropSessionDidUpdate session: UIDropSession,
-        withDestinationIndexPath destinationIndexPath: IndexPath?
-    ) -> UICollectionViewDropProposal {
-        guard session.localDragSession != nil else {
-            return UICollectionViewDropProposal(operation: .cancel, intent: .unspecified)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
+
+        case .ended:
+            collectionView.endInteractiveMovement()
+
+        default:
+            collectionView.cancelInteractiveMovement()
         }
-
-        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
-
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) { }
 }
