@@ -33,6 +33,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
         scrollView.alwaysBounceHorizontal = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.clipsToBounds = false
 
         return scrollView
     }()
@@ -153,23 +154,21 @@ private extension HostListCollectionViewCell {
 
     func setupBaseView() {
         scrollViewContentView.addSubview(baseView)
-        baseView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.top.equalToSuperview().offset(8)
-            $0.bottom.equalToSuperview().offset(-8)
-            $0.width.equalTo(scrollView).offset(-32)
+        baseView.snp.makeConstraints { make in
+            make.leading.verticalEdges.equalToSuperview()
+            make.size.equalTo(scrollView)
         }
-        scrollView.snp.makeConstraints { make in
-            make.height.equalTo(baseView).offset(16)
-        }
+//        scrollView.snp.makeConstraints { make in
+//            make.height.equalTo(baseView).offset(16)
+//        }
     }
 
     func setupDeleteView() {
         scrollViewContentView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
-            make.top.bottom.equalTo(baseView)
+            make.verticalEdges.equalTo(baseView)
             make.leading.equalTo(baseView.snp.trailing).offset(20)
-            make.trailing.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview()
             make.width.equalTo(deleteButton.snp.height)
         }
     }
@@ -180,7 +179,7 @@ private extension HostListCollectionViewCell {
             $0.leading.equalToSuperview().offset(16)
             $0.centerY.equalToSuperview()
 //            $0.top.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().inset(16).priority(.low)
+//            $0.trailing.lessThanOrEqualToSuperview().inset(16).priority(.low)
 //            $0.bottom.equalToSuperview().offset(-16)
             $0.width.height.equalTo(80)
         }
@@ -296,5 +295,8 @@ extension HostListCollectionViewCell {
         static let cellHeight: CGFloat = 128
 //        static let contentHeight: CGFloat = 112
         fileprivate static let infoButtonSize = 40
+
+        static let horizontalInset: CGFloat = 16
+        static let verticalInset: CGFloat = 16
     }
 }

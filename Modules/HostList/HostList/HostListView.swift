@@ -42,13 +42,14 @@ final class HostListView: UIView {
 
     private lazy var collectionLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
-//        layout.minimumInteritemSpacing = appearance.quickBeveragesItemSpacing
-//        layout.sectionInset = UIEdgeInsets(
-//            top: .zero,
-//            left: appearance.quickBeveragesSectionInset,
-//            bottom: .zero,
-//            right: appearance.quickBeveragesSectionInset
-//        )
+        layout.minimumInteritemSpacing = HostListCollectionViewCell.Constants.verticalInset
+        layout.sectionInset = UIEdgeInsets(
+            top: HostListCollectionViewCell.Constants.verticalInset,
+            left: HostListCollectionViewCell.Constants.horizontalInset,
+            bottom: HostListCollectionViewCell.Constants.verticalInset,
+            right: HostListCollectionViewCell.Constants.horizontalInset
+        )
+        layout.minimumLineSpacing = HostListCollectionViewCell.Constants.verticalInset
         layout.scrollDirection = .vertical
         return layout
     }()
@@ -194,7 +195,7 @@ private extension HostListView {
 
     func updateCollectionLayout() {
         collectionLayout.itemSize = CGSize(
-            width: collectionView.bounds.width,
+            width: collectionView.bounds.width - HostListCollectionViewCell.Constants.horizontalInset * 2,
             height: HostListCollectionViewCell.Constants.cellHeight
         )
     }
