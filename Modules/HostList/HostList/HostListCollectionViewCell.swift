@@ -283,7 +283,7 @@ extension HostListCollectionViewCell: UIScrollViewDelegate {
 
 extension HostListCollectionViewCell {
     enum Constants {
-        static let cellHeight: CGFloat = 128
+        static let cellHeight: CGFloat = 112
         static let horizontalInset: CGFloat = 16
         static let verticalInset: CGFloat = 16
 
