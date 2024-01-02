@@ -21,6 +21,7 @@ protocol HostListViewDelegate: AnyObject {
         moveRowAt sourceIndexPath: IndexPath,
         to destinationIndexPath: IndexPath
     )
+    func hostListViewDidPressDonateButton(_ view: DisplaysHostList)
 }
 
 protocol DisplaysHostList {
@@ -147,6 +148,37 @@ final class HostListView: UIView {
         return barButton
     }()
 
+    // swiftlint:disable:next closure_body_length
+    lazy var donateButton: UIBarButtonItem = {
+        let donateButton: SoftUIView = {
+            let button = SoftUIView(circleShape: true)
+            let label = UILabel()
+            label.text = L10n.HostList.NavigationBar.donate
+            label.textColor = Asset.Colors.secondary.color
+            label.font = .systemFont(ofSize: 14, weight: .bold)
+            button.configure(with: SoftUIViewModel(contentView: label))
+            button.addTarget(self, action: #selector(didTapDonateButton(_:)), for: .touchUpInside)
+
+            label.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.horizontalEdges.equalToSuperview().inset(8)
+            }
+
+            return button
+        }()
+
+        let barButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: donateButton)
+            button.customView?.snp.makeConstraints { make in
+                make.height.equalTo(Constants.barButtonDimensions)
+            }
+
+            return button
+        }()
+
+        return barButton
+    }()
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -192,6 +224,10 @@ private extension HostListView {
 
     @objc func didTapAboutButton(_ sender: UIButton) {
         delegate?.hostListViewDidPressAboutButton(self)
+    }
+
+    @objc func didTapDonateButton(_ sender: UIButton) {
+        delegate?.hostListViewDidPressDonateButton(self)
     }
 
     func updateCollectionLayout() {

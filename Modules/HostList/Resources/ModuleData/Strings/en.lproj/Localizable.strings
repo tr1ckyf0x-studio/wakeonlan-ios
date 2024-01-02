@@ -2,3 +2,4 @@
 "HostList.Notification.PacketSent" = "Packet sent";
 "HostList.Notification.CheckConnection" = "You must be connected to network";
 "HostList.Screen.EmptyViewMessage" = "There is nothing here.\nPress the plus button in the top right corner.";
+"HostList.NavigationBar.Donate" = "Donate";

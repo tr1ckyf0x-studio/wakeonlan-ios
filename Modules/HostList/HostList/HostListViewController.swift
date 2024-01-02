@@ -43,6 +43,7 @@ public final class HostListViewController: UIViewController {
 
     private func setupNavigationBar() {
         navigationItem.title = L10n.HostList.Screen.title
+        navigationItem.leftBarButtonItem = hostListView.donateButton
         navigationItem.rightBarButtonItems = [hostListView.addItemButton,
                                               hostListView.barButtonSpacer,
                                               hostListView.aboutButton]
@@ -100,5 +101,9 @@ extension HostListViewController: HostListViewDelegate {
             moveRowAt: sourceIndexPath,
             to: destinationIndexPath
         )
+    }
+
+    func hostListViewDidPressDonateButton(_ view: DisplaysHostList) {
+        presenter?.viewDidPressDonateButton(self)
     }
 }

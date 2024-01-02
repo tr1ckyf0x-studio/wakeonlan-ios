@@ -14,4 +14,6 @@ public protocol HostListRoutes {
     func openAddHost(with host: Host?) -> Route
     /// Navigates to `About` screen
     func openAbout() -> Route
+    /// Navigates to `Donate` screen
+    func openDonate() -> Route
 }

@@ -11,6 +11,10 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
   internal enum HostList {
+    internal enum NavigationBar {
+      /// Donate
+      internal static let donate = L10n.tr("Localizable", "HostList.NavigationBar.Donate", fallback: "Donate")
+    }
     internal enum Notification {
       /// You must be connected to network
       internal static let checkConnection = L10n.tr("Localizable", "HostList.Notification.CheckConnection", fallback: "You must be connected to network")

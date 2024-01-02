@@ -56,6 +56,10 @@ extension HostListPresenter: HostListViewOutput {
     ) {
         interactor?.moveRow(from: sourceIndexPath, to: destinationIndexPath)
     }
+
+    func viewDidPressDonateButton(_ view: HostListViewInput) {
+        navigate(to: router?.openDonate())
+    }
 }
 
 // MARK: - HostListInteractorOutput

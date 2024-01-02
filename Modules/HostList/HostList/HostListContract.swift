@@ -28,6 +28,7 @@ protocol HostListViewOutput: AnyObject {
         moveRowAt sourceIndexPath: IndexPath,
         to destinationIndexPath: IndexPath
     )
+    func viewDidPressDonateButton(_ view: HostListViewInput)
 }
 
 protocol HostListViewInput: AnyObject {
