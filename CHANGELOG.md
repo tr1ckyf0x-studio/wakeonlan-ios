@@ -10,6 +10,20 @@
 
 ### Removed
 
+## 1.4.0
+
+### Added
+
+- Implemented drag&drop host reordering
+- Added donate button to host list screen
+
+### Updated
+
+- Dependencies moved to Cocoapods
+- Updated Github URL
+- Updated dependencies
+- Project refactored
+
 ## 1.3.0
 
 ### Added
