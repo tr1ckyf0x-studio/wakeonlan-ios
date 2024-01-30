@@ -38,9 +38,9 @@ end
 # External dependencies
 def external_frameworks
     external_framework(name: 'CocoaLumberjack/Swift', version: '3.8.2')
-    external_framework(name: 'FirebaseAnalytics/WithoutAdIdSupport', version: '10.19.0')
-    external_framework(name: 'FirebaseCrashlytics', version: '10.19.0')
-    external_framework_git(name: 'ReachabilitySwift', source: 'https://github.com/ashleymills/Reachability.swift.git', version: 'v5.1.0')
+    external_framework(name: 'FirebaseAnalytics/WithoutAdIdSupport', version: '10.20.0')
+    external_framework(name: 'FirebaseCrashlytics', version: '10.20.0')
+    external_framework_git(name: 'ReachabilitySwift', source: 'https://github.com/ashleymills/Reachability.swift.git', version: 'v5.2.0')
     external_framework(name: 'RouteComposer', version: '2.10.5')
     external_framework_git(name: 'SnapKit', source: 'https://github.com/SnapKit/SnapKit.git', version: '5.7.0')
 end
