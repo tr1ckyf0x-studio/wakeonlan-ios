@@ -10,6 +10,17 @@
 
 ### Removed
 
+## 1.5.0
+
+### Fixed
+
+- Fixed unique host crash (#71)
+
+### Updated
+
+- Updated workflow checkout step to v4
+- Updated dependencies
+
 ## 1.4.0
 
 ### Added
