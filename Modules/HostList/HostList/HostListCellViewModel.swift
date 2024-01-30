@@ -11,10 +11,12 @@ struct HostListCellViewModel: Hashable, Equatable {
     let title: String
     let iconName: String
     let macAddress: String?
+    let createdAt: Date
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
         hasher.combine(iconName)
         hasher.combine(macAddress)
+        hasher.combine(createdAt)
     }
 }

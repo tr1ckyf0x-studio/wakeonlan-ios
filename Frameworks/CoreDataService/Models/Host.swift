@@ -16,6 +16,8 @@ public final class Host: NSManagedObject, HostRepresentable {
     @NSManaged public internal(set) var iconName: String
     @NSManaged public internal(set) var port: String?
     @NSManaged public internal(set) var destination: String?
+    @NSManaged public internal(set) var createdAt: Date
+
     public internal(set) var macAddress: String? {
         get {
             macAddressData.map { data in
@@ -28,7 +30,13 @@ public final class Host: NSManagedObject, HostRepresentable {
             }
         }
     }
+
     @NSManaged private var macAddressData: Data?
+
+    override public func awakeFromInsert() {
+        super.awakeFromInsert()
+        createdAt = Date()
+    }
 }
 
 // MARK: - Managed
