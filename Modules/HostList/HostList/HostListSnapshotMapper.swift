@@ -28,7 +28,8 @@ struct HostListSnapshotMapper: MapsSnapshotToHostListItem {
                     HostListCellViewModel(
                         title: host.title,
                         iconName: host.iconName,
-                        macAddress: host.macAddress
+                        macAddress: host.macAddress,
+                        createdAt: host.createdAt
                     )
                 }
                 .map(HostListSectionItem.host)
