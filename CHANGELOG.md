@@ -10,6 +10,12 @@
 
 ### Removed
 
+## 1.5.1
+
+### Updated
+
+- Updated dependencies
+
 ## 1.5.0
 
 ### Fixed
