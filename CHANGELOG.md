@@ -10,6 +10,22 @@
 
 ### Removed
 
+## 1.5.4
+
+### Updated
+
+- Updated dependencies
+
+## 1.5.3
+
+### Added
+
+- Enabled DEAD_CODE_STRIPPING
+
+### Updated
+
+- Updated dependencies
+
 ## 1.5.1
 
 ### Updated
