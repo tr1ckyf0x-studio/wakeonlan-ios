@@ -56,8 +56,8 @@ private extension AddHostViewController {
 
 extension AddHostViewController: AddHostViewInput {
     func reloadTable(with section: FormSection) {
-        let indexPaths: [IndexPath] = section.items.enumerated().map {
-            .init(row: $0.offset, section: section.kind?.rawValue ?? .zero)
+        let indexPaths: [IndexPath] = section.items.indices.map {
+            .init(row: $0, section: section.kind?.rawValue ?? .zero)
         }
         addHostView.tableView.reloadRows(at: indexPaths, with: .none)
     }
