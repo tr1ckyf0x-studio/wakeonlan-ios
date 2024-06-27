@@ -10,6 +10,17 @@
 
 ### Removed
 
+## 1.5.6
+
+### Fixed
+
+- Fixed donate screen texts
+- Fixed warnings
+
+### Updated
+
+- Updated dependencies
+
 ## 1.5.5
 
 ### Updated
