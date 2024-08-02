@@ -12,8 +12,8 @@ import Foundation
 internal enum L10n {
   internal enum DonateScreen {
     internal enum Screen {
-      /// Donations do not unlock any extra features in the application. The application is provided free of charge and any donations are your gratitude for our work.
-      internal static let footer = L10n.tr("DonateScreen", "DonateScreen.Screen.Footer", fallback: "Donations do not unlock any extra features in the application. The application is provided free of charge and any donations are your gratitude for our work.")
+      /// Donations do not unlock any extra features in the application. The application is provided as is and any donations are your gratitude for our work.
+      internal static let footer = L10n.tr("DonateScreen", "DonateScreen.Screen.Footer", fallback: "Donations do not unlock any extra features in the application. The application is provided as is and any donations are your gratitude for our work.")
       /// In-App purchases are unavailable on your device.
       internal static let paymentsUnavailable = L10n.tr("DonateScreen", "DonateScreen.Screen.PaymentsUnavailable", fallback: "In-App purchases are unavailable on your device.")
       /// Donate
