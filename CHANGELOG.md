@@ -10,6 +10,16 @@
 
 ### Removed
 
+## 1.5.7
+
+### Fixed
+
+- Fixed localization
+
+### Updated
+
+- Updated dependencies
+
 ## 1.5.6
 
 ### Fixed
