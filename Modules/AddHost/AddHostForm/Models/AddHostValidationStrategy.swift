@@ -21,8 +21,10 @@ extension AddHostValidationStrategy: RegExPatternRepresentable {
         switch self {
         case .title:
             return "(.|\\s)*\\S(.|\\s)*"
+
         case .macAddress:
             return "^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$"
+
         case .port:
             return "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
         }
