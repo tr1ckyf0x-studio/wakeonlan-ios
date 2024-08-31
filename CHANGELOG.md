@@ -26,7 +26,7 @@
 
 ### Removed
 
-Removed uk localization
+- Removed uk localization
 
 ## 1.5.7
 
