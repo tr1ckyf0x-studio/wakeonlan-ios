@@ -20,6 +20,16 @@ jobs:
           eval "$(rbenv init -)"
           make bootstrap
 
+      - name: Import provisioning profiles
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo ${{ secrets.PROVISION_PROFILE_WOL_ADHOC }} | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Wake_On_Lan_AdHoc.mobileprovision
+          echo ${{ secrets.PROVISION_PROFILE_WOL_APPSTORE }} | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Wake_On_Lan_AppStore.mobileprovision
+          echo ${{ secrets.PROVISION_PROFILE_WOL_DEVELOPMENT }} | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Wake_On_Lan_Development.mobileprovision
+          echo ${{ secrets.PROVISION_PROFILE_WOL_SIRI_INTENT_ADHOC }} | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Wake_On_Lan_Siri_Intent_AdHoc.mobileprovision
+          echo ${{ secrets.PROVISION_PROFILE_WOL_SIRI_INTENT_APPSTORE }} | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Wake_On_Lan_Siri_Intent_AppStore.mobileprovision
+          echo ${{ secrets.PROVISION_PROFILE_WOL_SIRI_INTENT_DEVELOPMENT }} | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/Wake_On_Lan_Siri_Intent_Development.mobileprovision
+
       - name: Import Certificates
         run: |
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
