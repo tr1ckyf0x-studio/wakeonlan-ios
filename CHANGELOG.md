@@ -10,6 +10,24 @@
 
 ### Removed
 
+## 1.5.8
+
+### Added
+
+- Added provisioning profile CI import step
+
+### Fixed
+
+- Fixed warnings
+
+### Updated
+
+- Updated dependencies
+
+### Removed
+
+Removed uk localization
+
 ## 1.5.7
 
 ### Fixed
