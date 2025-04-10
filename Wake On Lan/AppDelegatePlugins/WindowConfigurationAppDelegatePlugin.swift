@@ -6,7 +6,7 @@
 //  Copyright © 2022 Vladislav Lisianskii. All rights reserved.
 //
 
-import PostLaunch
+import HostList
 import SharedRouter
 import UIKit
 import WOLUIComponents
@@ -29,7 +29,7 @@ final class WindowConfigurationAppDelegatePlugin: NSObject, UIApplicationDelegat
         let window = UIWindow(frame: UIScreen.main.bounds)
         configureWindow(window)
         window.rootViewController = WOLNavigationController(rootViewController: {
-            let factory = PostLaunchFactory(router: WOLRouter())
+            let factory = HostListFactory(router: WOLRouter())
             guard
                 let viewController = try? factory.build(with: nil)
             else {

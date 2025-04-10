@@ -14,8 +14,6 @@ public protocol CoreDataServiceProtocol: AnyObject {
 
     var persistentContainer: NSPersistentContainer { get }
 
-    var persistentStoreCoordinator: NSPersistentStoreCoordinator { get }
-
     var mainContext: NSManagedObjectContext { get }
 
     /// Method has completion handler inside, but it is sync until shouldAddStoreAsynchronously equals true
@@ -27,12 +25,6 @@ public protocol CoreDataServiceProtocol: AnyObject {
 }
 
 extension CoreDataServiceProtocol {
-
-    public var mainContext: NSManagedObjectContext {
-        let context = persistentContainer.viewContext
-        context.automaticallyMergesChangesFromParent = true
-        return context
-    }
 
     public func createHostContainer() {
         persistentContainer.loadPersistentStores { _, error in

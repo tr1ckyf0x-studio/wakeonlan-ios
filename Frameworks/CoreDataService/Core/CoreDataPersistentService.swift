@@ -12,53 +12,32 @@ import SharedProtocolsAndModels
 
 // MARK: - PersistentContainer
 
-public enum PersistentContainer {
-    public struct SQLite: PersistentContainerType {
-        public static let store = NSSQLiteStoreType
-        public static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
-            guard let persistentContainerURL = CoreDataConstants.persistentContainerURL else {
-                fatalError("Persistent container URL is unavailable")
-            }
-            return [NSPersistentStoreDescription(url: persistentContainerURL)]
-        }()
-    }
-
-    public struct InMemory: PersistentContainerType {
-        public static let store = NSInMemoryStoreType
-        public static let persistentStoreDescriptions: [NSPersistentStoreDescription]? = {
-            let description = NSPersistentStoreDescription()
-            description.type = store
-            return [description]
-        }()
-    }
-}
-
-// MARK: - PersistentContainerType
-
-public protocol PersistentContainerType {
-    static var store: String { get }
-    static var persistentStoreDescriptions: [NSPersistentStoreDescription]? { get }
+public enum StoreType {
+    case sqlite(URL)
+    case inMemory
 }
 
 // MARK: - CoreDataService
 
 public final class CoreDataService: CoreDataServiceProtocol {
 
+    public private(set) lazy var mainContext: NSManagedObjectContext = {
+        let context = persistentContainer.viewContext
+        context.automaticallyMergesChangesFromParent = true
+        return context
+    }()
+
     public private(set) lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(
             name: CoreDataConstants.persistentContainerName,
             managedObjectModel: managedObjectModel
         )
-        if let persistentStoreDescriptions = persistentContainerType.persistentStoreDescriptions {
-            container.persistentStoreDescriptions = persistentStoreDescriptions
-        }
+
+        let descriptions = PersistentStoreDescriptionFactory().descriptions(for: storeType)
+        container.persistentStoreDescriptions = descriptions
 
         return container
     }()
-
-    public private(set) lazy var persistentStoreCoordinator = NSPersistentStoreCoordinator(
-        managedObjectModel: managedObjectModel
-    )
 
     private lazy var managedObjectModel: NSManagedObjectModel = {
         let bundle = Bundle.resourcesBundle
@@ -72,12 +51,13 @@ public final class CoreDataService: CoreDataServiceProtocol {
         return model
     }()
 
-    private let persistentContainerType: PersistentContainerType.Type
+    private let storeType: StoreType
 
     // MARK: - Init
 
-    public init(persistentContainerType: PersistentContainerType.Type) {
-        self.persistentContainerType = persistentContainerType
+    public init(storeType: StoreType) {
+        self.storeType = storeType
+        createHostContainer()
     }
 }
 
@@ -87,7 +67,33 @@ extension CoreDataService: ProvidesWeakSharedInstanceTrait {
     public static weak var weakSharedInstance: CoreDataService?
 
     public convenience init() {
-        self.init(persistentContainerType: PersistentContainer.SQLite.self)
-        createHostContainer()
+        guard let persistentContainerURL = CoreDataConstants.persistentContainerURL else {
+            fatalError("Persistent container URL is unavailable")
+        }
+        self.init(storeType: .sqlite(persistentContainerURL))
+    }
+}
+
+private struct PersistentStoreDescriptionFactory {
+    func descriptions(for storeType: StoreType) -> [NSPersistentStoreDescription] {
+        switch storeType {
+        case let .sqlite(url):
+            sqliteDescriptions(url: url)
+
+        case .inMemory:
+            inMemoryDescriptions()
+        }
+    }
+
+    private func sqliteDescriptions(url: URL) -> [NSPersistentStoreDescription] {
+        let description = NSPersistentStoreDescription(url: url)
+        description.type = NSSQLiteStoreType
+        return [description]
+    }
+
+    private func inMemoryDescriptions() -> [NSPersistentStoreDescription] {
+        let description = NSPersistentStoreDescription()
+        description.type = NSInMemoryStoreType
+        return [description]
     }
 }

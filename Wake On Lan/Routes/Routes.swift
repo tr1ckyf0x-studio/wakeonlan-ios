@@ -9,7 +9,6 @@ import AboutScreen
 import AddHost
 import DonateScreen
 import HostList
-import PostLaunch
 import SharedRouter
 
 /// General registry of the routes
@@ -20,4 +19,3 @@ extension WOLRouter: AboutScreenRoutes { }
 extension WOLRouter: ChooseIconRoutes { }
 extension WOLRouter: DonateScreenRoutes { }
 extension WOLRouter: HostListRoutes { }
-extension WOLRouter: PostLaunchRoutes { }

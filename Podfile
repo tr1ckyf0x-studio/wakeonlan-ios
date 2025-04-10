@@ -20,7 +20,6 @@ def features
     feature_module(name: 'AddHost')
     feature_module(name: 'DonateScreen')
     feature_module(name: 'HostList')
-    feature_module(name: 'PostLaunch')
 end
 
 # Frameworks
