@@ -1,4 +1,5 @@
 import CoreDataService
+import FoxCoreDataService
 import Intents
 import WakeOnLanService
 

@@ -42,6 +42,7 @@ def external_frameworks
     external_framework(name: 'ReachabilitySwift', version: '5.2.4')
     external_framework(name: 'RouteComposer', version: '2.10.5')
     external_framework(name: 'SnapKit', version: '5.7.1')
+    external_framework_git(name: 'FoxCoreDataService', source: 'https://github.com/tr1ckyf0x-studio/FoxCoreDataService.git', version: '1.0.0')
 end
 
 def core_data_service

@@ -123,7 +123,6 @@ final class AddHostForm: AddHostFormRepresentable {
 
     public init(host: Host? = nil) {
         makeSections()
-        // swiftlint:disable:next inert_defer
         defer { self.host = host } // Otherwise didSet does not call
     }
 

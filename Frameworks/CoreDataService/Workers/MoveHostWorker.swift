@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import FoxCoreDataService
 import SharedProtocolsAndModels
 
 public struct MoveHostWorker {

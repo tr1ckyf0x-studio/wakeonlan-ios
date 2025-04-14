@@ -8,6 +8,7 @@
 
 import CocoaLumberjack
 import CoreDataService
+import FoxCoreDataService
 import SharedProtocolsAndModels
 
 final class AddHostInteractor: AddHostInteractorInput {

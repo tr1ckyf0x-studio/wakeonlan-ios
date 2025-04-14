@@ -2,11 +2,14 @@ import SharedProtocolsAndModels
 
 enum CoreDataConstants {
     static let persistentContainerName = "HostsDataModel"
-    static let persistentContainerExtension = "momd"
     static let persistentContainerFilename: String = "\(persistentContainerName).sqlite"
 
     static var persistentContainerURL: URL? {
         appGroupDirectoryURL?.appendingPathComponent(CoreDataConstants.persistentContainerFilename)
+    }
+
+    static var managedModelURL: URL? {
+        Bundle.resourcesBundle.url(forResource: persistentContainerName, withExtension: "momd")
     }
 }
 

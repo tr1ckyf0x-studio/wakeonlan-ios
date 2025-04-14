@@ -8,6 +8,7 @@
 
 import CocoaLumberjack
 import CoreData
+import FoxCoreDataService
 import SharedProtocolsAndModels
 
 public final class Host: NSManagedObject, HostRepresentable {

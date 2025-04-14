@@ -7,6 +7,7 @@
 //
 
 import CoreDataService
+import FoxCoreDataService
 import RouteComposer
 import SharedRouter
 import WakeOnLanService

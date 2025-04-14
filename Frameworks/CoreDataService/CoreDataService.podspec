@@ -14,14 +14,13 @@ PodHelper.defmodule(
     dependencies: %w[
         CocoaLumberjack/Swift
         SharedProtocolsAndModels
+        FoxCoreDataService
     ],
     submodules: %w[
         Bundle
         Core
-        Helpers
         Migrations
         Models
-        Protocols
         Workers
     ]
 )
