@@ -10,6 +10,22 @@
 
 ### Removed
 
+## 1.5.9
+
+### Fixed
+
+- Fixed CI workflow
+
+### Updated
+
+- Small Core Data refactoring. Removed unused code
+- Updated dependencies
+- Extracted core DB layer to library
+
+### Removed
+
+- Removed fonts from Info.plist
+
 ## 1.5.8
 
 ### Added
