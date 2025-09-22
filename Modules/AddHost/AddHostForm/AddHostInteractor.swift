@@ -13,7 +13,7 @@ import SharedProtocolsAndModels
 
 final class AddHostInteractor: AddHostInteractorInput {
 
-    typealias CRUDPerformer = any PerformsCRUDOperation<AddHostFormRepresentable, Host>
+    typealias CRUDPerformer = any PerformsCRUDOperation<any AddHostFormRepresentable, Host>
 
     // MARK: - Properties
 

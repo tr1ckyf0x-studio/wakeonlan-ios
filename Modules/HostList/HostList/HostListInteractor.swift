@@ -14,7 +14,7 @@ import WakeOnLanService
 
 final class HostListInteractor: HostListInteractorInput {
 
-    typealias CRUDPerformer = any PerformsCRUDOperation<AddHostFormRepresentable, Host>
+    typealias CRUDPerformer = any PerformsCRUDOperation<any AddHostFormRepresentable, Host>
 
     typealias MovePerformer = any PerformsMoveOperation<Host>
 
