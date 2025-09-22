@@ -6,10 +6,7 @@
 //  Copyright © 2022 Vladislav Lisianskii. All rights reserved.
 //
 
-import HostList
-import SharedRouter
 import UIKit
-import WOLUIComponents
 
 final class WindowConfigurationAppDelegatePlugin: NSObject, UIApplicationDelegate {
 

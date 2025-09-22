@@ -1,6 +1,6 @@
 import CoreDataService
-import FoxCoreDataService
 import Intents
+import PersistenceCore
 import WakeOnLanService
 
 final class WOLIntentHandler: NSObject, WOLIntentHandling {

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import WOLResources
 
 final class NavigationBarAppearanceAppDelegatePlugin: NSObject, UIApplicationDelegate {
     func application(

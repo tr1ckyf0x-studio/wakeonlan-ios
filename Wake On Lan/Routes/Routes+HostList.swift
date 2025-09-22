@@ -6,10 +6,7 @@
 //  Copyright © 2022 Vladislav Lisianskii. All rights reserved.
 //
 
-import AboutScreen
-import AddHost
 import CoreDataService
-import SharedRouter
 
 @MainActor
 extension WOLRouter {
