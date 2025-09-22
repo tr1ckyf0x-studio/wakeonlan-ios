@@ -8,6 +8,7 @@
 import RouteComposer
 import UIKit
 
+@MainActor
 public struct WOLRouter {
 
     // MARK: - Properties

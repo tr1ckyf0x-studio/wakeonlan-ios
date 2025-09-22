@@ -8,6 +8,7 @@
 import RouteComposer
 import UIKit
 
+@MainActor
 public extension WOLRouter {
     func defaultStepRoutePushAction<F: Factory>(
         factory: F,
@@ -24,6 +25,7 @@ public extension WOLRouter {
     }
 }
 
+@MainActor
 extension WOLRouter {
     private func defaultStepRoute<F: Factory, Action: ContainerAction>(
         action: Action,
@@ -45,6 +47,7 @@ extension WOLRouter {
 }
 
 /// Wrapper for any object that implements protocol `ContainerAction`.
+@MainActor
 public struct AnyNavigationControllerAction<ViewController: ContainerViewController>: ContainerAction {
     // MARK: - Properties
 
@@ -70,6 +73,7 @@ public struct AnyNavigationControllerAction<ViewController: ContainerViewControl
 }
 
 /// Wrapper for any object that implements protocol `Action`.
+@MainActor
 public struct AnyAction<ViewController: UIViewController>: Action {
 
     // MARK: - Properties

@@ -11,6 +11,7 @@ import AddHost
 import CoreDataService
 import SharedRouter
 
+@MainActor
 extension WOLRouter {
     /// Navigates to `AddHost` screen.
     public func openAddHost(with host: Host?) -> Route {

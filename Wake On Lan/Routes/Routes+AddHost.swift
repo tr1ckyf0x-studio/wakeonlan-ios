@@ -11,6 +11,7 @@ import RouteComposer
 import SharedRouter
 import WOLUIComponents
 
+@MainActor
 extension WOLRouter: AddHostRoutes {
     typealias ChooseIconClassFinder = ClassFinder<ChooseIconFactory.ViewController, ChooseIconFactory.Context>
 

@@ -15,7 +15,11 @@ import SharedRouter
 ///
 /// - NOTE: New routes should be added in alphabetical order
 
+@MainActor
 extension WOLRouter: AboutScreenRoutes { }
+@MainActor
 extension WOLRouter: ChooseIconRoutes { }
+@MainActor
 extension WOLRouter: DonateScreenRoutes { }
+@MainActor
 extension WOLRouter: HostListRoutes { }

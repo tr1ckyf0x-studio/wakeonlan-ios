@@ -8,6 +8,7 @@
 import RouteComposer
 import UIKit
 
+@MainActor
 public extension WOLRouter {
     func backOrDismiss(animated: Bool) -> SharedRouter.Route {
         let classFinder: ClassFinder<UIViewController, Any?> = makeClassFinder()
@@ -57,6 +58,7 @@ public extension WOLRouter {
     }
 }
 
+@MainActor
 extension WOLRouter {
     private func makeClassFinder<VC: UIViewController, C>() -> ClassFinder<VC, C> {
         ClassFinder<VC, C>(iterator: defaultStackIterator)
