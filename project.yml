@@ -20,7 +20,7 @@ settings:
 
 options:
   deploymentTarget:
-    iOS: 13.0
+    iOS: 15.0
 
 attributes:
   ORGANIZATIONNAME: "Vladislav Lisianskii"

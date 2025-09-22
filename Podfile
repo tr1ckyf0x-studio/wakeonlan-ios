@@ -4,7 +4,7 @@ require 'PodHelper/podfile_helper'
 
 # Constants
 
-DEPLOYMENT_TARGET = 13.0
+DEPLOYMENT_TARGET = 15.0
 
 # Suppresses warning 'Your project does not explicitly specify the CocoaPods master specs repo'
 install! 'cocoapods', :warn_for_unused_master_specs_repo => false
@@ -36,11 +36,11 @@ end
 
 # External dependencies
 def external_frameworks
-    external_framework(name: 'CocoaLumberjack/Swift', version: '3.8.5')
-    external_framework(name: 'FirebaseAnalytics/WithoutAdIdSupport', version: '11.11.0')
-    external_framework(name: 'FirebaseCrashlytics', version: '11.11.0')
+    external_framework(name: 'CocoaLumberjack/Swift', version: '3.9.0')
+    external_framework(name: 'FirebaseAnalytics/Core', version: '12.3.0')
+    external_framework(name: 'FirebaseCrashlytics', version: '12.3.0')
     external_framework(name: 'ReachabilitySwift', version: '5.2.4')
-    external_framework(name: 'RouteComposer', version: '2.10.5')
+    external_framework(name: 'RouteComposer', version: '2.21.0')
     external_framework(name: 'SnapKit', version: '5.7.1')
     external_framework_git(name: 'FoxCoreDataService', source: 'https://github.com/tr1ckyf0x-studio/FoxCoreDataService.git', version: '1.0.2')
 end
