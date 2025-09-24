@@ -1,5 +1,4 @@
-disabled_rules: 
-- anyobject_protocol # https://stackoverflow.com/questions/30176814/whats-the-difference-between-a-protocol-extended-from-anyobject-and-a-class-onl/32895975#32895975 
+disabled_rules:
 - missing_docs 
 - no_extension_access_modifier 
 - no_grouping_extension 

@@ -13,6 +13,7 @@ settings:
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT: YES
     CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER: YES
+    SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES: YES
     DEVELOPMENT_TEAM: SGM5527A99
     CODE_SIGN_STYLE: Manual
     MARKETING_VERSION: 1.6.0
@@ -20,10 +21,30 @@ settings:
 
 options:
   deploymentTarget:
-    iOS: 13.0
+    iOS: 16.0
 
 attributes:
   ORGANIZATIONNAME: "Vladislav Lisianskii"
+
+packages:
+  CocoaLumberjack:
+    url: https://github.com/CocoaLumberjack/CocoaLumberjack.git
+    exactVersion: 3.9.0
+  firebase-ios-sdk:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    exactVersion: 12.3.0
+  ReachabilitySwift:
+    url: https://github.com/ashleymills/Reachability.swift.git
+    exactVersion: 5.2.4
+  RouteComposer:
+    url: https://github.com/ekazaev/route-composer.git
+    exactVersion: 2.21.0
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit.git
+    exactVersion: 5.7.1
+  shared-frameworks:
+    url: https://github.com/tr1ckyf0x-studio/shared-frameworks.git
+    exactVersion: 1.0.0
 
 targets:
   Wake on LAN:
@@ -33,11 +54,31 @@ targets:
       - path: "Wake on LAN"
         excludes:
           - "**/*.secret"
-          - "Modules/**/"
+          - "**/swiftgen.yml"
         optional: true
       - IntentSharedSources
     dependencies:
+      - target: WOLSharedProtocolsAndModels
+      - target: CoreDataService
+      - target: WakeOnLanService
       - target: Intent
+      - package: CocoaLumberjack
+        products:
+          - CocoaLumberjack
+          - CocoaLumberjackSwift
+      - package: firebase-ios-sdk
+        products:
+          - FirebaseCore
+          - FirebaseCrashlytics
+      - package: ReachabilitySwift
+        product: Reachability
+      - package: RouteComposer
+        product: RouteComposer
+      - package: SnapKit
+        product: SnapKit
+      - package: shared-frameworks
+        product: PersistenceCore
+
     scheme:
       configVariants:
         - AppStore
@@ -75,10 +116,14 @@ targets:
       - name: "Crashlytics"
         basedOnDependencyAnalysis: false
         script: |
-                ${PODS_ROOT}/FirebaseCrashlytics/run
+                "${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"
         inputFiles:
-          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
-          - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
+          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}
+          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}
+          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist
+          - $(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist
+          - $(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)
+          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}.debug.dylib
   Intent:
     platform: iOS
     type: app-extension
@@ -106,8 +151,58 @@ targets:
           CODE_SIGN_IDENTITY: "Apple Distribution"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AdHoc"
     dependencies:
+      - target: WOLSharedProtocolsAndModels
+      - target: CoreDataService
+      - target: WakeOnLanService
       - sdk: Intents.framework
+      - package: shared-frameworks
+        product: PersistenceCore
     scheme:
       configVariants:
         - AppStore
         - AdHoc
+
+  WakeOnLanService:
+    platform: iOS
+    type: framework
+    sources:
+      - path: "SharedCode/WakeOnLanService"
+    dependencies:
+      - target: WOLSharedProtocolsAndModels
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.frameworks.WakeOnLanService
+        GENERATE_INFOPLIST_FILE: YES
+
+  WOLSharedProtocolsAndModels:
+    platform: iOS
+    type: framework
+    sources:
+      - path: "SharedCode/WOLSharedProtocolsAndModels"
+    dependencies:
+      - package: shared-frameworks
+        product: SharedProtocolsAndModels
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.frameworks.SharedProtocolsAndModels
+        GENERATE_INFOPLIST_FILE: YES
+
+  CoreDataService:
+    platform: iOS
+    type: framework
+    sources:
+      - path: "SharedCode/CoreDataService"
+    resources:
+      - path: "SharedCode/CoreDataService/Resources"
+    dependencies:
+      - target: WOLSharedProtocolsAndModels
+      - package: shared-frameworks
+        product: PersistenceCore
+      - package: CocoaLumberjack
+        products:
+          - CocoaLumberjack
+          - CocoaLumberjackSwift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.frameworks.CoreDataService
+        GENERATE_INFOPLIST_FILE: YES

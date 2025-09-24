@@ -6,16 +6,14 @@
 //  Copyright © 2022 Vladislav Lisianskii. All rights reserved.
 //
 
-import AddHost
 import RouteComposer
-import SharedRouter
-import WOLUIComponents
 
+@MainActor
 extension WOLRouter: AddHostRoutes {
     typealias ChooseIconClassFinder = ClassFinder<ChooseIconFactory.ViewController, ChooseIconFactory.Context>
 
     /// Navigates to `ChooseIcon` screen.
-    public func openChooseIcon(with context: ChooseIconFactory.Context) -> SharedRouter.Route {
+    public func openChooseIcon(with context: ChooseIconFactory.Context) -> Route {
         Route {
             let delegate = SelfSizingBottomSheetModalTransitionDelegate()
             let step = StepAssembly(finder: ChooseIconClassFinder(), factory: ChooseIconFactory(router: self))

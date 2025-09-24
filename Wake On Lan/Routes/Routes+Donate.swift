@@ -6,9 +6,6 @@
 //  Copyright © 2023 Vladislav Lisianskii. All rights reserved.
 //
 
-import DonateScreen
-import SharedRouter
-
 extension WOLRouter {
     /// Navigates to `Donate` screen.
     public func openDonate() -> Route {
