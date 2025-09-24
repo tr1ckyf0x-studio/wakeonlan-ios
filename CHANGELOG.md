@@ -10,6 +10,21 @@
 
 ### Removed
 
+## 1.6.0
+
+### Fixed
+
+- Fixed build errors
+
+### Updated
+
+- Updated dependencies
+- Migrated to SPM
+
+### Removed
+
+- Removed modular architecture
+
 ## 1.5.9
 
 ### Fixed
