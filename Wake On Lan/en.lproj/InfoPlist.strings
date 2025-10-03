@@ -1,0 +1,9 @@
+/* 
+   InfoPlist.strings
+   
+   Created by Localization System
+   Base language: English
+*/
+
+/* Network Permission Description */
+"NSLocalNetworkUsageDescription" = "Awake uses this permission to send the WakeOnLan packet to hosts in local network";

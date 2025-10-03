@@ -26,6 +26,8 @@
 	<string>public.app-category.utilities</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Awake uses this permission to send the WakeOnLan packet to hosts in local network</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>WOLIntent</string>

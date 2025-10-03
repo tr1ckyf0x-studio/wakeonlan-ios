@@ -10,6 +10,12 @@
 
 ### Removed
 
+## 1.6.1
+
+### Fixed
+
+- Fixed magic packet send
+
 ## 1.6.0
 
 ### Fixed
