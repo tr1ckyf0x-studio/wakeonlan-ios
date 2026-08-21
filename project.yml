@@ -18,9 +18,6 @@ packages:
   firebase-ios-sdk:
     url: https://github.com/firebase/firebase-ios-sdk.git
     exactVersion: 12.18.0
-  ReachabilitySwift:
-    url: https://github.com/ashleymills/Reachability.swift.git
-    exactVersion: 5.2.4
   RouteComposer:
     url: https://github.com/ekazaev/route-composer.git
     exactVersion: 2.22.2
@@ -67,8 +64,6 @@ targets:
         products:
           - FirebaseCore
           - FirebaseCrashlytics
-      - package: ReachabilitySwift
-        product: Reachability
       - package: RouteComposer
         product: RouteComposer
       - package: SFSafeSymbols
