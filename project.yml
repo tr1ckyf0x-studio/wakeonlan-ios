@@ -3,8 +3,6 @@ name: "Wake On LAN"
 configs:
   AppStore Debug: debug
   AppStore Release: release
-  AdHoc Debug: debug
-  AdHoc Release: release
 
 settings:
   base:
@@ -16,6 +14,8 @@ settings:
     SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES: YES
     SWIFT_VERSION: 6.0
     SWIFT_APPROACHABLE_CONCURRENCY: YES
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
+    GCC_TREAT_WARNINGS_AS_ERRORS: YES
     DEVELOPMENT_TEAM: SGM5527A99
     CODE_SIGN_STYLE: Manual
     MARKETING_VERSION: 1.7.0
@@ -90,7 +90,6 @@ targets:
     scheme:
       configVariants:
         - AppStore
-        - AdHoc
 
     settings:
       base:
@@ -107,13 +106,6 @@ targets:
         AppStore Release:
           CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AppStore"
-          DEAD_CODE_STRIPPING: YES
-        AdHoc Debug:
-          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
-        AdHoc Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AdHoc"
           DEAD_CODE_STRIPPING: YES
     preBuildScripts:
     - name: "Swiftlint"
@@ -155,12 +147,6 @@ targets:
         AppStore Release:
           CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AppStore"
-        AdHoc Debug:
-          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
-        AdHoc Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AdHoc"
     dependencies:
       - target: WOLSharedProtocolsAndModels
       - target: CoreDataService
@@ -171,7 +157,6 @@ targets:
     scheme:
       configVariants:
         - AppStore
-        - AdHoc
 
   WakeOnLanService:
     platform: iOS
