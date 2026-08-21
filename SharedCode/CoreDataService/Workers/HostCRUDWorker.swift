@@ -35,7 +35,12 @@ extension HostCRUDWorker: PerformsCRUDOperation {
         in context: NSManagedObjectContext,
         completion: CompletionHandler?
     ) {
-        context.performAndWait {
+        // NOTE: Every touch of `context` must happen on its own queue. `insertObject`, `update` and
+        // `saveRecursively` used to run on the caller's thread — the main one — while `context` is a
+        // private-queue child context. That is a queue confinement violation: it traps under
+        // `-com.apple.CoreData.ConcurrencyDebug 1` and races on the context's registry otherwise.
+        // The `update` and `delete` paths below already do this correctly.
+        context.perform {
             do {
                 let hosts = try context.fetch(Host.sortedFetchRequest)
                 hosts.forEach {
@@ -44,16 +49,17 @@ extension HostCRUDWorker: PerformsCRUDOperation {
             } catch {
                 DDLogError("Failed to fetch hosts due to error: \(error)")
             }
-        }
-        let host: Host = context.insertObject()
-        host.update(from: model, in: context)
-        context.saveRecursively { error in
-            if let error {
-                completion?(.failure(error))
-                return
-            }
 
-            completion?(.success(Void()))
+            let host: Host = context.insertObject()
+            host.update(from: model, in: context)
+            context.saveRecursively { error in
+                if let error {
+                    completion?(.failure(error))
+                    return
+                }
+
+                completion?(.success(Void()))
+            }
         }
     }
 

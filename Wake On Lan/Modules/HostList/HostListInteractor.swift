@@ -50,12 +50,14 @@ final class HostListInteractor: HostListInteractorInput {
     }
 
     func wakeHost(_ host: Host, at indexPath: IndexPath) {
-        // NOTE: `@MainActor` is required, not cosmetic. `sendMagicPacket` reads `destination`,
-        // `port` and `macAddress` off the passed `Host`, which belongs to the main-queue view
-        // context — reading it from the cooperative pool is a queue confinement violation.
+        // NOTE: `host` is confined to the main-queue view context and `sendMagicPacket` is a
+        // nonisolated async function, so awaiting it hops onto the cooperative pool — reading the
+        // managed object there is a concurrency violation. Copying the values out on the caller's
+        // (main) queue is what makes this safe; `@MainActor` alone is not enough.
+        let snapshot = HostSnapshot(host: host)
         Task { @MainActor in
             do {
-                try await wakeOnLanService.sendMagicPacket(to: host)
+                try await wakeOnLanService.sendMagicPacket(to: snapshot)
                 DDLogDebug("Magic packet was sent")
                 presenter?.interactor(self, didWakeHostAt: indexPath)
             } catch {

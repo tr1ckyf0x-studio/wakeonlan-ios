@@ -1,7 +1,9 @@
+import CoreData
 import CoreDataService
 import Intents
 import PersistenceCore
 import WakeOnLanService
+import WOLSharedProtocolsAndModels
 
 final class WOLIntentHandler: NSObject, WOLIntentHandling {
 
@@ -21,7 +23,7 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
             return INStringResolutionResult.needsValue()
         }
         do {
-            let availableHostnames = try fetchHosts().map(\.title)
+            let availableHostnames = try fetchHostnames()
             let hostnameExists = availableHostnames.contains(hostname)
             if hostnameExists {
                 return INStringResolutionResult.success(with: hostname)
@@ -38,7 +40,7 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
             return WOLIntentResponse(code: .failure, userActivity: nil)
         }
         do {
-            guard let host = try fetchHost(with: hostname) else {
+            guard let host = try fetchHostSnapshot(with: hostname) else {
                 return WOLIntentResponse(code: .failure, userActivity: nil)
             }
             try await wakeOnLanService.sendMagicPacket(to: host)
@@ -53,7 +55,7 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
         for intent: WOLIntent,
         searchTerm: String?
     ) async throws -> INObjectCollection<NSString> {
-        var availableHostnames = try fetchHosts().map(\.title)
+        var availableHostnames = try fetchHostnames()
 
         if let searchTerm, !searchTerm.isEmpty {
             availableHostnames = availableHostnames.filter { (hostname: String) -> Bool in
@@ -68,19 +70,25 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
 // MARK: - Private methods
 
 extension WOLIntentHandler {
-    private func fetchHosts() throws -> [Host] {
+    // NOTE: The generated `WOLIntentHandling` methods run off the main thread while `mainContext` is
+    // a main-queue context, so both the fetch and every property read have to happen inside the
+    // context's own queue. Managed objects deliberately do not escape these methods — only values.
+
+    private func fetchHostnames() throws -> [String] {
         let fetchRequest = Host.sortedFetchRequest
         let context = coreDataService.mainContext
-        let objects = try context.fetch(fetchRequest)
-        return objects
+        return try context.performAndWait {
+            try context.fetch(fetchRequest).map(\.title)
+        }
     }
 
-    private func fetchHost(with name: String) throws -> Host? {
+    private func fetchHostSnapshot(with name: String) throws -> HostSnapshot? {
         let fetchRequest = Host.sortedFetchRequest
         fetchRequest.fetchLimit = 1
         fetchRequest.predicate = NSPredicate(format: "title == %@", name)
         let context = coreDataService.mainContext
-        let host = try context.fetch(fetchRequest).first
-        return host
+        return try context.performAndWait {
+            try context.fetch(fetchRequest).first.map(HostSnapshot.init(host:))
+        }
     }
 }
