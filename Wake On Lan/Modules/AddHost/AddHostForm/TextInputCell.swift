@@ -121,9 +121,15 @@ final class TextInputCell: UITableViewCell {
             return
         }
         item.value = textValue
+        if item.needsUppercased, let formatted = item.formatted?.uppercased() {
+            // NOTE: Assigning `textField.text` does not fire `.editingChanged` again, so the
+            // formatted value has to be written back into the item explicitly. Without it the item
+            // keeps the raw text while the field shows the formatted one — a pasted MAC address then
+            // renders correctly but never validates, and saving silently does nothing.
+            item.value = formatted
+            textField.text = formatted
+        }
         isExpanded = !(item.isValid || textValue.isEmpty)
-        guard item.needsUppercased else { return }
-        textField.text = item.formatted?.uppercased()
     }
 
     @objc private func didTapDoneButton() {
