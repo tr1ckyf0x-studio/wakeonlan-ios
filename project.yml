@@ -29,19 +29,19 @@ attributes:
 packages:
   CocoaLumberjack:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack.git
-    exactVersion: 3.9.0
+    exactVersion: 3.9.1
   firebase-ios-sdk:
     url: https://github.com/firebase/firebase-ios-sdk.git
-    exactVersion: 12.3.0
+    exactVersion: 12.18.0
   ReachabilitySwift:
     url: https://github.com/ashleymills/Reachability.swift.git
     exactVersion: 5.2.4
   RouteComposer:
     url: https://github.com/ekazaev/route-composer.git
-    exactVersion: 2.21.0
+    exactVersion: 2.22.2
   SnapKit:
     url: https://github.com/SnapKit/SnapKit.git
-    exactVersion: 5.7.1
+    exactVersion: 6.0.0
   shared-frameworks:
     url: https://github.com/tr1ckyf0x-studio/shared-frameworks.git
     exactVersion: 1.0.0
