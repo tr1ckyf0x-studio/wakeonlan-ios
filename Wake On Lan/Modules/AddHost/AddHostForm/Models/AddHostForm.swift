@@ -42,8 +42,14 @@ final class AddHostForm: AddHostFormRepresentable {
     private(set) var host: Host? {
         didSet {
             guard let host else { return }
-            guard let hostIcon = HostIcon(systemName: host.iconName) else { return }
-            iconModel = IconModel(symbol: hostIcon.symbol)
+            // NOTE: An unresolvable icon must not stop the rest of the form from being filled in.
+            // Hosts created before the migration to SF Symbols still store legacy asset names
+            // ("desktop", "other", "router"), which no Core Data mapping rewrites. Bailing out here
+            // opened such a host as a completely empty form, and saving it then overwrote the stored
+            // destination and port with nil. Fall back to the default icon instead.
+            if let hostIcon = HostIcon(systemName: host.iconName) {
+                iconModel = IconModel(symbol: hostIcon.symbol)
+            }
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
             destinationItem.value = host.destination
