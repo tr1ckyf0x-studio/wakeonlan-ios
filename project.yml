@@ -5,8 +5,15 @@ configs:
   AppStore Release: release
 
 settings:
+  # NOTE: A dSYM is only meaningful for Release. In Debug the app is built as a stub executable plus
+  # a `.debug.dylib`, so the executable itself carries no debug info and `dsymutil` produces an empty
+  # dSYM — that is the "empty dSYM file detected" warning on every device build.
+  configs:
+    AppStore Debug:
+      DEBUG_INFORMATION_FORMAT: dwarf
+    AppStore Release:
+      DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
   base:
-    DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
     ENABLE_BITCODE: NO
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT: YES
