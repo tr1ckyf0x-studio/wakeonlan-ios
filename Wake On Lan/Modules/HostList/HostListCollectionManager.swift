@@ -43,6 +43,9 @@ final class HostListCollectionManager: HostListCollectionDataSource, ManagesHost
         super.init(collectionView: collectionView, cellProvider: cellProvider.makeCollectionViewCell)
         self.collectionView = collectionView
         collectionView.addGestureRecognizer(longPressGesture)
+        // The diffable data source only applies an interactive move to its snapshot while reordering
+        // is allowed. Reordering itself is driven manually by `longPressGesture`.
+        reorderingHandlers.canReorderItem = { _ in true }
     }
 
     // MARK: - DataSource
@@ -52,6 +55,12 @@ final class HostListCollectionManager: HostListCollectionDataSource, ManagesHost
         moveItemAt sourceIndexPath: IndexPath,
         to destinationIndexPath: IndexPath
     ) {
+        // NOTE: `super` moves the item inside the snapshot so that it matches what the collection
+        // view has already drawn. Skipping it leaves the snapshot in the pre-drag order while the
+        // collection view is in the post-drag one, and the next applied snapshot replays the move on
+        // top of the visual result. The two index spaces then never converge, so a tap resolves to
+        // the wrong host — the packet is sent to another machine and delete removes another host.
+        super.collectionView(collectionView, moveItemAt: sourceIndexPath, to: destinationIndexPath)
         delegate?.hostListCollectionManager(self, moveRowAt: sourceIndexPath, to: destinationIndexPath)
     }
 }
