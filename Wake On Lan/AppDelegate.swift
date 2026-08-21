@@ -14,7 +14,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
         FirebaseAppDelegatePlugin(),
-        NavigationBarAppearanceAppDelegatePlugin()
+        NavigationBarAppearanceAppDelegatePlugin(),
+        IAPAppDelegatePlugin()
     ]
 
     func application(
