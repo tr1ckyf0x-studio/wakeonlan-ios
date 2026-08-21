@@ -6,6 +6,7 @@
 //  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
+import SnapKit
 import UIKit
 
 public final class ChooseIconViewController: UIViewController {
@@ -22,6 +23,8 @@ public final class ChooseIconViewController: UIViewController {
     // MARK: - Properties
 
     var presenter: ChooseIconViewOutput!
+
+    private var heightConstraint: Constraint?
 
     private lazy var chooseIconView: ChooseIconView = {
         let view = ChooseIconView(frame: .zero)
@@ -105,8 +108,18 @@ extension ChooseIconViewController: ChooseIconViewInput {
         else {
             return
         }
-        chooseIconView.snp.makeConstraints {
-            $0.height.equalTo(height + appearance.chooseIconViewEdgeMargin * 2)
+        // NOTE: The constraint is created once, on the first real measurement, and only updated
+        // afterwards. Creating it on every pass stacked active height constraints on a live view;
+        // creating it up front with a height of zero contradicted the collection view pinned inside
+        // with 8pt insets, so the very first layout pass logged "Unable to simultaneously satisfy
+        // constraints" and UIKit broke one of them.
+        let value = height + appearance.chooseIconViewEdgeMargin * 2
+        guard let heightConstraint else {
+            chooseIconView.snp.makeConstraints {
+                heightConstraint = $0.height.equalTo(value).constraint
+            }
+            return
         }
+        heightConstraint.update(offset: value)
     }
 }
