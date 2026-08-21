@@ -15,7 +15,12 @@ public extension String {
     }
 
     func formatted(by mask: String, _ separator: String) -> String {
-        let cleanString = components(separatedBy: separator).joined()
+        // NOTE: Every non-value character is dropped, not just `separator`, so that input pasted with
+        // a foreign separator ("AA-BB-CC-DD-EE-FF", "AA.BB.CC.DD.EE.FF") is re-formatted by the mask
+        // instead of being interleaved with it.
+        let cleanString = components(separatedBy: separator)
+            .joined()
+            .filter { $0.isLetter || $0.isNumber }
         var result = String.empty
         var index = cleanString.startIndex
         for char in mask where index < cleanString.endIndex {
