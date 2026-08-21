@@ -1,100 +1,198 @@
+# SwiftLint configuration — Wake on LAN (Awake)
+# Tuned for SwiftLint 0.65.0 (pinned in Mintfile).
+# Rule directory: https://realm.github.io/SwiftLint/rule-directory.html
+#
+# Policy:
+#   * Default (on-by-default) rules stay ENABLED and are NOT listed — only exceptions go to disabled_rules.
+#   * opt_in_rules   — extra rules we deliberately turn on.
+#   * analyzer_rules — run only via `swiftlint analyze` (needs a compiler log).
+# Regenerate the full rule inventory with: `mint run swiftlint rules`.
+
+# --- Paths -------------------------------------------------------------------
+included:
+  - "Wake On Lan"
+  - "SharedCode"
+  - "Intent"
+
+excluded:
+  - "Wake On Lan/Assets/Assets.swift"        # SwiftGen output (xcassets)
+  - "Wake On Lan/Localization/Localization.swift" # SwiftGen output (strings)
+  - "**/*.generated.swift"
+  - "swift-templates"                        # Genesis code-gen templates (not compilable Swift)
+  - ".build"
+  - ".bin"
+  - "vendor"
+
+reporter: "xcode"
+
+# --- Disabled default rules --------------------------------------------------
 disabled_rules:
-- missing_docs 
-- no_extension_access_modifier 
-- no_grouping_extension 
-- object_literal 
-- vertical_whitespace_closing_braces 
-- vertical_whitespace_opening_braces 
-- unowned_variable_capture 
-- multiline_arguments_brackets 
-- multiline_parameters_brackets 
-- multiline_literal_brackets 
-- attributes # @available на отдельной строке 
-- file_types_order 
-- discouraged_optional_collection 
-- identifier_name
-- lower_acl_than_parent 
-- trailing_closure 
-- force_unwrapping 
-- todo
-- nimble_operator
-- type_name
-- closure_parameter_position
-- generic_type_name
-- blanket_disable_command
-- let_var_whitespace
+  # Метрики размера/сложности — управляем вручную, без порогов линтера.
+  - cyclomatic_complexity
+  - file_length
+  - function_body_length
+  - function_parameter_count
+  - type_body_length
+  - line_length
+  - trailing_comma
+  - inclusive_language
+  # Параметры протокольных методов — часть контракта, а не мёртвый код: сигнатуры
+  # UIApplicationDelegate диктует UIKit, а `viewDidLoad(_ view:)` — VIPER-контракт модуля.
+  # 111 срабатываний, все ложные.
+  - unused_parameter
+  # Вёрстка программная, отступы и размеры задаются числами прямо в SnapKit-блоках.
+  - no_magic_numbers
+  # `tv`, `pc` — правильные имена устройств, `at:` — идиоматичная метка аргумента.
+  - identifier_name
+  # TODO в коде расставлены осознанно и отслеживаются отдельно.
+  - todo
+  # Требования @objc-протоколов (WOLIntentHandling) объявлены async независимо от того,
+  # использует ли реализация await. Автофикс снимал `async` и ломал конформанс.
+  - async_without_await
+  # Сигнатуры диктует UIKit: `[UIApplication.LaunchOptionsKey: Any]?` не переписать.
+  - discouraged_optional_collection
+  # `INObjectCollection<NSString>` требует Intents, `NSMutableAttributedString` — UIKit.
+  - legacy_objc_type
+  # Пустые `public init() { }` — часть публичного API сервисов, а не забытый блок.
+  - no_empty_block
+  # Однострочный switch-маппинг (`case .tv: .tv`) читается лучше развёрнутого.
+  - switch_case_on_newline
+  # Идиома `private let appearance = Appearance(); struct Appearance { … }` используется
+  # в 12 вью-файлах как единый способ держать константы вёрстки рядом с их описанием.
+  - let_var_whitespace
+  # Правило требует держать вспомогательные типы В НАЧАЛЕ файла, перед основным.
+  # Кодовая база следует обратному порядку: основной тип первым, приватные помощники — внизу.
+  - file_types_order
+  # `@available` и `@objc` в этом проекте пишутся на отдельной строке.
+  - attributes
+  # Кодовая база последовательно использует `public extension Foo { func bar() }`.
+  # Переписывание на `extension Foo { public func bar() }` требует расстановки `public`
+  # у каждого члена вручную: иначе API становится internal и падает сборка соседних таргетов.
+  # 33 таких места, выгоды нет — правило выключено осознанно.
+  - no_extension_access_modifier
 
-opt_in_rules: 
-- array_init 
-- closure_body_length 
-- closure_end_indentation 
-- closure_spacing 
-- collection_alignment 
-- contains_over_first_not_nil 
-- convenience_type 
-- discouraged_object_literal 
-- discouraged_optional_boolean 
-- empty_count 
-- empty_string 
-- empty_xctest_method 
-- explicit_init 
-- fatal_error_message 
-- first_where 
-- function_default_parameter_at_end 
-- identical_operands 
-- implicit_return 
-- joined_default_parameter 
-- last_where 
-- legacy_multiple 
-- legacy_random 
-- let_var_whitespace 
-- literal_expression_end_indentation 
-- modifier_order 
-- multiline_arguments 
-- multiline_function_chains 
-- multiline_parameters 
-- nimble_operator 
-- nslocalizedstring_key 
-- nslocalizedstring_require_bundle 
-- operator_usage_whitespace 
-- overridden_super_call 
-- prohibited_super_call 
-- pattern_matching_keywords 
-- private_action 
-- private_outlet 
-- reduce_into 
-- redundant_nil_coalescing 
-- redundant_type_annotation 
-- required_enum_case 
-- sorted_first_last 
-- static_operator 
-# - switch_case_on_newline # ⚠️ Требует обсуждения 
-- toggle_bool 
-- unneeded_parentheses_in_closure_argument 
-- untyped_error_in_catch 
-- vertical_parameter_alignment_on_call 
-- vertical_whitespace_between_cases 
-- xct_specific_matcher
-- sorted_imports
+# --- Opt-in rules ------------------------------------------------------------
+opt_in_rules:
+  - array_init
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - comma_inheritance
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - convenience_type
+  - direct_return
+  - discarded_notification_center_observer
+  - discouraged_assert
+  - discouraged_none_name
+  - discouraged_object_literal
+  - discouraged_optional_boolean
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - empty_xctest_method
+  - enum_case_associated_values_count
+  - explicit_init
+  - fatal_error_message
+  - file_name_no_space
+  - final_test_case
+  - first_where
+  - flatmap_over_map_reduce
+  - force_unwrapping
+  - function_default_parameter_at_end
+  - ibinspectable_in_extension
+  - identical_operands
+  - implicitly_unwrapped_optional
+  - indentation_width
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - legacy_uigraphics_function
+  - literal_expression_end_indentation
+  - local_doc_comment
+  - lower_acl_than_parent
+  - modifier_order
+  - multiline_arguments
+  - multiline_arguments_brackets
+  - multiline_function_chains
+  - multiline_literal_brackets
+  - multiline_parameters
+  - multiline_parameters_brackets
+  - operator_usage_whitespace
+  - overridden_super_call
+  - pattern_matching_keywords
+  - prefer_asset_symbols
+  - prefer_condition_list
+  - prefer_key_path
+  - prefer_self_in_static_references
+  - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
+  - private_action
+  - private_outlet
+  - private_swiftui_state
+  - prohibited_interface_builder
+  - prohibited_super_call
+  - reduce_into
+  - redundant_final
+  - redundant_nil_coalescing
+  - redundant_self
+  - redundant_type_annotation
+  - return_value_from_void_function
+  - shorthand_argument
+  - sorted_first_last
+  - sorted_imports
+  - static_operator
+  - toggle_bool
+  - trailing_closure
+  - unavailable_function
+  - unhandled_throwing_task
+  - unneeded_escaping
+  - unneeded_parentheses_in_closure_argument
+  - unneeded_throws_rethrows
+  - untyped_error_in_catch
+  - vertical_parameter_alignment_on_call
+  - vertical_whitespace_between_cases
+  - vertical_whitespace_closing_braces
+  - vertical_whitespace_opening_braces
+  - weak_delegate
+  - yoda_condition
 
+# --- Analyzer rules (swiftlint analyze) --------------------------------------
 analyzer_rules:
-  - unused_import 
- 
-excluded: # paths to ignore during linting. Takes precedence over included. 
-- Carthage 
-- Pods 
-- swift-templates
-- "**/*.generated.swift"
-- vendor
-- .bin
+  - unused_import
 
-# # configurable rules can be customized from this configuration file 
-# # binary rules can set their severity level 
-trailing_semicolon: error 
-return_arrow_whitespace: error 
- 
-# line_length: 140 
- 
-closure_body_length: 
-- 20 # warning 
-- 100 # error
+# --- Rule configuration ------------------------------------------------------
+# Многострочные аргументы вызова: первый аргумент — на новой строке (не прижат к "(").
+# Однострочные вызовы остаются на одной строке; вместе с multiline_arguments_brackets
+# даёт форму foo(\n  a: 1,\n  b: 2\n).
+multiline_arguments:
+  first_argument_location: next_line
+
+# Блоки /** ... */ — документация, а не код: их отступы правилу считать не нужно.
+indentation_width:
+  include_comments: false
+
+# type_name / generic_type_name остаются включёнными (default), поднимаем порог длины имени.
+type_name:
+  max_length:
+    warning: 100
+
+generic_type_name:
+  max_length:
+    warning: 100
+
+# --- custom_rules ------------------------------------------------------------
+custom_rules:
+  # Запрет строковых литералов SF Symbols: только SFSafeSymbols.
+  # match_kinds ограничивает совпадение кодом (identifier/typeidentifier),
+  # чтобы не срабатывать внутри строковых литералов и комментариев.
+  uiimage_system_name_string:
+    name: "SF Symbol string literal"
+    regex: '\bUIImage\s*\(\s*systemName\s*:'
+    match_kinds:
+      - identifier
+      - typeidentifier
+    message: "Use SFSafeSymbols: UIImage(systemSymbol:) instead of UIImage(systemName:)."
+    severity: error
