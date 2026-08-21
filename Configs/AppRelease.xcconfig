@@ -1,0 +1,11 @@
+#include "App.xcconfig"
+
+CODE_SIGN_IDENTITY = Apple Distribution: Vladislav Lisianskii (SGM5527A99)
+PROVISIONING_PROFILE_SPECIFIER = Wake On Lan AppStore
+DEAD_CODE_STRIPPING = YES
+
+// NOTE: a dSYM is only meaningful for Release. In Debug the app is built as a stub executable plus a
+// `.debug.dylib`, so the executable itself carries no debug info and `dsymutil` produces an empty
+// dSYM — the "empty dSYM file detected" warning on every device build. Debug therefore keeps
+// XcodeGen's `dwarf` preset and this setting stays on the Release side only.
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym

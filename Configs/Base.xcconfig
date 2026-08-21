@@ -1,0 +1,30 @@
+// Build settings shared by every target.
+//
+// NOTE: XcodeGen parses the attached xcconfig — following its `#include` chain — before writing its
+// own setting presets, and omits every key the file already declares. That holds whether the file is
+// attached to a target or to the project, so a setting kept here wins on its own merits rather than
+// because of where the file is attached. The four-file include chain is convention, not necessity.
+//
+// An earlier version of this comment claimed the reverse. Verify a precedence question by
+// regenerating and grepping project.pbxproj, not by reading prose. See BACKLOG.md.
+
+ENABLE_BITCODE = NO
+
+// iPhone only. XcodeGen's iOS preset would write "1,2" here if this line were absent.
+TARGETED_DEVICE_FAMILY = 1
+
+SWIFT_VERSION = 6.0
+SWIFT_APPROACHABLE_CONCURRENCY = YES
+SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES
+
+SWIFT_TREAT_WARNINGS_AS_ERRORS = YES
+GCC_TREAT_WARNINGS_AS_ERRORS = YES
+CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES
+CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES
+
+DEVELOPMENT_TEAM = SGM5527A99
+CODE_SIGN_STYLE = Manual
+
+MARKETING_VERSION = 1.7.0
+CURRENT_PROJECT_VERSION = 1

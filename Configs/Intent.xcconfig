@@ -1,0 +1,9 @@
+// Settings shared by both configurations of the `Intent` Siri extension target.
+
+DISPLAY_NAME = Awake Intent
+PRODUCT_BUNDLE_IDENTIFIER = com.tr1ckyf0x.wake-on-lan.intent
+CODE_SIGN_ENTITLEMENTS = Intent/Intent.entitlements
+
+// NOTE: INFOPLIST_FILE is deliberately absent. XcodeGen detects the plist from the target's
+// sources and writes the setting into the target's own build settings, which outrank this file --
+// a value here would be inert. It is the one setting in Configs/ that could not work.

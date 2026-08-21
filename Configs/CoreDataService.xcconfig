@@ -1,0 +1,3 @@
+#include "Framework.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.tr1ckyf0x.wake-on-lan.frameworks.CoreDataService

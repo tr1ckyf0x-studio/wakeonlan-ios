@@ -1,0 +1,4 @@
+#include "App.xcconfig"
+
+CODE_SIGN_IDENTITY = Apple Development
+PROVISIONING_PROFILE_SPECIFIER = Wake On Lan Development

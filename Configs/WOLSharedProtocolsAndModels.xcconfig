@@ -1,0 +1,6 @@
+#include "Framework.xcconfig"
+
+// NOTE: the identifier says `SharedProtocolsAndModels`, the target is `WOLSharedProtocolsAndModels`.
+// The mismatch is historical and kept on purpose — the bundle identifier of a shipped framework is
+// not worth churning.
+PRODUCT_BUNDLE_IDENTIFIER = com.tr1ckyf0x.wake-on-lan.frameworks.SharedProtocolsAndModels

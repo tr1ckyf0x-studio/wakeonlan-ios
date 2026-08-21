@@ -1,0 +1,4 @@
+// Settings shared by the framework targets in `SharedCode/`. They are embedded in the app and in the
+// Siri extension, so they are signed with the host's identity and need no profile of their own.
+
+GENERATE_INFOPLIST_FILE = YES

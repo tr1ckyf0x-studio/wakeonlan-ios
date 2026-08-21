@@ -1,0 +1,4 @@
+#include "Intent.xcconfig"
+
+CODE_SIGN_IDENTITY = Apple Distribution: Vladislav Lisianskii (SGM5527A99)
+PROVISIONING_PROFILE_SPECIFIER = Wake On Lan Siri Intent AppStore

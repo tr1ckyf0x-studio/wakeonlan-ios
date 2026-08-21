@@ -1,0 +1,10 @@
+// Settings shared by both configurations of the `Wake On LAN` application target.
+
+DISPLAY_NAME = Awake
+PRODUCT_BUNDLE_IDENTIFIER = com.tr1ckyf0x.wake-on-lan
+CODE_SIGN_ENTITLEMENTS = Wake On Lan/Wake on LAN.entitlements
+OTHER_LDFLAGS = $(inherited) -ObjC
+
+// NOTE: INFOPLIST_FILE is deliberately absent. XcodeGen detects the plist from the target's
+// sources and writes the setting into the target's own build settings, which outrank this file --
+// a value here would be inert. It is the one setting in Configs/ that could not work.

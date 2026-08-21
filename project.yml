@@ -4,30 +4,6 @@ configs:
   Debug: debug
   Release: release
 
-settings:
-  # NOTE: A dSYM is only meaningful for Release. In Debug the app is built as a stub executable plus
-  # a `.debug.dylib`, so the executable itself carries no debug info and `dsymutil` produces an empty
-  # dSYM — that is the "empty dSYM file detected" warning on every device build.
-  configs:
-    Debug:
-      DEBUG_INFORMATION_FORMAT: dwarf
-    Release:
-      DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
-  base:
-    ENABLE_BITCODE: NO
-    CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
-    CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT: YES
-    CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER: YES
-    SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES: YES
-    SWIFT_VERSION: 6.0
-    SWIFT_APPROACHABLE_CONCURRENCY: YES
-    SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
-    GCC_TREAT_WARNINGS_AS_ERRORS: YES
-    DEVELOPMENT_TEAM: SGM5527A99
-    CODE_SIGN_STYLE: Manual
-    MARKETING_VERSION: 1.7.0
-    CURRENT_PROJECT_VERSION: 1
-
 options:
   deploymentTarget:
     iOS: 16.0
@@ -57,6 +33,14 @@ packages:
   shared-frameworks:
     url: https://github.com/tr1ckyf0x-studio/shared-frameworks.git
     exactVersion: 1.0.0
+
+# Base.xcconfig is attached here rather than #include'd by every target xcconfig. XcodeGen omits any
+# preset the attached file declares, and does so for a project-level file too, so one attachment
+# covers every target -- measured, not assumed: with this in place the generated pbxproj carries no
+# TARGETED_DEVICE_FAMILY and no SWIFT_VERSION at all.
+configFiles:
+  Debug: Configs/Base.xcconfig
+  Release: Configs/Base.xcconfig
 
 targets:
   Wake On LAN:
@@ -96,22 +80,10 @@ targets:
 
     scheme: {}
 
-    settings:
-      base:
-        TARGETED_DEVICE_FAMILY: 1
-        DISPLAY_NAME: "Awake"
-        INFOPLIST_FILE: "Wake On Lan/Info.plist"
-        OTHER_LDFLAGS: $(inherited) -ObjC
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
-        CODE_SIGN_ENTITLEMENTS: "Wake On Lan/Wake on LAN.entitlements"
-      configs:
-        Debug:
-          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
-        Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AppStore"
-          DEAD_CODE_STRIPPING: YES
+    configFiles:
+      Debug: Configs/AppDebug.xcconfig
+      Release: Configs/AppRelease.xcconfig
+
     preBuildScripts:
     - name: "Swiftlint"
       basedOnDependencyAnalysis: false
@@ -139,20 +111,9 @@ targets:
       - Intent
       - IntentSharedSources
     scheme: {}
-    settings:
-      base:
-        TARGETED_DEVICE_FAMILY: 1
-        DISPLAY_NAME: "Awake Intent"
-        INFOPLIST_FILE: "Intent/Info.plist"
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.intent
-        CODE_SIGN_ENTITLEMENTS: "Intent/Intent.entitlements"
-      configs:
-        Debug:
-          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
-        Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
-          PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AppStore"
+    configFiles:
+      Debug: Configs/IntentDebug.xcconfig
+      Release: Configs/IntentRelease.xcconfig
     dependencies:
       - target: WOLSharedProtocolsAndModels
       - target: CoreDataService
@@ -168,10 +129,9 @@ targets:
       - path: "SharedCode/WakeOnLanService"
     dependencies:
       - target: WOLSharedProtocolsAndModels
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.frameworks.WakeOnLanService
-        GENERATE_INFOPLIST_FILE: YES
+    configFiles:
+      Debug: Configs/WakeOnLanService.xcconfig
+      Release: Configs/WakeOnLanService.xcconfig
 
   WOLSharedProtocolsAndModels:
     platform: iOS
@@ -183,10 +143,9 @@ targets:
         product: SharedProtocolsAndModels
       - package: SFSafeSymbols
         product: SFSafeSymbols
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.frameworks.SharedProtocolsAndModels
-        GENERATE_INFOPLIST_FILE: YES
+    configFiles:
+      Debug: Configs/WOLSharedProtocolsAndModels.xcconfig
+      Release: Configs/WOLSharedProtocolsAndModels.xcconfig
 
   CoreDataService:
     platform: iOS
@@ -205,7 +164,6 @@ targets:
         products:
           - CocoaLumberjack
           - CocoaLumberjackSwift
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.frameworks.CoreDataService
-        GENERATE_INFOPLIST_FILE: YES
+    configFiles:
+      Debug: Configs/CoreDataService.xcconfig
+      Release: Configs/CoreDataService.xcconfig
