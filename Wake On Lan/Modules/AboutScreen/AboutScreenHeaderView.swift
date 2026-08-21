@@ -27,7 +27,7 @@ final class AboutScreenHeaderView: UIView {
         /// Spacing between elements in stack
         let stackSpacing: CGFloat = 8.0
         /// Application version (just text)
-        let appVersion = L10n.AboutScreen.Item.version
+        let appVersion = String(localized: .aboutScreenItemVersion)
     }
 
     // MARK: - Properties

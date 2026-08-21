@@ -30,7 +30,7 @@ public final class AddHostViewController: UIViewController {
         setupTableView()
         setupNavigationBar()
         view.backgroundColor = UIColor(resource: .primary)
-        title = L10n.AddHost.Screen.title
+        title = String(localized: .addHostScreenTitle)
         presenter?.viewDidLoad(self)
     }
 }

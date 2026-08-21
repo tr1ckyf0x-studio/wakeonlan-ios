@@ -47,7 +47,6 @@ targets:
       - path: "Wake On Lan"
         excludes:
           - "**/*.secret"
-          - "**/swiftgen.yml"
           - "**/CLAUDE.md"
         optional: true
       - IntentSharedSources

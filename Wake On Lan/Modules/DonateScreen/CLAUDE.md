@@ -64,7 +64,7 @@ Ownership: `ViewController → Presenter → Interactor → IAPManager → Payme
 view.
 
 Table composition is fixed: exactly one section, `.donateSection(content: productItems, footer:
-L10n.DonateScreen.Screen.footer)`, rendered by a plain (non-diffable) data source.
+.donateScreenScreenFooter)`, rendered by a plain (non-diffable) data source.
 
 ## Purchase flow
 

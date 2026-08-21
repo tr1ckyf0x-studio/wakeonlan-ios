@@ -1,5 +1,6 @@
 executables:
   genesis: "mint run genesis"
+  # Required by the FoxGen 0.0.9 config schema; never invoked by module scaffolding.
   swiftgen: "mint run swiftgen"
 
 viper:

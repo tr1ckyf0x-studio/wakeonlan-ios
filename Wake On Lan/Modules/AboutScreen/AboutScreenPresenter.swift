@@ -73,26 +73,26 @@ private extension AboutScreenPresenter {
             ),
             buttonListViewModel: [
                 .init(
-                    title: L10n.AboutScreen.Item.rateApp,
+                    title: String(localized: .aboutScreenItemRateApp),
                     symbol: .starFill
                 ) { [weak self] in
                     self?.reviewRequester.requestReview()
                 },
                 .init(
-                    title: L10n.AboutScreen.Item.github,
+                    title: String(localized: .aboutScreenItemGithub),
                     symbol: .tag
                 ) { [weak self] in
                     guard let url = URL(string: Configuration.gitHubURL) else { return }
                     self?.urlOpener.open(url: url)
                 },
                 .init(
-                    title: L10n.AboutScreen.Item.shareApp,
+                    title: String(localized: .aboutScreenItemShareApp),
                     symbol: .squareAndArrowUp
                 ) { [weak self] in
                     self?.view?.displayShareApp(with: Configuration.appStoreURL)
                 },
                 .init(
-                    title: L10n.AboutScreen.Item.donate,
+                    title: String(localized: .aboutScreenItemDonate),
                     symbol: .dollarsignCircleFill
                 ) { [weak self] in
                     self?.navigate(to: self?.router?.openDonate())

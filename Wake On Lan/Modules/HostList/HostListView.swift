@@ -78,7 +78,7 @@ final class HostListView: UIView {
     lazy var emptyView: EmptyView = {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
-            title: L10n.HostList.Screen.emptyViewMessage,
+            title: String(localized: .hostListScreenEmptyViewMessage),
             image: UIImage(resource: .owl),
             backgroundColor: UIColor(resource: .primary)
         )
@@ -148,7 +148,7 @@ final class HostListView: UIView {
         let donateButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
             let label = UILabel()
-            label.text = L10n.HostList.NavigationBar.donate
+            label.text = String(localized: .hostListNavigationBarDonate)
             label.textColor = UIColor(resource: .secondary)
             label.font = .systemFont(ofSize: 14, weight: .bold)
             button.configure(with: SoftUIViewModel(contentView: label))

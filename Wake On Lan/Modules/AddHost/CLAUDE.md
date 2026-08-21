@@ -150,7 +150,7 @@ the host twice and colliding the `order` of every existing host.
 success callbacks do the same thing: navigate back. **Core Data failures are ignored** — the
 completion result is discarded and the screen dismisses anyway.
 
-The navigation title is always `L10n.AddHost.Screen.title` ("Add host"), even when editing.
+The navigation title is always `.addHostScreenTitle` ("Add host"), even when editing.
 
 ## Icon round-trip
 

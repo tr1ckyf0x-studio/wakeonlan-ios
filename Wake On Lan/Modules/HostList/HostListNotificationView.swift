@@ -16,13 +16,13 @@ protocol NotificationViewStyle {
 
 enum NotificationViewType {
     struct Default: NotificationViewStyle {
-        static let text = L10n.HostList.Notification.packetSent
+        static let text = String(localized: .hostListNotificationPacketSent)
         static let backgroundColor = UIColor(resource: .secondary)
         static let textColor = UIColor(resource: .primary)
     }
 
     struct Failure: NotificationViewStyle {
-        static let text = L10n.HostList.Notification.checkConnection
+        static let text = String(localized: .hostListNotificationCheckConnection)
         static let backgroundColor = UIColor(resource: .warning)
         static let textColor = UIColor(resource: .secondaryVariant).resolvedColor(
             with: .init(userInterfaceStyle: .dark)

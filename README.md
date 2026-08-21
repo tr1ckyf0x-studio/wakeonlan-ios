@@ -31,7 +31,7 @@ Certificates and provisioning profiles are managed by [fastlane match](https://d
 * `bundle exec fastlane ios generate_development_certificates` / `generate_release_certificates` — create or renew certificates and profiles in Apple Developer Portal. Requires the App Store Connect API key: `git secret reveal` decrypts `fastlane/api_key.json`.
 
 ## Code generation instructions
-To generate new modules or `swiftgen` files please follow instructions for `foxgen` which will be built during bootstrap
+To generate new modules please follow instructions for `foxgen`, which is built during bootstrap
 ```bash
 mint run foxgen --help
 ```

@@ -50,10 +50,10 @@ the stack view.
 
 | # | Title key | Icon | Action |
 |---|-----------|------|--------|
-| 1 | `L10n.AboutScreen.Item.rateApp` | `.starFill` | `SKStoreReviewController.requestReview()` (static, sceneless) |
-| 2 | `L10n.AboutScreen.Item.github` | `.tag` | Opens `https://github.com/tr1ckyf0x-studio/wakeonlan-ios` via `UIApplication.open` |
-| 3 | `L10n.AboutScreen.Item.shareApp` | `.squareAndArrowUp` | `view.displayShareApp(with:)` → `UIActivityViewController` |
-| 4 | `L10n.AboutScreen.Item.donate` | `.dollarsignCircleFill` | `router.openDonate()` |
+| 1 | `.aboutScreenItemRateApp` | `.starFill` | `SKStoreReviewController.requestReview()` (static, sceneless) |
+| 2 | `.aboutScreenItemGithub` | `.tag` | Opens `https://github.com/tr1ckyf0x-studio/wakeonlan-ios` via `UIApplication.open` |
+| 3 | `.aboutScreenItemShareApp` | `.squareAndArrowUp` | `view.displayShareApp(with:)` → `UIActivityViewController` |
+| 4 | `.aboutScreenItemDonate` | `.dollarsignCircleFill` | `router.openDonate()` |
 
 Both URLs are literals in the presenter's private `Configuration` enum. There is no mail item and no
 in-app browser — GitHub leaves the app.
@@ -72,7 +72,7 @@ in-app browser — GitHub leaves the app.
   adds `headerStackView`, whose lazy initializer moves the image view into the stack. The first
   `addSubview` has no lasting effect.
 - The literal "Version" is not in the view model — `AboutScreenHeaderView.configure` composes
-  `"\(L10n.AboutScreen.Item.version) \(viewModel.version)"`.
+  `"\(String(localized: .aboutScreenItemVersion)) \(viewModel.version)"`.
 - `presenter?.viewDidLoad(self)` runs **before** `setupNavigationBar()` here, the opposite order from
   `DonateScreenViewController`.
 - The protocol methods take the view as a parameter, but the presenter always uses its own `weak var view`.

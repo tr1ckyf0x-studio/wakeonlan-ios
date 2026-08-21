@@ -39,7 +39,7 @@ public final class HostListViewController: UIViewController {
     // MARK: - Private
 
     private func setupNavigationBar() {
-        navigationItem.title = L10n.HostList.Screen.title
+        navigationItem.title = String(localized: .hostListScreenTitle)
         navigationItem.leftBarButtonItem = hostListView.donateButton
         navigationItem.rightBarButtonItems = [
             hostListView.addItemButton,

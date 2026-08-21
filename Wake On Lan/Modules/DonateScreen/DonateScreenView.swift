@@ -64,7 +64,7 @@ final class DonateScreenView: UIView {
     lazy var paymentsUnavailableView: EmptyView = {
         let paymentsUnavailableView = EmptyView()
         let viewModel = StateableViewModel(
-            title: L10n.DonateScreen.Screen.paymentsUnavailable,
+            title: String(localized: .donateScreenScreenPaymentsUnavailable),
             image: UIImage(resource: .owl),
             backgroundColor: UIColor(resource: .primary)
         )
@@ -76,7 +76,7 @@ final class DonateScreenView: UIView {
     lazy var loadingFailedView: EmptyView = {
         let loadingFailedView = EmptyView()
         let viewModel = StateableViewModel(
-            title: L10n.DonateScreen.Screen.loadingFailed,
+            title: String(localized: .donateScreenScreenLoadingFailed),
             image: UIImage(resource: .owl),
             backgroundColor: UIColor(resource: .primary)
         )

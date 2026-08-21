@@ -136,4 +136,5 @@ on the `Task` does not help — the hop happens inside the callee.
 `WOLSharedProtocolsAndModels` (`ProvidesCollectionViewCell`, `HostSnapshot`, `HostFormValues`),
 `WOLResources` (`HostIcon`), `SFSafeSymbols`, `CocoaLumberjack`, `SnapKit`.
 
-Localization keys: `L10n.HostList.*`. Colors: `Asset.Colors.primary/secondary/secondaryVariant/warning`.
+Localized strings are `String(localized: .hostList…)` and colours `UIColor(resource: .primary)` and
+friends — both are Xcode-generated symbols, see the root `CLAUDE.md`.

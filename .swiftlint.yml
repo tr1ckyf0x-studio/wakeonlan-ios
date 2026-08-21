@@ -15,7 +15,6 @@ included:
   - "Intent"
 
 excluded:
-  - "Wake On Lan/Localization/Localization.swift" # SwiftGen output (strings)
   - "**/*.generated.swift"
   - "swift-templates"                        # Genesis code-gen templates (not compilable Swift)
   - ".build"
