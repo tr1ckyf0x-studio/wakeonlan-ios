@@ -40,7 +40,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
     private lazy var deleteButton: SoftUIView = {
         let button = SoftUIView()
         let symbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 36, weight: .regular))
-        let image = UIImage(sfSymbol: ButtonIcon.trash, withConfiguration: symbolConfiguration)
+        let image = UIImage(systemSymbol: .trash, withConfiguration: symbolConfiguration)
         let imageView = UIImageView(image: image)
         imageView.tintColor = Asset.Colors.secondary.color
         button.configure(with: SoftUIViewModel(contentView: imageView))
@@ -91,7 +91,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
     private lazy var infoButton: SoftUIView = {
         let button = SoftUIView(circleShape: true)
         let imageConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24, weight: .semibold))
-        let image = UIImage(sfSymbol: ButtonIcon.ellipsis, withConfiguration: imageConfiguration)
+        let image = UIImage(systemSymbol: .ellipsis, withConfiguration: imageConfiguration)
         let imageView = UIImageView(image: image)
         imageView.tintColor = Asset.Colors.secondary.color
         button.configure(with: SoftUIViewModel(contentView: imageView))
@@ -124,8 +124,8 @@ final class HostListCollectionViewCell: UICollectionViewCell {
     // MARK: - Public
 
     func configure(with viewModel: HostListCellViewModel, delegate: HostListCollectionViewCellDelegate?) {
-        let sfSymbol = SFSymbolFactory.build(from: viewModel.iconName)
-        let image = sfSymbol.flatMap { UIImage(sfSymbol: $0) }
+        let hostIcon = HostIcon(systemName: viewModel.iconName)
+        let image = hostIcon.map { UIImage(systemSymbol: $0.symbol) }
         hostTitle.text = viewModel.title
         deviceImageView.image = image
         macAddressTitle.text = viewModel.macAddress

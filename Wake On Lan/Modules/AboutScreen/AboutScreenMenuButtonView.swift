@@ -6,6 +6,7 @@
 //  Copyright © 2021 Vladislav Lisianskii. All rights reserved.
 //
 
+import SFSafeSymbols
 import SharedProtocolsAndModels
 import UIKit
 import WOLSharedProtocolsAndModels
@@ -71,7 +72,7 @@ extension AboutScreenMenuButtonView: ViewModelConfigurable {
     func configure(with model: AboutScreenMenuButtonViewViewModel) {
         action = model.action
         buttonTitleLabel.text = model.title
-        buttonImageView.image = UIImage(sfSymbol: model.symbol, withConfiguration: .init(weight: .semibold))
+        buttonImageView.image = UIImage(systemSymbol: model.symbol, withConfiguration: UIImage.SymbolConfiguration(weight: .semibold))
     }
 }
 

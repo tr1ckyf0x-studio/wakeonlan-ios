@@ -35,15 +35,15 @@ final class AddHostForm: AddHostFormRepresentable {
 
     // MARK: - Properties
 
-    var iconModel = IconModel(sfSymbol: HostIcon.desktopcomputer)
+    var iconModel = IconModel(symbol: HostIcon.desktopcomputer.symbol)
 
     private(set) var sections = [FormSection]()
 
     private(set) var host: Host? {
         didSet {
             guard let host else { return }
-            guard let sfSymbol = SFSymbolFactory.build(from: host.iconName) else { return }
-            iconModel = IconModel(sfSymbol: sfSymbol)
+            guard let hostIcon = HostIcon(systemName: host.iconName) else { return }
+            iconModel = IconModel(symbol: hostIcon.symbol)
             titleItem.value = host.title
             macAddressItem.value = host.macAddress
             destinationItem.value = host.destination

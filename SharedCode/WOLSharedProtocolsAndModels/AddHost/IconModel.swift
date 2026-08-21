@@ -6,15 +6,17 @@
 //  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
+import SFSafeSymbols
+
 public protocol IconModelRepresentable {
-    var sfSymbol: SFSymbolRepresentable { get }
+    var symbol: SFSymbol { get }
 }
 
 public struct IconModel: IconModelRepresentable {
-    public let sfSymbol: SFSymbolRepresentable
+    public let symbol: SFSymbol
 
-    public init(sfSymbol: SFSymbolRepresentable) {
-        self.sfSymbol = sfSymbol
+    public init(symbol: SFSymbol) {
+        self.symbol = symbol
     }
 }
 
@@ -22,6 +24,6 @@ public struct IconModel: IconModelRepresentable {
 
 extension IconModel: Equatable {
     public static func == (lhs: IconModel, rhs: IconModel) -> Bool {
-        lhs.sfSymbol.systemName == rhs.sfSymbol.systemName
+        lhs.symbol == rhs.symbol
     }
 }

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
+import SFSafeSymbols
 import UIKit
 import WOLSharedProtocolsAndModels
 
@@ -38,13 +39,13 @@ final class ChooseIconCell: UICollectionViewCell {
 
     func configure(with model: IconModel, didTapBlock: @escaping TapIconBlock) {
         didTapIconBlock = didTapBlock
-        setupDeviceImage(with: model.sfSymbol)
+        setupDeviceImage(with: model.symbol)
     }
 
     // MARK: - Private
 
-    private func setupDeviceImage(with sfSymbol: SFSymbolRepresentable) {
-        let image = UIImage(sfSymbol: sfSymbol)
+    private func setupDeviceImage(with symbol: SFSymbol) {
+        let image = UIImage(systemSymbol: symbol)
         let imageView = UIImageView(image: image)
         imageView.tintColor = Asset.Colors.secondaryVariant.color
         imageView.contentMode = .scaleAspectFit

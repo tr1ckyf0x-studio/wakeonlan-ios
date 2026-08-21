@@ -6,13 +6,14 @@
 //  Copyright © 2021 Vladislav Lisianskii. All rights reserved.
 //
 
+import SFSafeSymbols
 import WOLSharedProtocolsAndModels
 
 struct AboutScreenMenuButtonViewViewModel {
     /// Represents displayed title
     let title: String
     /// Represents icon
-    let symbol: SFSymbolRepresentable
+    let symbol: SFSymbol
     /// Action that will be executed by tap
     let action: (() -> Void)?
 }

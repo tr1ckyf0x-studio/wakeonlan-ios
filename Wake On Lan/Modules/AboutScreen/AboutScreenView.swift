@@ -27,8 +27,8 @@ final class AboutScreenView: UIView {
         let backBarButtonImageViewInset: CGFloat = 6.0
         let backBarButtonTintColor = Asset.Colors.secondary.color
         let backBarButtonImage = UIImage(
-            sfSymbol: ButtonIcon.chevronBackward,
-            withConfiguration: .init(weight: .semibold)
+            systemSymbol: .chevronBackward,
+            withConfiguration: UIImage.SymbolConfiguration(weight: .semibold)
         )
 
         let stackSpacing: CGFloat = 16.0

@@ -18,7 +18,7 @@ final class ChooseIconPresenter: Navigates {
     private let sections: [ChooseIconSection] =
         [
             HostIcon.allCases
-                .map { IconModel(sfSymbol: $0) }
+                .map { IconModel(symbol: $0.symbol) }
                 .map { .icon($0) }
         ]
         .map { .section(content: $0) }

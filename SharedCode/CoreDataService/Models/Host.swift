@@ -8,6 +8,7 @@
 
 import CoreData
 import PersistenceCore
+import SFSafeSymbols
 import WOLSharedProtocolsAndModels
 
 public final class Host: NSManagedObject, HostRepresentable {
@@ -56,7 +57,7 @@ extension Host: UpdatesManagedObject {
     public func update(from model: Model, in context: NSManagedObjectContext) {
         guard let object = context.object(with: self.objectID) as? Self else { return }
         object.title = model.title
-        object.iconName = model.iconModel.sfSymbol.systemName
+        object.iconName = model.iconModel.symbol.rawValue
         object.macAddress = model.macAddress
         object.destination = model.destination
         object.port = model.port

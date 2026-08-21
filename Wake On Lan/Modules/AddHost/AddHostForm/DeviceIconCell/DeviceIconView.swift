@@ -20,7 +20,7 @@ final class DeviceIconView: UIView {
     weak var delegate: DeviceIconViewDelegate?
 
     private lazy var deviceImageView: UIImageView = {
-        let image = UIImage(sfSymbol: HostIcon.desktopcomputer)
+        let image = UIImage(systemSymbol: HostIcon.desktopcomputer.symbol)
         let imageView = UIImageView(image: image)
         imageView.layer.cornerRadius = 14
         imageView.tintColor = Asset.Colors.secondary.color
@@ -47,7 +47,7 @@ final class DeviceIconView: UIView {
     }
 
     func configure(with model: IconModel) {
-        let image = UIImage(sfSymbol: model.sfSymbol)
+        let image = UIImage(systemSymbol: model.symbol)
         deviceImageView.image = image
     }
 

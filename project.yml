@@ -39,6 +39,9 @@ packages:
   RouteComposer:
     url: https://github.com/ekazaev/route-composer.git
     exactVersion: 2.22.2
+  SFSafeSymbols:
+    url: https://github.com/SFSafeSymbols/SFSafeSymbols.git
+    exactVersion: 7.0.0
   SnapKit:
     url: https://github.com/SnapKit/SnapKit.git
     exactVersion: 6.0.0
@@ -74,6 +77,8 @@ targets:
         product: Reachability
       - package: RouteComposer
         product: RouteComposer
+      - package: SFSafeSymbols
+        product: SFSafeSymbols
       - package: SnapKit
         product: SnapKit
       - package: shared-frameworks
@@ -182,6 +187,8 @@ targets:
     dependencies:
       - package: shared-frameworks
         product: SharedProtocolsAndModels
+      - package: SFSafeSymbols
+        product: SFSafeSymbols
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.frameworks.SharedProtocolsAndModels
@@ -198,6 +205,8 @@ targets:
       - target: WOLSharedProtocolsAndModels
       - package: shared-frameworks
         product: PersistenceCore
+      - package: SFSafeSymbols
+        product: SFSafeSymbols
       - package: CocoaLumberjack
         products:
           - CocoaLumberjack

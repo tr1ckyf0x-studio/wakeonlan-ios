@@ -6,6 +6,7 @@
 //  Copyright © 2021 Vladislav Lisianskii. All rights reserved.
 //
 
+import SFSafeSymbols
 import SharedProtocolsAndModels
 import StoreKit
 import UIKit
@@ -73,14 +74,14 @@ private extension AboutScreenPresenter {
             buttonListViewModel: [
                 .init(
                     title: L10n.AboutScreen.Item.rateApp,
-                    symbol: ButtonIcon.star,
+                    symbol: .starFill,
                     action: { [weak self] in
                         self?.reviewRequester.requestReview()
                     }
                 ),
                 .init(
                     title: L10n.AboutScreen.Item.github,
-                    symbol: ButtonIcon.tag,
+                    symbol: .tag,
                     action: { [weak self] in
                         guard let url = URL(string: Configuration.gitHubURL) else { return }
                         self?.urlOpener.open(url: url)
@@ -88,14 +89,14 @@ private extension AboutScreenPresenter {
                 ),
                 .init(
                     title: L10n.AboutScreen.Item.shareApp,
-                    symbol: ButtonIcon.share,
+                    symbol: .squareAndArrowUp,
                     action: { [weak self] in
                         self?.view?.displayShareApp(with: Configuration.appStoreURL)
                     }
                 ),
                 .init(
                     title: L10n.AboutScreen.Item.donate,
-                    symbol: ButtonIcon.dollar,
+                    symbol: .dollarsignCircleFill,
                     action: { [weak self] in
                         self?.navigate(to: self?.router?.openDonate())
                     }

@@ -90,7 +90,7 @@ final class HostListView: UIView {
     lazy var aboutButton: UIBarButtonItem = {
         let aboutButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
-            let image = UIImage(sfSymbol: ButtonIcon.questionmark, withConfiguration: .init(weight: .semibold))
+            let image = UIImage(systemSymbol: .questionmark, withConfiguration: UIImage.SymbolConfiguration(weight: .semibold))
             let imageView = UIImageView(image: image)
             imageView.tintColor = Asset.Colors.secondary.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
@@ -123,7 +123,7 @@ final class HostListView: UIView {
     lazy var addItemButton: UIBarButtonItem = {
         let addButton: SoftUIView = {
             let button = SoftUIView(circleShape: true)
-            let image = UIImage(sfSymbol: ButtonIcon.plus, withConfiguration: .init(weight: .semibold))
+            let image = UIImage(systemSymbol: .plus, withConfiguration: UIImage.SymbolConfiguration(weight: .semibold))
             let imageView = UIImageView(image: image)
             imageView.tintColor = Asset.Colors.secondary.color
             button.configure(with: SoftUIViewModel(contentView: imageView))
