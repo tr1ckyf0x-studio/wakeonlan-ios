@@ -20,6 +20,9 @@ final class HostListCollectionViewCell: UICollectionViewCell {
 
     private var viewModel: HostListCellViewModel?
 
+    private var notificationView: UIView?
+    private var hideNotificationWorkItem: DispatchWorkItem?
+
     private weak var delegate: HostListCollectionViewCellDelegate?
 
     private lazy var scrollView: UIScrollView = {
@@ -122,6 +125,19 @@ final class HostListCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public
 
+    // NOTE: A recycled cell must not inherit the previous host's state. The swipe affordance lives
+    // entirely in the scroll view's content offset, so without this reset a card can be drawn
+    // already swiped open with the delete button under the user's thumb, and a stale "Packet sent"
+    // banner can appear over a host that was never tapped.
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        hideNotificationWorkItem?.cancel()
+        hideNotificationWorkItem = nil
+        notificationView?.removeFromSuperview()
+        notificationView = nil
+        scrollView.setContentOffset(.zero, animated: false)
+    }
+
     func configure(with viewModel: HostListCellViewModel, delegate: HostListCollectionViewCellDelegate?) {
         let hostIcon = HostIcon(systemName: viewModel.iconName)
         let image = hostIcon.map { UIImage(systemSymbol: $0.symbol) }
@@ -137,6 +153,9 @@ final class HostListCollectionViewCell: UICollectionViewCell {
     /// - Note: Driven by the presenter once the send has actually finished. Deciding it here, at tap
     ///   time, meant the card always claimed success — including when no packet left the device.
     func showNotification(_ notification: HostListNotification) {
+        hideNotificationWorkItem?.cancel()
+        self.notificationView?.removeFromSuperview()
+
         let notificationView: UIView
         let feedbackType: UINotificationFeedbackGenerator.FeedbackType
 
@@ -150,6 +169,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
             feedbackType = .error
         }
 
+        self.notificationView = notificationView
         baseView.addSubview(notificationView)
         notificationView.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -159,15 +179,19 @@ final class HostListCollectionViewCell: UICollectionViewCell {
         }
 
         let animationDuration = 0.2
-        let hideNotificationAnimated = {
+        let hideNotificationAnimated = DispatchWorkItem { [weak self] in
             UIView.animate(
                 withDuration: animationDuration,
                 animations: { notificationView.alpha = 0.0 },
                 completion: { _ in
                     notificationView.removeFromSuperview()
+                    if self?.notificationView === notificationView {
+                        self?.notificationView = nil
+                    }
                 }
             )
         }
+        hideNotificationWorkItem = hideNotificationAnimated
 
         let displayNotificationAnimated = {
             UIView.animate(
@@ -176,9 +200,8 @@ final class HostListCollectionViewCell: UICollectionViewCell {
                 completion: { _ in
                     DispatchQueue.main.asyncAfter(
                         deadline: .now() + 0.9,
-                        execute: {
-                            hideNotificationAnimated()
-                        })
+                        execute: hideNotificationAnimated
+                    )
                 }
             )
         }
