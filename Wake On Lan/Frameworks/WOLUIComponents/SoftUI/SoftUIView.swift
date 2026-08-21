@@ -295,7 +295,11 @@ private extension SoftUIView {
 
         shadowOffset = appearance.shadowOffset
         shadowRadius = appearance.shadowRadius
-        cornerRadius = appearance.cornerRadius
+        // NOTE: `circleShape` has to win here. Writing the fixed radius unconditionally repainted
+        // round controls as squircles whenever the appearance was re-applied (a dark mode switch,
+        // for example), and changing layer properties does not dirty layout, so nothing was
+        // guaranteed to restore `bounds.height / 2` afterwards.
+        cornerRadius = circleShape ? bounds.height / 2 : appearance.cornerRadius
 
         darkShadowColor = appearance.darkShadowColor
         lightShadowColor = appearance.lightShadowColor
