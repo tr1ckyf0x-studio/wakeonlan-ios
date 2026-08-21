@@ -38,6 +38,7 @@ public final class SpinnerView: UIView {
         super.init(frame: frame)
         backgroundColor = .clear
         setupView()
+        observeApplicationState()
         startAnimating()
     }
 
@@ -57,6 +58,14 @@ public final class SpinnerView: UIView {
         setupAnimations()
     }
 
+    // NOTE: UIKit strips `CAAnimation`s from a backgrounded view hierarchy, and
+    // `isRemovedOnCompletion = false` does not protect against that. Without re-installing them the
+    // ring stays frozen for good, because `stopAnimating()` early-returns on `isAnimating`.
+    @objc private func applicationDidBecomeActive() {
+        guard isAnimating else { return }
+        setupAnimations()
+    }
+
     public func stopAnimating() {
         guard isAnimating else { return }
 
@@ -70,6 +79,15 @@ public final class SpinnerView: UIView {
 // MARK: - Private
 
 extension SpinnerView {
+    private func observeApplicationState() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+    }
+
     private func setupView() {
         addSubview(outerCircle)
         addSubview(innerCircle)
