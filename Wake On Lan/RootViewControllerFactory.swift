@@ -10,17 +10,9 @@ import UIKit
 
 @MainActor
 struct RootViewControllerFactory {
-
     func build() -> UIViewController {
-        WOLNavigationController(rootViewController: {
-            let factory = HostListFactory(router: WOLRouter())
-            guard
-                let viewController = try? factory.build(with: nil)
-            else {
-                fatalError("Root view controller wasn't built")
-            }
+        let hostList = HostListFactory(router: WOLRouter()).build(with: nil)
 
-            return viewController
-        }())
+        return WOLNavigationController(rootViewController: hostList)
     }
 }

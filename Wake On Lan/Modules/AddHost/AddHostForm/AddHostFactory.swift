@@ -27,7 +27,7 @@ public final class AddHostFactory {
 }
 
 extension AddHostFactory: Factory {
-    public func build(with context: Context) throws -> AddHostViewController {
+    public func build(with context: Context) -> AddHostViewController {
         let viewController = AddHostViewController()
 
         let presenter = AddHostPresenter(addHostForm: AddHostForm(host: context))

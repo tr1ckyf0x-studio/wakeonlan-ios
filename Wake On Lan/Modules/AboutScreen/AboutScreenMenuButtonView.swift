@@ -12,7 +12,6 @@ import UIKit
 import WOLSharedProtocolsAndModels
 
 final class AboutScreenMenuButtonView: UIView {
-
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
@@ -61,6 +60,7 @@ final class AboutScreenMenuButtonView: UIView {
         makeConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

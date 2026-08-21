@@ -13,7 +13,6 @@ import UIKit
 import WOLSharedProtocolsAndModels
 
 final class AboutScreenPresenter: Navigates {
-
     // MARK: - Configuration
 
     enum Configuration {
@@ -74,33 +73,29 @@ private extension AboutScreenPresenter {
             buttonListViewModel: [
                 .init(
                     title: L10n.AboutScreen.Item.rateApp,
-                    symbol: .starFill,
-                    action: { [weak self] in
-                        self?.reviewRequester.requestReview()
-                    }
-                ),
+                    symbol: .starFill
+                ) { [weak self] in
+                    self?.reviewRequester.requestReview()
+                },
                 .init(
                     title: L10n.AboutScreen.Item.github,
-                    symbol: .tag,
-                    action: { [weak self] in
-                        guard let url = URL(string: Configuration.gitHubURL) else { return }
-                        self?.urlOpener.open(url: url)
-                    }
-                ),
+                    symbol: .tag
+                ) { [weak self] in
+                    guard let url = URL(string: Configuration.gitHubURL) else { return }
+                    self?.urlOpener.open(url: url)
+                },
                 .init(
                     title: L10n.AboutScreen.Item.shareApp,
-                    symbol: .squareAndArrowUp,
-                    action: { [weak self] in
-                        self?.view?.displayShareApp(with: Configuration.appStoreURL)
-                    }
-                ),
+                    symbol: .squareAndArrowUp
+                ) { [weak self] in
+                    self?.view?.displayShareApp(with: Configuration.appStoreURL)
+                },
                 .init(
                     title: L10n.AboutScreen.Item.donate,
-                    symbol: .dollarsignCircleFill,
-                    action: { [weak self] in
-                        self?.navigate(to: self?.router?.openDonate())
-                    }
-                )
+                    symbol: .dollarsignCircleFill
+                ) { [weak self] in
+                    self?.navigate(to: self?.router?.openDonate())
+                }
             ]
         )
     }

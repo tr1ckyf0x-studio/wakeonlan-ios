@@ -9,7 +9,6 @@ import UIKit
 import WOLSharedProtocolsAndModels
 
 struct HostListCollectionCellProvider: ProvidesCollectionViewCell {
-
     private weak var hostCellDelegate: HostListCollectionViewCellDelegate?
 
     init(hostCellDelegate: HostListCollectionViewCellDelegate? = nil) {

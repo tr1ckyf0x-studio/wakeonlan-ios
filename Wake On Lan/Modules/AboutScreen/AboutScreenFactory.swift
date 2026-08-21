@@ -23,7 +23,7 @@ public final class AboutScreenFactory {
 // MARK: - Factory
 
 extension AboutScreenFactory: Factory {
-    public func build(with context: Context) throws -> AboutScreenViewController {
+    public func build(with context: Context) -> AboutScreenViewController {
         let viewController = AboutScreenViewController()
         let presenter = AboutScreenPresenter()
         let interactor = AboutScreenInteractor()

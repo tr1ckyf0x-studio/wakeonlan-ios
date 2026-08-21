@@ -6,11 +6,9 @@
 //
 
 protocol HostListCollectionViewCellDelegate: AnyObject {
-
     func hostListCellDidTapDelete(_ cell: HostListCollectionViewCell)
 
     func hostListCellDidTapInfo(_ cell: HostListCollectionViewCell)
 
     func hostListCellDidTap(_ cell: HostListCollectionViewCell)
-
 }

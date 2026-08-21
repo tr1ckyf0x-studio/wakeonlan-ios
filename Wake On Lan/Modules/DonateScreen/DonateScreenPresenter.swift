@@ -39,11 +39,10 @@ extension DonateScreenPresenter: DonateScreenInteractorOutput {
         let productItems = products.map { (product: Product) -> DonateScreenTableSectionItem in
             let viewModel = ProductViewModel(
                 title: product.title,
-                price: product.price,
-                onClick: { [weak self] in
-                    self?.interactor?.makePurchase(product: product)
-                }
-            )
+                price: product.price
+            ) { [weak self] in
+                self?.interactor?.makePurchase(product: product)
+            }
             return DonateScreenTableSectionItem.purchase(viewModel)
         }
         let section = DonateScreenTableSectionModel.donateSection(

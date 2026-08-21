@@ -7,7 +7,6 @@
 //
 
 public extension String {
-
     static let empty: String = .init()
 
     func matches(_ regex: String) -> Bool {
@@ -21,7 +20,7 @@ public extension String {
         let cleanString = components(separatedBy: separator)
             .joined()
             .filter { $0.isLetter || $0.isNumber }
-        var result = String.empty
+        var result = Self.empty
         var index = cleanString.startIndex
         for char in mask where index < cleanString.endIndex {
             if char == Configuration.maskSymbol {

@@ -9,11 +9,10 @@
 import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
 
     private lazy var plugins: [UIWindowSceneDelegate] = [
-        WindowConfigurationSceneDelegatePlugin(configureWindow: { [weak self] in self?.window = $0 })
+        WindowConfigurationSceneDelegatePlugin { [weak self] in self?.window = $0 }
     ]
 
     func scene(

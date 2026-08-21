@@ -23,7 +23,6 @@ protocol HostListCollectionManagerDelegate: AnyObject {
 }
 
 final class HostListCollectionManager: HostListCollectionDataSource, ManagesHostListCollection {
-
     // MARK: - Properties
 
     typealias CellProvider = ProvidesCollectionViewCell<HostListItem>
@@ -71,7 +70,6 @@ extension HostListCollectionManager {
     @objc private func handleLongGesture(gesture: UILongPressGestureRecognizer) {
         guard let collectionView else { return }
         switch gesture.state {
-
         case .began:
             guard let selectedIndexPath = collectionView.indexPathForItem(
                 at: gesture.location(in: collectionView)

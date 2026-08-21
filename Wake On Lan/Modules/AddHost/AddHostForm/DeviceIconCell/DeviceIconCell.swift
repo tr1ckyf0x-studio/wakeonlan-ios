@@ -10,7 +10,6 @@ import UIKit
 import WOLSharedProtocolsAndModels
 
 final class DeviceIconCell: UITableViewCell {
-
     typealias ChangeIconBlock = (_ model: IconModel) -> Void
 
     var didTapChangeIconBlock: ChangeIconBlock?
@@ -44,6 +43,7 @@ final class DeviceIconCell: UITableViewCell {
         setupChangeIconLabel()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -10,7 +10,6 @@ import UIKit
 
 // TODO: Implement custom header/footer views
 final class AddHostTableManager: NSObject {
-
     weak var delegate: AddHostTableManagerDelegate?
 
     var form: AddHostForm?
@@ -56,9 +55,9 @@ extension AddHostTableManager: UITableViewDataSource {
             // completion block for smoothy animation working
             textInputCell?.onExpandAction = { [weak tableView] completion in
                 CATransaction.begin()
-                CATransaction.setCompletionBlock({
+                CATransaction.setCompletionBlock {
                     completion?()
-                })
+                }
                 tableView?.beginUpdates()
                 tableView?.endUpdates()
                 CATransaction.commit()
@@ -73,7 +72,7 @@ extension AddHostTableManager: UITableViewDataSource {
             deviceIconCell?.configure(with: form?.iconModel)
             deviceIconCell?.didTapChangeIconBlock = { [weak self] model in
                 guard let self else { return }
-                self.delegate?.tableManagerDidTapDeviceIconCell(self, model)
+                delegate?.tableManagerDidTapDeviceIconCell(self, model)
             }
             cell = deviceIconCell
         }

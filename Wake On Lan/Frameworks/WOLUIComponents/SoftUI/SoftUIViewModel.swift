@@ -18,7 +18,6 @@ public protocol DescribesSoftUIViewModel {
 }
 
 public struct SoftUIViewModel: DescribesSoftUIViewModel {
-
     // MARK: - Properties
 
     public let contentView: UIView?

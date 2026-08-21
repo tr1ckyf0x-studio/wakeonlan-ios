@@ -116,8 +116,11 @@ targets:
     preBuildScripts:
     - name: "Swiftlint"
       basedOnDependencyAnalysis: false
+      # --strict promotes warnings to errors, matching SWIFT_TREAT_WARNINGS_AS_ERRORS for Swift
+      # itself. Switched on here rather than with the configuration itself: the rules surfaced 166
+      # violations, and turning them into errors before fixing them would have broken the build.
       script: |
-              .bin/swiftlint
+              .bin/swiftlint --strict
     postBuildScripts:
       - name: "Crashlytics"
         basedOnDependencyAnalysis: false

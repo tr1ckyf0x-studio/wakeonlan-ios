@@ -13,7 +13,6 @@ import WakeOnLanService
 import WOLSharedProtocolsAndModels
 
 final class HostListInteractor: HostListInteractorInput {
-
     typealias CRUDPerformer = any PerformsCRUDOperation<any AddHostFormRepresentable, Host>
 
     typealias MovePerformer = any PerformsMoveOperation<Host>

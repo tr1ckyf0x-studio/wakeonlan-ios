@@ -10,7 +10,6 @@ import SharedProtocolsAndModels
 import WOLSharedProtocolsAndModels
 
 enum FormSection {
-
     case section(content: [Item], header: Header? = nil, footer: Footer? = nil, kind: Kind? = nil)
 
     // MARK: - Kind
@@ -33,7 +32,6 @@ enum FormSection {
             self.header = header
             self.isMandatory = mandatory
         }
-
     }
 
     // MARK: - Footer
@@ -46,7 +44,6 @@ enum FormSection {
             self.footer = footer
             self.isMandatory = mandatory
         }
-
     }
 }
 

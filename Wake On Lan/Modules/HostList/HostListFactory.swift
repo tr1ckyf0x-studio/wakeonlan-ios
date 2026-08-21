@@ -28,7 +28,7 @@ public struct HostListFactory {
 // MARK: - Factory
 
 extension HostListFactory: Factory {
-    public func build(with context: Context) throws -> HostListViewController {
+    public func build(with context: Context) -> HostListViewController {
         let viewController = HostListViewController()
         let presenter = HostListPresenter()
         let coreDataService = CoreDataService.shared

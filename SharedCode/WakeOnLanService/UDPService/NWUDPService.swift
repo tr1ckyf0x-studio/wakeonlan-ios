@@ -18,9 +18,9 @@ extension NWUDPService: UDPService {
 
         try await connection.send(
             content: packet,
-            contentContext: .finalMessage,
             timeout: Constants.sendTimeout,
-            on: DispatchQueue(label: Constants.queueLabel)
+            on: DispatchQueue(label: Constants.queueLabel),
+            contentContext: .finalMessage
         )
     }
 }
@@ -42,10 +42,10 @@ extension NWUDPService {
 extension NWConnection {
     fileprivate func send<Content: DataProtocol>(
         content: Content,
-        contentContext: NWConnection.ContentContext = .defaultMessage,
-        isComplete: Bool = true,
         timeout: TimeInterval,
-        on queue: DispatchQueue
+        on queue: DispatchQueue,
+        contentContext: NWConnection.ContentContext = .defaultMessage,
+        isComplete: Bool = true
     ) async throws {
         let result = OneShotContinuation()
 
@@ -89,13 +89,13 @@ extension NWConnection {
                     content: content,
                     contentContext: contentContext,
                     isComplete: isComplete,
-                    completion: SendCompletion.contentProcessed({ (error: NWError?) in
+                    completion: SendCompletion.contentProcessed { (error: NWError?) in
                         if let error {
                             result.finish(.failure(UDPError.send(reason: error.localizedDescription)))
                             return
                         }
                         result.finish(.success(()))
-                    })
+                    }
                 )
             }
         } onCancel: {
@@ -115,7 +115,6 @@ extension NWError {
 /// Guarantees that a continuation is resumed exactly once, whichever of the concurrent callbacks —
 /// state change, timeout, send completion or cancellation — reaches it first.
 private final class OneShotContinuation: @unchecked Sendable {
-
     // MARK: - Properties
 
     private let lock = NSLock()

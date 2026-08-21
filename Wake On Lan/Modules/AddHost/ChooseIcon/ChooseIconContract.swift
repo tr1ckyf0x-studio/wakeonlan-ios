@@ -9,7 +9,7 @@
 import WOLSharedProtocolsAndModels
 
 protocol ChooseIconViewInput: AnyObject {
-    var presenter: ChooseIconViewOutput! { get set }
+    var presenter: ChooseIconViewOutput? { get set }
 
     func reloadCollectionViewLayout()
 

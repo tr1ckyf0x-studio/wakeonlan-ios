@@ -14,7 +14,6 @@ protocol DeviceIconViewDelegate: AnyObject {
 }
 
 final class DeviceIconView: UIView {
-
     // MARK: - Properties
 
     weak var delegate: DeviceIconViewDelegate?
@@ -42,6 +41,7 @@ final class DeviceIconView: UIView {
         setupDeviceImageView()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

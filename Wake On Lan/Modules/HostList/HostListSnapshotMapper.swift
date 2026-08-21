@@ -10,7 +10,6 @@ protocol MapsSnapshotToHostListItem {
 }
 
 struct HostListSnapshotMapper: MapsSnapshotToHostListItem {
-
     func map(
         snapshotReference: NSDiffableDataSourceSnapshotReference,
         context: NSManagedObjectContext

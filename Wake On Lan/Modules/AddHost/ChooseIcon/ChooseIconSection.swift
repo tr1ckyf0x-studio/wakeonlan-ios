@@ -13,7 +13,6 @@ enum ChooseIconSectionItem {
 }
 
 enum ChooseIconSection {
-
     typealias Item = FormItem
 
     case section(header: String? = nil, content: [Item], footer: String? = nil)

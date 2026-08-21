@@ -9,7 +9,6 @@
 import WOLSharedProtocolsAndModels
 
 final class AddHostPresenter: Navigates {
-
     // MARK: - Properties
 
     weak var view: AddHostViewInput?
@@ -31,7 +30,6 @@ final class AddHostPresenter: Navigates {
 // MARK: - AddHostViewOutput
 
 extension AddHostPresenter: AddHostViewOutput {
-
     func viewDidLoad(_ view: AddHostViewInput) {
         tableManager.form = addHostForm
         tableManager.delegate = self
@@ -89,14 +87,14 @@ extension AddHostPresenter: AddHostTableManagerDelegate {
 extension AddHostPresenter: ChooseIconModuleOutput {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel) {
         addHostForm.iconModel = iconModel
-        addHostForm.sections.forEach {
+        addHostForm.sections.forEach { section in
             guard
-                case let .section(_, _, _, kind) = $0,
+                case let .section(_, _, _, kind) = section,
                 kind == .deviceIcon
             else {
                 return
             }
-            view?.reloadTable(with: $0)
+            view?.reloadTable(with: section)
         }
     }
 }

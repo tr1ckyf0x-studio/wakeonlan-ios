@@ -26,7 +26,6 @@ final class ChooseIconTableManager: NSObject {
 // MARK: - UICollectionViewDelegate
 
 extension ChooseIconTableManager: UICollectionViewDelegate {
-
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         sections.count
     }
@@ -35,7 +34,6 @@ extension ChooseIconTableManager: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 
 extension ChooseIconTableManager: UICollectionViewDataSource {
-
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -57,7 +55,7 @@ extension ChooseIconTableManager: UICollectionViewDataSource {
             ) as? ChooseIconCell
             let didTapIconBlock: ChooseIconCell.TapIconBlock = { [weak self] _ in
                 guard let self else { return }
-                self.delegate?.tableManager(self, didTapIcon: model)
+                delegate?.tableManager(self, didTapIcon: model)
             }
 
             iconCell.map {

@@ -9,12 +9,12 @@
 extension WOLRouter {
     /// Navigates to `Donate` screen.
     public func openDonate() -> Route {
-        Route {
+        Route { completion in
             try? defaultRouter.navigate(
                 to: defaultStepRoutePushAction(factory: DonateScreenFactory(router: self)),
                 with: nil,
                 animated: true,
-                completion: $0
+                completion: completion
             )
         }
     }

@@ -11,7 +11,6 @@ import Foundation
 import WOLSharedProtocolsAndModels
 
 final class AddHostForm: AddHostFormRepresentable {
-
     // MARK: - Error
 
     enum Error: LocalizedError {
@@ -126,7 +125,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
     // MARK: - Init
 
-    public init(host: Host? = nil) {
+    init(host: Host? = nil) {
         makeSections()
         defer { self.host = host } // Otherwise didSet does not call
     }

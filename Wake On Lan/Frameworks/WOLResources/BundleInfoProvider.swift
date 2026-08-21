@@ -13,7 +13,6 @@ public protocol ProvidesBundleInfo {
 }
 
 public final class BundleInfoProvider {
-
     private typealias Resource = (name: String, type: String)
 
     private enum Configuration {

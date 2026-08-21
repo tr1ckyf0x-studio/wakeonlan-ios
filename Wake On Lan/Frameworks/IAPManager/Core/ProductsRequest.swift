@@ -8,7 +8,6 @@
 import StoreKit
 
 final class ProductsRequest: NSObject {
-
     enum ProductsRequestError: Error {
         case noProductsFound
         case productRequestFailed

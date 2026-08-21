@@ -10,7 +10,6 @@ import UIKit
 
 @MainActor
 public struct WOLRouter {
-
     // MARK: - Properties
 
     /// Default router object that must be responsibe for navigation

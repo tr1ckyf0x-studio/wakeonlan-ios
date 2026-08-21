@@ -8,7 +8,6 @@
 import UIKit
 
 final class DonateItemCell: UITableViewCell {
-
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
@@ -69,7 +68,6 @@ final class DonateItemCell: UITableViewCell {
 // MARK: - Private
 
 extension DonateItemCell {
-
     private func addSubviews() {
         contentView.addSubview(baseView)
         baseView.addSubview(titleLabel)

@@ -14,13 +14,13 @@ extension WOLRouter: AddHostRoutes {
 
     /// Navigates to `ChooseIcon` screen.
     public func openChooseIcon(with context: ChooseIconFactory.Context) -> Route {
-        Route {
+        Route { completion in
             let delegate = SelfSizingBottomSheetModalTransitionDelegate()
             let step = StepAssembly(finder: ChooseIconClassFinder(), factory: ChooseIconFactory(router: self))
                 .using(GeneralAction.presentModally(presentationStyle: .custom, transitioningDelegate: delegate))
                 .from(GeneralStep.current())
                 .assemble()
-            try? defaultRouter.navigate(to: step, with: context, animated: true, completion: $0)
+            try? defaultRouter.navigate(to: step, with: context, animated: true, completion: completion)
         }
     }
 }

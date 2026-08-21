@@ -29,7 +29,6 @@ protocol DisplaysHostList {
 }
 
 final class HostListView: UIView {
-
     // MARK: - Constants
 
     private enum Constants {
@@ -103,16 +102,14 @@ final class HostListView: UIView {
             return button
         }()
 
-        let barButton: UIBarButtonItem = {
+        return {
             let button = UIBarButtonItem(customView: aboutButton)
             button.customView?.snp.makeConstraints {
                 $0.size.equalTo(Constants.barButtonDimensions)
             }
 
             return button
-        }()
-
-        return barButton
+        }() as UIBarButtonItem
     }()
 
     lazy var barButtonSpacer: UIBarButtonItem = {
@@ -136,16 +133,14 @@ final class HostListView: UIView {
             return button
         }()
 
-        let barButton: UIBarButtonItem = {
+        return {
             let button = UIBarButtonItem(customView: addButton)
             button.customView?.snp.makeConstraints {
                 $0.size.equalTo(Constants.barButtonDimensions)
             }
 
             return button
-        }()
-
-        return barButton
+        }() as UIBarButtonItem
     }()
 
     // swiftlint:disable:next closure_body_length
@@ -167,16 +162,14 @@ final class HostListView: UIView {
             return button
         }()
 
-        let barButton: UIBarButtonItem = {
+        return {
             let button = UIBarButtonItem(customView: donateButton)
             button.customView?.snp.makeConstraints { make in
                 make.height.equalTo(Constants.barButtonDimensions)
             }
 
             return button
-        }()
-
-        return barButton
+        }() as UIBarButtonItem
     }()
 
     // MARK: - Init
@@ -188,6 +181,7 @@ final class HostListView: UIView {
         makeAppearance()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -203,7 +197,6 @@ final class HostListView: UIView {
 // MARK: - Private
 
 private extension HostListView {
-
     func addSubviews() {
         addSubview(collectionView)
     }
@@ -241,7 +234,6 @@ private extension HostListView {
 // MARK: - ContentStateView
 
 extension HostListView: StateableView {
-
     func view(for state: ViewState) -> DisplaysStateView? {
         switch state {
         case .default, .error, .waiting:

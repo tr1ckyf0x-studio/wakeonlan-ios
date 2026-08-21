@@ -24,7 +24,7 @@ public struct ChooseIconFactory: Factory {
         self.router = router
     }
 
-    public func build(with context: Context) throws -> ChooseIconViewController {
+    public func build(with context: Context) -> ChooseIconViewController {
         let presenter = ChooseIconPresenter()
         presenter.moduleDelegate = context
         let viewController = ChooseIconViewController()

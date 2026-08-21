@@ -10,7 +10,6 @@ public protocol ConfigurableSoftUIView: UIControl {
 }
 
 public class SoftUIView: UIControl {
-
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
@@ -25,7 +24,7 @@ public class SoftUIView: UIControl {
 
     // MARK: - Properties
 
-    open var type: SoftUIViewType = .pushButton {
+    public var type: SoftUIViewType = .pushButton {
         didSet { updateShadowLayers() }
     }
 
@@ -126,6 +125,7 @@ public class SoftUIView: UIControl {
         updateSublayersShape()
     }
 
+    @available(*, unavailable)
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -201,14 +201,13 @@ public class SoftUIView: UIControl {
 // MARK: - ConfigurableSoftUIView
 
 extension SoftUIView: ConfigurableSoftUIView {
-
     public func configure(with model: DescribesSoftUIViewModel) {
         contentView.map { $0.transform = model.selectedTransform ?? .identity }
-        [contentView, selectedContentView].compactMap { $0 }.forEach {
+        [contentView, selectedContentView].compactMap(\.self).forEach {
             $0.removeFromSuperview()
         }
 
-        [model.contentView, model.selectedContentView].compactMap { $0 }.forEach {
+        [model.contentView, model.selectedContentView].compactMap(\.self).forEach {
             $0.isUserInteractionEnabled = false
             addSubview($0)
         }
@@ -224,7 +223,6 @@ extension SoftUIView: ConfigurableSoftUIView {
 // MARK: - Private
 
 private extension SoftUIView {
-
     func addSublayers() {
         layer.addSublayer(lightOuterShadowLayer)
         layer.addSublayer(darkOuterShadowLayer)

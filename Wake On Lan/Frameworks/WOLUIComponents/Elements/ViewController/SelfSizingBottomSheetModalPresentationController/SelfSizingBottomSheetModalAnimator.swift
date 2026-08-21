@@ -9,7 +9,6 @@
 import UIKit
 
 class SelfSizingBottomSheetModalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-
     private enum Configuration {
         static let transitionDuration = 0.33
     }

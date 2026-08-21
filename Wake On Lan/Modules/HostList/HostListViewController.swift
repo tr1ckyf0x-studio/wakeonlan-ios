@@ -9,7 +9,6 @@
 import UIKit
 
 public final class HostListViewController: UIViewController {
-
     // MARK: - Properties
 
     var presenter: HostListViewOutput?
@@ -42,9 +41,11 @@ public final class HostListViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.title = L10n.HostList.Screen.title
         navigationItem.leftBarButtonItem = hostListView.donateButton
-        navigationItem.rightBarButtonItems = [hostListView.addItemButton,
-                                              hostListView.barButtonSpacer,
-                                              hostListView.aboutButton]
+        navigationItem.rightBarButtonItems = [
+            hostListView.addItemButton,
+            hostListView.barButtonSpacer,
+            hostListView.aboutButton
+        ]
         navigationItem.largeTitleDisplayMode = .always
         guard let navigationController else { return }
         navigationController.view.backgroundColor = Asset.Colors.primary.color
@@ -56,7 +57,6 @@ public final class HostListViewController: UIViewController {
 // MARK: - HostListViewInput
 
 extension HostListViewController: HostListViewInput {
-
     func showState(_ state: ViewState) {
         hostListView.showState(state)
     }

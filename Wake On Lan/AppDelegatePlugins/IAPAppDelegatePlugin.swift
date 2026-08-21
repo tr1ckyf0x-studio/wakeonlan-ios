@@ -15,7 +15,6 @@ import UIKit
 /// — promoted App Store purchases, purchases interrupted by termination, "Ask to Buy" approvals —
 /// would then never be finished and would stay pending in the payment queue forever.
 final class IAPAppDelegatePlugin: NSObject, UIApplicationDelegate {
-
     // MARK: - Properties
 
     private var iapManager: ManagesIAP?

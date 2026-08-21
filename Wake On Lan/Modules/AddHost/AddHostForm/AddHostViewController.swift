@@ -9,7 +9,6 @@
 import UIKit
 
 public final class AddHostViewController: UIViewController {
-
     // MARK: - Properties
 
     var presenter: (AddHostViewOutput & ChooseIconModuleOutput)?

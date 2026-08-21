@@ -19,7 +19,6 @@ public protocol StateableView: AnyObject {
 }
 
 extension StateableView where Self: UIView {
-
     public var currentState: ViewState? {
         get {
             objc_getAssociatedObject(

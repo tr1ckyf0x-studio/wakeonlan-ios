@@ -9,7 +9,6 @@
 import Foundation
 
 enum CoreDataHostFormatter {
-
     enum DataType {
         case macAddress
         case ipAddress

@@ -9,7 +9,6 @@
 import UIKit
 
 final class SelfSizingBottomSheetModalPresentationController: UIPresentationController {
-
     private let appearance = Appearance(); struct Appearance {
         let blurEffectstyle: UIBlurEffect.Style = .dark
     }
@@ -21,7 +20,7 @@ final class SelfSizingBottomSheetModalPresentationController: UIPresentationCont
     }()
 
     private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(recognizer:)))
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         gestureRecognizer.cancelsTouchesInView = false
         return gestureRecognizer
     }()
@@ -34,15 +33,13 @@ final class SelfSizingBottomSheetModalPresentationController: UIPresentationCont
 
     private lazy var blurEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: appearance.blurEffectstyle)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        return blurEffectView
+        return UIVisualEffectView(effect: blurEffect)
     }()
 
     private lazy var vibrancyEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: appearance.blurEffectstyle)
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-        let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-        return vibrancyEffectView
+        return UIVisualEffectView(effect: vibrancyEffect)
     }()
 
     override var presentedView: UIView? {
@@ -146,15 +143,15 @@ extension SelfSizingBottomSheetModalPresentationController {
 
     private func animateDimmingViewIn() {
         dimmingView.alpha = 0
-        presentingViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
+        presentingViewController.transitionCoordinator?.animate { _ in
             self.dimmingView.alpha = 1
-        })
+        }
     }
 
     private func animateDimmingViewOut() {
-        presentingViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
+        presentingViewController.transitionCoordinator?.animate { _ in
             self.dimmingView.alpha = 0
-        })
+        }
     }
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {

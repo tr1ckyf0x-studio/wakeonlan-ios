@@ -6,7 +6,7 @@ enum CoreDataConstants {
     static let persistentContainerFilename: String = "\(persistentContainerName).sqlite"
 
     static var persistentContainerURL: URL? {
-        appGroupDirectoryURL?.appendingPathComponent(CoreDataConstants.persistentContainerFilename)
+        appGroupDirectoryURL?.appendingPathComponent(Self.persistentContainerFilename)
     }
 
     static var managedModelURL: URL? {

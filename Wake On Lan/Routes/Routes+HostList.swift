@@ -12,24 +12,24 @@ import CoreDataService
 extension WOLRouter {
     /// Navigates to `AddHost` screen.
     public func openAddHost(with host: Host?) -> Route {
-        Route {
+        Route { completion in
             try? defaultRouter.navigate(
                 to: defaultStepRoutePushAction(factory: AddHostFactory(router: self)),
                 with: host,
                 animated: true,
-                completion: $0
+                completion: completion
             )
         }
     }
 
     /// Navigates to `About` screen.
     public func openAbout() -> Route {
-        Route {
+        Route { completion in
             try? defaultRouter.navigate(
                 to: defaultStepRoutePushAction(factory: AboutScreenFactory(router: self)),
                 with: nil,
                 animated: true,
-                completion: $0
+                completion: completion
             )
         }
     }

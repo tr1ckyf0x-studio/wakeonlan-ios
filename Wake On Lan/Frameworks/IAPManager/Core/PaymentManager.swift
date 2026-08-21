@@ -12,7 +12,6 @@ protocol ManagesPayments {
 }
 
 final class PaymentManager: NSObject {
-
     // MARK: - Properties
 
     private let paymentQueue: SKPaymentQueue

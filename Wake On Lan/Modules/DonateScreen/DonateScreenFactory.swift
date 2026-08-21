@@ -26,7 +26,7 @@ public struct DonateScreenFactory {
 
 extension DonateScreenFactory: Factory {
     @MainActor
-    public func build(with context: Context) throws -> DonateScreenViewController {
+    public func build(with context: Context) -> DonateScreenViewController {
         let viewController = DonateScreenViewController()
         let presenter = DonateScreenPresenter()
         let interactor = DonateScreenInteractor(iAPManager: IAPManager.shared)

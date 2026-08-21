@@ -8,7 +8,6 @@
 import UIKit
 
 final class TextInputCell: UITableViewCell {
-
     typealias OnExpandCompletion = () -> Void
     typealias OnExpandAction = (_ completion: OnExpandCompletion?) -> Void
     typealias OnNextResponderAction = (_ indexPath: IndexPath) -> Void
@@ -45,9 +44,9 @@ final class TextInputCell: UITableViewCell {
 
             case false:
                 failureView.hide()
-                onExpandAction?({ [weak self] in
+                onExpandAction? { [weak self] in
                     self?.failureView.isHidden = true
-                })
+                }
             }
         }
     }
@@ -61,6 +60,7 @@ final class TextInputCell: UITableViewCell {
         configureViews()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -155,7 +155,6 @@ final class TextInputCell: UITableViewCell {
 // MARK: - UITextFieldDelegate
 
 extension TextInputCell: UITextFieldDelegate {
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextResponderTag = textField.tag + 1
         guard
@@ -211,7 +210,6 @@ extension TextInputCell: FormConfigurable {
 }
 
 private class AddHostFailureView: UIView {
-
     // MARK: Properties
 
     private let failureLabel: UILabel = {
@@ -230,6 +228,7 @@ private class AddHostFailureView: UIView {
         backgroundColor = .clear
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -15,7 +15,6 @@ extension Bundle {
 
 // swiftlint:disable:next convenience_type
 private final class BundleToken {
-
     @available(*, unavailable)
     init() { }
 

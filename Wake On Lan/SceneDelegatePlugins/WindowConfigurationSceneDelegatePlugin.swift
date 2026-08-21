@@ -9,7 +9,6 @@
 import UIKit
 
 final class WindowConfigurationSceneDelegatePlugin: NSObject, UIWindowSceneDelegate {
-
     typealias ConfigureWindow = (_ window: UIWindow) -> Void
 
     private let rootViewControllerFactory: RootViewControllerFactory

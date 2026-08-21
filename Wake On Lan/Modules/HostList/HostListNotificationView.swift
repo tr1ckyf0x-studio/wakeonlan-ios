@@ -31,7 +31,6 @@ enum NotificationViewType {
 }
 
 final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
-
     // MARK: - Properties
 
     private let appearance = Appearance(); struct Appearance {
@@ -59,6 +58,7 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
         setupNotificationLabel()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,7 +67,6 @@ final class HostListNotificationView<Style: NotificationViewStyle>: UIView {
 // MARK: - Private
 
 private extension HostListNotificationView {
-
     func setupBaseView() {
         alpha = .zero
         layer.cornerRadius = 10

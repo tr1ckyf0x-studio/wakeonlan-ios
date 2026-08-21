@@ -9,7 +9,6 @@
 import Foundation
 
 struct TextValidator: Validator {
-
     typealias Value = String
     typealias Pattern = String
 

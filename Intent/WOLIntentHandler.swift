@@ -6,7 +6,6 @@ import WakeOnLanService
 import WOLSharedProtocolsAndModels
 
 final class WOLIntentHandler: NSObject, WOLIntentHandling {
-
     private let wakeOnLanService: WakeOnLanServiceProtocol
     private let coreDataService: CoreDataServiceProtocol
 

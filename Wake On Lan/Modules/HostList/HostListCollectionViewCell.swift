@@ -10,7 +10,6 @@ import UIKit
 // MARK: - HostListCollectionViewCell
 
 final class HostListCollectionViewCell: UICollectionViewCell {
-
     // MARK: - Typealiases
 
     typealias Default = HostListNotificationView<NotificationViewType.Default>
@@ -119,6 +118,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
         setupMacAddressTitle()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -214,7 +214,6 @@ final class HostListCollectionViewCell: UICollectionViewCell {
 // MARK: - Private
 
 private extension HostListCollectionViewCell {
-
     func setupScrollView() {
         contentView.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
@@ -292,13 +291,11 @@ private extension HostListCollectionViewCell {
     @objc func didTapBaseView() {
         delegate?.hostListCellDidTap(self)
     }
-
 }
 
 // MARK: - UIScrollViewDelegate
 
 extension HostListCollectionViewCell: UIScrollViewDelegate {
-
     // NOTE: Prevents left swiping
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switch scrollView.contentOffset.x {

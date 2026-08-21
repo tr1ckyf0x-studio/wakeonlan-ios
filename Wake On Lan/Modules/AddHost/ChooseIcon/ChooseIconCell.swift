@@ -11,7 +11,6 @@ import UIKit
 import WOLSharedProtocolsAndModels
 
 final class ChooseIconCell: UICollectionViewCell {
-
     typealias TapIconBlock = (_ cell: ChooseIconCell) -> Void
 
     // MARK: - Properties
@@ -31,6 +30,7 @@ final class ChooseIconCell: UICollectionViewCell {
         setupDeviceIconView()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

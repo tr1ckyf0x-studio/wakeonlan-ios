@@ -9,7 +9,6 @@
 import UIKit
 
 public class SoftUITextField: UITextField {
-
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
@@ -24,7 +23,6 @@ public class SoftUITextField: UITextField {
         let textRectInset = CGPoint(x: 15, y: 10)
         let editingRectInset = CGPoint(x: 15, y: 10)
         let clearButtonRectInset = CGPoint(x: -10, y: 0)
-
     }
 
     // MARK: - Properties
@@ -93,6 +91,7 @@ public class SoftUITextField: UITextField {
         addSublayers()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -137,7 +136,6 @@ public class SoftUITextField: UITextField {
 }
 
 private extension SoftUITextField {
-
     func addSublayers() {
         layer.addSublayer(backgroundLayer)
         layer.addSublayer(darkInnerShadowLayer)

@@ -9,7 +9,6 @@
 import UIKit
 
 public final class EmptyView: UIView {
-
     private lazy var containerView = UIView()
 
     private lazy var imageView = UIImageView(image: Asset.Assets.Logo.owl.image)
@@ -32,6 +31,7 @@ public final class EmptyView: UIView {
         setupView()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 public final class SpinnerView: UIView {
-
     private(set) var isAnimating = false
 
     private lazy var outerCircle: SoftUIView = { view in

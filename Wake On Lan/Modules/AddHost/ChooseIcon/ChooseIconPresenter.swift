@@ -9,9 +9,9 @@
 import WOLSharedProtocolsAndModels
 
 final class ChooseIconPresenter: Navigates {
-    weak var view: ChooseIconViewInput!
+    weak var view: ChooseIconViewInput?
     weak var moduleDelegate: ChooseIconModuleOutput?
-    var router: ChooseIconRoutes!
+    var router: ChooseIconRoutes?
 
     private(set) lazy var tableManager = ChooseIconTableManager(with: sections)
 
@@ -22,13 +22,11 @@ final class ChooseIconPresenter: Navigates {
                 .map { .icon($0) }
         ]
         .map { .section(content: $0) }
-
 }
 
 // MARK: - ChooseIconViewOutput
 
 extension ChooseIconPresenter: ChooseIconViewOutput {
-
     func viewDidLoad(_ view: ChooseIconViewInput) {
         tableManager.delegate = self
     }
@@ -44,6 +42,6 @@ extension ChooseIconPresenter: ChooseIconViewOutput {
 extension ChooseIconPresenter: ChooseIconTableManagerDelegate {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel) {
         moduleDelegate?.chooseIconModuleDidSelectIcon(icon)
-        navigate(to: router.backOrDismiss(animated: true))
+        navigate(to: router?.backOrDismiss(animated: true))
     }
 }

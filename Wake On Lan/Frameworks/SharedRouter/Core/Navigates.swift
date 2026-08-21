@@ -22,7 +22,8 @@ public extension Navigates {
             let route = route
         else {
             let error = RoutingError.nilRoute
-            return completion(.failure(error))
+            completion(.failure(error))
+            return
         }
         route.routeAction { completion($0) }
     }
@@ -30,6 +31,6 @@ public extension Navigates {
 
 public extension RoutingError {
     static var nilRoute: RoutingError {
-        .generic(RoutingError.Context("Route is nil. Navigation cannot be performed"))
+        .generic(Self.Context("Route is nil. Navigation cannot be performed"))
     }
 }

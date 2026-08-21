@@ -27,11 +27,9 @@ extension MagicPacketBuilder: BuildsMagicPacket {
         let body = Array(
             repeating: macComponents,
             count: Constants.magicPacketBodyLength
-        ).flatMap { $0 }
+        ).flatMap(\.self)
 
-        let magicPacketBytes = header + body
-
-        return magicPacketBytes
+        return header + body
     }
 }
 

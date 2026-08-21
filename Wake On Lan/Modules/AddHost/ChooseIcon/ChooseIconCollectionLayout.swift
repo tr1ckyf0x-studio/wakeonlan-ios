@@ -9,7 +9,6 @@
 import UIKit
 
 final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
-
     // MARK: - Constants
 
     private enum Constants {
@@ -41,13 +40,13 @@ final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
     }
 
     var containerWidth: CGFloat = .zero {
-         didSet {
+        didSet {
             guard containerWidth == oldValue else {
                 invalidateLayout()
                 return
             }
-         }
-     }
+        }
+    }
 
     // MARK: - Init
 
@@ -58,6 +57,7 @@ final class ChooseIconCollectionLayout: UICollectionViewFlowLayout {
         minimumInteritemSpacing = Constants.spaceBetweenColumns
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("\(ChooseIconCollectionLayout.self) : init(coder:) has not been implemented")
     }
@@ -91,7 +91,6 @@ enum ChooseIconCollectionDisplay {
 }
 
 extension ChooseIconCollectionDisplay: Equatable {
-
     static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
         case let (grid(lcolumns), .grid(rcolumns)):

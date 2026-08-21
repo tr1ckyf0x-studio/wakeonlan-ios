@@ -8,7 +8,6 @@
 import UIKit
 
 public final class DonateScreenViewController: UIViewController {
-
     // MARK: - Properties
 
     var presenter: DonateScreenViewOutput?
@@ -52,7 +51,6 @@ extension DonateScreenViewController {
 // MARK: - DonateScreenViewInput
 
 extension DonateScreenViewController: DonateScreenViewInput {
-
     func setSections(_ sections: [DonateScreenTableSectionModel]) {
         tableManager.sections = sections
         rootView.tableView.reloadData()

@@ -8,7 +8,6 @@
 import CoreData
 
 final class HostV4Mapping: NSEntityMigrationPolicy {
-
     override func createDestinationInstances(
         forSource sourceInstance: NSManagedObject,
         in mapping: NSEntityMapping,

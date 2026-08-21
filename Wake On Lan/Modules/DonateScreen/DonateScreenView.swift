@@ -12,7 +12,6 @@ protocol DonateScreenViewDelegate: AnyObject {
 }
 
 final class DonateScreenView: UIView {
-
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {

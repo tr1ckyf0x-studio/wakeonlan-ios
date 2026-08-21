@@ -12,7 +12,6 @@ import PersistenceCore
 import WOLSharedProtocolsAndModels
 
 final class AddHostInteractor: AddHostInteractorInput {
-
     typealias CRUDPerformer = any PerformsCRUDOperation<any AddHostFormRepresentable, Host>
 
     // MARK: - Properties
@@ -38,7 +37,7 @@ final class AddHostInteractor: AddHostInteractorInput {
         let context = coreDataService.mainContext.createChildContext(kind: .concurrent)
         hostCrudWorker.create(from: form, in: context) { [weak self] _ in
             guard let self else { return }
-            self.presenter?.interactor(self, didSaveForm: form)
+            presenter?.interactor(self, didSaveForm: form)
             DDLogDebug("Host saved")
         }
     }
@@ -53,7 +52,7 @@ final class AddHostInteractor: AddHostInteractorInput {
         let context = coreDataService.mainContext.createChildContext(kind: .concurrent)
         hostCrudWorker.update(object: host, in: context, with: form) { [weak self] _ in
             guard let self else { return }
-            self.presenter?.interactor(self, didUpdateForm: form)
+            presenter?.interactor(self, didUpdateForm: form)
             DDLogDebug("Host updated")
         }
     }

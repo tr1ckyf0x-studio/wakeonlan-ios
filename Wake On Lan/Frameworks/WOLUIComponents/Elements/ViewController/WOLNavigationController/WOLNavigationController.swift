@@ -9,12 +9,12 @@
 import UIKit
 
 public class WOLNavigationController: UINavigationController {
-
     override public init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
         configure()
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -23,7 +23,6 @@ public class WOLNavigationController: UINavigationController {
 // MARK: - Private
 
 private extension WOLNavigationController {
-
     private func configure() {
         // Change background color
         navigationBar.barTintColor = Asset.Colors.primary.color

@@ -57,7 +57,6 @@ public struct AnyNavigationControllerAction<ViewController: ContainerViewControl
 
     public init<T: ContainerAction>(_ other: T) where T.ViewController == ViewController {
         _perform = other.perform(with:on:animated:completion:)
-
     }
 
     // MARK: - ContainerAction
@@ -75,7 +74,6 @@ public struct AnyNavigationControllerAction<ViewController: ContainerViewControl
 /// Wrapper for any object that implements protocol `Action`.
 @MainActor
 public struct AnyAction<ViewController: UIViewController>: Action {
-
     // MARK: - Properties
 
     private let _perform: (UIViewController, ViewController, Bool, @escaping (RoutingResult) -> Void) -> Void
@@ -92,8 +90,8 @@ public struct AnyAction<ViewController: UIViewController>: Action {
         with viewController: UIViewController,
         on existingController: ViewController,
         animated: Bool,
-        completion: @escaping (RouteComposer.RoutingResult
-        ) -> Void) {
+        completion: @escaping (RouteComposer.RoutingResult) -> Void
+    ) {
         _perform(viewController, existingController, animated, completion)
     }
 }

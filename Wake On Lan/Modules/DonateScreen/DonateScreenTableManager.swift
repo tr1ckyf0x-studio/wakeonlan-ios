@@ -12,7 +12,6 @@ protocol ManagesDonateScreenTable {
 }
 
 final class DonateScreenTableManager: NSObject {
-
     // MARK: - Properties
 
     var sections: [DonateScreenTableSectionModel] = []
@@ -21,7 +20,6 @@ final class DonateScreenTableManager: NSObject {
 // MARK: - ManagesDonateScreenTable
 
 extension DonateScreenTableManager: ManagesDonateScreenTable {
-
 }
 
 // MARK: - UITableViewDataSource

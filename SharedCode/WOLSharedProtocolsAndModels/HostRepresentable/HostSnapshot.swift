@@ -13,7 +13,6 @@
 ///   `-com.apple.CoreData.ConcurrencyDebug 1`. Snapshot the values on the context's queue first and
 ///   pass the snapshot instead.
 public struct HostSnapshot: HostRepresentable, Sendable {
-
     // MARK: - Properties
 
     public let macAddress: String?

@@ -8,7 +8,6 @@
 import CoreData
 
 final class HostV3Mapping: NSEntityMigrationPolicy {
-
     private var oldHostCreationDates: [Date] = []
 
     override func begin(_ mapping: NSEntityMapping, with manager: NSMigrationManager) throws {

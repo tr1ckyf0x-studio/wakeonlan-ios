@@ -10,7 +10,6 @@ import StoreKit
 import WOLSharedProtocolsAndModels
 
 public protocol ManagesIAP {
-
     /// Indicates if manager can make payments
     var canMakePayments: Bool { get }
 
@@ -22,7 +21,6 @@ public protocol ManagesIAP {
 }
 
 public final class IAPManager: NSObject {
-
     private let paymentManager: ManagesPayments
 
     init(
@@ -48,9 +46,9 @@ extension IAPManager: ManagesIAP {
 
     public func fetchProducts(withIDs productIDs: Set<String>) async throws -> [Product] {
         try await ProductsRequest().fetch(productIDs: productIDs)
-            .sorted(by: { (lhs: SKProduct, rhs: SKProduct) -> Bool in
+            .sorted { (lhs: SKProduct, rhs: SKProduct) -> Bool in
                 lhs.price.compare(rhs.price) == .orderedAscending
-            })
+            }
             .compactMap { (product: SKProduct) -> Product? in
                 guard let price = formattedPrice(for: product) else { return nil }
                 return Product(

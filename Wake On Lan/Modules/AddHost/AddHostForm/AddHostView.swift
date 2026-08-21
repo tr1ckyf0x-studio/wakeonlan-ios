@@ -14,7 +14,6 @@ protocol AddHostViewDelegate: AnyObject {
 }
 
 final class AddHostView: UIView {
-
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
@@ -76,6 +75,7 @@ final class AddHostView: UIView {
         registerNotifications()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,7 +84,6 @@ final class AddHostView: UIView {
 // MARK: - Private
 
 private extension AddHostView {
-
     typealias ObserverArgs = (selector: Selector, notification: NSNotification.Name)
 
     func registerNotifications() {

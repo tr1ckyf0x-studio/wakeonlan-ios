@@ -11,7 +11,6 @@ import UIKit
 // NOTE: Grabbed from
 // https://stackoverflow.com/questions/27472249/get-indexpath-of-next-uitableviewcell
 public extension UITableView {
-
     func nextIndexPath(for currentIndexPath: IndexPath) -> IndexPath? {
         var nextRow = 0
         var nextSection = 0
@@ -23,8 +22,7 @@ public extension UITableView {
                 nextRow = row
                 iteration += 1
                 if iteration == 2 {
-                    let nextIndexPath = IndexPath(row: nextRow, section: nextSection)
-                    return nextIndexPath
+                    return IndexPath(row: nextRow, section: nextSection)
                 }
             }
             startRow = 0

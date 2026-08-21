@@ -10,7 +10,6 @@ import SnapKit
 import UIKit
 
 public final class ChooseIconViewController: UIViewController {
-
     private let appearance = Appearance(); struct Appearance {
         let cancelButtonFontSize: CGFloat = 20.0
         let cornerRadius: CGFloat = 15.0
@@ -22,7 +21,7 @@ public final class ChooseIconViewController: UIViewController {
 
     // MARK: - Properties
 
-    var presenter: ChooseIconViewOutput!
+    var presenter: ChooseIconViewOutput?
 
     private var heightConstraint: Constraint?
 
@@ -53,18 +52,18 @@ public final class ChooseIconViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        chooseIconView.collectionView.delegate = presenter.tableManager
-        chooseIconView.collectionView.dataSource = presenter.tableManager
+        chooseIconView.collectionView.delegate = presenter?.tableManager
+        chooseIconView.collectionView.dataSource = presenter?.tableManager
 
         setupCancelButton()
         setupChooseIconView()
 
-        presenter.viewDidLoad(self)
+        presenter?.viewDidLoad(self)
     }
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        presenter.viewWillLayoutSubviews(self)
+        presenter?.viewWillLayoutSubviews(self)
     }
 }
 

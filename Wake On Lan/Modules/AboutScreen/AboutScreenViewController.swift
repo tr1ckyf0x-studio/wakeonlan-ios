@@ -9,7 +9,6 @@
 import UIKit
 
 public final class AboutScreenViewController: UIViewController {
-
     // MARK: - Properties
 
     var presenter: AboutScreenViewOutput?

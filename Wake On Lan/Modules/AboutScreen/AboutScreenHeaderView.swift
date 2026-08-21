@@ -33,15 +33,15 @@ final class AboutScreenHeaderView: UIView {
     // MARK: - Properties
 
     // Contains logo, app name and version
-    private lazy var headerStackView: UIStackView = {
-        $0.addArrangedSubview(logoImageView)
-        $0.addArrangedSubview(appNameLabel)
-        $0.addArrangedSubview(appVersionLabel)
-        $0.axis = .vertical
-        $0.alignment = .center
-        $0.distribution = .fillProportionally
-        $0.spacing = appearance.stackSpacing
-        return $0
+    private lazy var headerStackView: UIStackView = { stackView in
+        stackView.addArrangedSubview(logoImageView)
+        stackView.addArrangedSubview(appNameLabel)
+        stackView.addArrangedSubview(appVersionLabel)
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        stackView.spacing = appearance.stackSpacing
+        return stackView
     }(UIStackView())
 
     private lazy var logoImageView: UIImageView = {
@@ -70,6 +70,7 @@ final class AboutScreenHeaderView: UIView {
         makeConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
