@@ -12,6 +12,7 @@ import StoreKit
 import UIKit
 import WOLSharedProtocolsAndModels
 
+@MainActor
 final class AboutScreenPresenter: Navigates {
     // MARK: - Configuration
 

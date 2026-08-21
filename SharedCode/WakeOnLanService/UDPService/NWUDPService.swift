@@ -114,6 +114,10 @@ extension NWError {
 
 /// Guarantees that a continuation is resumed exactly once, whichever of the concurrent callbacks —
 /// state change, timeout, send completion or cancellation — reaches it first.
+///
+/// - Important: never give this type an actor. Every caller is a `NWConnection` callback delivered
+///   on the connection's own queue, so it has to be reachable from any isolation; the `lock` below is
+///   what makes that safe.
 private final class OneShotContinuation: @unchecked Sendable {
     // MARK: - Properties
 

@@ -9,6 +9,7 @@
 import RouteComposer
 import UIKit
 
+@MainActor
 public struct ChooseIconFactory: Factory {
     public typealias ViewController = ChooseIconViewController
 

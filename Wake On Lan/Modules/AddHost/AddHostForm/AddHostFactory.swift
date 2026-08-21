@@ -10,6 +10,7 @@ import CoreDataService
 import PersistenceCore
 import RouteComposer
 
+@MainActor
 public final class AddHostFactory {
     public typealias ViewController = AddHostViewController
 

@@ -7,6 +7,7 @@
 
 import CocoaLumberjackSwift
 
+@MainActor
 final class DonateScreenInteractor {
     weak var presenter: DonateScreenInteractorOutput?
     private let iAPManager: ManagesIAP
@@ -31,16 +32,12 @@ extension DonateScreenInteractor: DonateScreenInteractorInput {
                 let products = try await iAPManager.fetchProducts(
                     withIDs: Set(ProductIdentifier.allCases.map(\.rawValue))
                 )
-                await MainActor.run {
-                    presenter?.interactor(self, didLoad: products)
-                }
+                presenter?.interactor(self, didLoad: products)
             } catch {
                 DDLogError("\(error)")
                 // NOTE: Without this the screen stayed on `.loading` forever — the spinner was the
                 // only feedback a failed product fetch ever produced.
-                await MainActor.run {
-                    presenter?.interactorDidFailToLoad(self, error: error)
-                }
+                presenter?.interactorDidFailToLoad(self, error: error)
             }
         }
     }
@@ -54,9 +51,7 @@ extension DonateScreenInteractor: DonateScreenInteractorInput {
                 print(error)
             }
 
-            await MainActor.run {
-                presenter?.interactorDidFinishPurchasing(self)
-            }
+            presenter?.interactorDidFinishPurchasing(self)
         }
     }
 }

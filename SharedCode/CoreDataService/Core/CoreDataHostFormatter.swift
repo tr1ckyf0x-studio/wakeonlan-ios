@@ -8,6 +8,8 @@
 
 import Foundation
 
+// NOTE: pure value conversion, reached from Core Data's own migration thread. Do not give it an
+// actor.
 enum CoreDataHostFormatter {
     enum DataType {
         case macAddress

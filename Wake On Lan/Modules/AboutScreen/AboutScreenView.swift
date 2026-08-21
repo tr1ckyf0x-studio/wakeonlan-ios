@@ -14,10 +14,6 @@ protocol AboutScreenViewDelegate: AnyObject {
     func aboutScreenViewDidPressBackButton(_ view: AboutScreenView)
 }
 
-protocol AboutScreenViewRepresentable: ViewModelConfigurable {
-    func configure(with viewModel: AboutScreenViewViewModel)
-}
-
 final class AboutScreenView: UIView {
     // MARK: - Appearance
 
@@ -86,9 +82,9 @@ final class AboutScreenView: UIView {
     }
 }
 
-// MARK: - AboutScreenViewRepresentable
+// MARK: - Configuration
 
-extension AboutScreenView: AboutScreenViewRepresentable {
+extension AboutScreenView {
     func configure(with viewModel: AboutScreenViewViewModel) {
         // Configure header view
         headerView.configure(with: viewModel.headerViewModel)

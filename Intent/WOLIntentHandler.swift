@@ -85,20 +85,22 @@ extension WOLIntentHandler {
     // context's own queue. Managed objects deliberately do not escape these methods — only values.
 
     private func fetchHostnames() throws -> [String] {
-        let fetchRequest = Host.sortedFetchRequest
         let context = coreDataService.mainContext
+        // NOTE: The request is built inside the block — `NSFetchRequest` is not Sendable and must
+        // not be captured by the `@Sendable` closure.
         return try context.performAndWait {
-            try context.fetch(fetchRequest).map(\.title)
+            try context.fetch(Host.sortedFetchRequest).map(\.title)
         }
     }
 
     private func fetchHostSnapshot(with name: String) throws -> HostSnapshot? {
-        let fetchRequest = Host.sortedFetchRequest
-        fetchRequest.fetchLimit = 1
-        fetchRequest.predicate = NSPredicate(format: "title == %@", name)
         let context = coreDataService.mainContext
         return try context.performAndWait {
-            try context.fetch(fetchRequest).first.map(HostSnapshot.init(host:))
+            let fetchRequest = Host.sortedFetchRequest
+            fetchRequest.fetchLimit = 1
+            fetchRequest.predicate = NSPredicate(format: "title == %@", name)
+
+            return try context.fetch(fetchRequest).first.map(HostSnapshot.init(host:))
         }
     }
 }

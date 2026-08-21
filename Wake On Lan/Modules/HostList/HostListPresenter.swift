@@ -8,6 +8,7 @@
 
 import CocoaLumberjackSwift
 
+@MainActor
 final class HostListPresenter: Navigates {
     // MARK: - Properties
 

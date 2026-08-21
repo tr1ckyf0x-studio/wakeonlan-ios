@@ -11,6 +11,7 @@ import PersistenceCore
 import RouteComposer
 import WakeOnLanService
 
+@MainActor
 public struct HostListFactory {
     public typealias Context = Void?
 

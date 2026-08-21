@@ -10,6 +10,7 @@ import UIKit
 
 // MARK: - StateableView
 
+@MainActor
 public protocol StateableView: AnyObject {
     var currentState: ViewState? { get set }
 
@@ -70,6 +71,7 @@ public enum ViewState {
 
 // MARK: - DisplaysStateView
 
+@MainActor
 public protocol DisplaysStateView where Self: UIView {
     func configure(with viewModel: StateableViewModel)
 }
@@ -78,5 +80,7 @@ public protocol DisplaysStateView where Self: UIView {
 
 private enum Constants {
     static let viewTag = UUID().hashValue
-    static var associateKey: Void?
+    // NOTE: the address of this variable is the objc associated-object key; it is never read as a
+    // value, so there is nothing to race on.
+    nonisolated(unsafe) static var associateKey: Void?
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 public protocol ProvidesCollectionViewCell<ItemIdentifierType> {
     associatedtype ItemIdentifierType: Hashable, Sendable
 

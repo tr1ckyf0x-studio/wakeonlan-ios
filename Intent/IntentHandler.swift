@@ -9,17 +9,12 @@ final class IntentHandler: INExtension {
             fatalError("Unhandled Intent error: \(intent)")
         }
 
-        return Self.wolIntentHandler
+        // NOTE: Built per request rather than held in static properties. The system retains the
+        // handler for the duration of the request, and statics holding non-Sendable services are not
+        // concurrency-safe in Swift 6.
+        return WOLIntentHandler(
+            wakeOnLanService: WakeOnLanService.shared,
+            coreDataService: CoreDataService.shared
+        )
     }
-}
-
-extension IntentHandler {
-    private static let wakeOnLanService: WakeOnLanServiceProtocol = WakeOnLanService.shared
-
-    private static let coreDataService: CoreDataServiceProtocol = CoreDataService.shared
-
-    private static let wolIntentHandler: WOLIntentHandling = WOLIntentHandler(
-        wakeOnLanService: wakeOnLanService,
-        coreDataService: coreDataService
-    )
 }

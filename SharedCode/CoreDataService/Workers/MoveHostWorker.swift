@@ -36,8 +36,14 @@ extension MoveHostWorker: PerformsMoveOperation {
     ) {
         let host = fetchedObjects.remove(at: sourceIndexPath.item)
         fetchedObjects.insert(host, at: destinationIndexPath.item)
+
+        // NOTE: Only object IDs cross into the context's queue. `NSManagedObjectID` is thread-safe,
+        // whereas `[Host]` is not Sendable and `fetchedObjects` is an `inout` parameter — capturing
+        // either in the `@Sendable` block would be a data race.
+        let orderedObjectIDs = fetchedObjects.map(\.objectID)
         context.performAndWait {
-            fetchedObjects.enumerated().forEach { index, host in
+            for (index, objectID) in orderedObjectIDs.enumerated() {
+                guard let host = try? context.existingObject(with: objectID) as? Host else { continue }
                 host.order = index
             }
         }

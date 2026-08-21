@@ -8,6 +8,7 @@
 
 import WOLSharedProtocolsAndModels
 
+@MainActor
 protocol AddHostTableManagerDelegate: AnyObject {
     func tableManagerDidTapDeviceIconCell(_ manager: AddHostTableManager, _ model: IconModel)
 }

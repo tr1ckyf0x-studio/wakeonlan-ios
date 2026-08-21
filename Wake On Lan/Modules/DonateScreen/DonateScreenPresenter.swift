@@ -5,6 +5,7 @@
 //  Created by Vladislav Lisianskii on 14.04.2023.
 //
 
+@MainActor
 final class DonateScreenPresenter: Navigates {
     var interactor: DonateScreenInteractorInput?
     var router: DonateScreenRoutes?

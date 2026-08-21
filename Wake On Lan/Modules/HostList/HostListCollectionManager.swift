@@ -14,6 +14,7 @@ protocol ManagesHostListCollection:
     HostListCollectionDataSource,
     UICollectionViewDelegate { }
 
+@MainActor
 protocol HostListCollectionManagerDelegate: AnyObject {
     func hostListCollectionManager(
         _ hostListCollectionManager: ManagesHostListCollection,

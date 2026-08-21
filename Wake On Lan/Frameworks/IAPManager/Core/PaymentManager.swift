@@ -11,6 +11,9 @@ protocol ManagesPayments {
     func enqueue(product: SKProduct) async throws
 }
 
+// NOTE: deliberately not `@MainActor`. `SKPaymentTransactionObserver` is a pre-concurrency StoreKit
+// protocol whose callbacks are not tied to the main actor, and this type is designed to be reached
+// from any of them — `lock` is what makes that safe.
 final class PaymentManager: NSObject {
     // MARK: - Properties
 

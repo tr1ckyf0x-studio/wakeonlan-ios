@@ -15,6 +15,7 @@ typealias HostListItem = HostListSectionItem
 
 typealias HostListSnapshot = NSDiffableDataSourceSnapshot<HostListSection, HostListItem>
 
+@MainActor
 protocol HostListViewOutput: AnyObject {
     func viewDidLoad(_ view: HostListViewInput)
     func viewDidPressAddButton(_ view: HostListViewInput)
@@ -37,12 +38,14 @@ enum HostListNotification {
     case failure
 }
 
+@MainActor
 protocol HostListViewInput: AnyObject {
     func showState(_ state: ViewState)
     func updateContentSnapshot(_ contentSnapshot: HostListSnapshot)
     func showNotification(_ notification: HostListNotification, at indexPath: IndexPath)
 }
 
+@MainActor
 protocol HostListInteractorInput: AnyObject {
     func startCacheTracker()
     func wakeHost(_ host: Host, at indexPath: IndexPath)
@@ -51,6 +54,7 @@ protocol HostListInteractorInput: AnyObject {
     func moveRow(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
 }
 
+@MainActor
 protocol HostListInteractorOutput: AnyObject {
     func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: HostListSnapshot)
     func interactor(_ interactor: HostListInteractorInput, didWakeHostAt indexPath: IndexPath)

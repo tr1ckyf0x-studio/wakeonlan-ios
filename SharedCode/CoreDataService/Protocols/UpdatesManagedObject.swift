@@ -9,7 +9,7 @@
 import CoreData
 
 public protocol UpdatesManagedObject {
-    associatedtype Model
+    associatedtype Model: Sendable
     associatedtype ManagedObject: NSManagedObject
 
     func update(from model: Model, in context: NSManagedObjectContext)

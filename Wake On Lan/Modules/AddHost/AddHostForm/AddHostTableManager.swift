@@ -9,6 +9,7 @@
 import UIKit
 
 // TODO: Implement custom header/footer views
+@MainActor
 final class AddHostTableManager: NSObject {
     weak var delegate: AddHostTableManagerDelegate?
 

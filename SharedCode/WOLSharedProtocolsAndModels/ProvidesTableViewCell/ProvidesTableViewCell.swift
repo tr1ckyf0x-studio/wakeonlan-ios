@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 public protocol ProvidesTableViewCell<ItemIdentifierType> {
     associatedtype ItemIdentifierType: Hashable, Sendable
 

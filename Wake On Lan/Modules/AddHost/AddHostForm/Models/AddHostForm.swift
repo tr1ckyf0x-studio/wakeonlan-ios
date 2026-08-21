@@ -10,6 +10,7 @@ import CoreDataService
 import Foundation
 import WOLSharedProtocolsAndModels
 
+@MainActor
 final class AddHostForm: AddHostFormRepresentable {
     // MARK: - Error
 
@@ -38,23 +39,7 @@ final class AddHostForm: AddHostFormRepresentable {
 
     private(set) var sections = [FormSection]()
 
-    private(set) var host: Host? {
-        didSet {
-            guard let host else { return }
-            // NOTE: An unresolvable icon must not stop the rest of the form from being filled in.
-            // Hosts created before the migration to SF Symbols still store legacy asset names
-            // ("desktop", "other", "router"), which no Core Data mapping rewrites. Bailing out here
-            // opened such a host as a completely empty form, and saving it then overwrote the stored
-            // destination and port with nil. Fall back to the default icon instead.
-            if let hostIcon = HostIcon(systemName: host.iconName) {
-                iconModel = IconModel(symbol: hostIcon.symbol)
-            }
-            titleItem.value = host.title
-            macAddressItem.value = host.macAddress
-            destinationItem.value = host.destination
-            portItem.value = host.port
-        }
-    }
+    private(set) var host: Host?
 
     private(set) var title: String = .empty
     private(set) var macAddress: String = .empty
@@ -126,8 +111,33 @@ final class AddHostForm: AddHostFormRepresentable {
     // MARK: - Init
 
     init(host: Host? = nil) {
+        self.host = host
         makeSections()
-        defer { self.host = host } // Otherwise didSet does not call
+        applyValues(from: host)
+    }
+
+    // MARK: - Private
+
+    /// Fills the form fields from an existing host.
+    ///
+    /// - Note: Called explicitly rather than from a `didSet` on `host`. This used to be
+    ///   `defer { self.host = host }` in `init`, which relied on a property observer firing for an
+    ///   assignment made inside an initializer — that worked in Swift 5 but **silently stopped
+    ///   working in Swift 6**, leaving every edit form empty. Do not reintroduce the trick.
+    private func applyValues(from host: Host?) {
+        guard let host else { return }
+        // NOTE: An unresolvable icon must not stop the rest of the form from being filled in.
+        // Hosts created before the migration to SF Symbols still store legacy asset names
+        // ("desktop", "other", "router"), which no Core Data mapping rewrites. Bailing out here
+        // opened such a host as a completely empty form, and saving it then overwrote the stored
+        // destination and port with nil. Fall back to the default icon instead.
+        if let hostIcon = HostIcon(systemName: host.iconName) {
+            iconModel = IconModel(symbol: hostIcon.symbol)
+        }
+        titleItem.value = host.title
+        macAddressItem.value = host.macAddress
+        destinationItem.value = host.destination
+        portItem.value = host.port
     }
 
     // MARK: - Private

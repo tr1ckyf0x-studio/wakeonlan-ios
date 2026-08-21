@@ -6,6 +6,7 @@
 //  Copyright © 2020 Vladislav Lisianskii. All rights reserved.
 //
 
+@MainActor
 protocol AddHostViewOutput: AnyObject {
     var tableManager: AddHostTableManager { get }
 
@@ -14,16 +15,19 @@ protocol AddHostViewOutput: AnyObject {
     func viewDidPressBackButton(_ view: AddHostViewInput)
 }
 
+@MainActor
 protocol AddHostViewInput: AnyObject {
     func reloadTable()
     func reloadTable(with section: FormSection)
 }
 
+@MainActor
 protocol AddHostInteractorInput: AnyObject {
     func saveForm(_ form: AddHostForm)
     func updateForm(_ form: AddHostForm)
 }
 
+@MainActor
 protocol AddHostInteractorOutput: AnyObject {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm)
     func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm)

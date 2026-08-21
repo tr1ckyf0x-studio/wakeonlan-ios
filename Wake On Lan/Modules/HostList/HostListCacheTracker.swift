@@ -10,6 +10,7 @@ import CocoaLumberjackSwift
 import CoreData
 import CoreDataService
 
+@MainActor
 protocol TracksHostListCache {
     var fetchedObjects: [Host]? { get }
     var context: NSManagedObjectContext { get }
@@ -18,6 +19,7 @@ protocol TracksHostListCache {
     func hostAtIndexPath(_ indexPath: IndexPath) -> Host
 }
 
+@MainActor
 protocol HostListCacheTrackerDelegate: AnyObject {
     func cacheTracker(_ tracker: TracksHostListCache, didChangeContentSnapshot contentSnapshot: HostListSnapshot)
 }

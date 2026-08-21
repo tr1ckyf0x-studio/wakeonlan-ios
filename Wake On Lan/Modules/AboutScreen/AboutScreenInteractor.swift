@@ -6,6 +6,7 @@
 //  Copyright © 2021 Vladislav Lisianskii. All rights reserved.
 //
 
+@MainActor
 final class AboutScreenInteractor {
     // MARK: - Properties
 

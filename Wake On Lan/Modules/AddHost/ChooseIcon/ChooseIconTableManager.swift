@@ -9,10 +9,12 @@
 import UIKit
 import WOLSharedProtocolsAndModels
 
+@MainActor
 protocol ChooseIconTableManagerDelegate: AnyObject {
     func tableManager(_ manager: ChooseIconTableManager, didTapIcon icon: IconModel)
 }
 
+@MainActor
 final class ChooseIconTableManager: NSObject {
     var sections: [ChooseIconSection]
     weak var delegate: ChooseIconTableManagerDelegate?

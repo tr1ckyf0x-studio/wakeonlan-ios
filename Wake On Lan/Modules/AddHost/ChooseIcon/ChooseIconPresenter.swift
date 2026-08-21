@@ -8,6 +8,7 @@
 
 import WOLSharedProtocolsAndModels
 
+@MainActor
 final class ChooseIconPresenter: Navigates {
     weak var view: ChooseIconViewInput?
     weak var moduleDelegate: ChooseIconModuleOutput?

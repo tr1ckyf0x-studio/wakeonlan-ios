@@ -63,9 +63,6 @@ in-app browser — GitHub leaves the app.
 - **`configure(with:)` is append-only.** It never clears the stack view, so a second call duplicates
   all four rows. The invariant that it runs exactly once holds only because `fetchBundleInfo()` is
   called once from `viewDidLoad`.
-- **`AboutScreenView` conforms `@preconcurrency`.** `AboutScreenViewRepresentable` inherits
-  `ViewModelConfigurable` from a package that predates concurrency, so the requirement is nonisolated
-  while the view is main-actor isolated.
 - **The share sheet receives a `String`, not a `URL`.** `activityItems` is `[appURL]` where `appURL`
   is the raw App Store URL string.
 - **`BundleInfoProvider` traps.** `fetchBundleInfo()` calls `fatalError` if `Info.plist` cannot be

@@ -51,13 +51,13 @@ extension Host: Managed {
 // MARK: - UpdatesManagedObject
 
 extension Host: UpdatesManagedObject {
-    public typealias Model = any AddHostFormRepresentable
+    public typealias Model = HostFormValues
     public typealias ManagedObject = Host
 
     public func update(from model: Model, in context: NSManagedObjectContext) {
         guard let object = context.object(with: self.objectID) as? Self else { return }
         object.title = model.title
-        object.iconName = model.iconModel.symbol.rawValue
+        object.iconName = model.iconName
         object.macAddress = model.macAddress
         object.destination = model.destination
         object.port = model.port

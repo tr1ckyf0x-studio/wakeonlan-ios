@@ -8,6 +8,7 @@
 
 import WOLSharedProtocolsAndModels
 
+@MainActor
 final class AddHostPresenter: Navigates {
     // MARK: - Properties
 

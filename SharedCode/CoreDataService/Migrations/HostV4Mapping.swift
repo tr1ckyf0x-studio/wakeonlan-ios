@@ -7,7 +7,9 @@
 
 import CoreData
 
-final class HostV4Mapping: NSEntityMigrationPolicy {
+// NOTE: Core Data instantiates and drives migration policies on its own migration thread, so
+// they must opt out of the module's MainActor default isolation.
+nonisolated final class HostV4Mapping: NSEntityMigrationPolicy {
     override func createDestinationInstances(
         forSource sourceInstance: NSManagedObject,
         in mapping: NSEntityMapping,
@@ -31,7 +33,7 @@ final class HostV4Mapping: NSEntityMigrationPolicy {
 
 // MARK: - Constants
 
-extension HostV4Mapping {
+nonisolated extension HostV4Mapping {
     private enum Constants {
         static let createdAt = "createdAt"
     }

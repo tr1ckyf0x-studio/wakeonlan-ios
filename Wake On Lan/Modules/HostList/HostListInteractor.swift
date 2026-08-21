@@ -12,8 +12,9 @@ import PersistenceCore
 import WakeOnLanService
 import WOLSharedProtocolsAndModels
 
+@MainActor
 final class HostListInteractor: HostListInteractorInput {
-    typealias CRUDPerformer = any PerformsCRUDOperation<any AddHostFormRepresentable, Host>
+    typealias CRUDPerformer = any PerformsCRUDOperation<HostFormValues, Host>
 
     typealias MovePerformer = any PerformsMoveOperation<Host>
 
@@ -54,7 +55,7 @@ final class HostListInteractor: HostListInteractorInput {
         // managed object there is a concurrency violation. Copying the values out on the caller's
         // (main) queue is what makes this safe; `@MainActor` alone is not enough.
         let snapshot = HostSnapshot(host: host)
-        Task { @MainActor in
+        Task {
             do {
                 try await wakeOnLanService.sendMagicPacket(to: snapshot)
                 DDLogDebug("Magic packet was sent")
@@ -73,7 +74,7 @@ final class HostListInteractor: HostListInteractorInput {
             DDLogDebug("Nothing to delete")
             return
         }
-        hostCrudWorker.delete(object: host, in: context)
+        hostCrudWorker.delete(objectID: host.objectID, in: context)
     }
 
     func fetchHost(at indexPath: IndexPath) -> Host {

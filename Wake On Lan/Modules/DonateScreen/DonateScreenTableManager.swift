@@ -7,10 +7,12 @@
 
 import UIKit
 
+@MainActor
 protocol ManagesDonateScreenTable {
     var sections: [DonateScreenTableSectionModel] { get set }
 }
 
+@MainActor
 final class DonateScreenTableManager: NSObject {
     // MARK: - Properties
 

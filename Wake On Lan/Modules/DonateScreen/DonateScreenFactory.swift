@@ -8,6 +8,7 @@
 import RouteComposer
 import UIKit
 
+@MainActor
 public struct DonateScreenFactory {
     public typealias Context = Void?
 

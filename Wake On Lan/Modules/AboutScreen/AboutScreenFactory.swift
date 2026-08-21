@@ -8,6 +8,7 @@
 
 import RouteComposer
 
+@MainActor
 public final class AboutScreenFactory {
     public typealias Context = Void?
 

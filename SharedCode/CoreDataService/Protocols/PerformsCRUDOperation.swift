@@ -9,9 +9,9 @@
 import CoreData
 
 public protocol PerformsCRUDOperation<Model, ManagedObject> {
-    typealias CompletionHandler = (Result<Void, Error>) -> Void
+    typealias CompletionHandler = @MainActor (Result<Void, Error>) -> Void
 
-    associatedtype Model
+    associatedtype Model: Sendable
     associatedtype ManagedObject: NSManagedObject
 
     func create(
@@ -21,11 +21,11 @@ public protocol PerformsCRUDOperation<Model, ManagedObject> {
     )
 
     func update(
-        object: ManagedObject,
+        objectID: NSManagedObjectID,
         in context: NSManagedObjectContext,
         with model: Model,
         completion: CompletionHandler?
     )
 
-    func delete(object: ManagedObject, in context: NSManagedObjectContext)
+    func delete(objectID: NSManagedObjectID, in context: NSManagedObjectContext)
 }

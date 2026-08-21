@@ -26,6 +26,7 @@ protocol ChooseIconViewOutput {
 
 // MARK: - Module delegate
 
+@MainActor
 public protocol ChooseIconModuleOutput: AnyObject {
     func chooseIconModuleDidSelectIcon(_ iconModel: IconModel)
 }

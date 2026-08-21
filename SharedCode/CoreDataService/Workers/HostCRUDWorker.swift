@@ -14,7 +14,7 @@ import WOLSharedProtocolsAndModels
 
 public struct HostCRUDWorker {
     public typealias ManagedObject = Host
-    public typealias Model = any AddHostFormRepresentable
+    public typealias Model = HostFormValues
 
     // MARK: - Properties
 
@@ -53,38 +53,52 @@ extension HostCRUDWorker: PerformsCRUDOperation {
             let host: Host = context.insertObject()
             host.update(from: model, in: context)
             context.saveRecursively { error in
-                if let error {
-                    completion?(.failure(error))
-                    return
-                }
+                // NOTE: `saveRecursively` documents that it calls back on the main queue; this makes
+                // that promise legible to the compiler instead of hopping and changing the ordering.
+                MainActor.assumeIsolated {
+                    if let error {
+                        completion?(.failure(error))
+                        return
+                    }
 
-                completion?(.success(Void()))
+                    completion?(.success(Void()))
+                }
             }
         }
     }
 
     public func update(
-        object: Host,
+        objectID: NSManagedObjectID,
         in context: NSManagedObjectContext,
         with model: Model,
         completion: CompletionHandler?
     ) {
         context.perform {
-            object.update(from: model, in: context)
+            guard let host = try? context.existingObject(with: objectID) as? Host else {
+                DDLogWarn("Host to update no longer exists")
+                return
+            }
+            host.update(from: model, in: context)
             context.saveRecursively { error in
-                if let error {
-                    completion?(.failure(error))
-                    return
-                }
+                MainActor.assumeIsolated {
+                    if let error {
+                        completion?(.failure(error))
+                        return
+                    }
 
-                completion?(.success(Void()))
+                    completion?(.success(Void()))
+                }
             }
         }
     }
 
-    public func delete(object: ManagedObject, in context: NSManagedObjectContext) {
+    public func delete(objectID: NSManagedObjectID, in context: NSManagedObjectContext) {
         context.perform {
-            context.delete(object)
+            guard let host = try? context.existingObject(with: objectID) else {
+                DDLogDebug("Nothing to delete")
+                return
+            }
+            context.delete(host)
             context.saveRecursively()
             DDLogDebug("Host deleted")
         }
