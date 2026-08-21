@@ -9,7 +9,7 @@ import Foundation
 
 extension Bundle {
     static var resourcesBundle: Bundle {
-        return BundleToken.bundle
+        BundleToken.bundle
     }
 }
 
