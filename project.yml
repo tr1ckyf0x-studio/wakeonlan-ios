@@ -58,6 +58,7 @@ targets:
         excludes:
           - "**/*.secret"
           - "**/swiftgen.yml"
+          - "**/CLAUDE.md"
         optional: true
       - IntentSharedSources
     dependencies:
