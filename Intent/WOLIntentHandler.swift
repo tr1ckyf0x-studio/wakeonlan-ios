@@ -24,12 +24,23 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
         }
         do {
             let availableHostnames = try fetchHostnames()
-            let hostnameExists = availableHostnames.contains(hostname)
-            if hostnameExists {
-                return INStringResolutionResult.success(with: hostname)
-            } else {
+            // NOTE: With nothing saved there is nothing to disambiguate between, and handing an
+            // empty list to the Intents runtime leaves the shortcut stuck in resolution.
+            guard !availableHostnames.isEmpty else {
+                return INStringResolutionResult.unsupported()
+            }
+            // NOTE: Matched case-insensitively — Siri transcribes "wake my pc" as "my pc" while the
+            // host is titled "My PC", which used to fall through to disambiguation every time. The
+            // stored title is returned, not the transcription, so `handle(intent:)` can look the
+            // host up by its exact name.
+            let match = availableHostnames.first { (title: String) -> Bool in
+                title.caseInsensitiveCompare(hostname) == .orderedSame
+            }
+            guard let match else {
                 return INStringResolutionResult.disambiguation(with: availableHostnames)
             }
+
+            return INStringResolutionResult.success(with: match)
         } catch {
             return INStringResolutionResult.unsupported()
         }
