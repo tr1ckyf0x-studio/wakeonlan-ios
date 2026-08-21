@@ -19,6 +19,8 @@ final class AddHostPresenter: Navigates {
     private(set) var tableManager = AddHostTableManager()
     private(set) var addHostForm: AddHostForm
 
+    private var isSaving = false
+
     // MARK: - Init
 
     init(addHostForm: AddHostForm = AddHostForm()) {
@@ -40,6 +42,12 @@ extension AddHostPresenter: AddHostViewOutput {
         // TODO: Обработка ошибок формы
         guard addHostForm.isValid else { return }
 
+        // NOTE: The save control stays enabled and nothing visible happens while the write is in
+        // flight, so a second tap used to re-enter the create branch with a fresh child context —
+        // inserting the host twice and colliding the `order` of every existing host.
+        guard !isSaving else { return }
+        isSaving = true
+
         if addHostForm.host == nil {
             // Host does not yet exists
             interactor?.saveForm(addHostForm)
@@ -58,10 +66,12 @@ extension AddHostPresenter: AddHostViewOutput {
 
 extension AddHostPresenter: AddHostInteractorOutput {
     func interactor(_ interactor: AddHostInteractorInput, didSaveForm form: AddHostForm) {
+        isSaving = false
         navigate(to: router?.backOrDismiss(animated: true))
     }
 
     func interactor(_ interactor: AddHostInteractorInput, didUpdateForm form: AddHostForm) {
+        isSaving = false
         navigate(to: router?.backOrDismiss(animated: true))
     }
 }
