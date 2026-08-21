@@ -65,6 +65,21 @@ final class TextInputCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Lifecycle
+
+    // NOTE: `isExpanded` drives the cell height and the failure label survives recycling, so without
+    // a reset a reused cell can render a valid field expanded and red, carrying another field's
+    // error text — and the number pad's "Done" toolbar can follow onto an alphabetic keyboard.
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        textFormItem = nil
+        isExpanded = false
+        failureView.isHidden = true
+        failureView.configure(with: nil)
+        textField.text = nil
+        textField.inputAccessoryView = nil
+    }
+
     // MARK: - Private
 
     private func configureViews() {
@@ -189,9 +204,9 @@ extension TextInputCell: FormConfigurable {
             configureToolbarIfNeeded()
         }
 
-        // Setup FailureView if needed
-        guard let error = textFormItem.failureReason else { return }
-        failureView.configure(with: error)
+        // NOTE: Configured unconditionally. Returning early for items without a `failureReason`
+        // (Name, Host) left the recycled cell showing the previous field's error text.
+        failureView.configure(with: textFormItem.failureReason)
     }
 }
 
@@ -221,8 +236,8 @@ private class AddHostFailureView: UIView {
 
     // MARK: - Methods
 
-    func configure(with reason: AddHostForm.Error) {
-        failureLabel.text = reason.description
+    func configure(with reason: AddHostForm.Error?) {
+        failureLabel.text = reason?.description
     }
 
     func show() {
