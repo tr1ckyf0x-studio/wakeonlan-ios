@@ -8,15 +8,13 @@
 
 import UIKit
 
-@UIApplicationMain
+@main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
 
     private lazy var plugins: [UIApplicationDelegate] = [
         DDLogAppDelegatePlugin(),
         FirebaseAppDelegatePlugin(),
-        NavigationBarAppearanceAppDelegatePlugin(),
-        WindowConfigurationAppDelegatePlugin(configureWindow: { [weak self] in self?.window = $0 })
+        NavigationBarAppearanceAppDelegatePlugin()
     ]
 
     func application(
