@@ -1,17 +1,17 @@
 name: "Wake On LAN"
 
 configs:
-  AppStore Debug: debug
-  AppStore Release: release
+  Debug: debug
+  Release: release
 
 settings:
   # NOTE: A dSYM is only meaningful for Release. In Debug the app is built as a stub executable plus
   # a `.debug.dylib`, so the executable itself carries no debug info and `dsymutil` produces an empty
   # dSYM — that is the "empty dSYM file detected" warning on every device build.
   configs:
-    AppStore Debug:
+    Debug:
       DEBUG_INFORMATION_FORMAT: dwarf
-    AppStore Release:
+    Release:
       DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
   base:
     ENABLE_BITCODE: NO
@@ -94,9 +94,7 @@ targets:
       - package: shared-frameworks
         product: PersistenceCore
 
-    scheme:
-      configVariants:
-        - AppStore
+    scheme: {}
 
     settings:
       base:
@@ -107,10 +105,10 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
         CODE_SIGN_ENTITLEMENTS: "Wake On Lan/Wake on LAN.entitlements"
       configs:
-        AppStore Debug:
+        Debug:
           CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
-        AppStore Release:
+        Release:
           CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AppStore"
           DEAD_CODE_STRIPPING: YES
@@ -140,6 +138,7 @@ targets:
     sources:
       - Intent
       - IntentSharedSources
+    scheme: {}
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
@@ -148,10 +147,10 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan.intent
         CODE_SIGN_ENTITLEMENTS: "Intent/Intent.entitlements"
       configs:
-        AppStore Debug:
+        Debug:
           CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
-        AppStore Release:
+        Release:
           CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AppStore"
     dependencies:
@@ -161,9 +160,6 @@ targets:
       - sdk: Intents.framework
       - package: shared-frameworks
         product: PersistenceCore
-    scheme:
-      configVariants:
-        - AppStore
 
   WakeOnLanService:
     platform: iOS

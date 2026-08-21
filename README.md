@@ -20,7 +20,7 @@ make bootstrap
 make sync_development_certificates
 ```
 
-* #### Open the generated `Wake On LAN.xcodeproj` and build the scheme `Wake On LAN AppStore`
+* #### Open the generated `Wake On LAN.xcodeproj` and build the scheme `Wake On LAN`
 
 ## Signing *(only for maintainers)*
 

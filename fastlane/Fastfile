@@ -74,7 +74,7 @@ platform :ios do
   desc "Build app without code signing. CI check"
   lane :build_only do
     build_app(
-      scheme: "Wake On LAN AppStore",
+      scheme: "Wake On LAN",
       skip_codesigning: true,
       skip_package_ipa: true,
       skip_archive: true,
@@ -90,7 +90,7 @@ platform :ios do
     )
 
     build_app(
-      scheme: "Wake On LAN AppStore",
+      scheme: "Wake On LAN",
       include_bitcode: false,
       xcodebuild_formatter: "mint run xcbeautify",
       export_options: {
