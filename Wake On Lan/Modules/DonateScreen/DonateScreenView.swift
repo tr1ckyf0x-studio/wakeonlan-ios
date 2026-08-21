@@ -15,11 +15,11 @@ final class DonateScreenView: UIView {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        let backgroundColor = Asset.Colors.primary.color
+        let backgroundColor = UIColor(resource: .primary)
 
         let backBarButtonSize: CGFloat = 32.0
         let backBarButtonImageViewInset: CGFloat = 6.0
-        let backBarButtonTintColor = Asset.Colors.secondary.color
+        let backBarButtonTintColor = UIColor(resource: .secondary)
         let backBarButtonImage = UIImage(
             systemSymbol: .chevronBackward,
             withConfiguration: UIImage.SymbolConfiguration(weight: .semibold)
@@ -65,8 +65,8 @@ final class DonateScreenView: UIView {
         let paymentsUnavailableView = EmptyView()
         let viewModel = StateableViewModel(
             title: L10n.DonateScreen.Screen.paymentsUnavailable,
-            image: Asset.Assets.Logo.owl.image,
-            backgroundColor: Asset.Colors.primary.color
+            image: UIImage(resource: .owl),
+            backgroundColor: UIColor(resource: .primary)
         )
         paymentsUnavailableView.configure(with: viewModel)
 
@@ -77,8 +77,8 @@ final class DonateScreenView: UIView {
         let loadingFailedView = EmptyView()
         let viewModel = StateableViewModel(
             title: L10n.DonateScreen.Screen.loadingFailed,
-            image: Asset.Assets.Logo.owl.image,
-            backgroundColor: Asset.Colors.primary.color
+            image: UIImage(resource: .owl),
+            backgroundColor: UIColor(resource: .primary)
         )
         loadingFailedView.configure(with: viewModel)
 

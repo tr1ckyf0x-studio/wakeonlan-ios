@@ -16,7 +16,7 @@ final class NavigationBarAppearanceAppDelegatePlugin: NSObject, UIApplicationDel
         if #available(iOS 15.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithDefaultBackground()
-            navigationBarAppearance.backgroundColor = Asset.Colors.primary.color
+            navigationBarAppearance.backgroundColor = UIColor(resource: .primary)
             navigationBarAppearance.shadowColor = nil
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().compactAppearance = navigationBarAppearance

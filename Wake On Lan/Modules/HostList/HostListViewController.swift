@@ -48,7 +48,7 @@ public final class HostListViewController: UIViewController {
         ]
         navigationItem.largeTitleDisplayMode = .always
         guard let navigationController else { return }
-        navigationController.view.backgroundColor = Asset.Colors.primary.color
+        navigationController.view.backgroundColor = UIColor(resource: .primary)
         let navigationBar = navigationController.navigationBar
         navigationBar.prefersLargeTitles = true
     }

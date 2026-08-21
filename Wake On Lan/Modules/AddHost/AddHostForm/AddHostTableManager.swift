@@ -126,7 +126,7 @@ private extension NSMutableAttributedString {
     func appendOptional() {
         let additionalAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.italicSystemFont(ofSize: 12),
-            .foregroundColor: Asset.Colors.secondary.color
+            .foregroundColor: UIColor(resource: .secondary)
         ]
         let additionalAttributedString =
             NSMutableAttributedString(

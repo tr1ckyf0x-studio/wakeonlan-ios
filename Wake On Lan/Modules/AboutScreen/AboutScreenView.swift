@@ -20,7 +20,7 @@ final class AboutScreenView: UIView {
     private let appearance = Appearance(); struct Appearance {
         let backBarButtonSize: CGFloat = 32.0
         let backBarButtonImageViewInset: CGFloat = 6.0
-        let backBarButtonTintColor = Asset.Colors.secondary.color
+        let backBarButtonTintColor = UIColor(resource: .secondary)
         let backBarButtonImage = UIImage(
             systemSymbol: .chevronBackward,
             withConfiguration: UIImage.SymbolConfiguration(weight: .semibold)
@@ -71,7 +71,7 @@ final class AboutScreenView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Asset.Colors.primary.color
+        backgroundColor = UIColor(resource: .primary)
         addSubviews()
         makeConstraints()
     }

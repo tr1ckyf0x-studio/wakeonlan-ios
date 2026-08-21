@@ -24,7 +24,7 @@ public final class SpinnerView: UIView {
 
     private lazy var progressLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.strokeColor = Asset.Colors.secondary.color.resolved
+        layer.strokeColor = UIColor(resource: .secondary).resolved
         layer.fillColor = nil
         layer.lineWidth = Constants.progressStrokeWidth
         layer.lineCap = .round

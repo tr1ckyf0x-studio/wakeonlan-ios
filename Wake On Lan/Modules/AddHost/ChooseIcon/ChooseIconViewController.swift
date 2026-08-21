@@ -35,8 +35,8 @@ public final class ChooseIconViewController: UIViewController {
     private lazy var cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(L10n.AddHost.Form.ActionSheet.cancel, for: .normal)
-        button.backgroundColor = Asset.Colors.primary.color
-        button.setTitleColor(Asset.Colors.secondary.color, for: .normal)
+        button.backgroundColor = UIColor(resource: .primary)
+        button.setTitleColor(UIColor(resource: .secondary), for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: appearance.cancelButtonFontSize)
         button.layer.cornerRadius = appearance.cornerRadius
         button.addTarget(self, action: #selector(closeViewController), for: .touchUpInside)

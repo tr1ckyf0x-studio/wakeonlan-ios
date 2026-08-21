@@ -25,27 +25,27 @@ public class WOLNavigationController: UINavigationController {
 private extension WOLNavigationController {
     private func configure() {
         // Change background color
-        navigationBar.barTintColor = Asset.Colors.primary.color
+        navigationBar.barTintColor = UIColor(resource: .primary)
 
         // Remove bottom line
         navigationBar.shadowImage = UIImage()
         navigationBar.setBackgroundImage(UIImage(), for: .default)
 
         // Change color of tappable items
-        navigationBar.tintColor = Asset.Colors.primary.color
+        navigationBar.tintColor = UIColor(resource: .primary)
         navigationBar.isTranslucent = false
 
         let largeTitleTextAttributes = [
             NSAttributedString.Key.font:
                 UIFont.boldSystemFont(ofSize: 36),
             NSAttributedString.Key.foregroundColor:
-                Asset.Colors.secondaryVariant.color
+                UIColor(resource: .secondaryVariant)
         ]
         navigationBar.largeTitleTextAttributes = largeTitleTextAttributes
 
         let titleTextAttributes = [
             NSAttributedString.Key.foregroundColor:
-                Asset.Colors.secondaryVariant.color
+                UIColor(resource: .secondaryVariant)
         ]
         navigationBar.titleTextAttributes = titleTextAttributes
     }

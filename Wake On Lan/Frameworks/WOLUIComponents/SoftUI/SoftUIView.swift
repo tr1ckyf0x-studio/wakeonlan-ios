@@ -13,9 +13,9 @@ public class SoftUIView: UIControl {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        var mainColor: CGColor { Asset.Colors.primary.color.resolved }
-        var darkShadowColor: CGColor { Asset.Colors.Shadow.darkShadow.color.resolved }
-        var lightShadowColor: CGColor { Asset.Colors.Shadow.lightShadow.color.resolved }
+        var mainColor: CGColor { UIColor(resource: .primary).resolved }
+        var darkShadowColor: CGColor { UIColor(resource: .darkShadow).resolved }
+        var lightShadowColor: CGColor { UIColor(resource: .lightShadow).resolved }
 
         let shadowOffset = CGSize(width: 2, height: 2)
         let shadowRadius = CGFloat(2)

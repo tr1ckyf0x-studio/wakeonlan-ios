@@ -59,7 +59,7 @@ final class HostListView: UIView {
             frame: .zero,
             collectionViewLayout: collectionLayout
         )
-        collectionView.backgroundColor = Asset.Colors.primary.color
+        collectionView.backgroundColor = UIColor(resource: .primary)
         collectionView.dragInteractionEnabled = true
 
         return collectionView
@@ -79,8 +79,8 @@ final class HostListView: UIView {
         let emptyView = EmptyView()
         let viewModel = StateableViewModel(
             title: L10n.HostList.Screen.emptyViewMessage,
-            image: Asset.Assets.Logo.owl.image,
-            backgroundColor: Asset.Colors.primary.color
+            image: UIImage(resource: .owl),
+            backgroundColor: UIColor(resource: .primary)
         )
         emptyView.configure(with: viewModel)
 
@@ -92,7 +92,7 @@ final class HostListView: UIView {
             let button = SoftUIView(circleShape: true)
             let image = UIImage(systemSymbol: .questionmark, withConfiguration: UIImage.SymbolConfiguration(weight: .semibold))
             let imageView = UIImageView(image: image)
-            imageView.tintColor = Asset.Colors.secondary.color
+            imageView.tintColor = UIColor(resource: .secondary)
             button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(self, action: #selector(didTapAboutButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
@@ -123,7 +123,7 @@ final class HostListView: UIView {
             let button = SoftUIView(circleShape: true)
             let image = UIImage(systemSymbol: .plus, withConfiguration: UIImage.SymbolConfiguration(weight: .semibold))
             let imageView = UIImageView(image: image)
-            imageView.tintColor = Asset.Colors.secondary.color
+            imageView.tintColor = UIColor(resource: .secondary)
             button.configure(with: SoftUIViewModel(contentView: imageView))
             button.addTarget(self, action: #selector(didTapAddButton(_:)), for: .touchUpInside)
             imageView.snp.makeConstraints {
@@ -149,7 +149,7 @@ final class HostListView: UIView {
             let button = SoftUIView(circleShape: true)
             let label = UILabel()
             label.text = L10n.HostList.NavigationBar.donate
-            label.textColor = Asset.Colors.secondary.color
+            label.textColor = UIColor(resource: .secondary)
             label.font = .systemFont(ofSize: 14, weight: .bold)
             button.configure(with: SoftUIViewModel(contentView: label))
             button.addTarget(self, action: #selector(didTapDonateButton(_:)), for: .touchUpInside)
@@ -208,7 +208,7 @@ private extension HostListView {
     }
 
     func makeAppearance() {
-        backgroundColor = Asset.Colors.primary.color
+        backgroundColor = UIColor(resource: .primary)
     }
 
     @objc func didTapAddButton(_ sender: UIButton) {

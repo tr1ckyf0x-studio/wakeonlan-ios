@@ -4,13 +4,3 @@ strings:
   outputs:
     - templateName: structured-swift5
       output: Localization/Localization.swift
-
-xcassets:
-  inputs:
-    - Resources/Assets/Assets.xcassets
-    - Resources/Assets/Colors.xcassets
-  outputs:
-    - templateName: swift5
-      params:
-        forceProvidesNamespaces: true
-      output: Assets/Assets.swift

@@ -11,11 +11,11 @@ import UIKit
 public final class EmptyView: UIView {
     private lazy var containerView = UIView()
 
-    private lazy var imageView = UIImageView(image: Asset.Assets.Logo.owl.image)
+    private lazy var imageView = UIImageView(image: UIImage(resource: .owl))
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Asset.Colors.secondary.color
+        label.textColor = UIColor(resource: .secondary)
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
