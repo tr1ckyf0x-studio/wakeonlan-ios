@@ -1,0 +1,23 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSLocalNetworkUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Awake uses this permission to send the WakeOnLan packet to hosts in local network"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Awake использует это разрешение для отправки WakeOnLan пакетов в локальной сети"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -1,9 +1,0 @@
-/* 
-   InfoPlist.strings
-   
-   Created by Localization System
-   Base language: English
-*/
-
-/* Network Permission Description */
-"NSLocalNetworkUsageDescription" = "Awake использует это разрешение для отправки WakeOnLan пакетов в локальной сети";
