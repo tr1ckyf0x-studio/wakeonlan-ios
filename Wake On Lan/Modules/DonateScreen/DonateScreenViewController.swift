@@ -72,6 +72,9 @@ extension DonateScreenViewController: DonateScreenViewInput {
 
         case .loaded:
             rootView.tableView.isHidden = false
+
+        case .loadingFailed:
+            rootView.loadingFailedView.isHidden = false
         }
     }
 }

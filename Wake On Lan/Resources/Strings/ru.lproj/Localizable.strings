@@ -42,6 +42,8 @@
 
 "DonateScreen.Screen.PaymentsUnavailable" = "Встроенные покупки недоступны на вашем устройстве.";
 
+"DonateScreen.Screen.LoadingFailed" = "Не удалось загрузить донаты. Проверьте подключение и откройте экран снова.";
+
 // HostList
 
 "HostList.Screen.Title" = "Устройства";

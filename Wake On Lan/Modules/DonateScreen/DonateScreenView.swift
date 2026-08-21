@@ -74,6 +74,18 @@ final class DonateScreenView: UIView {
         return paymentsUnavailableView
     }()
 
+    lazy var loadingFailedView: EmptyView = {
+        let loadingFailedView = EmptyView()
+        let viewModel = StateableViewModel(
+            title: L10n.DonateScreen.Screen.loadingFailed,
+            image: Asset.Assets.Logo.owl.image,
+            backgroundColor: Asset.Colors.primary.color
+        )
+        loadingFailedView.configure(with: viewModel)
+
+        return loadingFailedView
+    }()
+
     lazy var spinnerView: SpinnerView = { view in
         view.stopAnimating()
         view.isHidden = true
@@ -98,6 +110,7 @@ final class DonateScreenView: UIView {
         [
             tableView,
             paymentsUnavailableView,
+            loadingFailedView,
             spinnerView
         ]
     }
@@ -109,6 +122,7 @@ extension DonateScreenView {
     private func addSubviews() {
         addSubview(tableView)
         addSubview(paymentsUnavailableView)
+        addSubview(loadingFailedView)
         addSubview(spinnerView)
     }
 
@@ -118,6 +132,10 @@ extension DonateScreenView {
         }
 
         paymentsUnavailableView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+
+        loadingFailedView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
 

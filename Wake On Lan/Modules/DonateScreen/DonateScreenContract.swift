@@ -24,6 +24,7 @@ protocol DonateScreenInteractorInput {
 
 protocol DonateScreenInteractorOutput: AnyObject {
     func interactor(_ interactor: DonateScreenInteractorInput, didLoad products: [Product])
+    func interactorDidFailToLoad(_ interactor: DonateScreenInteractorInput, error: Error)
     func interactorDidStartPurchasing(_ interactor: DonateScreenInteractorInput)
     func interactorDidFinishPurchasing(_ interactor: DonateScreenInteractorInput)
 }

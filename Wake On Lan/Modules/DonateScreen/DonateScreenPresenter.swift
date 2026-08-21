@@ -31,6 +31,10 @@ extension DonateScreenPresenter: DonateScreenViewOutput {
 // MARK: - DonateScreenInteractorOutput
 
 extension DonateScreenPresenter: DonateScreenInteractorOutput {
+    func interactorDidFailToLoad(_ interactor: DonateScreenInteractorInput, error: Error) {
+        view?.showState(.loadingFailed)
+    }
+
     func interactor(_ interactor: DonateScreenInteractorInput, didLoad products: [Product]) {
         let productItems = products.map { (product: Product) -> DonateScreenTableSectionItem in
             let viewModel = ProductViewModel(

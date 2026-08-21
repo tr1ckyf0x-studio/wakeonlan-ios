@@ -96,6 +96,8 @@ internal enum L10n {
     internal enum Screen {
       /// Donations do not unlock any extra features in the application. The application is provided as is and any donations are your gratitude for our work.
       internal static let footer = L10n.tr("Localizable", "DonateScreen.Screen.Footer", fallback: "Donations do not unlock any extra features in the application. The application is provided as is and any donations are your gratitude for our work.")
+      /// Could not load donations. Check your connection and open this screen again.
+      internal static let loadingFailed = L10n.tr("Localizable", "DonateScreen.Screen.LoadingFailed", fallback: "Could not load donations. Check your connection and open this screen again.")
       /// In-App purchases are unavailable on your device.
       internal static let paymentsUnavailable = L10n.tr("Localizable", "DonateScreen.Screen.PaymentsUnavailable", fallback: "In-App purchases are unavailable on your device.")
       /// Donate

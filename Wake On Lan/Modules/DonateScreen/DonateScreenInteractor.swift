@@ -36,6 +36,11 @@ extension DonateScreenInteractor: DonateScreenInteractorInput {
                 }
             } catch {
                 DDLogError("\(error)")
+                // NOTE: Without this the screen stayed on `.loading` forever — the spinner was the
+                // only feedback a failed product fetch ever produced.
+                await MainActor.run {
+                    presenter?.interactorDidFailToLoad(self, error: error)
+                }
             }
         }
     }

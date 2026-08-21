@@ -42,6 +42,8 @@
 
 "DonateScreen.Screen.PaymentsUnavailable" = "In-App purchases are unavailable on your device.";
 
+"DonateScreen.Screen.LoadingFailed" = "Could not load donations. Check your connection and open this screen again.";
+
 // HostList
 
 "HostList.Screen.Title" = "Hosts";
