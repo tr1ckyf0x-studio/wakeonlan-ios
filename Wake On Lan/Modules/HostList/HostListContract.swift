@@ -31,14 +31,21 @@ protocol HostListViewOutput: AnyObject {
     func viewDidPressDonateButton(_ view: HostListViewInput)
 }
 
+/// Outcome of an attempt to wake a host, as shown on the host's card.
+enum HostListNotification {
+    case packetSent
+    case failure
+}
+
 protocol HostListViewInput: AnyObject {
     func showState(_ state: ViewState)
     func updateContentSnapshot(_ contentSnapshot: HostListSnapshot)
+    func showNotification(_ notification: HostListNotification, at indexPath: IndexPath)
 }
 
 protocol HostListInteractorInput: AnyObject {
     func startCacheTracker()
-    func wakeHost(_ host: Host)
+    func wakeHost(_ host: Host, at indexPath: IndexPath)
     func deleteHost(_ host: Host)
     func fetchHost(at indexPath: IndexPath) -> Host
     func moveRow(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
@@ -46,5 +53,10 @@ protocol HostListInteractorInput: AnyObject {
 
 protocol HostListInteractorOutput: AnyObject {
     func interactor(_ interactor: HostListInteractorInput, didChangeContentSnapshot contentSnapshot: HostListSnapshot)
-    func interactor(_ interactor: HostListInteractorInput, didEncounterError error: Error)
+    func interactor(_ interactor: HostListInteractorInput, didWakeHostAt indexPath: IndexPath)
+    func interactor(
+        _ interactor: HostListInteractorInput,
+        didFailToWakeHostAt indexPath: IndexPath,
+        error: Error
+    )
 }

@@ -49,14 +49,18 @@ final class HostListInteractor: HostListInteractorInput {
         cacheTracker.start()
     }
 
-    func wakeHost(_ host: Host) {
-        Task {
+    func wakeHost(_ host: Host, at indexPath: IndexPath) {
+        // NOTE: `@MainActor` is required, not cosmetic. `sendMagicPacket` reads `destination`,
+        // `port` and `macAddress` off the passed `Host`, which belongs to the main-queue view
+        // context — reading it from the cooperative pool is a queue confinement violation.
+        Task { @MainActor in
             do {
                 try await wakeOnLanService.sendMagicPacket(to: host)
                 DDLogDebug("Magic packet was sent")
+                presenter?.interactor(self, didWakeHostAt: indexPath)
             } catch {
-                presenter?.interactor(self, didEncounterError: error)
                 DDLogError("Magic packet was not sent due to error: \(error)")
+                presenter?.interactor(self, didFailToWakeHostAt: indexPath, error: error)
             }
         }
     }

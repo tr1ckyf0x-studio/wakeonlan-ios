@@ -5,8 +5,7 @@
 //  Created by Vladislav Lisianskii on 01.01.2024.
 //
 
-import CocoaLumberjackSwift
-import Reachability
+import UIKit
 
 // MARK: - HostListCollectionViewCell
 
@@ -55,7 +54,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
     private lazy var baseView: SoftUIView = {
         let view = SoftUIView()
         view.type = .normal
-        view.addTarget(self, action: #selector(displayNotification), for: .touchUpInside)
+        view.addTarget(self, action: #selector(didTapBaseView), for: .touchUpInside)
 
         return view
     }()
@@ -131,6 +130,61 @@ final class HostListCollectionViewCell: UICollectionViewCell {
         macAddressTitle.text = viewModel.macAddress
         self.viewModel = viewModel
         self.delegate = delegate
+    }
+
+    /// Shows the outcome of a wake attempt on this card.
+    ///
+    /// - Note: Driven by the presenter once the send has actually finished. Deciding it here, at tap
+    ///   time, meant the card always claimed success — including when no packet left the device.
+    func showNotification(_ notification: HostListNotification) {
+        let notificationView: UIView
+        let feedbackType: UINotificationFeedbackGenerator.FeedbackType
+
+        switch notification {
+        case .packetSent:
+            notificationView = Default()
+            feedbackType = .success
+
+        case .failure:
+            notificationView = Failure()
+            feedbackType = .error
+        }
+
+        baseView.addSubview(notificationView)
+        notificationView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.height.equalTo(28)
+        }
+
+        let animationDuration = 0.2
+        let hideNotificationAnimated = {
+            UIView.animate(
+                withDuration: animationDuration,
+                animations: { notificationView.alpha = 0.0 },
+                completion: { _ in
+                    notificationView.removeFromSuperview()
+                }
+            )
+        }
+
+        let displayNotificationAnimated = {
+            UIView.animate(
+                withDuration: animationDuration,
+                animations: { notificationView.alpha = 1.0 },
+                completion: { _ in
+                    DispatchQueue.main.asyncAfter(
+                        deadline: .now() + 0.9,
+                        execute: {
+                            hideNotificationAnimated()
+                        })
+                }
+            )
+        }
+
+        UINotificationFeedbackGenerator().notificationOccurred(feedbackType)
+        displayNotificationAnimated()
     }
 }
 
@@ -212,53 +266,10 @@ private extension HostListCollectionViewCell {
         delegate?.hostListCellDidTapDelete(self)
     }
 
-    @objc func displayNotification() {
-        guard let reachability = try? Reachability() else {
-            DDLogWarn("It is impossible to determine the connection type")
-            return
-        }
-
-        let isReachable = reachability.connection != .unavailable
-        let notificationView = isReachable ? Default() : Failure()
-
-        baseView.addSubview(notificationView)
-        notificationView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(24)
-            $0.height.equalTo(28)
-        }
-
-        let animationDuration = 0.2
-        let hideNotificationAnimated = {
-            UIView.animate(
-                withDuration: animationDuration,
-                animations: { notificationView.alpha = 0.0 },
-                completion: { _ in
-                    notificationView.removeFromSuperview()
-                }
-            )
-        }
-
-        let displayNotificationAnimated = {
-            UIView.animate(
-                withDuration: animationDuration,
-                animations: { notificationView.alpha = 1.0 },
-                completion: { _ in
-                    DispatchQueue.main.asyncAfter(
-                        deadline: .now() + 0.9,
-                        execute: {
-                            hideNotificationAnimated()
-                        })
-                }
-            )
-        }
-
+    @objc func didTapBaseView() {
         delegate?.hostListCellDidTap(self)
-
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
-        displayNotificationAnimated()
     }
+
 }
 
 // MARK: - UIScrollViewDelegate

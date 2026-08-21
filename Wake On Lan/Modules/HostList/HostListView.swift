@@ -25,6 +25,7 @@ protocol HostListViewDelegate: AnyObject {
 
 protocol DisplaysHostList {
     func updateContentSnapshot(_ contentSnapshot: HostListSnapshot)
+    func showNotification(_ notification: HostListNotification, at indexPath: IndexPath)
 }
 
 final class HostListView: UIView {
@@ -257,6 +258,15 @@ extension HostListView: StateableView {
 extension HostListView: DisplaysHostList {
     func updateContentSnapshot(_ contentSnapshot: HostListSnapshot) {
         collectionManager.apply(contentSnapshot)
+    }
+
+    func showNotification(_ notification: HostListNotification, at indexPath: IndexPath) {
+        // NOTE: The cell may have been recycled or scrolled away while the packet was in flight,
+        // in which case there is nothing left to annotate.
+        guard
+            let cell = collectionView.cellForItem(at: indexPath) as? HostListCollectionViewCell
+        else { return }
+        cell.showNotification(notification)
     }
 }
 

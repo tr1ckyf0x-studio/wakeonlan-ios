@@ -64,6 +64,10 @@ extension HostListViewController: HostListViewInput {
     func updateContentSnapshot(_ contentSnapshot: HostListSnapshot) {
         hostListView.updateContentSnapshot(contentSnapshot)
     }
+
+    func showNotification(_ notification: HostListNotification, at indexPath: IndexPath) {
+        hostListView.showNotification(notification, at: indexPath)
+    }
 }
 
 // MARK: - HostListViewDelegate

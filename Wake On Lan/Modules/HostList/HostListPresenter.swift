@@ -44,7 +44,7 @@ extension HostListPresenter: HostListViewOutput {
 
     func viewDidPressHostCell(_ view: HostListViewInput, for indexPath: IndexPath) {
         guard let host = interactor?.fetchHost(at: indexPath) else { return }
-        interactor?.wakeHost(host)
+        interactor?.wakeHost(host, at: indexPath)
     }
 
     func view(
@@ -74,8 +74,17 @@ extension HostListPresenter: HostListInteractorOutput {
 
     func interactor(
         _ interactor: HostListInteractorInput,
-        didEncounterError error: Error
+        didWakeHostAt indexPath: IndexPath
+    ) {
+        view?.showNotification(.packetSent, at: indexPath)
+    }
+
+    func interactor(
+        _ interactor: HostListInteractorInput,
+        didFailToWakeHostAt indexPath: IndexPath,
+        error: Error
     ) {
         DDLogError("HostListInteractor encountered error: \(error)")
+        view?.showNotification(.failure, at: indexPath)
     }
 }
