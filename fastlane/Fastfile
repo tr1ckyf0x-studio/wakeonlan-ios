@@ -29,11 +29,11 @@ platform :ios do
 
     increment_build_number(
       build_number: latest_testflight_build_number + 1,
-      xcodeproj: "Wake on LAN.xcodeproj"
+      xcodeproj: "Wake On LAN.xcodeproj"
     )
 
     build_app(
-      scheme: "Wake on LAN AppStore",
+      scheme: "Wake On LAN AppStore",
       include_bitcode: false,
       export_options: {
         provisioningProfiles: { 

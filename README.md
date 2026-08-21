@@ -20,7 +20,7 @@ git secret reveal
 make bootstrap
 ```
 
-* #### Open the generated `Wake on LAN.xcworkspace` and build the scheme `Wake on LAN`
+* #### Open the generated `Wake On LAN.xcodeproj` and build the scheme `Wake On LAN AppStore`
 
 ## Code generation instructions
 To generate new modules or `swiftgen` files please follow instructions for `foxgen` which will be built during bootstrap

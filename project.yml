@@ -1,4 +1,4 @@
-name: "Wake on LAN"
+name: "Wake On LAN"
 
 configs:
   AppStore Debug: debug
@@ -47,11 +47,11 @@ packages:
     exactVersion: 1.0.0
 
 targets:
-  Wake on LAN:
+  Wake On LAN:
     platform: iOS
     type: application
     sources:
-      - path: "Wake on LAN"
+      - path: "Wake On Lan"
         excludes:
           - "**/*.secret"
           - "**/swiftgen.yml"
@@ -88,10 +88,10 @@ targets:
       base:
         TARGETED_DEVICE_FAMILY: 1
         DISPLAY_NAME: "Awake"
-        INFOPLIST_FILE: "Wake on LAN/Info.plist"
+        INFOPLIST_FILE: "Wake On Lan/Info.plist"
         OTHER_LDFLAGS: $(inherited) -ObjC
         PRODUCT_BUNDLE_IDENTIFIER: com.tr1ckyf0x.wake-on-lan
-        CODE_SIGN_ENTITLEMENTS: "Wake on LAN/Wake on LAN.entitlements"
+        CODE_SIGN_ENTITLEMENTS: "Wake On Lan/Wake on LAN.entitlements"
       configs:
         AppStore Debug:
           CODE_SIGN_IDENTITY: "Apple Development"
