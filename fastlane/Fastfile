@@ -10,40 +10,88 @@
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
-    app_store_connect_api_key(
-      key_id: "65K8M54759",
-      issuer_id: "39222a33-4915-477e-a282-57c970346695",
-      key_content: ENV['APPSTORE_AUTH_KEY'],
-      is_key_content_base64: true,
-      duration: 1200, # optional (maximum 1200)
-      in_house: false # optional but may be required if using match/sigh
-    )
 
+  # App Store Connect API key, stored encrypted via git-secret (`git secret reveal`)
+  def api_key_path
+    "./fastlane/api_key.json"
+  end
+
+  # Provisioning profile name prefix per bundle identifier.
+  # "<prefix> <Type>" must match PROVISIONING_PROFILE_SPECIFIER in project.yml.
+  def profile_prefixes
+    {
+      "com.tr1ckyf0x.wake-on-lan" => "Wake On Lan",
+      "com.tr1ckyf0x.wake-on-lan.intent" => "Wake On Lan Siri Intent"
+    }
+  end
+
+  def profile_names(type_suffix)
+    profile_prefixes.transform_values { |prefix| "#{prefix} #{type_suffix}" }
+  end
+
+  # Runs `match` once per bundle identifier so every profile keeps its own name
+  # (match applies a single `profile_name` to all identifiers otherwise).
+  def match_profiles(type:, type_suffix:, **options)
+    profile_names(type_suffix).each do |app_identifier, profile_name|
+      match(
+        type: type,
+        app_identifier: app_identifier,
+        profile_name: profile_name,
+        generate_apple_certs: true,
+        **options
+      )
+    end
+  end
+
+  def keychain_options
+    return {} unless ENV["KEYCHAIN_NAME"]
+
+    {
+      keychain_name: ENV["KEYCHAIN_NAME"],
+      keychain_password: ENV["KEYCHAIN_PASSWORD"]
+    }
+  end
+
+  lane :sync_development_certificates do
+    match_profiles(type: "development", type_suffix: "Development", readonly: true)
+  end
+
+  lane :sync_release_certificates do
+    match_profiles(type: "appstore", type_suffix: "AppStore", readonly: true, **keychain_options)
+    match_profiles(type: "adhoc", type_suffix: "AdHoc", readonly: true, **keychain_options)
+  end
+
+  lane :generate_development_certificates do
+    match_profiles(type: "development", type_suffix: "Development", api_key_path: api_key_path)
+  end
+
+  lane :generate_release_certificates do
+    match_profiles(type: "appstore", type_suffix: "AppStore", api_key_path: api_key_path)
+    match_profiles(type: "adhoc", type_suffix: "AdHoc", api_key_path: api_key_path)
+  end
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do |options|
     increment_build_number(
-      build_number: latest_testflight_build_number + 1,
+      build_number: latest_testflight_build_number(api_key_path: api_key_path) + 1,
       xcodeproj: "Wake On LAN.xcodeproj"
     )
 
     build_app(
       scheme: "Wake On LAN AppStore",
       include_bitcode: false,
+      xcodebuild_formatter: "mint run xcbeautify",
       export_options: {
-        provisioningProfiles: { 
-          "com.tr1ckyf0x.wake-on-lan" => "Wake On Lan AppStore"
-        }
+        provisioningProfiles: profile_names("AppStore")
       }
     )
 
     upload_to_testflight(
-      skip_waiting_for_build_processing: true
+      api_key_path: api_key_path,
+      skip_waiting_for_build_processing: options[:skip_waiting_for_build_processing] == true
     )
   end
 end

@@ -14,3 +14,6 @@ generate_resources:
 
 git_clean:
 	git clean -f -d -x
+
+sync_development_certificates:
+	bundle exec fastlane ios sync_development_certificates

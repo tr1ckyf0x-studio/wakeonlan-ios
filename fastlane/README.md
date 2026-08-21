@@ -15,6 +15,38 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios sync_development_certificates
+
+```sh
+[bundle exec] fastlane ios sync_development_certificates
+```
+
+
+
+### ios sync_release_certificates
+
+```sh
+[bundle exec] fastlane ios sync_release_certificates
+```
+
+
+
+### ios generate_development_certificates
+
+```sh
+[bundle exec] fastlane ios generate_development_certificates
+```
+
+
+
+### ios generate_release_certificates
+
+```sh
+[bundle exec] fastlane ios generate_release_certificates
+```
+
+
+
 ### ios beta
 
 ```sh

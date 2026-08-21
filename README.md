@@ -10,17 +10,25 @@ Awake
 
 ## Bootstrap
 
-* #### Reveal secrets *(only for maintainers)*
-```bash
-git secret reveal
-```
-
 * #### Bootstrap project
 ```bash
 make bootstrap
 ```
 
+* #### Sync development certificates and profiles *(only for maintainers, requires access to `match-certificates` repo and `MATCH_PASSWORD`)*
+```bash
+make sync_development_certificates
+```
+
 * #### Open the generated `Wake On LAN.xcodeproj` and build the scheme `Wake On LAN AppStore`
+
+## Signing *(only for maintainers)*
+
+Certificates and provisioning profiles are managed by [fastlane match](https://docs.fastlane.tools/actions/match). Profiles are named `Wake On Lan <Type>` and `Wake On Lan Siri Intent <Type>` and referenced from `project.yml`.
+
+* `make sync_development_certificates` — install development certificate and profiles (read-only)
+* `bundle exec fastlane ios sync_release_certificates` — install distribution certificate and App Store / Ad Hoc profiles (read-only, used by CI)
+* `bundle exec fastlane ios generate_development_certificates` / `generate_release_certificates` — create or renew certificates and profiles in Apple Developer Portal. Requires the App Store Connect API key: `git secret reveal` decrypts `fastlane/api_key.json`.
 
 ## Code generation instructions
 To generate new modules or `swiftgen` files please follow instructions for `foxgen` which will be built during bootstrap
@@ -35,7 +43,7 @@ mint run foxgen --help
 ```
 Kind of key: RSA and RSA
 Keysize: 4096
-Key lifetime: 1 year
+Key lifetime: 20y
 ```
 
 `gpg --armor --export your.email@address.com > public-key.gpg`

@@ -94,17 +94,17 @@ targets:
         CODE_SIGN_ENTITLEMENTS: "Wake On Lan/Wake on LAN.entitlements"
       configs:
         AppStore Debug:
-          CODE_SIGN_IDENTITY: "Apple Development"
+          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         AppStore Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution"
+          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AppStore"
           DEAD_CODE_STRIPPING: YES
         AdHoc Debug:
-          CODE_SIGN_IDENTITY: "Apple Development"
+          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Development"
         AdHoc Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution"
+          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan AdHoc"
           DEAD_CODE_STRIPPING: YES
     preBuildScripts:
@@ -139,16 +139,16 @@ targets:
         CODE_SIGN_ENTITLEMENTS: "Intent/Intent.entitlements"
       configs:
         AppStore Debug:
-          CODE_SIGN_IDENTITY: "Apple Development"
+          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
         AppStore Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution"
+          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AppStore"
         AdHoc Debug:
-          CODE_SIGN_IDENTITY: "Apple Development"
+          CODE_SIGN_IDENTITY: "Apple Development: Created via API (65K8M54759)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent Development"
         AdHoc Release:
-          CODE_SIGN_IDENTITY: "Apple Distribution"
+          CODE_SIGN_IDENTITY: "Apple Distribution: Vladislav Lisianskii (SGM5527A99)"
           PROVISIONING_PROFILE_SPECIFIER: "Wake On Lan Siri Intent AdHoc"
     dependencies:
       - target: WOLSharedProtocolsAndModels

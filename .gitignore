@@ -65,6 +65,7 @@ vendor/
 # git-secret
 .gitsecret/keys/random_seed
 !*.secret
+fastlane/api_key.json
 DevelopmentKeys/Dev key password.txt
 DevelopmentKeys/Wake_On_Lan_Development.mobileprovision
 DevelopmentKeys/Wake_On_Lan_Siri_Intent_Development.mobileprovision

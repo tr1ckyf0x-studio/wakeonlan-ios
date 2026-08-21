@@ -3,15 +3,17 @@ on:
   push:
     branches:
       - development
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+concurrency:
+  group: build-upload-wake-on-lan
+  cancel-in-progress: false
 
 jobs:
   Build:
     runs-on: self-hosted-mac
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           lfs: true
 
@@ -20,35 +22,35 @@ jobs:
           eval "$(rbenv init -)"
           make bootstrap
 
-      - name: Import provisioning profiles
+      - name: Import GPG key and reveal secrets
         run: |
-          mkdir -p ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles
-          echo ${{ secrets.PROVISION_PROFILE_WOL_ADHOC }} | base64 --decode > ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/Wake_On_Lan_AdHoc.mobileprovision
-          echo ${{ secrets.PROVISION_PROFILE_WOL_APPSTORE }} | base64 --decode > ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/Wake_On_Lan_AppStore.mobileprovision
-          echo ${{ secrets.PROVISION_PROFILE_WOL_DEVELOPMENT }} | base64 --decode > ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/Wake_On_Lan_Development.mobileprovision
-          echo ${{ secrets.PROVISION_PROFILE_WOL_SIRI_INTENT_ADHOC }} | base64 --decode > ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/Wake_On_Lan_Siri_Intent_AdHoc.mobileprovision
-          echo ${{ secrets.PROVISION_PROFILE_WOL_SIRI_INTENT_APPSTORE }} | base64 --decode > ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/Wake_On_Lan_Siri_Intent_AppStore.mobileprovision
-          echo ${{ secrets.PROVISION_PROFILE_WOL_SIRI_INTENT_DEVELOPMENT }} | base64 --decode > ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/Wake_On_Lan_Siri_Intent_Development.mobileprovision
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          KEY_FPR=$(gpg --list-secret-keys --with-colons | grep '^fpr' | head -1 | cut -d: -f10)
+          echo "${KEY_FPR}:6:" | gpg --import-ownertrust
+          git secret reveal
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
-      - name: Import Certificates
+      - name: Create temporary keychain
         run: |
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          security create-keychain -p ${{ secrets.IOS_RELEASE_SIGN_KEY_PASSWORD }} $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p ${{ secrets.IOS_RELEASE_SIGN_KEY_PASSWORD }} $KEYCHAIN_PATH
-          echo ${{ secrets.IOS_RELEASE_SIGN_KEY }} | base64 --decode | security import /dev/stdin -P ${{ secrets.IOS_RELEASE_SIGN_KEY_PASSWORD }} -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -lut 21600 build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security list-keychains -d user -s build.keychain $(security list-keychains -d user | tr -d '"')
+        env:
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
 
       - name: Build release
         env:
           LANG: en_US.UTF-8
-          KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
-          APPSTORE_AUTH_KEY: ${{ secrets.APPSTORE_AUTH_KEY }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          KEYCHAIN_NAME: build.keychain
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           eval "$(rbenv init -)"
-          bundle exec fastlane ios beta
+          bundle exec fastlane ios sync_release_certificates
+          bundle exec fastlane ios beta skip_waiting_for_build_processing:true
 
-      - name: Clean up keychain and provisioning profile
-        if: ${{ always() }}
-        run: |
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+      - name: Delete temporary keychain
+        if: always()
+        run: security delete-keychain build.keychain
