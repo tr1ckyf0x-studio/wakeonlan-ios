@@ -15,11 +15,9 @@ extension NWUDPService: UDPService {
         }
 
         connection.start(queue: .global())
+        defer { connection.cancel() }
 
-        Task {
-            try await connection.send(content: packet, contentContext: .finalMessage)
-            connection.cancel()
-        }
+        try await connection.send(content: packet, contentContext: .finalMessage)
     }
 }
 
