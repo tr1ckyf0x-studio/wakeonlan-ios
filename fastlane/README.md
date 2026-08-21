@@ -47,6 +47,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### ios build_only
+
+```sh
+[bundle exec] fastlane ios build_only
+```
+
+Build app without code signing. CI check
+
 ### ios beta
 
 ```sh

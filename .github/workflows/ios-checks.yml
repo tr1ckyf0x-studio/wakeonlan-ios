@@ -1,0 +1,31 @@
+name: Checks
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: checks-wake-on-lan-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Build:
+    runs-on: self-hosted-mac
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+
+      - name: Bootstrap
+        run: |
+          eval "$(rbenv init -)"
+          make bootstrap
+
+      - name: Build
+        env:
+          LANG: en_US.UTF-8
+        run: |
+          eval "$(rbenv init -)"
+          bundle exec fastlane ios build_only

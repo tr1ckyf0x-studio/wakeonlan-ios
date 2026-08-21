@@ -1,8 +1,8 @@
 name: Build iOS Beta
 on:
   push:
-    branches:
-      - development
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
 
 concurrency:
@@ -24,6 +24,14 @@ jobs:
 
       - name: Import GPG key and reveal secrets
         run: |
+          # Import into a throwaway keyring rather than the runner's own. This runner is self-hosted
+          # and also serves the Checks workflow on pull_request, so a signing key left in the default
+          # keyring outlives the job on a machine that runs other people's code.
+          export GNUPGHOME="$RUNNER_TEMP/gnupg"
+          rm -rf "$GNUPGHOME"
+          mkdir -p "$GNUPGHOME"
+          chmod 700 "$GNUPGHOME"
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
           echo "$GPG_PRIVATE_KEY" | gpg --batch --import
           KEY_FPR=$(gpg --list-secret-keys --with-colons | grep '^fpr' | head -1 | cut -d: -f10)
           echo "${KEY_FPR}:6:" | gpg --import-ownertrust
@@ -54,3 +62,12 @@ jobs:
       - name: Delete temporary keychain
         if: always()
         run: security delete-keychain build.keychain
+
+      - name: Remove the revealed secrets and the temporary keyring
+        if: always()
+        run: |
+          gpgconf --homedir "$RUNNER_TEMP/gnupg" --kill all || true
+          rm -rf "$RUNNER_TEMP/gnupg"
+          # `git secret reveal` decrypts the App Store Connect key into the workspace, which persists
+          # between jobs on a self-hosted runner.
+          rm -f fastlane/api_key.json
