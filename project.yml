@@ -89,15 +89,40 @@ targets:
     postBuildScripts:
       - name: "Crashlytics"
         basedOnDependencyAnalysis: false
-        # NOTE: the opt-out is deliberately fail-safe — an unset variable uploads, exactly as before.
-        # Inverting it (upload only when asked) would let a typo silently stop shipping dSYMs, and
-        # nothing downstream would notice until a crash came back unsymbolicated.
+        # Uploads every dSYM the build produced, not only the app's. The Siri extension and the three
+        # SharedCode frameworks each get their own, and without them a crash inside one of them --
+        # `fatalError("Persistent container URL is unavailable")` in `CoreDataService.init()`, say --
+        # arrives with nothing but hex addresses. `upload-symbols` accepts a directory and walks it,
+        # so one invocation covers the lot; Firebase's own `run` wrapper does not, because
+        # `--build-phase` makes it look at `$DWARF_DSYM_FILE_NAME` alone.
+        #
+        # It also runs in the foreground. `run` backgrounds the upload and sends its output to
+        # /dev/null, so a failed upload is indistinguishable from a successful one until a crash
+        # comes back unreadable weeks later. Better to fail the build and retry.
+        #
+        # The skip is deliberately fail-safe: an unset variable uploads. Inverting it would let a typo
+        # silently stop shipping dSYMs, with nothing downstream to notice.
         script: |
                 if [ "$SKIP_CRASHLYTICS_UPLOAD" = "1" ]; then
                   echo "SKIP_CRASHLYTICS_UPLOAD=1, not uploading dSYMs"
                   exit 0
                 fi
-                "${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"
+
+                case "$DEBUG_INFORMATION_FORMAT" in
+                  *dwarf-with-dsym*) ;;
+                  *)
+                    echo "DEBUG_INFORMATION_FORMAT=$DEBUG_INFORMATION_FORMAT produces no dSYM, nothing to upload"
+                    exit 0
+                    ;;
+                esac
+
+                UPLOAD_SYMBOLS="${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols"
+                SERVICE_PLIST="$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/GoogleService-Info.plist"
+
+                # Validate first, exactly as Firebase's wrapper does: it catches a misconfigured phase
+                # without paying for the upload.
+                "$UPLOAD_SYMBOLS" -gsp "$SERVICE_PLIST" -p ios --validate -- "$DWARF_DSYM_FOLDER_PATH" || exit 1
+                "$UPLOAD_SYMBOLS" -gsp "$SERVICE_PLIST" -p ios -- "$DWARF_DSYM_FOLDER_PATH"
         inputFiles:
           - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}
           - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}

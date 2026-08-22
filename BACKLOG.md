@@ -287,12 +287,27 @@ Alongside it:
 - the Crashlytics phase honours `SKIP_CRASHLYTICS_UPLOAD=1` so the verification build does not push
   dSYMs for a binary that never ships.
 
-### Crashlytics uploads only the app's dSYM · ~30 min
+### ~~Crashlytics uploads only the app's dSYM~~ — DONE
 
-`Intent.appex.dSYM` and the three framework dSYMs are never uploaded **(reported)**, so a crash in the
-Siri extension — or the `fatalError("Persistent container URL is unavailable")` in
-`CoreDataService.init()` — arrives unsymbolicated. The run script also fires on every Debug build,
-where there is no dSYM to process; guard it on `DEBUG_INFORMATION_FORMAT`.
+Firebase's `run` wrapper passes `--build-phase`, which makes `upload-symbols` look at
+`$DWARF_DSYM_FILE_NAME` and nothing else — so `Intent.appex.dSYM` and the framework dSYMs were never
+uploaded, and a crash in the Siri extension or in `CoreDataService.init()` arrived as hex addresses.
+The phase now calls `upload-symbols` directly and hands it `$DWARF_DSYM_FOLDER_PATH`, which the tool
+walks recursively; that folder holds all nine dSYMs the build produces.
+
+Two more things changed with it:
+
+- **The upload runs in the foreground.** `run` backgrounds it and redirects output to `/dev/null`, so
+  a failed upload looked exactly like a successful one until a crash came back unreadable. It now
+  fails the build instead. The trade is real — a network blip during a release turns the run red —
+  but a silently unsymbolicated release build is worse.
+- **Debug builds skip it.** Guarded on `DEBUG_INFORMATION_FORMAT`, which is `dwarf` in Debug and
+  `dwarf-with-dsym` in Release. Verified by building Debug with uploading enabled: it printed
+  "produces no dSYM, nothing to upload" and never reached the uploader.
+
+Not verified end to end: that all nine dSYMs actually land in Crashlytics. Uploading symbols for a
+throwaway build to prove it was not worth it — `upload-symbols --validate` accepts the directory, and
+the first real release run will print the result now that the upload is in the foreground.
 
 ### Dead build settings and unused entitlements · ~30 min
 
