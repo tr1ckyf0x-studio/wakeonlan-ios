@@ -47,13 +47,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios build_only
+### ios test
 
 ```sh
-[bundle exec] fastlane ios build_only
+[bundle exec] fastlane ios test
 ```
 
-Build app without code signing. CI check
+Run the SharedCode unit tests. CI check
+
+### ios verify_release
+
+```sh
+[bundle exec] fastlane ios verify_release
+```
+
+Build Release without signing and assert the bundle is shippable. CI check
 
 ### ios beta
 

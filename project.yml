@@ -89,7 +89,14 @@ targets:
     postBuildScripts:
       - name: "Crashlytics"
         basedOnDependencyAnalysis: false
+        # NOTE: the opt-out is deliberately fail-safe — an unset variable uploads, exactly as before.
+        # Inverting it (upload only when asked) would let a typo silently stop shipping dSYMs, and
+        # nothing downstream would notice until a crash came back unsymbolicated.
         script: |
+                if [ "$SKIP_CRASHLYTICS_UPLOAD" = "1" ]; then
+                  echo "SKIP_CRASHLYTICS_UPLOAD=1, not uploading dSYMs"
+                  exit 0
+                fi
                 "${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"
         inputFiles:
           - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}

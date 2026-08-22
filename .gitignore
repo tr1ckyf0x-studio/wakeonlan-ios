@@ -62,6 +62,9 @@ vendor/
 # Tools
 .bin/
 
+# fastlane verify_release derived data
+build/
+
 # git-secret
 .gitsecret/keys/random_seed
 !*.secret
