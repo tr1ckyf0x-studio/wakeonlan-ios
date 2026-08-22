@@ -84,6 +84,15 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :beta do |options|
+    # The explicit `build_number:` is load-bearing, not decoration. `CURRENT_PROJECT_VERSION` lives in
+    # Configs/Base.xcconfig, and agvtool reads project.pbxproj without resolving xcconfigs, so
+    # `agvtool what-version` exits 6 here. fastlane only tolerates that because a number was passed:
+    # `raise "Apple Generic Versioning is not enabled." if agv_disabled && params[:build_number].nil?`.
+    # Drop the argument and the release stops working, and only at tag-push time.
+    #
+    # What actually carries the number into the build is agvtool rewriting CFBundleVersion in both
+    # Info.plist files, replacing `$(CURRENT_PROJECT_VERSION)` with a literal for the duration of the
+    # run. The value in the xcconfig never participates in a release.
     increment_build_number(
       build_number: latest_testflight_build_number(api_key_path: api_key_path) + 1,
       xcodeproj: "Wake On LAN.xcodeproj"
