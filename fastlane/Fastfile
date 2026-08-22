@@ -129,6 +129,19 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    # A tag that disagrees with MARKETING_VERSION ships a build labelled with the wrong version, and
+    # nothing downstream notices. Read straight out of the xcconfig, which is the source of truth --
+    # asking xcodebuild for it would cost a project load for one string. Only a tag push has a
+    # version to check; workflow_dispatch runs from a branch and skips this.
+    if ENV["GITHUB_REF_TYPE"] == "tag"
+      tag = ENV["GITHUB_REF_NAME"].to_s
+      config = File.read(File.expand_path("../Configs/Base.xcconfig", __dir__))
+      marketing_version = config[/^MARKETING_VERSION\s*=\s*(\S+)/, 1]
+      unless tag == marketing_version
+        UI.user_error!("Tag #{tag} does not match MARKETING_VERSION #{marketing_version} in Configs/Base.xcconfig")
+      end
+    end
+
     # The explicit `build_number:` is load-bearing, not decoration. `CURRENT_PROJECT_VERSION` lives in
     # Configs/Base.xcconfig, and agvtool reads project.pbxproj without resolving xcconfigs, so
     # `agvtool what-version` exits 6 here. fastlane only tolerates that because a number was passed:
