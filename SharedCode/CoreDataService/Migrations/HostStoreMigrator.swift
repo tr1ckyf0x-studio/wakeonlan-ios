@@ -65,6 +65,32 @@ extension HostStoreMigrator {
     }
 }
 
+// MARK: - Discarding
+
+extension HostStoreMigrator {
+    /// Deletes the store so the next container opens on an empty one at the current model version.
+    ///
+    /// Only ever called after ``migrateIfNeeded(storeURL:modelURL:)`` has failed. Leaving the file in
+    /// place is the worse option: `PersistenceCore` builds a bare `NSPersistentStoreDescription`, so
+    /// the container that opens next would run Core Data's inferred single-hop migration over it and
+    /// produce a host list whose addresses are silently wrong — hosts that look right and wake
+    /// nothing. An empty list is at least honest about having lost something.
+    static func discardStore(at storeURL: URL) {
+        // The journal files are part of the store; leaving them behind resurrects pages of the old
+        // one when SQLite next opens the path.
+        let files = [storeURL]
+            + ["-wal", "-shm"].map { URL(fileURLWithPath: storeURL.path + $0) }
+
+        for file in files where FileManager.default.fileExists(atPath: file.path) {
+            do {
+                try FileManager.default.removeItem(at: file)
+            } catch {
+                DDLogError("HostStoreMigrator: could not remove \(file.lastPathComponent): \(error)")
+            }
+        }
+    }
+}
+
 // MARK: - Failure
 
 extension HostStoreMigrator {

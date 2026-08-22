@@ -142,3 +142,44 @@ struct HostStoreMigratorTests {
         #expect(try store.migrateAndRead().isEmpty)
     }
 }
+
+// MARK: - Discarding
+
+@Suite("Discarding a store", .serialized)
+struct HostStoreDiscardTests {
+    @Test("Discarding removes the store together with its journal files")
+    func discardRemovesJournalFiles() throws {
+        let store = try HostStoreFixture(version: .current, count: 1) { row, _ in
+            row.setValue("Host", forKey: "title")
+            row.setValue("desktopcomputer", forKey: "iconName")
+            row.setValue("10.0.0.1", forKey: "destination")
+            row.setValue(0, forKey: "order")
+            row.setValue(Date(timeIntervalSince1970: 1_600_000_000), forKey: "createdAt")
+        }
+
+        // Journal files only exist while SQLite has the store open, so seed them by hand: the point
+        // of the test is that `discardStore` does not leave a `-wal` behind for the next open to
+        // resurrect pages from.
+        let journals = ["-wal", "-shm"].map { URL(fileURLWithPath: store.storeURL.path + $0) }
+        for journal in journals {
+            try Data().write(to: journal)
+        }
+
+        HostStoreMigrator.discardStore(at: store.storeURL)
+
+        #expect(!FileManager.default.fileExists(atPath: store.storeURL.path))
+        for journal in journals {
+            #expect(!FileManager.default.fileExists(atPath: journal.path))
+        }
+    }
+
+    @Test("Discarding a store that is not there is not an error")
+    func discardMissingStoreIsHarmless() throws {
+        let absent = FileManager.default.temporaryDirectory
+            .appendingPathComponent("\(UUID().uuidString).sqlite")
+
+        HostStoreMigrator.discardStore(at: absent)
+
+        #expect(!FileManager.default.fileExists(atPath: absent.path))
+    }
+}

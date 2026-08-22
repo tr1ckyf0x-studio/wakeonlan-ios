@@ -30,12 +30,21 @@ extension CoreDataService: @retroactive ProvidesWeakSharedInstanceTrait {
         }
 
         // NOTE: must run before the container opens the store — see `HostStoreMigrator`.
-        // The failure is swallowed on purpose: the migrator leaves the store at the version it
-        // already had, so the container below opens exactly what was there before.
+        //
+        // A failure here cannot simply be logged and stepped over. `PersistenceCore` hands Core Data
+        // a bare `NSPersistentStoreDescription`, leaving `shouldMigrateStoreAutomatically` and
+        // `shouldInferMappingModelAutomatically` at their `true` default, so the container built
+        // below would run exactly the single-hop inferred migration that `HostMigrationStages` exists
+        // to replace: the one that drops the host address and the list order. The result is a list
+        // that still looks right and wakes nothing.
+        //
+        // Discarding the store is the lesser loss. The user sees an empty list — obvious, and fixed
+        // by re-adding hosts — rather than entries that quietly point at the wrong machine.
         do {
             try HostStoreMigrator.migrateIfNeeded(storeURL: persistentContainerURL, modelURL: managedModelURL)
         } catch {
-            DDLogError("HostStoreMigrator: \(error)")
+            DDLogError("HostStoreMigrator: migration failed, discarding the store: \(error)")
+            HostStoreMigrator.discardStore(at: persistentContainerURL)
         }
 
         self.init(
