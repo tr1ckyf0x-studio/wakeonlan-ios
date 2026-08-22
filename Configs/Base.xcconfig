@@ -8,14 +8,11 @@
 // An earlier version of this comment claimed the reverse. Verify a precedence question by
 // regenerating and grepping project.pbxproj, not by reading prose. See BACKLOG.md.
 
-ENABLE_BITCODE = NO
-
 // iPhone only. XcodeGen's iOS preset would write "1,2" here if this line were absent.
 TARGETED_DEVICE_FAMILY = 1
 
 SWIFT_VERSION = 6.0
 SWIFT_APPROACHABLE_CONCURRENCY = YES
-SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES
 
 SWIFT_TREAT_WARNINGS_AS_ERRORS = YES
 GCC_TREAT_WARNINGS_AS_ERRORS = YES

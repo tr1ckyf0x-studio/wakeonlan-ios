@@ -309,13 +309,29 @@ Not verified end to end: that all nine dSYMs actually land in Crashlytics. Uploa
 throwaway build to prove it was not worth it — `upload-symbols --validate` accepts the directory, and
 the first real release run will print the result now that the upload is in the foreground.
 
-### Dead build settings and unused entitlements · ~30 min
+### ~~Dead build settings and unused entitlements~~ — DONE
 
-Reported, worth checking before removing: `SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES` (no such
-setting in Xcode 26.6, and the feature is unconditional under Swift 6), `ENABLE_BITCODE`, and
-push-notification leftovers with no code behind them — `aps-environment` in both entitlements files,
-`UIBackgroundModes: remote-notification`, and `UIRequiredDeviceCapabilities: armv7` on an arm64-only
-binary.
+All five removed, each confirmed inert first rather than taken on the audit's word:
+
+- `SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES` never reached `swiftc`. The build passes seven
+  upcoming features — `ExistentialAny`, `ImmutableWeakCaptures`, `InferIsolatedConformances`,
+  `InternalImportsByDefault`, `MemberImportVisibility`, `NonescapableTypes`,
+  `NonisolatedNonsendingByDefault` — and `IsolatedDefaultValues` is not among them. Xcode does not
+  recognise the setting, and SE-0411 is unconditional under Swift 6 anyway.
+- `ENABLE_BITCODE` — bitcode left Xcode in 14; the variable is only exported into the build
+  environment.
+- `aps-environment` in both entitlements files, and `UIBackgroundModes: remote-notification`. There is
+  no push code at all: no `registerForRemoteNotifications`, no `UNUserNotificationCenter`, no
+  `deviceToken`, and Firebase is wired for `FirebaseCore` + `FirebaseCrashlytics` only. The value was
+  wrong on top of being unused — `development` would have shipped in Release builds.
+- `UIRequiredDeviceCapabilities: armv7`, on a binary `lipo` reports as `arm64` alone, for a minimum of
+  iOS 17 — no armv7 device has run anything past iOS 10. Removing the hand-written key lets Xcode
+  inject its own, and the built bundle now declares `arm64`.
+
+**Regenerating provisioning profiles was not needed**, contrary to the first guess: a profile may
+carry more capabilities than the app requests, only the reverse fails. Proved by building signed for
+a device against the existing profiles — `codesign` succeeded and the signed binary carries only
+app-groups, Siri and multicast.
 
 ## Tests
 
