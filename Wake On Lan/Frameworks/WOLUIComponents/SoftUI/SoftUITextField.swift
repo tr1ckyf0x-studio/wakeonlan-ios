@@ -89,6 +89,10 @@ public class SoftUITextField: UITextField {
     override public init(frame: CGRect) {
         super.init(frame: frame)
         addSublayers()
+        // Repaints when the colour appearance changes — the layers hold resolved colours.
+        registerForTraitChanges(SoftUITraits.colorAppearance) { (field: Self, _: UITraitCollection) in
+            field.updateAppearance()
+        }
     }
 
     @available(*, unavailable)
@@ -123,15 +127,6 @@ public class SoftUITextField: UITextField {
             dx: appearance.clearButtonRectInset.x,
             dy: appearance.clearButtonRectInset.y
         )
-    }
-
-    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if
-            #available(iOS 13, *),
-            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
-        }
     }
 }
 

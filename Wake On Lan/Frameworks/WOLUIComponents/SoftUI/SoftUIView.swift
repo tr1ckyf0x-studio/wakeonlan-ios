@@ -123,6 +123,7 @@ public class SoftUIView: UIControl {
         super.init(frame: frame)
         addSublayers()
         updateSublayersShape()
+        registerForColorAppearanceChanges()
     }
 
     @available(*, unavailable)
@@ -137,12 +138,10 @@ public class SoftUIView: UIControl {
 
     // MARK: - Override
 
-    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if
-            #available(iOS 13, *),
-            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance()
+    /// Repaints when the colour appearance changes — the layers hold resolved colours.
+    private func registerForColorAppearanceChanges() {
+        registerForTraitChanges(SoftUITraits.colorAppearance) { (view: Self, _: UITraitCollection) in
+            view.updateAppearance()
         }
     }
 

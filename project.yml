@@ -6,7 +6,7 @@ configs:
 
 options:
   deploymentTarget:
-    iOS: 16.0
+    iOS: 17.0
 
 attributes:
   ORGANIZATIONNAME: "Vladislav Lisianskii"
@@ -140,6 +140,20 @@ targets:
     configFiles:
       Debug: Configs/WOLSharedProtocolsAndModels.xcconfig
       Release: Configs/WOLSharedProtocolsAndModels.xcconfig
+
+  SharedCodeTests:
+    platform: iOS
+    type: bundle.unit-test
+    sources:
+      - path: SharedCodeTests
+    dependencies:
+      - target: CoreDataService
+    configFiles:
+      Debug: Configs/SharedCodeTests.xcconfig
+      Release: Configs/SharedCodeTests.xcconfig
+    scheme:
+      testTargets:
+        - SharedCodeTests
 
   CoreDataService:
     platform: iOS

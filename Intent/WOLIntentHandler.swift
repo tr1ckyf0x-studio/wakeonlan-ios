@@ -60,7 +60,6 @@ final class WOLIntentHandler: NSObject, WOLIntentHandling {
         }
     }
 
-    @available(iOSApplicationExtension 14.0, *)
     func provideHostnameOptionsCollection(
         for intent: WOLIntent,
         searchTerm: String?

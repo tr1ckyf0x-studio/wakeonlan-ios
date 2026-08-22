@@ -71,6 +71,15 @@ platform :ios do
     match_profiles(type: "appstore", type_suffix: "AppStore", api_key_path: api_key_path)
   end
 
+  desc "Run the SharedCode unit tests. CI check"
+  lane :test do
+    run_tests(
+      scheme: "SharedCodeTests",
+      device: "iPhone 17",
+      xcodebuild_formatter: "mint run xcbeautify"
+    )
+  end
+
   desc "Build app without code signing. CI check"
   lane :build_only do
     build_app(

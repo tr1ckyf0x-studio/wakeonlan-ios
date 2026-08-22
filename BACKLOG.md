@@ -134,35 +134,26 @@ execution.
 
 ## Correctness
 
-### Core Data migration loses data for old installs · ~1 day
+### ~~Core Data migration loses data for old installs~~ — DONE
 
-The model has four versions and the attribute names shift between them **(verified)**:
+Automatic lightweight migration is single-hop, so a store at v1 got an inferred v1→v4 mapping that
+matched attributes by name: `ipAddressData` (v1, Binary) has no counterpart in v4, so every host lost
+its address and fell back to the 255.255.255.255 broadcast, and `order` did not exist before v3 so the
+list collapsed onto one position. Reproduced on a seeded store.
 
-```
-v1: createdAt iconName ipAddressData macAddressData port title
-v2: createdAt destination iconName macAddressData port title      ipAddressData -> destination
-v3: destination iconName macAddressData order port title          createdAt dropped, order added
-v4: createdAt destination iconName macAddressData order port title
-```
+Exposure from history: v1 shipped May 2020 – Aug 2023, v2 until Dec 2023, v3 until Jan 2024. A v1
+store therefore means an install untouched for over two years; a v2 store lost only its ordering.
 
-`loadPersistentStores` is called with no options (`PersistenceCore/Core/CoreDataServiceProtocol.swift:21`),
-so the defaults apply: automatic migration with an inferred mapping model **(verified)**. No staged or
-chained migration exists — `HostV2Mapping`, `HostV3Mapping` and `HostV4Mapping` only run if Core Data
-selects the matching explicit mapping model, which needs an exact source/destination match.
+Fixed by raising the deployment target to iOS 17 and adopting `NSStagedMigrationManager`
+(`HostMigrationStages`), which walks v1→v2→v3→v4 with three custom stages. The three
+`.xcmappingmodel` files and the three `NSEntityMigrationPolicy` subclasses were deleted with it —
+staged migration takes no mapping models, and one of the three had been unusable for years anyway
+because a mapping model embeds a *copy* of its source and destination models and v3 was edited after
+it was authored.
 
-Lightweight migration is single-hop. For a store still at v1 there is no v1→v4 mapping, so Core Data
-infers one, and inference matches attributes **by name**: `ipAddressData` has no counterpart in v4, so
-`destination` comes out `nil` and `order` is unset. `WakeOnLanService` then falls back to
-`255.255.255.255`, and `Host.defaultSortDescriptors` sorts every row by the same `order`.
-
-A store at v2 loses only `order`. A store at v3 is fine — `HostV3toV4Mapping` matches exactly.
-
-Reported and not re-verified: an end-to-end reproduction on a synthetic v1 store, and a claim that
-`HostV2toV3Mapping` is additionally stale (its destination hash matches no model).
-
-**Open question before fixing:** how many installs can still be at v1 — that is, which shipped version
-introduced `destination`. All four model versions entered the current path in one commit (`314b733`,
-the de-modularisation), so the real dates are further back in history.
+Covered by `SharedCodeTests/HostStoreMigratorTests.swift` (v1, v2, v3, current, empty store, creation
+dates preserved, missing icon backfilled) and verified end to end by seeding a v1 store into the
+simulator's App Group container and launching the app.
 
 ### ~~The icon picker's transition delegate is owned by nobody~~ — investigated, not doing
 
@@ -362,12 +353,14 @@ Recorded, not scheduled:
   access" on a Mac, wrong subnet, Wi-Fi versus Ethernet). Most "it doesn't work" reports for
   Wake-on-LAN apps are protocol misunderstandings.
 - **UI tests** and a **gradual migration to SwiftUI**, screen by screen.
+- Now unblocked by the iOS 17 deployment target: **Control Center controls** and **interactive
+  widgets** (both iOS 17/18 era), and the App Intents migration above.
 - Check in App Store Connect whether the donation products are non-consumable. If they are, a user
   cannot donate twice, and the missing "Restore Purchases" is an App Review 3.1.1 problem.
 
 ## Deliberately not doing
 
-Raising the deployment target, iPad and Apple Silicon support, XCUITest on the self-hosted runner,
+iPad and Apple Silicon support, XCUITest on the self-hosted runner,
 snapshot tests, generated mocks, and stripping the vestigial `public` from module types (124
 declarations, no effect — clean up in passing when a file is touched anyway).
 

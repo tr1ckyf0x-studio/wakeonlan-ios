@@ -5,6 +5,7 @@
 //  Created by Vladislav Lisianskii on 13. 4. 2025..
 //
 
+import CocoaLumberjackSwift
 import PersistenceCore
 import SharedProtocolsAndModels
 import WOLSharedProtocolsAndModels
@@ -26,6 +27,15 @@ extension CoreDataService: @retroactive ProvidesWeakSharedInstanceTrait {
 
         guard let managedModelURL = CoreDataConstants.managedModelURL else {
             fatalError("Managed model URL is unavailable")
+        }
+
+        // NOTE: must run before the container opens the store — see `HostStoreMigrator`.
+        // The failure is swallowed on purpose: the migrator leaves the store at the version it
+        // already had, so the container below opens exactly what was there before.
+        do {
+            try HostStoreMigrator.migrateIfNeeded(storeURL: persistentContainerURL, modelURL: managedModelURL)
+        } catch {
+            DDLogError("HostStoreMigrator: \(error)")
         }
 
         self.init(

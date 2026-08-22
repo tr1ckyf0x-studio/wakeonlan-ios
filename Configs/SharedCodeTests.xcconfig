@@ -1,0 +1,11 @@
+// Unit tests over the `SharedCode/` frameworks. No host application: nothing here touches UIKit, the
+// App Group container or the keychain, so the bundle runs on its own and needs no provisioning.
+
+GENERATE_INFOPLIST_FILE = YES
+PRODUCT_BUNDLE_IDENTIFIER = com.tr1ckyf0x.wake-on-lan.SharedCodeTests
+
+// Base.xcconfig selects manual signing with a distribution team, which a simulator-only test bundle
+// neither has nor needs.
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY =
+DEVELOPMENT_TEAM =
