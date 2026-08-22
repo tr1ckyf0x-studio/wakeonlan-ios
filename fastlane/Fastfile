@@ -92,7 +92,7 @@ platform :ios do
   end
 
   desc "Push a new beta build to TestFlight"
-  lane :beta do |options|
+  lane :beta do
     # The explicit `build_number:` is load-bearing, not decoration. `CURRENT_PROJECT_VERSION` lives in
     # Configs/Base.xcconfig, and agvtool reads project.pbxproj without resolving xcconfigs, so
     # `agvtool what-version` exits 6 here. fastlane only tolerates that because a number was passed:
@@ -116,9 +116,15 @@ platform :ios do
       }
     )
 
+    # Wait for App Store Connect to finish processing. With the wait skipped and no changelog,
+    # pilot returns right after the upload and never reaches its distribute step, so a build that
+    # fails processing is still reported as a successful release.
     upload_to_testflight(
       api_key_path: api_key_path,
-      skip_waiting_for_build_processing: options[:skip_waiting_for_build_processing] == true
+      # Bound how long a stalled processing queue can hold the self-hosted runner: without this the
+      # watcher polls indefinitely and the job only ends at GitHub's six-hour default. The upload
+      # has already succeeded by the time this fires, so a timeout costs a red run, not the build.
+      wait_processing_timeout_duration: 1800
     )
   end
 end

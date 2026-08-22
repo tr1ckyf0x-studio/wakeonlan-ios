@@ -57,7 +57,7 @@ jobs:
         run: |
           eval "$(rbenv init -)"
           bundle exec fastlane ios sync_release_certificates
-          bundle exec fastlane ios beta skip_waiting_for_build_processing:true
+          bundle exec fastlane ios beta
 
       - name: Delete temporary keychain
         if: always()
