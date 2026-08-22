@@ -154,6 +154,13 @@ targets:
     scheme:
       testTargets:
         - SharedCodeTests
+      # Traps on the first Core Data concurrency violation instead of letting it corrupt state and
+      # crash somewhere unrelated later. A stage reading rows through the wrong queue cost a day of
+      # chasing a 1-in-3 crash that landed in a different test every time; this turns that class of
+      # bug into a deterministic stop at the offending call. It found two violations in the fixture
+      # the first time it was switched on.
+      commandLineArguments:
+        "-com.apple.CoreData.ConcurrencyDebug 1": true
 
   CoreDataService:
     platform: iOS
