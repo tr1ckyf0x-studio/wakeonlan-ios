@@ -78,7 +78,12 @@ platform :ios do
 
   # Bump only when tests are deliberately removed. A minimum rather than an exact count, so adding
   # tests needs no edit here.
-  MINIMUM_TEST_COUNT = 8
+  #
+  # Two different numbers describe the same run: fastlane's own summary table counts a parameterised
+  # `@Test` once per argument (23 today), while `xcresulttool`'s `totalTestCount` counts the test
+  # itself (14). This guard reads the latter, so take the number from the guard's own output --
+  # "N tests ran" -- and not from the table fastlane prints underneath it.
+  MINIMUM_TEST_COUNT = 14
 
   desc "Run the SharedCode unit tests. CI check"
   lane :test do

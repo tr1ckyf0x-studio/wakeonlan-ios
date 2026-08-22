@@ -180,6 +180,7 @@ targets:
       - path: SharedCodeTests
     dependencies:
       - target: CoreDataService
+      - target: WakeOnLanService
     configFiles:
       Debug: Configs/SharedCodeTests.xcconfig
       Release: Configs/SharedCodeTests.xcconfig

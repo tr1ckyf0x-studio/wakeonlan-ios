@@ -171,26 +171,34 @@ observable, and no defect was ever demonstrated. Do not re-open this without a r
 ownership reads wrong, but the behaviour is correct and the presentation path does not depend on the
 local outliving the call.
 
-### `MagicPacketBuilder` accepts malformed MAC addresses · ~20 min · hardening, not a live defect
+### ~~`MagicPacketBuilder` accepts malformed MAC addresses~~ — DONE
 
-`compactMap` silently drops the groups it cannot parse, and the length check then counts only the
-survivors — so `"AA:BB:CC:DD:EE:FF:GG"` parses to six bytes and produces a well-formed packet
-**(verified)**. Fix by counting the separated groups before parsing and using `map` that fails on
-`nil`.
+`compactMap` dropped the groups it could not parse and the length check counted only the survivors,
+so anything with six *parseable* groups among however many was accepted. The builder now counts the
+separated groups before parsing any of them, requires exactly six, and requires each to be exactly
+two hexadecimal digits — the same shape the AddHost form's regex enforces, so the codebase holds one
+definition of a valid MAC rather than two that can drift apart.
 
-Priority is **lower than the original audit implied**: no path that reaches the builder with
-unvalidated input was found **(verified)**.
+All three per-group conditions earn their place, measured rather than assumed:
 
-- the AddHost form gates on `^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$` behind an
-  `XX:XX:XX:XX:XX:XX` input mask, and `git log -p` on `AddHostValidationStrategy.swift` shows that
-  pattern has never been any looser than it is now;
-- the Siri extension takes no MAC of its own — `WOLIntentHandler` resolves a saved host by title and
-  sends whatever the store already holds.
+| input | `UInt8(_:radix: 16)` | `count == 2` | `allSatisfy(\.isHexDigit)` |
+|---|---|---|---|
+| `"AA"` | 170 | yes | yes |
+| `"+A"` | **10** | yes | no |
+| `"１２"` | nil | yes | **yes** |
+| `"A"` | 10 | no | yes |
 
-So every address the builder sees came through the form. Worth fixing as defence in depth for a
-`public` API with a documented `throws MagicPacketError.wrongMacAddressFormat` contract, and cheap to
-cover with a test — but it is not reachable today, and it should not be prioritised as though a user
-could trigger it.
+A length check alone admits `"+A"`, because `UInt8(_:radix:)` accepts a leading sign; `isHexDigit`
+alone admits full-width digits, which `UInt8` then rejects.
+
+Covered by `SharedCodeTests/MagicPacketBuilderTests.swift`, which also brings `WakeOnLanService`
+under test for the first time. The suite was checked against the old implementation: five of its ten
+malformed inputs failed there — `AA:BB:CC:DD:EE:FF:GG`, `AA:BB:CC:DD:EE:FF:`, `::AA:BB:CC:DD:EE:FF`,
+`A:B:C:D:E:F` and `+A:BB:CC:DD:EE:FF` — so it proves the fix rather than itself.
+
+Still true, and the reason this stayed low priority: no path reaches the builder with unvalidated
+input. The form gates on the regex, and the Siri extension resolves a saved host rather than taking a
+MAC of its own.
 
 ### Failures are reported to the user as success · ~1 day
 
