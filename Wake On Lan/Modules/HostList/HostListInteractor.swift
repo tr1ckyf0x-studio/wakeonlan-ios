@@ -22,7 +22,7 @@ final class HostListInteractor: HostListInteractorInput {
 
     weak var presenter: HostListInteractorOutput?
     private let coreDataService: CoreDataServiceProtocol
-    private let wakeOnLanService: WakeOnLanService
+    private let wakeOnLanService: WakeOnLanServiceProtocol
     private let cacheTracker: TracksHostListCache
     private let hostCrudWorker: CRUDPerformer
     private let hostMoveWorker: MovePerformer
@@ -31,7 +31,7 @@ final class HostListInteractor: HostListInteractorInput {
 
     init(
         coreDataService: CoreDataServiceProtocol,
-        wakeOnLanService: WakeOnLanService,
+        wakeOnLanService: WakeOnLanServiceProtocol,
         cacheTracker: TracksHostListCache,
         hostCrudWorker: CRUDPerformer,
         hostMoveWorker: MovePerformer

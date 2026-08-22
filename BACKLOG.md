@@ -362,9 +362,11 @@ done:
 Items 2 through 5 all live in the app target, which has no test target at all — that is the next step
 here, and a larger one than adding a file.
 
-`HostListInteractor.swift:25` still holds `WakeOnLanService` as a concrete type rather than
-`WakeOnLanServiceProtocol` **(verified)**. Three lines, and it is what blocks testing the
-wake-failure path.
+~~`HostListInteractor.swift:25` holds `WakeOnLanService` as a concrete type~~ — DONE. It takes
+`WakeOnLanServiceProtocol` now, the way `WOLIntentHandler` already did, so the wake-failure path can
+be driven by a fake. No test came with the change: items 2 through 5 above all need an app-target
+test target that does not exist yet, and this only removes the obstacle rather than clearing the way.
+No service is held by concrete type anywhere in the app or the extension now.
 
 ## Release
 
