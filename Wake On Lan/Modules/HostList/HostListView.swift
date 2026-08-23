@@ -103,7 +103,7 @@ final class HostListView: UIView {
         }()
 
         return {
-            let button = UIBarButtonItem(customView: aboutButton)
+            let button = UIBarButtonItem(softUIView: aboutButton)
             button.customView?.snp.makeConstraints {
                 $0.size.equalTo(Constants.barButtonDimensions)
             }
@@ -134,7 +134,7 @@ final class HostListView: UIView {
         }()
 
         return {
-            let button = UIBarButtonItem(customView: addButton)
+            let button = UIBarButtonItem(softUIView: addButton)
             button.customView?.snp.makeConstraints {
                 $0.size.equalTo(Constants.barButtonDimensions)
             }
@@ -163,7 +163,7 @@ final class HostListView: UIView {
         }()
 
         return {
-            let button = UIBarButtonItem(customView: donateButton)
+            let button = UIBarButtonItem(softUIView: donateButton)
             button.customView?.snp.makeConstraints { make in
                 make.height.equalTo(Constants.barButtonDimensions)
             }

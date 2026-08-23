@@ -126,7 +126,7 @@ private extension AddHostView {
 
 private extension UIBarButtonItem {
     convenience init(with view: SoftUIView) {
-        self.init(customView: view)
+        self.init(softUIView: view)
         customView?.snp.makeConstraints {
             $0.size.equalTo(32)
         }
