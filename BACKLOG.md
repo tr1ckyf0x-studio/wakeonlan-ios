@@ -124,10 +124,11 @@ execution.
   that reached for the forked stencil ever moved it, and that commit is gone. `master` in
   `swift-templates` sits ahead of it at `1593714`; a submodule pinning an ancestor is normal, and
   nothing in this project reads the templates on the build path.
-- ~~**`CFBundleDisplayName` and `CFBundleName` leaked into `InfoPlist.xcstrings`**~~ — DONE. Both were
-  English-only and identical to what `DISPLAY_NAME` / `PRODUCT_NAME` already expand to, and the
-  Russian bundle never carried them, so removing them changes nothing. Verified against a rebuilt
-  bundle: `CFBundleDisplayName` is still `Awake`.
+- ~~**`CFBundleDisplayName` and `CFBundleName` leaked into `InfoPlist.xcstrings`**~~ — **not doing**,
+  and removing them was reverted. Xcode re-extracts both on every build, so deleting them is a change
+  that undoes itself; it came back within one `verify_release` run. They cost nothing: both are
+  English-only and identical to what `DISPLAY_NAME` / `PRODUCT_NAME` expand to, and the Russian bundle
+  never carried them. They now stay in the catalog on purpose.
 - ~~**`CODE_SIGN_IDENTITY` hardcodes full certificate common names**~~ — DONE for the Debug
   configurations. The Distribution ones keep their full name, which is keyed on the team and survives
   renewal.
@@ -405,6 +406,27 @@ iPad and Apple Silicon support, XCUITest on the self-hosted runner,
 snapshot tests, generated mocks, and stripping the vestigial `public` from module types (124
 declarations, no effect — clean up in passing when a file is touched anyway).
 
-`UIDesignRequiresCompatibility = true` was added in `314b733` to build under Xcode 26. Apple describes
-it as temporary and it stops working in the next major iOS release; the whole `SoftUI` design system
-rests on it. Weeks of work, and not something to discover a week before a deadline.
+`UIDesignRequiresCompatibility = true` was added in `314b733` to build under Xcode 26, and Apple
+describes it as temporary. An earlier version of this entry claimed the whole `SoftUI` design system
+rested on it and put the cost at weeks. **That was wrong**, and measuring it took an hour.
+
+`SoftUIView` is a `UIControl` that draws its own `CAShapeLayer` background and four shadow layers.
+Liquid Glass changes how *system* controls render; it does not touch layers you draw yourself. Built
+and run on iOS 26.5 with the flag and without it, the neumorphic panels, the icons and the form are
+pixel-identical.
+
+Two things do change without the flag:
+
+- the navigation bar grows by roughly 15 pt and its content shifts down;
+- the bar draws its shared Glass background behind every `UIBarButtonItem`, which under a `SoftUIView`
+  reads as a second, brighter capsule around the button. Fixed: `hidesSharedBackground` on the item,
+  iOS 26 API, applied through one shared initializer in `UIBarButtonItem+SoftUI.swift`. Verified on
+  the simulator, on both the host list and the AddHost form.
+
+So dropping the flag costs an evening of adjusting navigation-bar spacing, not weeks. Worth doing
+while it is still a choice rather than a deadline. Screens not yet checked without the flag: Donate,
+About, and the icon picker.
+
+> The plus glyph measures 18.7 x 16.3 pt — 14% wider than tall — but that is the SF Symbol's own
+> shape, identical with the flag and without it, and predates all of this. The button itself is
+> square, 73.3 x 73.3 pt in both builds. Removing the bubble simply made the glyph easier to notice.
