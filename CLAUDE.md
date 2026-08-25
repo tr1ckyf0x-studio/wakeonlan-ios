@@ -10,6 +10,46 @@ UIKit, Swift, targeting iOS 17.0+. Ships on the App Store as **Awake**.
 - App Group (shared Core Data store): `group.com.tr1ckyf0x.wake-on-lan.shared`
 - `TARGETED_DEVICE_FAMILY = 1` — iPhone only, portrait only
 
+## Design source (v2)
+
+The v2 redesign is **not in this repository**. It lives in a Claude Design project and is read with
+the `DesignSync` tool:
+
+```
+projectId: c668bd3e-c8f8-4c1b-b73c-4cc78c8c4ea9
+```
+
+| File | Holds |
+|------|-------|
+| `Awake Design System.dc.html` | The system itself, in seven numbered sections: colour, type, radii and rhythm, host status, components, icons, rules. The document is written in Russian and its headings are numbered `01`–`07`, so search by number |
+| `Awake Green Combo.dc.html` | Screen assemblies as numbered cards — `4a` host list, `4b` status alphabet, `3a`/`3b`/`3c` composition studies |
+| `icons/*.svg` | The device icons the mockups use |
+
+Components are referred to by those card numbers: card `4b` is the host status alphabet, card `4a`
+the host list.
+
+**The design changes, and a local copy goes stale silently.** Re-fetch with `get_file` and diff
+against whatever you already have before trusting it; the palette and the status states have already
+been revised once mid-implementation. Each file is 100–160 KB and opens with an inline
+`<svg width="0" height="0">` block of icon definitions — strip that block before reading or the
+useful markup is buried under path data.
+
+Decisions distilled from the design are written up under `docs/superpowers/specs/`, and the colours
+land in `Wake On Lan/Resources/Assets/Colors.xcassets/DesignSystem/` — read those first, they are
+shorter than the source.
+
+### Where the v2 design system applies
+
+**Only to new SwiftUI components, under `Wake On Lan/SwiftUI/`.** The existing UIKit screens keep the
+neumorphic palette (`LegacyPrimary`, `LegacySecondary`, `LegacySecondaryVariant`, `Shadow/*`) and are
+not restyled: they are being replaced, not updated. Never repaint a UIKit view with a
+`DesignSystem/*` colour, and never give a new SwiftUI component a `Legacy*` one — the two palettes
+mark which half of the migration a view belongs to, and mixing them destroys that signal.
+
+The SwiftUI screens are built separately from the UIKit ones rather than in place, so both flows
+exist side by side until the SwiftUI half is complete; the UIKit screens are deleted only then. Which
+flow is shown at runtime is a decision made where the root view controller is built.
+
 ## Architecture
 
 **VIPER** modules + **RouteComposer** for navigation, with a plugin-based app lifecycle.
