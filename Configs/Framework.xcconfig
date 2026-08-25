@@ -2,3 +2,11 @@
 // Siri extension, so they are signed with the host's identity and need no profile of their own.
 
 GENERATE_INFOPLIST_FILE = YES
+
+// Xcode's "Validate Project Settings" recommends the Clang module verifier for every target that
+// defines a module, which is all three of these. It compiles the generated `-Swift.h` header on its
+// own to prove the module stands up outside the target that built it. Values match what Xcode's own
+// "Perform Changes" writes.
+ENABLE_MODULE_VERIFIER = YES
+MODULE_VERIFIER_SUPPORTED_LANGUAGES = objective-c objective-c++
+MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = gnu17 gnu++20

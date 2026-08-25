@@ -162,6 +162,35 @@ outrank the target's xcconfig. The lines in `App.xcconfig` and `Intent.xcconfig`
 > the expensive kind — it tells you to avoid something that works. Settle a precedence question by
 > regenerating and grepping `project.pbxproj`, never by reading prose, this paragraph included.
 
+### Xcode's project-setting recommendations
+
+Xcode's "Validate Project Settings" dialog edits `Wake On LAN.xcodeproj`, which is generated — its
+changes vanish at the next `xcodegen` run. The recommendations are therefore accepted in `Configs/`
+instead, and the dialog itself should always be dismissed with Cancel.
+
+| Setting | Where | Note |
+|---------|-------|------|
+| `ENABLE_USER_SCRIPT_SANDBOXING` | `Base.xcconfig` = YES, `App.xcconfig` = NO | The app target is the only one with script phases, and both need what the sandbox denies |
+| `ENABLE_MODULE_VERIFIER` (+ `MODULE_VERIFIER_SUPPORTED_LANGUAGES`, `..._LANGUAGE_STANDARDS`) | `Framework.xcconfig` | The three `SharedCode/` frameworks each emit a `-Swift.h` and a modulemap, so there is a real module to verify. The task shows up as `VerifyModule` in the build log |
+| `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS` | `Base.xcconfig` = YES | Adds `Color`/`UIColor`/`Image` accessors on top of the default `ColorResource` symbols |
+| `STRING_CATALOG_GENERATE_SYMBOLS` | `Base.xcconfig` = YES | Was on the app target alone; the validation asks for it project-wide, and `Intent` has its own catalog |
+
+Two of these have teeth:
+
+**Script sandboxing cannot be switched on for the app target.** `Swiftlint` lints the whole tree
+against `.swiftlint.yml` at the repository root; sandboxed, it reports the config as
+"you don't have permission to view it" and then fails with "No lintable files found". `Crashlytics`
+walks `DerivedData` for dSYMs and uploads them, so it needs filesystem breadth *and* the network.
+Declaring the tree as `inputFiles` would mean enumerating every Swift file and would still leave the
+upload blocked.
+
+**An asset may not be named after a member of `SwiftUI.Color`, `UIColor` or `Image`.** With the
+symbol extensions on, the generator refuses to shadow the system member and writes `#warning` in its
+place — which `SWIFT_TREAT_WARNINGS_AS_ERRORS` turns into a build failure. This is why the
+neumorphic colours are `LegacyPrimary` / `LegacySecondary` / `LegacySecondaryVariant`: `Primary` and
+`Secondary` collided with `Color.primary` and `Color.secondary`. The `Legacy` prefix also makes the
+whole pre-v2 palette one grep when it is finally deleted.
+
 ### Targets
 
 | Target | Type | Notes |
@@ -209,15 +238,23 @@ SwiftGen, no checked-in generated file, and no `make` step to remember.
 
 | Source | Emitted by | Use it as |
 |--------|-----------|-----------|
-| `Resources/Assets/{Assets,Colors}.xcassets` | `actool` (`GeneratedAssetSymbols.swift`) | `UIColor(resource: .primary)`, `UIImage(resource: .owl)` |
+| `Resources/Assets/{Assets,Colors}.xcassets` | `actool` (`GeneratedAssetSymbols.swift`) | `UIColor(resource: .legacyPrimary)`, `Color(.DesignSystem.accent)`, `UIImage(resource: .owl)` |
 | `Resources/Strings/Localizable.xcstrings` | `xcstringstool` (`GeneratedStringSymbols_Localizable.swift`) | `String(localized: .hostListScreenTitle)` |
 | `InfoPlist.xcstrings` | the system reads it from the bundle | not referenced from code |
 | `IntentSharedSources/Intents.xcstrings` | `xcstringstool` | translations for `Base.lproj/Intents.intentdefinition` |
 
-Asset symbols are on by Xcode's default — nothing configures them. String symbols are **not**: they
-need `STRING_CATALOG_GENERATE_SYMBOLS = YES`, which is set in `Configs/App.xcconfig`. Both generators
-are gated `@available(iOS 11.0, *)` and `@available(iOS 16, *)` respectively, so the iOS 17.0
-deployment target needs no guards, and both emit `Sendable`/`nonisolated` types.
+Asset symbols are on by Xcode's default; the `Color`/`UIColor`/`Image` extensions on top of them are
+not, and come from `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`. String symbols
+need `STRING_CATALOG_GENERATE_SYMBOLS`. Both settings live in `Configs/Base.xcconfig`, at project
+level, which is where Xcode's "Validate Project Settings" asks for them — the string one because the
+`Intent` target has a catalog of its own. Both generators are gated `@available(iOS 11.0, *)` and
+`@available(iOS 16, *)` respectively, so the iOS 17.0 deployment target needs no guards, and both
+emit `Sendable`/`nonisolated` types.
+
+Symbols are flat for `Localizable.xcstrings` (`.hostListScreenTitle`) and namespaced by table for
+the others: `.InfoPlist.nslocalNetworkUsageDescription`, `.Intents.awEh3N`. The `Intents` ones carry
+the intent editor's opaque IDs, which is why they read like noise — nothing calls them, they exist
+because the catalog is compiled into both targets.
 
 Symbol names are flattened from the key: `AddHost.Form.Field.MacAddress.Failure.InvalidMACAddress`
 becomes `.addHostFormFieldMacAddressFailureInvalidMACAddress`. Long, but a missing or renamed key is a

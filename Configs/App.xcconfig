@@ -5,11 +5,19 @@ PRODUCT_BUNDLE_IDENTIFIER = com.tr1ckyf0x.wake-on-lan
 CODE_SIGN_ENTITLEMENTS = Wake On Lan/Wake on LAN.entitlements
 OTHER_LDFLAGS = $(inherited) -ObjC
 
-// Emits `LocalizedStringResource` symbols for `Localizable.xcstrings` into DerivedSources, the same
-// way `actool` emits the asset symbols. Off by default, and not one of XcodeGen's presets, so a
-// target-level xcconfig is the right place for it.
-STRING_CATALOG_GENERATE_SYMBOLS = YES
-
 // NOTE: INFOPLIST_FILE is deliberately absent. XcodeGen detects the plist from the target's
 // sources and writes the setting into the target's own build settings, which outrank this file --
 // a value here would be inert. It is the one setting in Configs/ that could not work.
+
+// The only target with script phases, and both of them need access the sandbox denies.
+//
+// `Swiftlint` lints the whole source tree — `Wake On Lan/`, `SharedCode/`, `Intent/` — against
+// `.swiftlint.yml` at the repository root. Under `ENABLE_USER_SCRIPT_SANDBOXING = YES` it cannot
+// read either: the config comes back "you don't have permission to view it" and the run ends with
+// "No lintable files found", failing the build. `Crashlytics` walks `DerivedData` for every dSYM
+// and uploads them, so it needs both filesystem breadth and the network.
+//
+// Declaring the tree as `inputFiles` would mean enumerating every Swift file in the project, and
+// would still leave the Crashlytics upload blocked. The setting stays YES for every other target
+// through Base.xcconfig; this is the one exception, and it exists because of those two phases.
+ENABLE_USER_SCRIPT_SANDBOXING = NO
