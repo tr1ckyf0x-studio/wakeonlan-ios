@@ -10,6 +10,40 @@
 
 ### Removed
 
+## 1.7.0
+
+### Added
+
+- Added a timeout and cancellation to the magic packet send, so waking a host no longer hangs silently
+- Added a failure state to the donate screen instead of an endless spinner
+
+### Fixed
+
+- Fixed waking or deleting the wrong machine after reordering the host list
+- Fixed hosts losing their address and their order when upgrading from an older version
+- Fixed the Wake action missing from the Shortcuts app
+- Fixed a failed send reporting nothing: errors now reach the user
+- Fixed the edit form opening empty
+- Fixed a typed MAC address never reaching the form
+- Fixed pasting a MAC address written with a different separator
+- Fixed a double tap on Save adding the host twice
+- Fixed Siri failing on an empty host list, and made the host name match ignore case
+- Fixed the spinner staying frozen after returning from the background
+- Fixed a crash on the donate screen
+- Fixed donations being dropped when no payment was in flight
+- Fixed swipe state and validation errors carrying over to recycled cards
+- Fixed the icon picker growing taller on every layout pass
+
+### Updated
+
+- Updated the minimum iOS version to 17
+- Adopted the iOS 26 design
+- Updated dependencies
+
+### Removed
+
+- Removed the unused Reachability dependency
+
 ## 1.6.1
 
 ### Fixed
