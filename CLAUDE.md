@@ -46,6 +46,28 @@ not restyled: they are being replaced, not updated. Never repaint a UIKit view w
 `DesignSystem/*` colour, and never give a new SwiftUI component a `Legacy*` one — the two palettes
 mark which half of the migration a view belongs to, and mixing them destroys that signal.
 
+### Take every value from the token layer
+
+A new SwiftUI component writes no raw numbers and no colour literals. Colour, font, radius, spacing,
+size, shadow and motion all come from `Wake On Lan/SwiftUI/DesignSystem/`:
+
+| Token | Holds |
+|-------|-------|
+| `Colors.xcassets/DesignSystem/` | every colour, as `Color(.DesignSystem.accent)` |
+| `AwakeTextStyle` | the type scale, applied as `.textStyle(.rowTitle)` — never a bare `.font`, which drops the tracking |
+| `AwakeRadius` / `AwakeSpacing` / `AwakeSize` | section 03 |
+| `AwakeShadow` | the shadow colours from section 01 with their geometry, applied as `.awakeShadow(.accent)` |
+| `AwakeMotion` | the pulse of section 04 |
+| `DesignSystem/Components/Awake<Component>Metrics` | values the design draws for one component and gives no token for |
+
+The last row is the escape hatch, and it stays inside the design system rather than in the view: the
+components section of the design routinely uses type sizes and radii that sections 02 and 03 do not
+list, and those must not be promoted into the shared token files — that would make them claim tokens
+the design does not have.
+
+Only two things stay as literals: a structural `spacing: 0`, and the chrome of a preview catalogue,
+which is not product UI.
+
 The SwiftUI screens are built separately from the UIKit ones rather than in place, so both flows
 exist side by side until the SwiftUI half is complete; the UIKit screens are deleted only then. Which
 flow is shown at runtime is a decision made where the root view controller is built.
