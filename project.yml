@@ -27,6 +27,9 @@ packages:
   SnapKit:
     url: https://github.com/SnapKit/SnapKit.git
     exactVersion: 6.0.0
+  FoxDebug:
+    url: https://github.com/tr1ckyf0x-studio/FoxDebug.git
+    exactVersion: 2.0.1
   shared-frameworks:
     url: https://github.com/tr1ckyf0x-studio/shared-frameworks.git
     exactVersion: 1.0.0
@@ -71,6 +74,14 @@ targets:
         product: SnapKit
       - package: shared-frameworks
         product: PersistenceCore
+      # Linked in both configurations because XcodeGen has no per-configuration dependencies. Every
+      # call site is behind `#if DEBUG`, so the menu cannot be reached from a Release build; the
+      # framework itself still ships. See `Wake On Lan/Debug/`.
+      - package: FoxDebug
+        products:
+          - FoxDebugMenu
+          - FoxFeatureToggle
+          - FoxFeatureToggleUI
 
     scheme: {}
 

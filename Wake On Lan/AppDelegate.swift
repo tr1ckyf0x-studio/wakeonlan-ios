@@ -15,7 +15,15 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseAppDelegatePlugin(),
         NavigationBarAppearanceAppDelegatePlugin(),
         IAPAppDelegatePlugin()
-    ]
+    ] + debugPlugins
+
+    private var debugPlugins: [UIApplicationDelegate] {
+        #if DEBUG
+        [DebugAppDelegatePlugin.shared]
+        #else
+        []
+        #endif
+    }
 
     func application(
         _ application: UIApplication,

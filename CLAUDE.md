@@ -151,6 +151,39 @@ transaction observer would only be registered while the Donate screen is on scre
 
 Adding a forwarded callback requires editing the host: it forwards only the methods it explicitly implements.
 
+## Debug menu and the SwiftUI flow
+
+The app is mid-rewrite: the UIKit screens and the SwiftUI ones both exist, and which set runs is a
+feature flag. `RootViewControllerFactory.build()` asks `ProvidesAppFlowFlags` and returns either the
+UIKit `WOLNavigationController` stack or a `UIHostingController` around `SwiftUIFlowRootView`. The
+hosting controller is the seam; it goes away with the last UIKit screen.
+
+| Piece | Where |
+|-------|-------|
+| The question the app asks | `Wake On Lan/FeatureFlags/ProvidesAppFlowFlags.swift` — no FoxDebug dependency, so Release answers it with `DefaultAppFlowFlags` (always UIKit) |
+| The flags themselves | `Wake On Lan/Debug/AwakeFeatureFlags.swift` — `@FeatureFlagContainer` / `@FeatureToggle` from FoxFeatureToggle |
+| The toggle stack | `Wake On Lan/Debug/DebugFeatureToggles.swift`, owned for the process by `DebugAppDelegatePlugin` |
+| The gesture | `Wake On Lan/Debug/ShakeDetectingWindow.swift`, installed by `WindowConfigurationSceneDelegatePlugin` |
+
+**Shake the device to open the menu** — ⌃⌘Z in the simulator. The gesture is caught at the window,
+not in a view controller, precisely because the root is swapped between two flows: anything attached
+to a screen would need attaching twice.
+
+Overrides are stored in `UserDefaults` under `FoxFeatureToggle.override.<flagKey>`, so a flag
+survives a relaunch. To flip one without the menu:
+
+```bash
+xcrun simctl spawn booted defaults write com.tr1ckyf0x.wake-on-lan FoxFeatureToggle.override.swiftUIFlow -string forceEnabled
+```
+
+Editing the container's plist by hand does **not** work — `cfprefsd` caches it and writes its own
+copy back over yours.
+
+**FoxDebug links into Release too.** XcodeGen has no per-configuration dependencies, so the package
+is declared unconditionally and every call site is wrapped in `#if DEBUG`. The menu is unreachable
+from a Release build; the framework still ships. `AwakeFeatureFlags.swiftUIFlow` is `.development`
+stage, so no remote value can ever switch a user onto the unfinished rewrite.
+
 ## Build system
 
 ### Prerequisites
