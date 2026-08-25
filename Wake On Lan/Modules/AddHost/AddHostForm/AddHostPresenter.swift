@@ -38,7 +38,7 @@ extension AddHostPresenter: AddHostViewOutput {
     }
 
     func viewDidPressSaveButton(_ view: AddHostViewInput) {
-        // TODO: Обработка ошибок формы
+        // TODO: Surface form validation errors
         guard addHostForm.isValid else { return }
 
         // NOTE: The save control stays enabled and nothing visible happens while the write is in

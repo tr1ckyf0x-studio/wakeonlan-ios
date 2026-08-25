@@ -207,8 +207,8 @@ MAC of its own.
   the presenter still calls `didSaveForm` and dismisses: the user returns to a list without the host
   they just filled in. The AddHost contract has no error state at all.
 - `AddHostPresenter.swift:41-42` — `guard addHostForm.isValid else { return }` with an explicit
-  `// TODO: Обработка ошибок формы`. Save is never disabled, so on a fresh install the first tap on
-  Save does nothing at all, with no feedback.
+  `// TODO: Surface form validation errors`. Save is never disabled, so on a fresh install the
+  first tap on Save does nothing at all, with no feedback.
 - A denied Local Network permission is indistinguishable from any other failure: every tap waits out
   the 5 s UDP timeout and then claims the user is not connected to a network. Nothing links to
   `openSettingsURLString`.

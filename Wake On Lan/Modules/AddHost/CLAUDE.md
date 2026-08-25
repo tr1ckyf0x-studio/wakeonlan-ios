@@ -90,8 +90,8 @@ references to the same items the cells mutate.
 
 `AddHostForm.isValid` is `sections.lazy.flatMap(\.items).allSatisfy(\.isValid)`.
 `viewDidPressSaveButton` **silently returns** when invalid — there is an explicit
-`// TODO: Обработка ошибок формы`; the only feedback is the per-cell error row that live validation
-already produced.
+`// TODO: Surface form validation errors`; the only feedback is the per-cell error row that live
+validation already produced.
 
 ### Live formatting (MAC address)
 

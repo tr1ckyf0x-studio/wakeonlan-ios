@@ -25,7 +25,7 @@ reporter: "xcode"
 
 # --- Disabled default rules --------------------------------------------------
 disabled_rules:
-  # Метрики размера/сложности — управляем вручную, без порогов линтера.
+  # Size and complexity metrics — managed by hand, without linter thresholds.
   - cyclomatic_complexity
   - file_length
   - function_body_length
@@ -34,39 +34,39 @@ disabled_rules:
   - line_length
   - trailing_comma
   - inclusive_language
-  # Параметры протокольных методов — часть контракта, а не мёртвый код: сигнатуры
-  # UIApplicationDelegate диктует UIKit, а `viewDidLoad(_ view:)` — VIPER-контракт модуля.
-  # 111 срабатываний, все ложные.
+  # Protocol method parameters are part of a contract, not dead code: UIKit dictates the
+  # UIApplicationDelegate signatures, and `viewDidLoad(_ view:)` is the module's VIPER contract.
+  # 111 violations, all false.
   - unused_parameter
-  # Вёрстка программная, отступы и размеры задаются числами прямо в SnapKit-блоках.
+  # Layout is programmatic; insets and sizes are written as numbers inside the SnapKit blocks.
   - no_magic_numbers
-  # `tv`, `pc` — правильные имена устройств, `at:` — идиоматичная метка аргумента.
+  # `tv` and `pc` are the correct device names, and `at:` is an idiomatic argument label.
   - identifier_name
-  # TODO в коде расставлены осознанно и отслеживаются отдельно.
+  # The TODOs in the code are deliberate and tracked separately, in BACKLOG.md.
   - todo
-  # Требования @objc-протоколов (WOLIntentHandling) объявлены async независимо от того,
-  # использует ли реализация await. Автофикс снимал `async` и ломал конформанс.
+  # @objc protocol requirements (WOLIntentHandling) are declared async whether or not the
+  # implementation awaits anything. The autofix stripped `async` and broke the conformance.
   - async_without_await
-  # Сигнатуры диктует UIKit: `[UIApplication.LaunchOptionsKey: Any]?` не переписать.
+  # UIKit dictates the signatures: `[UIApplication.LaunchOptionsKey: Any]?` cannot be rewritten.
   - discouraged_optional_collection
-  # `INObjectCollection<NSString>` требует Intents, `NSMutableAttributedString` — UIKit.
+  # Intents requires `INObjectCollection<NSString>`, and UIKit requires `NSMutableAttributedString`.
   - legacy_objc_type
-  # Пустые `public init() { }` — часть публичного API сервисов, а не забытый блок.
+  # An empty `public init() { }` is part of a service's public API, not a block left unfinished.
   - no_empty_block
-  # Однострочный switch-маппинг (`case .tv: .tv`) читается лучше развёрнутого.
+  # A one-line switch mapping (`case .tv: .tv`) reads better than the expanded form.
   - switch_case_on_newline
-  # Идиома `private let appearance = Appearance(); struct Appearance { … }` используется
-  # в 12 вью-файлах как единый способ держать константы вёрстки рядом с их описанием.
+  # The `private let appearance = Appearance(); struct Appearance { … }` idiom is used across
+  # 12 view files as the single way to keep layout constants next to what they describe.
   - let_var_whitespace
-  # Правило требует держать вспомогательные типы В НАЧАЛЕ файла, перед основным.
-  # Кодовая база следует обратному порядку: основной тип первым, приватные помощники — внизу.
+  # The rule wants helper types at the TOP of the file, ahead of the main one. This codebase
+  # follows the opposite order: the main type first, private helpers at the bottom.
   - file_types_order
-  # `@available` и `@objc` в этом проекте пишутся на отдельной строке.
+  # `@available` and `@objc` are written on their own line in this project.
   - attributes
-  # Кодовая база последовательно использует `public extension Foo { func bar() }`.
-  # Переписывание на `extension Foo { public func bar() }` требует расстановки `public`
-  # у каждого члена вручную: иначе API становится internal и падает сборка соседних таргетов.
-  # 33 таких места, выгоды нет — правило выключено осознанно.
+  # The codebase consistently uses `public extension Foo { func bar() }`. Rewriting it as
+  # `extension Foo { public func bar() }` means adding `public` to every member by hand —
+  # otherwise the API turns internal and neighbouring targets stop building. 33 such places,
+  # no benefit; the rule is off on purpose.
   - no_extension_access_modifier
 
 # --- Opt-in rules ------------------------------------------------------------
@@ -162,17 +162,17 @@ analyzer_rules:
   - unused_import
 
 # --- Rule configuration ------------------------------------------------------
-# Многострочные аргументы вызова: первый аргумент — на новой строке (не прижат к "(").
-# Однострочные вызовы остаются на одной строке; вместе с multiline_arguments_brackets
-# даёт форму foo(\n  a: 1,\n  b: 2\n).
+# Multiline call arguments: the first argument goes on its own line rather than against the "(".
+# Single-line calls stay on one line; together with multiline_arguments_brackets this produces
+# the form foo(\n  a: 1,\n  b: 2\n).
 multiline_arguments:
   first_argument_location: next_line
 
-# Блоки /** ... */ — документация, а не код: их отступы правилу считать не нужно.
+# /** ... */ blocks are documentation rather than code, so the rule should not measure them.
 indentation_width:
   include_comments: false
 
-# type_name / generic_type_name остаются включёнными (default), поднимаем порог длины имени.
+# type_name and generic_type_name stay enabled (default); only the length threshold is raised.
 type_name:
   max_length:
     warning: 100
@@ -183,9 +183,9 @@ generic_type_name:
 
 # --- custom_rules ------------------------------------------------------------
 custom_rules:
-  # Запрет строковых литералов SF Symbols: только SFSafeSymbols.
-  # match_kinds ограничивает совпадение кодом (identifier/typeidentifier),
-  # чтобы не срабатывать внутри строковых литералов и комментариев.
+  # Bans raw SF Symbol string literals: SFSafeSymbols only.
+  # match_kinds restricts matching to code (identifier/typeidentifier) so the rule does not
+  # fire inside string literals or comments.
   uiimage_system_name_string:
     name: "SF Symbol string literal"
     regex: '\bUIImage\s*\(\s*systemName\s*:'
