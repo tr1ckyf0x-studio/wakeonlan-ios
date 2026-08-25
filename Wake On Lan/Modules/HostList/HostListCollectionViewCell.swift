@@ -43,7 +43,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
         let symbolConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 36, weight: .regular))
         let image = UIImage(systemSymbol: .trash, withConfiguration: symbolConfiguration)
         let imageView = UIImageView(image: image)
-        imageView.tintColor = UIColor(resource: .secondary)
+        imageView.tintColor = UIColor(resource: .legacySecondary)
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -63,7 +63,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
 
     private let deviceImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = UIColor(resource: .secondary)
+        imageView.tintColor = UIColor(resource: .legacySecondary)
         imageView.contentMode = .scaleAspectFit
 
         return imageView
@@ -72,7 +72,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
     private let hostTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .medium)
-        label.textColor = UIColor(resource: .secondaryVariant)
+        label.textColor = UIColor(resource: .legacySecondaryVariant)
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -82,7 +82,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
     private let macAddressTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = UIColor(resource: .secondaryVariant)
+        label.textColor = UIColor(resource: .legacySecondaryVariant)
         label.numberOfLines = 1
         label.textAlignment = .left
 
@@ -94,7 +94,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
         let imageConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 24, weight: .semibold))
         let image = UIImage(systemSymbol: .ellipsis, withConfiguration: imageConfiguration)
         let imageView = UIImageView(image: image)
-        imageView.tintColor = UIColor(resource: .secondary)
+        imageView.tintColor = UIColor(resource: .legacySecondary)
         button.configure(with: SoftUIViewModel(contentView: imageView))
         imageView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -108,7 +108,7 @@ final class HostListCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(resource: .primary)
+        backgroundColor = UIColor(resource: .legacyPrimary)
         setupScrollView()
         setupBaseView()
         setupDeleteView()

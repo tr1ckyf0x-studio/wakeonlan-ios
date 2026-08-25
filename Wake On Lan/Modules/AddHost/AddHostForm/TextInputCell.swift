@@ -56,7 +56,7 @@ final class TextInputCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = UIColor(resource: .primary)
+        backgroundColor = UIColor(resource: .legacyPrimary)
         configureViews()
     }
 
@@ -115,7 +115,7 @@ final class TextInputCell: UITableViewCell {
             target: self,
             action: #selector(didTapDoneButton)
         )
-        doneButton.tintColor = UIColor(resource: .secondary)
+        doneButton.tintColor = UIColor(resource: .legacySecondary)
         let flexibleSpace = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace,
             target: nil,

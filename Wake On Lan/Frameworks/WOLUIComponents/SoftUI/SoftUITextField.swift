@@ -12,7 +12,7 @@ public class SoftUITextField: UITextField {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        var mainColor: CGColor { UIColor(resource: .primary).resolved }
+        var mainColor: CGColor { UIColor(resource: .legacyPrimary).resolved }
         var darkShadowColor: CGColor { UIColor(resource: .darkShadow).resolved }
         var lightShadowColor: CGColor { UIColor(resource: .lightShadow).resolved }
 

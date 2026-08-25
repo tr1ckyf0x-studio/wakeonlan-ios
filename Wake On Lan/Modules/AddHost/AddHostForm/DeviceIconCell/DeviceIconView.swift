@@ -22,7 +22,7 @@ final class DeviceIconView: UIView {
         let image = UIImage(systemSymbol: HostIcon.desktopcomputer.symbol)
         let imageView = UIImageView(image: image)
         imageView.layer.cornerRadius = 14
-        imageView.tintColor = UIColor(resource: .secondary)
+        imageView.tintColor = UIColor(resource: .legacySecondary)
         imageView.isUserInteractionEnabled = true
         imageView.contentMode = .scaleAspectFit
 

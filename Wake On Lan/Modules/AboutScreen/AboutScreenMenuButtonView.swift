@@ -38,14 +38,14 @@ final class AboutScreenMenuButtonView: UIView {
     private lazy var buttonImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = UIColor(resource: .secondaryVariant)
+        imageView.tintColor = UIColor(resource: .legacySecondaryVariant)
         return imageView
     }()
 
     private lazy var buttonTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.textColor = UIColor(resource: .secondaryVariant)
+        label.textColor = UIColor(resource: .legacySecondaryVariant)
         return label
     }()
 
@@ -55,7 +55,7 @@ final class AboutScreenMenuButtonView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(resource: .primary)
+        backgroundColor = UIColor(resource: .legacyPrimary)
         addSubviews()
         makeConstraints()
     }

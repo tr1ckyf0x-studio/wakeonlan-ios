@@ -11,8 +11,8 @@ final class DonateItemCell: UITableViewCell {
     // MARK: - Appearance
 
     private let appearance = Appearance(); struct Appearance {
-        let backgroundColor = UIColor(resource: .primary)
-        let labelColor = UIColor(resource: .secondaryVariant)
+        let backgroundColor = UIColor(resource: .legacyPrimary)
+        let labelColor = UIColor(resource: .legacySecondaryVariant)
 
         let labelsHorizontalInset = 16
         let labelsVerticalInset = 16

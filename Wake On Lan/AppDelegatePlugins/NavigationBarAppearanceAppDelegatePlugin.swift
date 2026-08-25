@@ -15,7 +15,7 @@ final class NavigationBarAppearanceAppDelegatePlugin: NSObject, UIApplicationDel
     ) -> Bool {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithDefaultBackground()
-        navigationBarAppearance.backgroundColor = UIColor(resource: .primary)
+        navigationBarAppearance.backgroundColor = UIColor(resource: .legacyPrimary)
         navigationBarAppearance.shadowColor = nil
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactAppearance = navigationBarAppearance

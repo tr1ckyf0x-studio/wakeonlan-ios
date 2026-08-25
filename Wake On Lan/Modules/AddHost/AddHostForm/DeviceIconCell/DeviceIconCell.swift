@@ -24,7 +24,7 @@ final class DeviceIconCell: UITableViewCell {
     private let changeIconLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.textColor = UIColor(resource: .secondaryVariant)
+        label.textColor = UIColor(resource: .legacySecondaryVariant)
         label.font = .systemFont(ofSize: 12)
         label.text = String(localized: .addHostFormFieldChangeIconTitle)
 

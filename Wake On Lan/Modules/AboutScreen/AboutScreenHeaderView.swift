@@ -17,11 +17,11 @@ final class AboutScreenHeaderView: UIView {
         /// Application name font
         let appNameFont: UIFont = .systemFont(ofSize: 36, weight: .medium)
         /// Application name text color
-        let appNameTextColor = UIColor(resource: .secondaryVariant)
+        let appNameTextColor = UIColor(resource: .legacySecondaryVariant)
         /// Application version
         let appVersionFont: UIFont = .systemFont(ofSize: 12, weight: .medium)
         /// Application text color
-        let appVersionTextColor = UIColor(resource: .secondary)
+        let appVersionTextColor = UIColor(resource: .legacySecondary)
         /// Application main logo
         let logoImage = UIImage(resource: .owl)
         /// Spacing between elements in stack
@@ -87,7 +87,7 @@ extension AboutScreenHeaderView: ViewModelConfigurable {
 
 private extension AboutScreenHeaderView {
     func setupView() {
-        tintColor = UIColor(resource: .primary)
+        tintColor = UIColor(resource: .legacyPrimary)
     }
 
     func addSubviews() {
