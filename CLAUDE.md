@@ -104,9 +104,9 @@ make bootstrap    # Mint tools -> .bin, bundle install, XcodeGen project
 | Tool | Version | Purpose |
 |------|---------|---------|
 | XcodeGen | 2.46.0 | Generates `.xcodeproj` from `project.yml` |
-| SwiftLint | 0.65.0 | Linting; runs as a pre-build script phase |
+| SwiftLint | 0.65.1 | Linting; runs as a pre-build script phase |
 | Genesis | 0.9.0 | Template engine behind module scaffolding |
-| FoxGen | 0.0.9 | Orchestrates Genesis module scaffolding (`foxgen.yml`) |
+| FoxGen | 1.0.0 | Orchestrates Genesis module scaffolding (`foxgen.yml`) |
 | xcbeautify | 3.2.1 | `xcodebuild` output formatter used by fastlane |
 
 ### Build settings (`Configs/`)
@@ -245,8 +245,8 @@ folders that appear *in the built bundle* are produced by `xcstringstool` from t
 > `.strings` forever. Its generated `ColorAsset` was also a mutable class whose `static let` constants
 > Swift 6 rejects outright.
 
-> `foxgen.yml` still declares a `swiftgen` executable. FoxGen 0.0.9 refuses to decode its config
-> without that key, but never invokes it — see the comment there.
+> `foxgen.yml` still declares `swiftgen` and `sourcery` executables. FoxGen 1.0.0 refuses to decode
+> its config without those keys, but scaffolding never invokes them — see the comment there.
 
 ### Modules (FoxGen + Genesis)
 

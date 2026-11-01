@@ -1,5 +1,5 @@
 # SwiftLint configuration — Wake on LAN (Awake)
-# Tuned for SwiftLint 0.65.0 (pinned in Mintfile).
+# Tuned for SwiftLint 0.65.1 (pinned in Mintfile).
 # Rule directory: https://realm.github.io/SwiftLint/rule-directory.html
 #
 # Policy:
