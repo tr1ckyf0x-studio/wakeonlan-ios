@@ -61,7 +61,6 @@ UIKit, Swift, targeting iOS 17.0+. Ships on the App Store as **Awake**.
 │   └── WOLSharedProtocolsAndModels/ # cross-target protocols and value types
 ├── Intent/                          # Siri app extension (WOLIntentHandler)
 ├── IntentSharedSources/             # Intents.intentdefinition + its localization, built into both targets
-├── swift-templates/Genesis/         # module scaffolding templates (VIPER, Bundle, YARCH)
 ├── SharedCodeTests/                 # unit tests over SharedCode/ (Swift Testing, no host app)
 ├── Configs/                         # xcconfig files — the source of truth for build settings
 ├── fastlane/                        # Fastfile, Matchfile, Appfile, encrypted api_key.json
@@ -105,8 +104,6 @@ make bootstrap    # Mint tools -> .bin, bundle install, XcodeGen project
 |------|---------|---------|
 | XcodeGen | 2.46.0 | Generates `.xcodeproj` from `project.yml` |
 | SwiftLint | 0.65.1 | Linting; runs as a pre-build script phase |
-| Genesis | 0.9.0 | Template engine behind module scaffolding |
-| FoxGen | 1.0.0 | Orchestrates Genesis module scaffolding (`foxgen.yml`) |
 | xcbeautify | 3.2.1 | `xcodebuild` output formatter used by fastlane |
 
 ### Build settings (`Configs/`)
@@ -244,18 +241,6 @@ folders that appear *in the built bundle* are produced by `xcstringstool` from t
 > one, it writes an empty file and exits 0 — so keeping it would have frozen the project on legacy
 > `.strings` forever. Its generated `ColorAsset` was also a mutable class whose `static let` constants
 > Swift 6 rejects outright.
-
-> `foxgen.yml` still declares `swiftgen` and `sourcery` executables. FoxGen 1.0.0 refuses to decode
-> its config without those keys, but scaffolding never invokes them — see the comment there.
-
-### Modules (FoxGen + Genesis)
-
-```bash
-mint run foxgen --help
-```
-
-Templates live in `swift-templates/Genesis/`. The VIPER template generates `Factory`, `Interactor`,
-`Presenter`, `Routes`, `View`, `ViewController` into `Modules/<Module>/<Submodule>/`.
 
 ## Signing and CI/CD
 

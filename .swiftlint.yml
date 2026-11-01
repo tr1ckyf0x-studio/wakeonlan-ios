@@ -16,7 +16,6 @@ included:
 
 excluded:
   - "**/*.generated.swift"
-  - "swift-templates"                        # Genesis code-gen templates (not compilable Swift)
   - ".build"
   - ".bin"
   - "vendor"
