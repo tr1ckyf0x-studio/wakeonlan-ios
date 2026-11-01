@@ -11,7 +11,9 @@ concurrency:
 
 jobs:
   Build:
-    runs-on: self-hosted-mac
+    # The Xcode label makes a rebuilt runner image queue the job with a clear reason instead of building
+    # with a different Xcode unnoticed.
+    runs-on: [macos-vm, xcode-27.2]
     steps:
       - uses: actions/checkout@v7
         with:
@@ -19,14 +21,16 @@ jobs:
 
       - name: Bootstrap
         run: |
-          eval "$(rbenv init -)"
+          # The shims are baked into the image. rbenv 1.3.2's own rehash fails when another one holds
+          # its lock, and under `bash -e` that ends the step with exit 1 and no output.
+          eval "$(rbenv init - --no-rehash bash)"
           make bootstrap
 
       - name: Import GPG key and reveal secrets
         run: |
-          # Import into a throwaway keyring rather than the runner's own. This runner is self-hosted
-          # and also serves the Checks workflow on pull_request, so a signing key left in the default
-          # keyring outlives the job on a machine that runs other people's code.
+          # Import into a throwaway keyring rather than the default one. The virtual machine is
+          # destroyed after the job, so nothing would outlive it either way — this is kept because
+          # it costs nothing and keeps the workflow correct on any runner it is ever pointed at.
           export GNUPGHOME="$RUNNER_TEMP/gnupg"
           rm -rf "$GNUPGHOME"
           mkdir -p "$GNUPGHOME"
@@ -38,6 +42,19 @@ jobs:
           git secret reveal
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Provide the SSH key for the certificates repository
+        env:
+          CI_SSH_PRIVATE_KEY: ${{ secrets.CI_SSH_PRIVATE_KEY }}
+        run: |
+          # `match` clones match-certificates over SSH, and the runner is an ephemeral virtual
+          # machine with an empty home directory. Everything goes into RUNNER_TEMP rather than
+          # ~/.ssh, the same way the GPG keyring above does: a key written to ~/.ssh would be
+          # deleted again by the cleanup step, which on any persistent runner destroys its own key.
+          printf '%s\n' "$CI_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/ci_ssh_key"
+          chmod 600 "$RUNNER_TEMP/ci_ssh_key"
+          ssh-keyscan -t ed25519 github.com > "$RUNNER_TEMP/known_hosts" 2>/dev/null
+          echo "GIT_SSH_COMMAND=ssh -i $RUNNER_TEMP/ci_ssh_key -o IdentitiesOnly=yes -o UserKnownHostsFile=$RUNNER_TEMP/known_hosts" >> "$GITHUB_ENV"
 
       - name: Create temporary keychain
         run: |
@@ -55,19 +72,21 @@ jobs:
           KEYCHAIN_NAME: build.keychain
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          eval "$(rbenv init -)"
+          eval "$(rbenv init - --no-rehash bash)"
           bundle exec fastlane ios sync_release_certificates
           bundle exec fastlane ios beta
 
+      # `|| true` because this runs on failure too, and a job that failed before the keychain was
+      # created would otherwise report a second, misleading failure on top of the real one.
       - name: Delete temporary keychain
         if: always()
-        run: security delete-keychain build.keychain
+        run: security delete-keychain build.keychain || true
 
       - name: Remove the revealed secrets and the temporary keyring
         if: always()
         run: |
           gpgconf --homedir "$RUNNER_TEMP/gnupg" --kill all || true
           rm -rf "$RUNNER_TEMP/gnupg"
-          # `git secret reveal` decrypts the App Store Connect key into the workspace, which persists
-          # between jobs on a self-hosted runner.
+          rm -f "$RUNNER_TEMP/ci_ssh_key" "$RUNNER_TEMP/known_hosts"
+          # `git secret reveal` decrypts the App Store Connect key into the workspace.
           rm -f fastlane/api_key.json

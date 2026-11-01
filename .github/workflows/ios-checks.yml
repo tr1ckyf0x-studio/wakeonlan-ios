@@ -12,7 +12,9 @@ concurrency:
 
 jobs:
   Build:
-    runs-on: self-hosted-mac
+    # The Xcode label makes a rebuilt runner image queue the job with a clear reason instead of building
+    # with a different Xcode unnoticed.
+    runs-on: [macos-vm, xcode-27.2]
     steps:
       - uses: actions/checkout@v7
         with:
@@ -20,19 +22,21 @@ jobs:
 
       - name: Bootstrap
         run: |
-          eval "$(rbenv init -)"
+          # The shims are baked into the image. rbenv 1.3.2's own rehash fails when another one holds
+          # its lock, and under `bash -e` that ends the step with exit 1 and no output.
+          eval "$(rbenv init - --no-rehash bash)"
           make bootstrap
 
       - name: Test
         env:
           LANG: en_US.UTF-8
         run: |
-          eval "$(rbenv init -)"
+          eval "$(rbenv init - --no-rehash bash)"
           bundle exec fastlane ios test
 
       - name: Build Release and verify the bundle
         env:
           LANG: en_US.UTF-8
         run: |
-          eval "$(rbenv init -)"
+          eval "$(rbenv init - --no-rehash bash)"
           bundle exec fastlane ios verify_release

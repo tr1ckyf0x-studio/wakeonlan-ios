@@ -61,7 +61,6 @@ UIKit, Swift, targeting iOS 17.0+. Ships on the App Store as **Awake**.
 │   └── WOLSharedProtocolsAndModels/ # cross-target protocols and value types
 ├── Intent/                          # Siri app extension (WOLIntentHandler)
 ├── IntentSharedSources/             # Intents.intentdefinition + its localization, built into both targets
-├── swift-templates/Genesis/         # module scaffolding templates (VIPER, Bundle, YARCH)
 ├── SharedCodeTests/                 # unit tests over SharedCode/ (Swift Testing, no host app)
 ├── Configs/                         # xcconfig files — the source of truth for build settings
 ├── fastlane/                        # Fastfile, Matchfile, Appfile, encrypted api_key.json
@@ -104,9 +103,7 @@ make bootstrap    # Mint tools -> .bin, bundle install, XcodeGen project
 | Tool | Version | Purpose |
 |------|---------|---------|
 | XcodeGen | 2.46.0 | Generates `.xcodeproj` from `project.yml` |
-| SwiftLint | 0.65.0 | Linting; runs as a pre-build script phase |
-| Genesis | 0.9.0 | Template engine behind module scaffolding |
-| FoxGen | 0.0.9 | Orchestrates Genesis module scaffolding (`foxgen.yml`) |
+| SwiftLint | 0.65.1 | Linting; runs as a pre-build script phase |
 | xcbeautify | 3.2.1 | `xcodebuild` output formatter used by fastlane |
 
 ### Build settings (`Configs/`)
@@ -245,18 +242,6 @@ folders that appear *in the built bundle* are produced by `xcstringstool` from t
 > `.strings` forever. Its generated `ColorAsset` was also a mutable class whose `static let` constants
 > Swift 6 rejects outright.
 
-> `foxgen.yml` still declares a `swiftgen` executable. FoxGen 0.0.9 refuses to decode its config
-> without that key, but never invokes it — see the comment there.
-
-### Modules (FoxGen + Genesis)
-
-```bash
-mint run foxgen --help
-```
-
-Templates live in `swift-templates/Genesis/`. The VIPER template generates `Factory`, `Interactor`,
-`Presenter`, `Routes`, `View`, `ViewController` into `Modules/<Module>/<Submodule>/`.
-
 ## Signing and CI/CD
 
 ### Code signing — fastlane match
@@ -284,8 +269,12 @@ The `generate_*` lanes need the App Store Connect API key, which is stored encry
 
 **Only a tag ships to TestFlight.** Pushing to `development` just verifies that the project builds.
 
+Both run on a self-hosted runner labelled `macos-vm` and `xcode-27.2`: a **single-use virtual machine**,
+created for each job and destroyed after it (see `github-runner-macos`). The second label names the
+Xcode in the image, so when the image moves the jobs queue until the label is changed in both workflows.
+
 Required repository secrets (release workflow only): `GPG_PRIVATE_KEY`, `MATCH_PASSWORD`,
-`KEYCHAIN_PASSWORD`.
+`KEYCHAIN_PASSWORD`, `CI_SSH_PRIVATE_KEY` (clones `match-certificates`; the machine has no key of its own).
 
 ### Release flow
 
