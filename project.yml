@@ -29,7 +29,7 @@ packages:
     exactVersion: 6.0.0
   shared-frameworks:
     url: https://github.com/tr1ckyf0x-studio/shared-frameworks.git
-    exactVersion: 2.0.0
+    exactVersion: 1.2.0
 
 # Base.xcconfig is attached here rather than #include'd by every target xcconfig. XcodeGen omits any
 # preset the attached file declares, and does so for a project-level file too, so one attachment
