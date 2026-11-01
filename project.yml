@@ -14,13 +14,13 @@ attributes:
 packages:
   CocoaLumberjack:
     url: https://github.com/CocoaLumberjack/CocoaLumberjack.git
-    exactVersion: 3.9.1
+    exactVersion: 3.10.0
   firebase-ios-sdk:
     url: https://github.com/firebase/firebase-ios-sdk.git
-    exactVersion: 12.18.0
+    exactVersion: 13.1.1
   RouteComposer:
     url: https://github.com/ekazaev/route-composer.git
-    exactVersion: 2.22.2
+    exactVersion: 2.22.3
   SFSafeSymbols:
     url: https://github.com/SFSafeSymbols/SFSafeSymbols.git
     exactVersion: 7.0.0
@@ -29,7 +29,7 @@ packages:
     exactVersion: 6.0.0
   shared-frameworks:
     url: https://github.com/tr1ckyf0x-studio/shared-frameworks.git
-    exactVersion: 1.0.0
+    exactVersion: 2.0.0
 
 # Base.xcconfig is attached here rather than #include'd by every target xcconfig. XcodeGen omits any
 # preset the attached file declares, and does so for a project-level file too, so one attachment
