@@ -284,8 +284,12 @@ The `generate_*` lanes need the App Store Connect API key, which is stored encry
 
 **Only a tag ships to TestFlight.** Pushing to `development` just verifies that the project builds.
 
+Both run on a self-hosted runner labelled `macos-vm` and `xcode-27.2`: a **single-use virtual machine**,
+created for each job and destroyed after it (see `github-runner-macos`). The second label names the
+Xcode in the image, so when the image moves the jobs queue until the label is changed in both workflows.
+
 Required repository secrets (release workflow only): `GPG_PRIVATE_KEY`, `MATCH_PASSWORD`,
-`KEYCHAIN_PASSWORD`.
+`KEYCHAIN_PASSWORD`, `CI_SSH_PRIVATE_KEY` (clones `match-certificates`; the machine has no key of its own).
 
 ### Release flow
 
